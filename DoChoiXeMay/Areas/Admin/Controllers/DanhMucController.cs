@@ -52,6 +52,88 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ViewBag.GetListchinhanh = model;
             return PartialView(model);
         }
+        public ActionResult HinhThucThuChi()
+        {
+            Session["requestUri"] = "/Admin/DanhMuc/HinhThucThuChi";
+            return View();
+        }
+        public ActionResult GetListHinhThucTC()
+        {
+            var model = dbc.HinhThucTCs.OrderByDescending(kh => kh.Id).ToList();
+            ViewBag.GetListHinhThucTC = model;
+            return PartialView();
+        }
+        public ActionResult InsertHinhThucTC()
+        {
+            HinhThucTC model = new HinhThucTC();
+            model.TenHT = "Auto hT";
+            model.SuDung = false;
+            model.Ngay = DateTime.Now;
+            
+            dbc.HinhThucTCs.Add(model);
+            dbc.SaveChanges();
+            Session["ThongBaoHinhThucTC"] = "Insert hình thức TC mới thành công. Cần update để sử dụng.";
+            var userid = int.Parse(Session["UserId"].ToString());
+            var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, userid, Session["quyen"].ToString()
+                        , Session["UserName"].ToString(), "Insert LV chi nhánh-" + model.TenHT + "-" + DateTime.Now.ToString(), "");
+            //tro lai trang truoc do 
+            var requestUri = Session["requestUri"] as string;
+            if (requestUri != null)
+            {
+                return Redirect(requestUri);
+            }
+            return RedirectToAction("HinhThucThuChi");
+        }
+        public ActionResult DeleteHTTC(int id)
+        {
+            var userid = int.Parse(Session["UserId"].ToString());
+            var model = dbc.HinhThucTCs.Find(id);
+            dbc.HinhThucTCs.Remove(model);
+            dbc.SaveChanges();
+            Session["ThongBaoHinhThucTC"] = "Delete HinhThucTC :" + model.TenHT + " thành công.";
+            var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, userid, Session["quyen"].ToString()
+                        , Session["UserName"].ToString(), "Delete HinhThucTC -" + model.TenHT + "-" + DateTime.Now.ToString(), "");
+            //tro lai trang truoc do 
+            var requestUri = Session["requestUri"] as string;
+            if (requestUri != null)
+            {
+                return Redirect(requestUri);
+            }
+            return RedirectToAction("HinhThucThuChi");
+        }
+        public ActionResult UpdateHTTC(int id)
+        {
+            var model = dbc.HinhThucTCs.Find(id);
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult UpdateHTTC(HinhThucTC HTTC)
+        {
+            try
+            {
+                dbc.Entry(HTTC).State = EntityState.Modified;
+                dbc.SaveChanges();
+                Session["ThongBaoHinhThucTC"] = "Update HinhThucTC Id=" + HTTC.Id + ", thành công.";
+                //SMS hệ thống
+                var sms = "Update HinhThucTC Id=" + HTTC.Id + ", thành công.";
+                new Data.UserData().SMSvaNhatKy(dbc, Session["UserId"].ToString(), Session["UserName"].ToString()
+                    , Session["quyen"].ToString(), sms);
+                //tro lai trang truoc do 
+                var requestUri = Session["requestUri"] as string;
+                if (requestUri != null)
+                {
+                    return Redirect(requestUri);
+                }
+                return RedirectToAction("HinhThucThuChi");
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                ModelState.AddModelError("", "Update Thất Bại !!!!" + message);
+
+                return View(HTTC);
+            }
+        }
         public ActionResult Levelchinhanh()
         {
             Session["requestUri"] = "/Admin/DanhMuc/Levelchinhanh";

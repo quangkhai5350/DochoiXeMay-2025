@@ -1,0 +1,47 @@
+﻿@using DoChoiXeMay.Models;
+
+@model HinhThucTC
+<div class="table-responsive">
+    <table class="table table-hover table-striped" style="margin-bottom:0">
+        <thead>
+            <tr class="canhgiua" style="background-color: #00bcd4">
+                <th class="canhgiua">Id</th>
+                <th class="canhgiua">Tên HT</th>
+                <th class="canhgiua">Sử Dụng</th>
+                <th class="canhgiua">Ngày</th>
+                
+                <th class="canhgiua">Update</th>
+            </tr>
+        </thead>
+        
+            <tbody style="border: 2px solid black !important">
+                @foreach (DoChoiXeMay.Models.HinhThucTC Item in ViewBag.GetListHinhThucTC)
+                {
+                    <tr class="canhgiua" style="border-bottom: 2px solid black !important">
+                        <td>@Item.Id</td>
+                        <td>@Item.TenHT</td>
+                        <td>@Item.SuDung</td>
+                        <td>
+                            @Item.Ngay
+                        </td>
+                        
+                        <td>
+                            @if (int.Parse(Session["quyen"].ToString()) < 5)
+                            {
+                                if (Item.Id > 1)
+                                {
+                                    <a style="display:none" class="btn btn-warning" onclick="return confirm('Bạn muốn xóa Hình thức TC: @Item.TenHT ??')" href="/Admin/DanhMuc/DeleteHTTC/@Item.Id"><span class="glyphicon glyphicon-trash"></span></a>
+                                }
+                                <a class="btn btn-danger" href="/Admin/DanhMuc/UpdateHTTC/@Item.Id"><span class="glyphicon glyphicon-edit"></span></a>
+                            }
+                        </td>
+                    </tr>
+
+                }
+            </tbody>
+
+
+    </table>
+
+</div>
+
