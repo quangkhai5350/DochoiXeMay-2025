@@ -543,6 +543,7 @@
     <Content Include="Areas\Admin\Views\DanhMuc\UpdateLoaiHang.cshtml" />
     <Content Include="Areas\Admin\Views\DanhMuc\HinhThucThuChi.cshtml" />
     <Content Include="Areas\Admin\Views\DanhMuc\GetListHinhThucTC.cshtml" />
+    <Content Include="Areas\Admin\Views\DanhMuc\UpdateHTTC.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />

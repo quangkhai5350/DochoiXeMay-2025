@@ -41,6 +41,11 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             //var uid = int.Parse(Session["UserId"].ToString());
             ViewBag.ChitietTCTEK = model;
 
+            double ThuTKThuLien = new Data.ThuChiData().TongbyHTvaThuChi(modelTong, 5, true);
+            ViewBag.ThuTKThuLien = String.Format(new CultureInfo("vi-VN"), "{0:#,##0}", ThuTKThuLien);
+            double ChiTKThuLien = new Data.ThuChiData().TongbyHTvaThuChi(modelTong, 5, false);
+            ViewBag.ChiTKThuLien = String.Format(new CultureInfo("vi-VN"), "{0:#,##0}", ChiTKThuLien);
+            //new 21 thang 9
             double ThuTK = new Data.ThuChiData().TongbyHTvaThuChi(modelTong, 1, true);
             ViewBag.ThuTK = String.Format(new CultureInfo("vi-VN"), "{0:#,##0}", ThuTK);
             double ChiTK = new Data.ThuChiData().TongbyHTvaThuChi(modelTong, 1, false);
@@ -55,18 +60,21 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ViewBag.ThuTKVCB = String.Format(new CultureInfo("vi-VN"), "{0:#,##0}", ThuTKVCB);
             double ChiTKVCB = new Data.ThuChiData().TongbyHTvaThuChi(modelTong, 4, false);
             ViewBag.ChiTKVCB = String.Format(new CultureInfo("vi-VN"), "{0:#,##0}", ChiTKVCB);
+            
             double NoPhaiThu = new Data.ThuChiData().TongbyIndebtedvaThuChi(modelTong, true, true);
             ViewBag.NoPhaiThu = String.Format(new CultureInfo("vi-VN"), "{0:#,##0}", NoPhaiThu);
             double NoPhaiTra = new Data.ThuChiData().TongbyIndebtedvaThuChi(modelTong, true, false);
             ViewBag.NoPhaiTra = String.Format(new CultureInfo("vi-VN"), "{0:#,##0}", NoPhaiTra);
-
+            
+            double conlaiTKThuLien = ThuTKThuLien - ChiTKThuLien;
             double conlaiTK = ThuTK - ChiTK;
+            ViewBag.conlaiTKThuLien = String.Format(new CultureInfo("vi-VN"), "{0:#,##0}", conlaiTKThuLien);
             ViewBag.conlaiTK = String.Format(new CultureInfo("vi-VN"), "{0:#,##0}", conlaiTK);
             double conlaiTienmat = ThuTienMat - ChiTienMat;
             ViewBag.conlaiTienmat = String.Format(new CultureInfo("vi-VN"), "{0:#,##0}", conlaiTienmat);
             double conlaiTKVCB = ThuTKVCB - ChiTKVCB;
             ViewBag.conlaiTKVCB = String.Format(new CultureInfo("vi-VN"), "{0:#,##0}", conlaiTKVCB);
-            double TTconlai = conlaiTK + conlaiTienmat + conlaiTKVCB;
+            double TTconlai = conlaiTK + conlaiTienmat + conlaiTKVCB + conlaiTKThuLien;
             ViewBag.TTconlai = String.Format(new CultureInfo("vi-VN"), "{0:#,##0}", TTconlai);
 
             return PartialView();
