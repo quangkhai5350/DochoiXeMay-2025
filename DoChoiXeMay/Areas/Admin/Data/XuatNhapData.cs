@@ -169,15 +169,15 @@ namespace DoChoiXeMay.Areas.Admin.Data
                     }
                     if (model[i].IDMF != Hangsx)
                     {
-                        ThongbLog[i + 1] = ThongbLog[i + 1] + " , Khác Hãng(" + model[i].Manufacturer.Name + ")";
+                        ThongbLog[i + 1] = ThongbLog[i + 1] + " , Khác Hãng(" + model[i].Manufacturer.Name + ")!!!";
                     }
                     if (model[i].IDColor != Mau)
                     {
-                        ThongbLog[i + 1] = ThongbLog[i + 1] + " , Khác Màu(màu " + model[i].Color.TenColor + ")";
+                        ThongbLog[i + 1] = ThongbLog[i + 1] + " , Khác Màu(màu " + model[i].Color.TenColor + ")!!!";
                     }
                     if (model[i].IDSize != Size)
                     {
-                        ThongbLog[i + 1] = ThongbLog[i + 1] + " , Khác Size(size " + model[i].Size.TenSize + ")";
+                        ThongbLog[i + 1] = ThongbLog[i + 1] + " , Khác Size(size " + model[i].Size.TenSize + ")!!!";
                     }
                 }
                 return ThongbLog;
