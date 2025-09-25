@@ -30,7 +30,7 @@ namespace DoChoiXeMay.Utils
         {
             //get Random text
             StringBuilder randomText = new StringBuilder();
-            string alphabets = "123456789QWERTYUIPASDFGHJKLZXCVBNM#@&*";
+            string alphabets = "123456789QWERTYUIPASDFGHJKLZXCVBNM";
             Random r = new Random();
             for (int j = 0; j < i; j++)
             {
