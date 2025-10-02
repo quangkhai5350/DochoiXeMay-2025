@@ -463,6 +463,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             Session["TenKy"]=ky.TenKy;
             Session["IDKy"] = id;
             Session["xuatnhap"] = ky.XuatNhap==true?"Xuat":"Nhap";
+            Session["KhachLe"] = ky.KhachLe == true ? "KhachLe" : "ĐaiLy";
             Session["CKphantram"] = ky.CKphantram;
             Session["CKtienmat"] = ky.CKtienmat;
             ViewBag.IDMF = new SelectList(dbc.Manufacturers.Where(kh => kh.Sudung == true), "Id", "Name");
@@ -535,7 +536,10 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                         return View();
                     }
                 }
-
+                if (Session["KhachLe"].ToString() == "KhachLe")
+                {
+                    model.SoLuong = 1;
+                }
                 dbc.ChitietXuatNhaps.Add(model);
                 int kq = dbc.SaveChanges();
                 if (kq > 0)

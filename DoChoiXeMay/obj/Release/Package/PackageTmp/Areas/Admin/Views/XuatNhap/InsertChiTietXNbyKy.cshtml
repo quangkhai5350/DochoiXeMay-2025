@@ -15,7 +15,9 @@
 
 
                 <h1 class="info_header">
-                    <span style="color:black">@Session["UserName"]</span>  Thêm mới hàng hóa cho kỳ <span style="color:black;text-decoration:underline double black ">@Session["xuatnhap"].ToString()</span>: @Session["TenKy"]
+                    <span style="color:black">@Session["UserName"]</span>  Thêm mới hàng hóa cho kỳ <span style="color:black;text-decoration:underline double black ">
+                        @Session["xuatnhap"].ToString()/@Session["KhachLe"]
+                    </span>: @Session["TenKy"] 
                     <span class="pull-right label label-warning" style="color:white;font-family:monospace">
                         @Html.ValidationSummary()
                     </span>
@@ -33,7 +35,7 @@
                                     {
                                         <option value="@Item.Ten"></option>
                                     }
-                                    
+
                                 </datalist>
                             }
                             else
@@ -60,132 +62,159 @@
                                 <p>Size</p>
                                 <span class="icon-case"><i class="glyphicon glyphicon-text-size"></i></span>
                                 @Html.DropDownList("IDSize", null, new { style = "width: 100%; height: 40px" })
-                                
+
                             </div>
                         </div>
                         <div class="form-group" style="padding-left:10px">
-                            <p>Màu</p>
-                            <span class="icon-case"><i class="glyphicon glyphicon-text-background"></i></span>
-                            @Html.DropDownList("IDColor", null, new { style = "width: 100%; height: 40px" })
-                        </div>
-                        <div class="form-group" style="padding:10px;font-size:medium;display:none" id="TBHHTeK">
-                            <p id="dong0">Trong kho hiện có:</p>
-                            <p id="dong1" style="margin-left:10px"></p>
-                            <p id="dong2" style="margin-left:10px"></p>
-                            <p id="dong3" style="margin-left:10px"></p>
-                            <p id="dong4" style="margin-left:10px"></p>
-                            <p id="dong5" style="margin-left:10px"></p>
-                            <p id="dong6" style="margin-left:10px"></p>
-                        </div>
-                    </div>
-                    <div class="rightcontact">
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 col-sx-12 col-12">
-                                    @if (Session["xuatnhap"].ToString() == "Nhap")
-                                    {
-                                        <p>Số Lượng</p>
-                                    }
-                                    else
-                                    {
-                                        <p>Số Lượng Xuất</p>
-                                    }
-
-                                    <span class="icon-case"><i class="glyphicon glyphicon-shopping-cart"></i></span>
-                                    @Html.TextBoxFor(m => m.SoLuong, new { @class = "form-control", @type = "number", style = "width: 75%; height: 40px", @required = true })
-
-                                </div>
-                                <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 col-sx-12 mobilekhai">
-                                    @if (Session["xuatnhap"].ToString() == "Nhap")
-                                    {
-                                        <p>Giá Nhập</p>
-                                    }
-                                    else
-                                    {
-                                        <p>Giá Xuất</p>
-                                    }
-
-                                    <span class="icon-case"><i class="glyphicon glyphicon-usd"></i></span>
-                                    @Html.TextBoxFor(m => m.Gianhap, new { @class = "form-control", @type = "number", style = "width: 75%; height: 40px", @required = true })
-                                </div>
-                            </div>
+                                <p>Màu</p>
+                                <span class="icon-case"><i class="glyphicon glyphicon-text-background"></i></span>
+                                @Html.DropDownList("IDColor", null, new { style = "width: 100%; height: 40px" })
                             
                         </div>
-                        <div class="form-group">
-                            <p>Hình sản phẩm 1 (giới hạn 7MB) <span></span></p>
-                            <span class="icon-case"><i class="glyphicon glyphicon-info-sign"></i></span>
-                            <input type="file" name="Hinh1" id="Hinh1" />
-                            <p id="thongbaosite1" style="color:red; display:none">File quá lớn !!!</p>
-                        </div>
-                        <div class="form-group">
-                            <p>Hình sản phẩm 2 (giới hạn 7MB) <span></span></p>
-                            <span class="icon-case"><i class="glyphicon glyphicon-info-sign"></i></span>
-                            <input type="file" name="Hinh2" id="Hinh2" />
-                            <p id="thongbaosite2" style="color:red; display:none">File quá lớn !!!</p>
-                        </div>
-                        <div class="form-group">
-                            <p>Hình sản phẩm 3 (giới hạn 7MB) <span></span></p>
-                            <span class="icon-case"><i class="glyphicon glyphicon-info-sign"></i></span>
-                            <input type="file" name="Hinh3" id="Hinh3" />
-                            <p id="thongbaosite3" style="color:red; display:none">File quá lớn !!!</p>
-                        </div>
-                        <script>
-                            var kt1 = true;
-                            var kt2 = true;
-                            var kt3 = true;
-                            $('#Hinh1').bind('change', function () {
-                                //this.files[0].size gets the size of your file.
-                                var size = this.files[0].size;
-                                const file = Math.round((size / 1024));
-                                if (file >= 7200) {
-                                    $("#thongbaosite1").css('display', 'block');
-                                    kt1 = false;
-                                    KtLuu();
-                                } else {
-                                    $("#thongbaosite1").css('display', 'none')
-                                    kt1 = true;
-                                    KtLuu();
-                                }
-                            });
-                            $('#Hinh2').bind('change', function () {
-                                //this.files[0].size gets the size of your file.
-                                var size = this.files[0].size;
-                                const file = Math.round((size / 1024));
-                                if (file >= 7200) {
-                                    $("#thongbaosite2").css('display', 'block');
-                                    kt2 = false;
-                                    KtLuu();
-                                } else {
-                                    $("#thongbaosite2").css('display', 'none')
-                                    kt2 = true;
-                                    KtLuu();
-                                }
-                            });
-                            $('#Hinh3').bind('change', function () {
-                                //this.files[0].size gets the size of your file.
-                                var size = this.files[0].size;
-                                const file = Math.round((size / 1024));
-                                if (file >= 7200) {
-                                    $("#thongbaosite3").css('display', 'block');
-                                    kt3 = false;
-                                    KtLuu();
-                                } else {
-                                    $("#thongbaosite3").css('display', 'none')
-                                    kt3 = true;
-                                    KtLuu();
-                                }
-                            });
-                            function KtLuu() {
-                                if (kt1 == true && kt2 == true && kt3 == true) {
-                                    document.getElementById('btnLuu').disabled = false;
-                                } else {
-                                    document.getElementById('btnLuu').disabled = true;
-                                }
-                            }
+                        @if (Session["KhachLe"].ToString() == "KhachLe")
+                {
+<div class="form-group" style="padding-left:10px">
+    <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 col-sx-12 col-12">
+        <p>SerialHop</p>
+        <span class="icon-case"><i class="glyphicon glyphicon-qrcode"></i></span>
+        @Html.TextBoxFor(m => m.SerialHop, new { @class = "form-control", style = "width: 75%; height: 40px", @required = true })
 
-                        </script>
-                    </div>
+    </div>
+    <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 col-sx-12 col-12">
+        <p>SerialSP</p>
+        <span class="icon-case"><i class="glyphicon glyphicon-qrcode"></i></span>
+        @Html.TextBoxFor(m => m.SerialSP, new { @class = "form-control", style = "width: 75%; height: 40px", @required = true })
+
+    </div>
+</div>
+                }
                         
+                            <div class="form-group" style="padding:10px;font-size:medium;display:none" id="TBHHTeK">
+                                <p id="dong0">Trong kho hiện có:</p>
+                                <p id="dong1" style="margin-left:10px"></p>
+                                <p id="dong2" style="margin-left:10px"></p>
+                                <p id="dong3" style="margin-left:10px"></p>
+                                <p id="dong4" style="margin-left:10px"></p>
+                                <p id="dong5" style="margin-left:10px"></p>
+                                <p id="dong6" style="margin-left:10px"></p>
+                            </div>
+                        </div>
+                        <div class="rightcontact">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 col-sx-12 col-12">
+                                        @if (Session["xuatnhap"].ToString() == "Nhap")
+                                        {
+                                            <p>Số Lượng</p>
+                                        }
+                                        else
+                                        {
+                                            <p>Số Lượng Xuất</p>
+                                        }
+
+                                        <span class="icon-case"><i class="glyphicon glyphicon-shopping-cart"></i></span>
+                                        @if (Session["KhachLe"].ToString() == "KhachLe")
+                                        {
+                                            <input id="SoLuong" type="number" value="1" name="SoLuong" disabled required />
+                                        }
+                                        else
+                                        {
+                                            <input id="SoLuong" type="number" value="1" name="SoLuong" required />
+                                        }
+
+                                    </div>
+                                    <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 col-sx-12 mobilekhai">
+                                        @if (Session["xuatnhap"].ToString() == "Nhap")
+                                        {
+                                            <p>Giá Nhập</p>
+                                        }
+                                        else
+                                        {
+                                            <p>Giá Xuất</p>
+                                        }
+
+                                        <span class="icon-case"><i class="glyphicon glyphicon-usd"></i></span>
+                                        @*@Html.TextBoxFor(m => m.Gianhap, new { @class = "form-control", @type = "number", @value = '0', style = "width: 75%; height: 40px", @required = true })*@
+                                    <input id="Gianhap" type="number" value="0" name="Gianhap" required />
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <p>Hình sản phẩm 1 (giới hạn 7MB) <span></span></p>
+                                <span class="icon-case"><i class="glyphicon glyphicon-info-sign"></i></span>
+                                <input type="file" name="Hinh1" id="Hinh1" />
+                                <p id="thongbaosite1" style="color:red; display:none">File quá lớn !!!</p>
+                            </div>
+                            <div class="form-group">
+                                <p>Hình sản phẩm 2 (giới hạn 7MB) <span></span></p>
+                                <span class="icon-case"><i class="glyphicon glyphicon-info-sign"></i></span>
+                                <input type="file" name="Hinh2" id="Hinh2" />
+                                <p id="thongbaosite2" style="color:red; display:none">File quá lớn !!!</p>
+                            </div>
+                            <div class="form-group">
+                                <p>Hình sản phẩm 3 (giới hạn 7MB) <span></span></p>
+                                <span class="icon-case"><i class="glyphicon glyphicon-info-sign"></i></span>
+                                <input type="file" name="Hinh3" id="Hinh3" />
+                                <p id="thongbaosite3" style="color:red; display:none">File quá lớn !!!</p>
+                            </div>
+                            <script>
+                                var kt1 = true;
+                                var kt2 = true;
+                                var kt3 = true;
+                                $('#Hinh1').bind('change', function () {
+                                    //this.files[0].size gets the size of your file.
+                                    var size = this.files[0].size;
+                                    const file = Math.round((size / 1024));
+                                    if (file >= 7200) {
+                                        $("#thongbaosite1").css('display', 'block');
+                                        kt1 = false;
+                                        KtLuu();
+                                    } else {
+                                        $("#thongbaosite1").css('display', 'none')
+                                        kt1 = true;
+                                        KtLuu();
+                                    }
+                                });
+                                $('#Hinh2').bind('change', function () {
+                                    //this.files[0].size gets the size of your file.
+                                    var size = this.files[0].size;
+                                    const file = Math.round((size / 1024));
+                                    if (file >= 7200) {
+                                        $("#thongbaosite2").css('display', 'block');
+                                        kt2 = false;
+                                        KtLuu();
+                                    } else {
+                                        $("#thongbaosite2").css('display', 'none')
+                                        kt2 = true;
+                                        KtLuu();
+                                    }
+                                });
+                                $('#Hinh3').bind('change', function () {
+                                    //this.files[0].size gets the size of your file.
+                                    var size = this.files[0].size;
+                                    const file = Math.round((size / 1024));
+                                    if (file >= 7200) {
+                                        $("#thongbaosite3").css('display', 'block');
+                                        kt3 = false;
+                                        KtLuu();
+                                    } else {
+                                        $("#thongbaosite3").css('display', 'none')
+                                        kt3 = true;
+                                        KtLuu();
+                                    }
+                                });
+                                function KtLuu() {
+                                    if (kt1 == true && kt2 == true && kt3 == true) {
+                                        document.getElementById('btnLuu').disabled = false;
+                                    } else {
+                                        document.getElementById('btnLuu').disabled = true;
+                                    }
+                                }
+
+                            </script>
+                        </div>
+
                     </div>
                 <div class="row">
                     <div class="form-group col-sm-12">

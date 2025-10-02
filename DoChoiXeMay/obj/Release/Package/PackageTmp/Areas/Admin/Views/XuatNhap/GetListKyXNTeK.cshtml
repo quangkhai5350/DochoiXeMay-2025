@@ -133,10 +133,17 @@
                     </td>
 
                     <td>
-                        <p style="font-size: 20px; height: 65px">
+                        <p style="font-size: 17px; height: 65px">
                             @if (Item.XuatNhap == true)
                             {
-                                <span style="background-color:burlywood">Xuất Hàng</span>
+                                if (Item.KhachLe == true)
+                                {
+                                    <span style="background-color:burlywood">Xuất Hàng/KhachLe</span>
+                                }
+                                else
+                                {
+                                    <span style="background-color:burlywood">Xuất Hàng/ĐaiLy</span>
+                                }
                             }
                             else
                             {

@@ -5,6 +5,7 @@ using DoChoiXeMay.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data.Entity;
 using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Drawing;
 using System.Drawing.Printing;
@@ -30,10 +31,52 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         }
         public ActionResult ListSerialChuaIn()
         {
+            //Auto active Khách Lẻ mua quá 15 ngày
+            DateTime ngayHienTai = DateTime.Today;
+            
+            
+            var ListChuaActive = dbc.ChitietXuatNhaps.Where(kh =>kh.KyXuatNhap.KhachLe==true && kh.KyXuatNhap.UPush==true &&( kh.DaActive == null || kh.DaActive != "Active")
+               && DbFunctions.DiffDays(kh.NgayAuto,ngayHienTai) > 14).ToList();
+            
+            foreach (var kh in ListChuaActive)
+            {
+                var ky = dbc.KyXuatNhaps.Find(kh.IdKy);
+                var kqAc= AotuActive(ky.TenKy, kh.SerialHop, kh.SerialSP, "AutoActive", "", "AutoActive");
+                if (kqAc)
+                {
+                    kh.DaActive = "ActiveAuto";
+                    var kqAuto = new XuatNhapData().UPdateChiTietKy(kh);
+                }
+            }
             Session["requestUri"] = "/Admin/Serial/ListSerialChuaIn";
             ViewBag.TotalSerialSPchuaIn = dbc.Ser_sp.Where(kh=>kh.DaIn==false).Count();
             ViewBag.TotalSerialBoXchuaIn = dbc.Ser_box.Where(kh => kh.DaIn == false).Count();
             return View();
+        }
+        public bool AotuActive(string Tenkh = "", string sBOX = "", string sSP = "", string gmail = "", string sdt = "", string khuvuc = "")
+        {
+            var serial = dbc.Ser_sp.FirstOrDefault(kh => kh.SerialSP == sSP && kh.DaIn == true && kh.Sudung == false);
+            var serialb = dbc.Ser_box.FirstOrDefault(kh => kh.Serial == sBOX && kh.DaIn == true && kh.Sudung == false);
+            
+                if (serial != null)
+                {
+                    if (serialb != null)
+                    {
+                        var Ac = new ActiveData().InsertKichHoatBH(
+                            serialb.Id.ToString(), serial.Id.ToString(), 1, gmail, Tenkh, sdt, khuvuc);
+                        if (Ac > -1)
+                        {
+                            var kqBox = new SerialData().UpdateSer_box(serialb.Id.ToString(),
+                                true, true, serialb.NgayUpdate, "Active");
+                            var kqSP = new SerialData().UpdateSer_SP(serial.Id.ToString(),
+                                true, true, serial.NgayUpdate, serial.HangTangKhongBan);
+                            return true;
+                        }
+                        return false;
+                    }
+                    return false;
+                }
+                return false;
         }
         public ActionResult ListSerialDaIn()
         {

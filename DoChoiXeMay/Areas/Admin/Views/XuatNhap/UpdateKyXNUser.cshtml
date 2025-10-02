@@ -32,9 +32,13 @@
                                 <p>Tên Kỳ</p>
                                 @Html.TextBoxFor(m => m.TenKy, new { @class = "form-control", style = "width: 75%; height: 40px", @required = true })
                             </div>
-                            <div class="col-sm-6" style="text-align:center">
+                            <div class="col-sm-3" style="text-align:center">
                                 <p>Xuất Hàng</p>
                                 @Html.CheckBoxFor(m => m.XuatNhap, new { @style = "height:20px;margin-left: 10%" })
+                            </div>
+                            <div class="col-sm-3" style="text-align:center">
+                                <p>Khách Lẻ</p>
+                                @Html.CheckBoxFor(m => m.KhachLe, new { @style = "height:20px;margin-left: 10%" })
                             </div>
                         </div>
                         <div class="form-group">

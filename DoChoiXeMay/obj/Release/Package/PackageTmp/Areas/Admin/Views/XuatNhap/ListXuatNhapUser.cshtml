@@ -77,15 +77,26 @@
                                             </div>
                                         </div>
                                         <div class="row" style="margin-top:10px">
-                                            <div class="col-md-6">
+                                            <div class="col-md-5">
                                                 <span>Ngày Xuất Nhập</span>
                                                 <input id="NgayXuatNhap" type="date" name="NgayXuatNhap" required />
                                             </div>
-                                            <div class="col-md-6">
-                                                <span>Kỳ Xuất</span>
-                                                @Html.CheckBoxFor(m => m.XuatNhap, new { @style = "height:20px;margin-left: 10%" })
-                                                <p style="font-size:small">Chiết khấu thì (-), Ship và VAT thì (+)</p>
-                                            </div>
+                                            <div class="col-md-7">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <span>Kỳ Xuất</span>
+                                                        @Html.CheckBoxFor(m => m.XuatNhap, new { @style = "height:20px;margin-left: 10%" })
+
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <span>Khách Lẻ</span>
+                                                        @Html.CheckBoxFor(m => m.KhachLe, new { @style = "height:20px;margin-left: 10%" })
+
+                                                    </div>
+                                                    <p style="font-size:small">Chiết khấu thì (-), Ship và VAT thì (+)</p>
+                                                </div>
+                                                    
+                                                </div>
                                         </div>
 
                                         <div class="col-md-12" style="margin-top:10px">
