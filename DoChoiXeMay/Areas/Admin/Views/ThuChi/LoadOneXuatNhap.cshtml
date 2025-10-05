@@ -72,10 +72,17 @@
                             </td>
 
                             <td>
-                                <p style="font-size: 20px; height: 65px">
+                                <p style="font-size: 17px; height: 65px">
                                     @if (Item.XuatNhap == true)
                                     {
-                                        <span style="background-color:burlywood">Xuất Hàng</span>
+                                        if (Item.KhachLe == true)
+                                        {
+                                            <span style="background-color:burlywood">Xuất Hàng/KhachLe</span>
+                                        }
+                                        else
+                                        {
+                                            <span style="background-color:burlywood">Xuất Hàng/ĐaiLy</span>
+                                        }
                                     }
                                     else
                                     {
@@ -130,6 +137,18 @@
                                         @if (ct.IDSize != 1)
                                         {
                                             <span> <span>-</span>size @ct.Size.TenSize</span>
+                                        }
+                                        @if (ct.SerialHop != null)
+                                        {
+                                            <span> <span>-</span> @ct.SerialHop</span>
+                                        }
+                                        @if (ct.SerialSP != null)
+                                        {
+                                            <span> <span>-</span> @ct.SerialSP</span>
+                                        }
+                                        @if (ct.DaActive != null)
+                                        {
+                                            <span> <span>-</span> @ct.DaActive</span>
                                         }
                                     </p>
                                     <hr />
