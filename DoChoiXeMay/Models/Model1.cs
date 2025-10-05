@@ -14,6 +14,7 @@ namespace DoChoiXeMay.Models
 
         public virtual DbSet<aspnet_getVisitors> aspnet_getVisitors { get; set; }
         public virtual DbSet<ChiTietTC> ChiTietTCs { get; set; }
+        public virtual DbSet<ChiTietTonKho> ChiTietTonKhoes { get; set; }
         public virtual DbSet<ChitietXuatNhap> ChitietXuatNhaps { get; set; }
         public virtual DbSet<Color> Colors { get; set; }
         public virtual DbSet<GroupDuAn> GroupDuAns { get; set; }
@@ -21,6 +22,7 @@ namespace DoChoiXeMay.Models
         public virtual DbSet<HanhDong> HanhDongs { get; set; }
         public virtual DbSet<HinhThucTC> HinhThucTCs { get; set; }
         public virtual DbSet<KhuVuc> KhuVucs { get; set; }
+        public virtual DbSet<KyTonKho> KyTonKhoes { get; set; }
         public virtual DbSet<KyXuatNhap> KyXuatNhaps { get; set; }
         public virtual DbSet<Loai_Socials> Loai_Socials { get; set; }
         public virtual DbSet<LoaiNoteTeK> LoaiNoteTeKs { get; set; }
@@ -94,6 +96,18 @@ namespace DoChoiXeMay.Models
                 .HasMany(e => e.Ser_ChiNhanh)
                 .WithRequired(e => e.KhuVuc)
                 .HasForeignKey(e => e.IdKhuVuc)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<KyTonKho>()
+                .HasMany(e => e.ChiTietTonKhoes)
+                .WithRequired(e => e.KyTonKho)
+                .HasForeignKey(e => e.IdKyTonKho)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<KyTonKho>()
+                .HasMany(e => e.KyXuatNhaps)
+                .WithRequired(e => e.KyTonKho)
+                .HasForeignKey(e => e.IdKyTonKho)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<KyXuatNhap>()

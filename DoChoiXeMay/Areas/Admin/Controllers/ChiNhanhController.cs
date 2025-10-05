@@ -86,7 +86,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         public ActionResult UpdateSNchoCN(int Id)
         {
             var model = dbc.Ser_XuatSN_CN.Find(Id);
-            ViewBag.IdKyxuat = new SelectList(dbc.KyXuatNhaps.Where(kh => kh.AdminXNPUSH == true && kh.UPush==true), "Id", "TenKy", model.IdKyxuat);
+            ViewBag.IdKyxuat = new SelectList(dbc.KyXuatNhaps.Where(kh => kh.AdminXNPUSH == true && kh.UPush==true && kh.KhachLe==false && kh.XuatNhap==true), "Id", "TenKy", model.IdKyxuat);
             ViewBag.IdChiNhanh = new SelectList(dbc.Ser_ChiNhanh.Where(kh => kh.Sudung == true), "Id", "TenChiNhanh", model.IdChiNhanh);
             return View(model);
         }

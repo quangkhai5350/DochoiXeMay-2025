@@ -33,6 +33,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         public ActionResult ListXuatNhapUser()
         {
             ViewBag.IdMaTC = new SelectList(dbc.MaTCs.Where(kh => kh.SuDung == true && kh.XuatNhap==true), "Id", "GhiChu");
+            ViewBag.IdKyTonKho = new SelectList(dbc.KyTonKhoes.ToList(), "Id", "TenKy");
             Session["requestUri"] = "/Admin/XuatNhap/ListXuatNhapUser";
             return View();
         }
@@ -77,6 +78,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         {
             var model = dbc.KyXuatNhaps.Find(id);
             ViewBag.IdMaTC = new SelectList(dbc.MaTCs.Where(kh => kh.SuDung == true && kh.XuatNhap == true), "Id", "GhiChu",model.IdMaTC);
+            ViewBag.IdKyTonKho = new SelectList(dbc.KyTonKhoes.ToList(), "Id", "TenKy", model.IdKyTonKho);
             return View(model);
         }
         public ActionResult DayXuatNhapTek(int id,int thuchi)
@@ -385,6 +387,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     ModelState.AddModelError("", "Update Kỳ XN Thất Bại !!!!");
                     var model = dbc.ChiTietTCs.Find(XN.Id);
                     ViewBag.IdMaTC = new SelectList(dbc.MaTCs.Where(kh => kh.SuDung == true && kh.XuatNhap == true), "Id", "GhiChu", XN.IdMaTC);
+                    ViewBag.IdKyTonKho = new SelectList(dbc.KyTonKhoes.ToList(), "Id", "TenKy", XN.IdKyTonKho);
                     return View(model);
                 }
             }
@@ -394,6 +397,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 ModelState.AddModelError("", "Update Xuất Nhập Thất Bại !!!! Có Lỗi hệ thống.");
                 var model = dbc.ChiTietTCs.Find(XN.Id);
                 ViewBag.IdMaTC = new SelectList(dbc.MaTCs.Where(kh => kh.SuDung == true && kh.XuatNhap == true), "Id", "GhiChu", XN.IdMaTC);
+                ViewBag.IdKyTonKho = new SelectList(dbc.KyTonKhoes.ToList(), "Id", "TenKy", XN.IdKyTonKho);
                 return View(model);
             }
         }

@@ -43,10 +43,13 @@ namespace DoChoiXeMay.Models
 
         [StringLength(30)]
         public string SerialHop { get; set; }
+
         [StringLength(30)]
         public string SerialSP { get; set; }
+
         [StringLength(30)]
         public string DaActive { get; set; }
+
         public virtual Color Color { get; set; }
 
         public virtual KyXuatNhap KyXuatNhap { get; set; }

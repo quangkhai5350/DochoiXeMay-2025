@@ -168,6 +168,7 @@
     </Compile>
     <Compile Include="Models\aspnet_getVisitors.cs" />
     <Compile Include="Models\ChiTietTC.cs" />
+    <Compile Include="Models\ChiTietTonKho.cs" />
     <Compile Include="Models\ChitietXuatNhap.cs" />
     <Compile Include="Models\Color.cs" />
     <Compile Include="Models\GroupDuAn.cs" />
@@ -175,6 +176,7 @@
     <Compile Include="Models\HanhDong.cs" />
     <Compile Include="Models\HinhThucTC.cs" />
     <Compile Include="Models\KhuVuc.cs" />
+    <Compile Include="Models\KyTonKho.cs" />
     <Compile Include="Models\KyXuatNhap.cs" />
     <Compile Include="Models\LoaiNoteTeK.cs" />
     <Compile Include="Models\LoaiUserTek.cs" />
