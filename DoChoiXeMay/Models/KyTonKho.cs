@@ -29,6 +29,9 @@ namespace DoChoiXeMay.Models
         public string GhiChu { get; set; }
 
         public DateTime NgayTao { get; set; }
+        [StringLength(50)]
+        public string STT { get; set; }
+        public bool SuDung {  get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChiTietTonKho> ChiTietTonKhoes { get; set; }

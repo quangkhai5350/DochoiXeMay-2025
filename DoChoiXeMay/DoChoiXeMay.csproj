@@ -146,6 +146,7 @@
     <Compile Include="Areas\Admin\Controllers\NoteKyThuatController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProjectTeKController.cs" />
     <Compile Include="Areas\Admin\Controllers\SerialController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ThongKeController.cs" />
     <Compile Include="Areas\Admin\Controllers\ThuChiController.cs" />
     <Compile Include="Areas\Admin\Controllers\XuatNhapController.cs" />
     <Compile Include="Areas\Admin\Data\ActiveData.cs" />
@@ -154,6 +155,7 @@
     <Compile Include="Areas\Admin\Data\ProjectTeKData.cs" />
     <Compile Include="Areas\Admin\Data\SerialData.cs" />
     <Compile Include="Areas\Admin\Data\ThuChiData.cs" />
+    <Compile Include="Areas\Admin\Data\TonKhoData.cs" />
     <Compile Include="Areas\Admin\Data\UserData.cs" />
     <Compile Include="Areas\Admin\Data\XstringAdmin.cs" />
     <Compile Include="Areas\Admin\Data\XuatNhapData.cs" />
@@ -547,6 +549,8 @@
     <Content Include="Areas\Admin\Views\DanhMuc\HinhThucThuChi.cshtml" />
     <Content Include="Areas\Admin\Views\DanhMuc\GetListHinhThucTC.cshtml" />
     <Content Include="Areas\Admin\Views\DanhMuc\UpdateHTTC.cshtml" />
+    <Content Include="Areas\Admin\Views\ThongKe\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ThongKe\GetListKyTonKho.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />

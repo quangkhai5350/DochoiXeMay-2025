@@ -28,10 +28,12 @@ namespace DoChoiXeMay.Models
         public DateTime NgayTao { get; set; }
 
         public DateTime NgayUpdate { get; set; }
+        public bool SanPham {  get; set; }
 
         [StringLength(200)]
         public string GhiChu { get; set; }
-
+        [StringLength(20)]
+        public string STT { get; set; }
         public virtual KyTonKho KyTonKho { get; set; }
     }
 }
