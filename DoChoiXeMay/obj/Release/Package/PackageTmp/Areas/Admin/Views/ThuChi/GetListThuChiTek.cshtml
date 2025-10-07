@@ -41,11 +41,18 @@
                     <td>
                         @if (Item.IdKyxuatnhap > 1)
                         {
-                            <a style="cursor:pointer" onclick="ChitietXuatNhap(@Item.IdKyxuatnhap)">@Item.KyXuatNhap.TenKy</a>
+                            <a style="cursor:pointer" onclick="ChitietXuatNhap(@Item.IdKyxuatnhap)">@Item.KyXuatNhap.TenKy-@Item.KyXuatNhap.KhuVuc.TenKhuvuc
+                            @if (Item.KyXuatNhap.KhachLe)
+                            {
+                                <span>-@Item.KyXuatNhap.SanThuongMai.TenSan</span>
+                            }
+                        </a>
                         }
                         else
                         {
-                            <span>@Item.KyXuatNhap.TenKy</span>
+                    <span>
+                        @Item.KyXuatNhap.TenKy
+                    </span>
                         }
 
                     </td>

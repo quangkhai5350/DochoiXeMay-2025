@@ -191,11 +191,16 @@
     <Compile Include="Models\MsgAotu.cs" />
     <Compile Include="Models\NhatKyUTek.cs" />
     <Compile Include="Models\NoteKythuat.cs" />
+    <Compile Include="Models\NV_ChiTietNhanVien.cs" />
+    <Compile Include="Models\NV_DonViTinhLuong.cs" />
+    <Compile Include="Models\NV_NhanVienTek.cs" />
+    <Compile Include="Models\NV_Vitrinhanvien.cs" />
     <Compile Include="Models\ProjectDetail.cs" />
     <Compile Include="Models\ProjectTeK.cs" />
     <Compile Include="Models\ProjectUserDetail.cs" />
     <Compile Include="Models\QCtrangchu.cs" />
     <Compile Include="Models\QCVitri.cs" />
+    <Compile Include="Models\SanThuongMai.cs" />
     <Compile Include="Models\Ser_box.cs" />
     <Compile Include="Models\Ser_ChiNhanh.cs" />
     <Compile Include="Models\Ser_Chitiet_XuatSN_CN.cs" />

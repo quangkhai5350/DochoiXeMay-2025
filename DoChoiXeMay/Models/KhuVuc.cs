@@ -12,6 +12,7 @@ namespace DoChoiXeMay.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public KhuVuc()
         {
+            KyXuatNhaps = new HashSet<KyXuatNhap>();
             Ser_ChiNhanh = new HashSet<Ser_ChiNhanh>();
         }
 
@@ -41,6 +42,9 @@ namespace DoChoiXeMay.Models
 
         [StringLength(200)]
         public string Ghichu { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<KyXuatNhap> KyXuatNhaps { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Ser_ChiNhanh> Ser_ChiNhanh { get; set; }

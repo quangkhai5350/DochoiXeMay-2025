@@ -68,13 +68,21 @@ namespace DoChoiXeMay.Models
 
         public int IdKyTonKho { get; set; }
 
+        public int IdSan { get; set; }
+
+        public int IdKhuVuc { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChiTietTC> ChiTietTCs { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChitietXuatNhap> ChitietXuatNhaps { get; set; }
 
+        public virtual KhuVuc KhuVuc { get; set; }
+
         public virtual KyTonKho KyTonKho { get; set; }
+
+        public virtual SanThuongMai SanThuongMai { get; set; }
 
         public virtual UserTek UserTek { get; set; }
 

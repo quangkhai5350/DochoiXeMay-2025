@@ -6,37 +6,25 @@ namespace DoChoiXeMay.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("KyTonKho")]
-    public partial class KyTonKho
+    [Table("SanThuongMai")]
+    public partial class SanThuongMai
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public KyTonKho()
+        public SanThuongMai()
         {
-            ChiTietTonKhoes = new HashSet<ChiTietTonKho>();
             KyXuatNhaps = new HashSet<KyXuatNhap>();
         }
 
         public int Id { get; set; }
 
         [Required]
-        [StringLength(100)]
-        public string TenKy { get; set; }
-
         [StringLength(200)]
-        public string LuuKho { get; set; }
-
-        [StringLength(200)]
-        public string GhiChu { get; set; }
-
-        public DateTime NgayTao { get; set; }
-
-        [StringLength(50)]
-        public string STT { get; set; }
+        public string TenSan { get; set; }
 
         public bool SuDung { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ChiTietTonKho> ChiTietTonKhoes { get; set; }
+        [StringLength(50)]
+        public string GhiChu { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<KyXuatNhap> KyXuatNhaps { get; set; }

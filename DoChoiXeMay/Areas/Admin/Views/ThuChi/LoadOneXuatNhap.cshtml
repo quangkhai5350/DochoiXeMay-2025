@@ -57,7 +57,13 @@
                             </td>
 
                             <td>
-                                <p style="font-size: 20px; color: red; height: 65px">@Item.TenKy</p>
+                                <p style="font-size: 20px; color: red; height: 65px">
+                                    @Item.TenKy-@Item.KhuVuc.TenKhuvuc
+                                    @if (Item.KhachLe)
+                                    {
+                                        <span>-@Item.SanThuongMai.TenSan</span>
+                                    }
+                                </p>
                                 @if (Item.LuuKho != null)
                                 {
                                     if (Item.LuuKho.Trim() != "")

@@ -56,29 +56,8 @@
                                             @Html.DropDownList("IdMaTC", null, new { style = "width: 100%; height: 40px" })
                                         </div>
                                         <div class="row" style="margin-top:10px">
-                                            <span>Tồn Kho(Kỳ Nhập)</span>
-                                            @Html.DropDownList("IdKyTonKho", null, new { style = "width: 100%; height: 40px" })
-                                        </div>
-                                        <div class="row" style="margin-top:20px">
-                                            <div class="col-md-6">
-                                                <span>(-)Chiết khấu %</span>
-                                                <input id="CKphantram" type="number" value="0" name="CKphantram" required />
-                                            </div>
-                                            <div class="col-md-6">
-                                                <span>(-)Chiết khấu tiền mặt</span>
-                                                <input id="CKtienmat" type="number" value="0" name="CKtienmat" required />
-                                            </div>
-
-                                        </div>
-                                        <div class="row" style="margin-top:10px">
-                                            <div class="col-md-6">
-                                                <span>(+)Tiền Ship</span>
-                                                <input id="Shipper" type="number" value="0" name="Shipper" required />
-                                            </div>
-                                            <div class="col-md-6">
-                                                <span>(+)Vat %</span>
-                                                <input id="VAT" type="number" value="0" name="VAT" required />
-                                            </div>
+                                            <span>Khu Vực</span>
+                                            @Html.DropDownList("IdKhuVuc", null, new { style = "width: 100%; height: 40px" })
                                         </div>
                                         <div class="row" style="margin-top:10px">
                                             <div class="col-md-5">
@@ -102,35 +81,67 @@
 
                                             </div>
                                         </div>
+                                        <div class="row" style="margin-top:20px">
+                                            <div class="col-md-6">
+                                                <span>Tồn Kho(Kỳ Nhập)</span>
+                                                @Html.DropDownList("IdKyTonKho", null, new { style = "width: 100%; height: 40px" })
+                                            </div>
+                                            <div class="col-md-6">
+                                                <span>Sàn(Khách Lẻ)</span>
+                                                @Html.DropDownList("IdSan", null, new { style = "width: 100%; height: 40px" })
+                                            </div>
+                                        </div>
+                                            <div class="row" style="margin-top:20px">
+                                                <div class="col-md-6">
+                                                    <span>(-)Chiết khấu %</span>
+                                                    <input id="CKphantram" type="number" value="0" name="CKphantram" required />
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <span>(-)Chiết khấu tiền mặt</span>
+                                                    <input id="CKtienmat" type="number" value="0" name="CKtienmat" required />
+                                                </div>
 
-                                        <div class="col-md-12" style="margin-top:10px">
-                                            <span>Tải Hóa Đơn</span>
-                                            <input id="HoaDon" type="file" name="HoaDon" />
+                                            </div>
+                                            <div class="row" style="margin-top:10px">
+                                                <div class="col-md-6">
+                                                    <span>(+)Tiền Ship</span>
+                                                    <input id="Shipper" type="number" value="0" name="Shipper" required />
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <span>(+)Vat %</span>
+                                                    <input id="VAT" type="number" value="0" name="VAT" required />
+                                                </div>
+                                            </div>
+                                            
+
+                                            <div class="col-md-12" style="margin-top:10px">
+                                                <span>Tải Hóa Đơn</span>
+                                                <input id="HoaDon" type="file" name="HoaDon" />
+
+                                            </div>
+                                            <div class="col-md-12" style="margin-top:10px">
+                                                <span>Tải File1</span>
+                                                <input id="Filesave2" type="file" name="Filesave2" />
+
+                                            </div>
+                                            <div class="col-md-12" style="margin-top:10px">
+                                                <span>Tải File2</span>
+                                                <input id="Filesave3" type="file" name="Filesave3" />
+
+                                            </div>
+                                            <div class="col-md-6" style="margin-top:10px;font-size:larger;text-align:center">
+                                                <button id="btnLuu" class="btn btn-primary" type="submit">Lưu Kỳ Xuất Nhập</button>
+
+                                            </div>
+                                            <div class="col-md-6" style="margin-top:10px;font-size:larger;text-align:center">
+
+                                                <button id="btnLuu" class="btn btn-default" onclick="closemodal()">Đóng(Không Lưu)</button>
+                                            </div>
 
                                         </div>
-                                        <div class="col-md-12" style="margin-top:10px">
-                                            <span>Tải File1</span>
-                                            <input id="Filesave2" type="file" name="Filesave2" />
-
-                                        </div>
-                                        <div class="col-md-12" style="margin-top:10px">
-                                            <span>Tải File2</span>
-                                            <input id="Filesave3" type="file" name="Filesave3" />
-
-                                        </div>
-                                        <div class="col-md-6" style="margin-top:10px;font-size:larger;text-align:center">
-                                            <button id="btnLuu" class="btn btn-primary" type="submit">Lưu Kỳ Xuất Nhập</button>
-
-                                        </div>
-                                        <div class="col-md-6" style="margin-top:10px;font-size:larger;text-align:center">
-
-                                            <button id="btnLuu" class="btn btn-default" onclick="closemodal()">Đóng(Không Lưu)</button>
-                                        </div>
-
-                                    </div>
-                                }
+                                    }
                             </div>
-                        </div>
+                            </div>
 
                     </div>
                 </div>

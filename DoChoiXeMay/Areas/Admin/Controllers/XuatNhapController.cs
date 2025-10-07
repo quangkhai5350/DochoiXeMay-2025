@@ -34,6 +34,8 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         {
             ViewBag.IdMaTC = new SelectList(dbc.MaTCs.Where(kh => kh.SuDung == true && kh.XuatNhap==true), "Id", "GhiChu");
             ViewBag.IdKyTonKho = new SelectList(dbc.KyTonKhoes.Where(kh=>kh.SuDung==true).ToList(), "Id", "TenKy");
+            ViewBag.IdSan = new SelectList(dbc.SanThuongMais.Where(kh => kh.SuDung == true).ToList(), "Id", "TenSan");
+            ViewBag.IdKhuVuc = new SelectList(dbc.KhuVucs.ToList(), "Id", "SatNhap", 36);
             Session["requestUri"] = "/Admin/XuatNhap/ListXuatNhapUser";
             return View();
         }
@@ -79,6 +81,8 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             var model = dbc.KyXuatNhaps.Find(id);
             ViewBag.IdMaTC = new SelectList(dbc.MaTCs.Where(kh => kh.SuDung == true && kh.XuatNhap == true), "Id", "GhiChu",model.IdMaTC);
             ViewBag.IdKyTonKho = new SelectList(dbc.KyTonKhoes.Where(kh => kh.SuDung == true).ToList(), "Id", "TenKy", model.IdKyTonKho);
+            ViewBag.IdSan = new SelectList(dbc.SanThuongMais.Where(kh => kh.SuDung == true).ToList(), "Id", "TenSan",model.IdSan);
+            ViewBag.IdKhuVuc = new SelectList(dbc.KhuVucs.ToList(), "Id", "SatNhap",model.IdKhuVuc);
             return View(model);
         }
         public ActionResult DayXuatNhapTek(int id,int thuchi)
@@ -388,6 +392,8 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     var model = dbc.ChiTietTCs.Find(XN.Id);
                     ViewBag.IdMaTC = new SelectList(dbc.MaTCs.Where(kh => kh.SuDung == true && kh.XuatNhap == true), "Id", "GhiChu", XN.IdMaTC);
                     ViewBag.IdKyTonKho = new SelectList(dbc.KyTonKhoes.Where(kh => kh.SuDung == true).ToList(), "Id", "TenKy", XN.IdKyTonKho);
+                    ViewBag.IdSan = new SelectList(dbc.SanThuongMais.Where(kh => kh.SuDung == true).ToList(), "Id", "TenSan", XN.IdSan);
+                    ViewBag.IdKhuVuc = new SelectList(dbc.KhuVucs.ToList(), "Id", "SatNhap", XN.IdKhuVuc);
                     return View(model);
                 }
             }
@@ -398,6 +404,8 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 var model = dbc.ChiTietTCs.Find(XN.Id);
                 ViewBag.IdMaTC = new SelectList(dbc.MaTCs.Where(kh => kh.SuDung == true && kh.XuatNhap == true), "Id", "GhiChu", XN.IdMaTC);
                 ViewBag.IdKyTonKho = new SelectList(dbc.KyTonKhoes.Where(kh => kh.SuDung == true).ToList(), "Id", "TenKy", XN.IdKyTonKho);
+                ViewBag.IdSan = new SelectList(dbc.SanThuongMais.Where(kh => kh.SuDung == true).ToList(), "Id", "TenSan", XN.IdSan);
+                ViewBag.IdKhuVuc = new SelectList(dbc.KhuVucs.ToList(), "Id", "SatNhap", XN.IdKhuVuc);
                 return View(model);
             }
         }
@@ -470,8 +478,8 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             Session["KhachLe"] = ky.KhachLe == true ? "KhachLe" : "ĐaiLy";
             Session["CKphantram"] = ky.CKphantram;
             Session["CKtienmat"] = ky.CKtienmat;
-            ViewBag.IDMF = new SelectList(dbc.Manufacturers.Where(kh => kh.Sudung == true), "Id", "Name");
-            ViewBag.IDColor = new SelectList(dbc.Colors.OrderByDescending(kh => kh.Id), "Id", "TenColor");
+            ViewBag.IDMF = new SelectList(dbc.Manufacturers.Where(kh => kh.Sudung == true), "Id", "Name",5);
+            ViewBag.IDColor = new SelectList(dbc.Colors.OrderByDescending(kh => kh.Id), "Id", "TenColor",7);
             ViewBag.IDSize = new SelectList(dbc.Sizes.OrderBy(kh => kh.Id), "Id", "TenSize");
             ViewBag.NameSP = dbc.HangHoas.DistinctBy(kh=>kh.Ten);
             
@@ -480,8 +488,8 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult InsertChiTietXNbyKy(ChitietXuatNhap ctxn)
         {
-            ViewBag.IDMF = new SelectList(dbc.Manufacturers.Where(kh => kh.Sudung == true), "Id", "Name");
-            ViewBag.IDColor = new SelectList(dbc.Colors.OrderByDescending(kh => kh.Id), "Id", "TenColor");
+            ViewBag.IDMF = new SelectList(dbc.Manufacturers.Where(kh => kh.Sudung == true), "Id", "Name",5);
+            ViewBag.IDColor = new SelectList(dbc.Colors.OrderByDescending(kh => kh.Id), "Id", "TenColor",7);
             ViewBag.IDSize = new SelectList(dbc.Sizes.OrderBy(kh => kh.Id), "Id", "TenSize");
             ViewBag.NameSP = dbc.HangHoas.DistinctBy(kh => kh.Ten);
             //check trùng hàng cùng kỳ

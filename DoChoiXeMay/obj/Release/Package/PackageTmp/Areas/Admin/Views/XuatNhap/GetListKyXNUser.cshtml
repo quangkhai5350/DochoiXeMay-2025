@@ -12,6 +12,7 @@
                 <th class="canhgiua" style="width: 15px">Hóa Đơn</th>
                 <th class="canhgiua" style="width: 15px">File 2</th>
                 <th class="canhgiua" style="width: 15px">File 3</th>
+
                 <th class="canhgiua" style="width:30px">Thêm HH</th>
 
                 <th class="canhgiua">Soluong/Tên Hàng/ThôngSố/Hãng</th>
@@ -28,6 +29,7 @@
             {
                 var Chitiet = new XuatNhapData().GetListByKy(Item.Id);
                 var tenky = XstringAdmin.Truncate(Item.TenKy, 20);
+
                 <tr class="canhgiua" style="border: 2px solid black !important">
                     <td style="padding-top:40px">
                         @if (Item.UserId == int.Parse(Session["UserId"].ToString()))
@@ -45,7 +47,13 @@
                         <a title="Update Kỳ hiện tại" class="btn btn-primary" href="/Admin/XuatNhap/UpdateKyXNUser/@Item.Id"><span class="glyphicon glyphicon-edit" style="font-size:30px"></span></a>
                     </td>
                     <td style="font-size:15px">
-                        <p style="color:red">@tenky</p>
+                        <p style="color:red">
+                            @tenky-@Item.KhuVuc.TenKhuvuc
+                            @if (Item.KhachLe)
+                            {
+                                <span>-@Item.SanThuongMai.TenSan</span>
+                            }
+                        </p>
                         @if (Item.LuuKho != null)
                         {
                             if (Item.LuuKho.Trim() != "")
