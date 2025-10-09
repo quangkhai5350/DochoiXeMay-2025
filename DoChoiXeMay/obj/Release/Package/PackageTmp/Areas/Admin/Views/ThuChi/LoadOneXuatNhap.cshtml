@@ -95,6 +95,12 @@
                                         <span>Nhập Hàng</span>
                                     }
                                 </p>
+                                @if (Item.XuatNhap == true && Item.HangMau==true)
+                                {
+                                    <p style="font-size: 17px; height: 25px">
+                                        <span style="background-color:burlywood">Hàng Mẫu</span>
+                                    </p>
+                                }
                                 <hr />
                                 <p style="font-size:20px">Tổng: @Html.FormatValue(Item.TongTienAuto, "{0:#,###,###}")</p>
 
