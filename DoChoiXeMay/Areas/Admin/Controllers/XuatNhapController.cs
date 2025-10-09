@@ -440,6 +440,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 model.HoaDon = ten1;
                 model.Filesave2 = ten2;
                 model.Filesave3 = ten3;
+                model.HangMau = false;
                 dbc.KyXuatNhaps.Add(model);
                 int kt = dbc.SaveChanges();
                 if (kt > 0)

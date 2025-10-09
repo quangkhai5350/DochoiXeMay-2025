@@ -36,7 +36,7 @@ namespace DoChoiXeMay.Models
 
         [StringLength(20)]
         public string STT { get; set; }
-
+        public int ParentId {  get; set; }
         public virtual KyTonKho KyTonKho { get; set; }
     }
 }

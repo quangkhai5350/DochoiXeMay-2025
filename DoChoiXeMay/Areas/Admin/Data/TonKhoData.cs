@@ -29,7 +29,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
             try
             {
                 string sql = "insert into [" + DBname + "TechZone].[dbo].[ChiTietTonKho] " +
-                                            "values(" + IdKy + ",'Auto tên 1',0,0,0,0,GETDATE(),GETDATE(),0,'','')";
+                                            "values(" + IdKy + ",'Auto tên 1',0,0,0,0,GETDATE(),GETDATE(),0,'','',0)";
                 var insert_SVL = _context.Database.ExecuteSqlCommand(sql);
                 return true;
             }
