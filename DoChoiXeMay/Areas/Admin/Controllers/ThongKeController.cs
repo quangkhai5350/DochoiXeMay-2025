@@ -1,4 +1,5 @@
-﻿using DoChoiXeMay.Models;
+﻿using DoChoiXeMay.Filters;
+using DoChoiXeMay.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -8,6 +9,7 @@ using System.Web.Mvc;
 
 namespace DoChoiXeMay.Areas.Admin.Controllers
 {
+    [Protect]
     public class ThongKeController : Controller
     {
         // GET: Admin/ThongKe
