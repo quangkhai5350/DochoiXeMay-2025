@@ -470,6 +470,43 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             
             return RedirectToAction("ListXuatNhapUser");
         }
+        public ActionResult TraHangChiTietXNbyID(String id)
+        {
+            try
+            {
+                var model = dbc.ChitietXuatNhaps.Find(new Guid(id));
+                var ky = dbc.KyXuatNhaps.Find(model.IdKy);
+
+                if (ky.KhachLe == true && model.TraHangKhachLe == false)
+                {
+                    model.TraHangKhachLe = true;
+                    model.NgayAuto = DateTime.Now;
+                    dbc.Entry(model).State = EntityState.Modified;
+                    var kq = dbc.SaveChanges();
+                    if (kq > 0)
+                    {
+                        var HH = dbc.HangHoas.FirstOrDefault(kh => kh.Ten == model.Ten && kh.IDMF == model.IDMF
+                                        && kh.IDColor == model.IDColor && kh.IDSize == model.IDSize);
+                        if (HH != null)
+                        {
+                            HH.SoLuong = HH.SoLuong + 1;
+                            dbc.Entry(model).State = EntityState.Modified;
+                            dbc.SaveChanges();
+                            Session["ThongBaoXuatNhapTeK"] = "Trả Hàng Thành Công, Số lượng HH tăng 1.";
+                            return RedirectToAction("ListXuatNhapTeK");
+                        }
+                    }
+                }
+                Session["ThongBaoXuatNhapTeK"] = "Không đủ đk để trả hàng.Trả Hàng Thất Bại !!!";
+                return RedirectToAction("ListXuatNhapTeK");
+            }
+            catch (Exception ex)
+            {
+                string loi = ex.ToString();
+                Session["ThongBaoXuatNhapTeK"] = "Trả Hàng Thất Bại !!!!!!!!!!. Có lỗi hệ thống";
+            }
+            return RedirectToAction("ListXuatNhapTeK");
+        }
         [HttpGet]
         public ActionResult InsertChiTietXNbyKy(int id) {
             var ky = dbc.KyXuatNhaps.Find(id);
@@ -553,6 +590,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 {
                     model.SoLuong = 1;
                 }
+                model.TraHangKhachLe = false;
                 dbc.ChitietXuatNhaps.Add(model);
                 int kq = dbc.SaveChanges();
                 if (kq > 0)

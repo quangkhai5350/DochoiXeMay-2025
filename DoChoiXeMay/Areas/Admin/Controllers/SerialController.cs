@@ -36,7 +36,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             
             
             var ListChuaActive = dbc.ChitietXuatNhaps.Where(kh =>kh.KyXuatNhap.KhachLe==true && kh.KyXuatNhap.UPush==true &&( kh.DaActive == null || kh.DaActive != "Active")
-               && DbFunctions.DiffDays(kh.NgayAuto,ngayHienTai) > 14).ToList();
+               && kh.TraHangKhachLe==false && DbFunctions.DiffDays(kh.NgayAuto,ngayHienTai) > 14).ToList();
             
             foreach (var kh in ListChuaActive)
             {

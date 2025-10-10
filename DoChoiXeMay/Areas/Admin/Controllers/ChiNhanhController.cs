@@ -150,16 +150,26 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         public ActionResult TimSNLoHang(string Serial)
         {
             var modelct = dbc.Ser_Chitiet_XuatSN_CN.FirstOrDefault(kh => kh.Serial == Serial);
-            if (modelct != null)
+            var modelctxn = dbc.ChitietXuatNhaps.FirstOrDefault(kh => kh.TraHangKhachLe == false && kh.SerialHop == Serial);
+            if (modelct != null && modelctxn == null)
             {
                 Session["ThongBaoLoiSN_ChiNhanh"] = "";
                 Session["ThongBaoXuatSN_ChiNhanh"] = "Số serial: " + Serial + " đã nằm trong lô hàng của chi nhánh "
-                    + modelct.Ser_XuatSN_CN.Ser_ChiNhanh.TenChiNhanh + " có Id=" + modelct.IdSN_CN + ".";
+                    + modelct.Ser_XuatSN_CN.Ser_ChiNhanh.TenChiNhanh + " có Id=" + modelct.IdSN_CN + ".!!!";
+            }
+            else if(modelctxn !=null && modelct == null)
+            {
+                Session["ThongBaoLoiSN_ChiNhanh"] = "";
+                Session["ThongBaoXuatSN_ChiNhanh"] = "Số serial: " + Serial + " đã xuất cho khách lẻ.!!!";
+            }else if(modelct == null && modelctxn == null)
+            {
+                Session["ThongBaoLoiSN_ChiNhanh"] = "";
+                Session["ThongBaoXuatSN_ChiNhanh"] = "Số serial: " + Serial + " vẫn CHƯA dùng.";
             }
             else
             {
                 Session["ThongBaoLoiSN_ChiNhanh"] = "";
-                Session["ThongBaoXuatSN_ChiNhanh"] = "Số serial: " + Serial + " vẫn CHƯA add lô hàng nào.";
+                Session["ThongBaoXuatSN_ChiNhanh"] = "Số serial: " + Serial + " Có Thể Đã Add cả khách lẻ và Sỉ.!!!";
             }
             return Json("", JsonRequestBehavior.AllowGet);
         }
@@ -176,12 +186,19 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 try
                 {
                     var modelct = dbc.Ser_Chitiet_XuatSN_CN.FirstOrDefault(kh => kh.Serial == Serial);
+                    var modelctxn = dbc.ChitietXuatNhaps.FirstOrDefault(kh => kh.TraHangKhachLe == false && kh.SerialHop == Serial);
                     if (modelct != null)
                     {
                         Session["ThongBaotaolohang"] = "";
                         Session["ThongBaoLoitaolohang"] = "Số serial: " + Serial + " đã nằm trong lô hàng của chi nhánh "
                             + modelct.Ser_XuatSN_CN.Ser_ChiNhanh.TenChiNhanh + " có Id=" + modelct.IdSN_CN + ", không thể add !!!";
-                    }else if (modelctxuat.Count()== soluong)
+                    }
+                    else if (modelctxn != null)
+                    {
+                        Session["ThongBaotaolohang"] = "";
+                        Session["ThongBaoLoitaolohang"] = "Số serial: " + Serial + " đã xuất cho khách lẻ.!!!";
+                    }
+                    else if (modelctxuat.Count()== soluong)
                     {
                         Session["ThongBaotaolohang"] = "";
                         Session["ThongBaoLoitaolohang"] = "Đã add đủ S/N cho lô hàng này, không thể add thêm !!!";

@@ -1,4 +1,5 @@
-﻿using DoChoiXeMay.Models;
+﻿using DoChoiXeMay.Filters;
+using DoChoiXeMay.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -8,6 +9,7 @@ using System.Web.Mvc;
 
 namespace DoChoiXeMay.Areas.Admin.Controllers
 {
+    [Protect]
     public class ThongKeController : Controller
     {
         // GET: Admin/ThongKe
@@ -16,9 +18,19 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         public ActionResult Index()
         {
             Session["requestUri"] = "/Admin/ThongKe/Index";
-            var begin = dbc.ChitietXuatNhaps.Where(kh => kh.Ten == "Xi Nhan Wave TNT BLOCKX G2 ZEN 1"
+            var beg = dbc.ChitietXuatNhaps.Where(kh => kh.Ten == "Xi Nhan Wave TNT BLOCKX G2 ZEN 1"
                                     && kh.KyXuatNhap.XuatNhap == true).ToList();
+            var begin = beg.Where(kh=> kh.TraHangKhachLe == false).ToList();
             var daban = begin.Where(kh => kh.KyXuatNhap.HangMau == false).ToList();
+            var DaBanTikTok = begin.Where(kh => kh.KyXuatNhap.HangMau == false  && kh.KyXuatNhap.IdSan == 2).ToList();
+            var DaBanShopee = begin.Where(kh => kh.KyXuatNhap.HangMau == false  && kh.KyXuatNhap.IdSan == 3).ToList();
+            var DaBanLeNSan = begin.Where(kh => kh.KyXuatNhap.HangMau == false  && kh.KyXuatNhap.IdSan == 1 && kh.KyXuatNhap.KhachLe == true).ToList();
+            var DaTraHangKhachLe = beg.Where(kh => kh.TraHangKhachLe == true).ToList();
+            var DaTraHangKhachLeTrong = beg.Where(kh => kh.TraHangKhachLe == true && kh.IDColor==5).ToList();
+            var DaTraHangKhachLeKhoi = beg.Where(kh => kh.TraHangKhachLe == true && kh.IDColor == 7).ToList();
+            var DaBanLSiNSan = begin.Where(kh => kh.KyXuatNhap.HangMau == false && kh.KyXuatNhap.IdSan == 1 && kh.KyXuatNhap.KhachLe == false).ToList();
+
+
             var TrongDaBan = begin.Where(kh => kh.KyXuatNhap.HangMau == false && kh.IDColor == 5).ToList();
             var TrongDaBanTikTok = begin.Where(kh => kh.KyXuatNhap.HangMau == false && kh.IDColor == 5 && kh.KyXuatNhap.IdSan == 2).ToList();
             var trongDaBanShopee = begin.Where(kh => kh.KyXuatNhap.HangMau == false && kh.IDColor == 5 && kh.KyXuatNhap.IdSan == 3).ToList();
@@ -38,7 +50,17 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ViewBag.TongXiNhanGen1TrongTK = dbc.HangHoas.Where(kh => kh.Id == 56).Sum(kh => kh.SoLuong);
             ViewBag.TongXiNhanGen1KhoiTK = dbc.HangHoas.Where(kh => kh.Id == 55).Sum(kh => kh.SoLuong);
             
-            ViewBag.TongXiNhanGen1DaBan = daban ==null?0: daban.Sum(kh => kh.SoLuong);
+            
+            ViewBag.daban = daban ==null?0: daban.Sum(kh => kh.SoLuong);
+            ViewBag.DaBanTikTok=DaBanTikTok==null?0: DaBanTikTok.Sum(kh => kh.SoLuong);
+            ViewBag.DaBanShopee = DaBanShopee == null ? 0 : DaBanShopee.Sum(kh => kh.SoLuong);
+            ViewBag.DaBanLeNSan = DaBanLeNSan == null ? 0 : DaBanLeNSan.Sum(kh => kh.SoLuong);
+            ViewBag.DaBanLSiNSan = DaBanLSiNSan == null ? 0 : DaBanLSiNSan.Sum(kh => kh.SoLuong);
+            
+            ViewBag.DaTraHangKhachLe = DaTraHangKhachLe == null ? 0 : DaTraHangKhachLe.Sum(kh => kh.SoLuong);
+            ViewBag.DaTraHangKhachLeTrong = DaTraHangKhachLeTrong == null ? 0 : DaTraHangKhachLeTrong.Sum(kh => kh.SoLuong);
+            ViewBag.DaTraHangKhachLeKhoi = DaTraHangKhachLeKhoi == null ? 0 : DaTraHangKhachLeKhoi.Sum(kh => kh.SoLuong);
+
             ViewBag.TongXiNhanGen1TrongDaBan = TrongDaBan==null?0:TrongDaBan.Sum(kh => kh.SoLuong);
 
             ViewBag.TongXiNhanGen1TrongDaBanTikTok = TrongDaBanTikTok == null ? 0 : TrongDaBanTikTok.Sum(kh => kh.SoLuong);
@@ -58,6 +80,9 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ViewBag.TongXiNhanGen1MauDaXuat = MauDaXuat == null ? 0 : MauDaXuat.Sum(kh => kh.SoLuong);
             ViewBag.TongXiNhanGen1KhoiMauDaXuat = KhoiMauDaXuat == null ? 0 : KhoiMauDaXuat.Sum(kh => kh.SoLuong);
             ViewBag.TongXiNhanGen1TrongMauDaXuat = TrongMauDaXuat == null ? 0 : TrongMauDaXuat.Sum(kh => kh.SoLuong);
+
+
+            ViewBag.DaSanXuat = ViewBag.daban + ViewBag.TongXiNhanGen1Tek + ViewBag.TongXiNhanGen1MauDaXuat;
             return View();
         }
         public ActionResult GetListKyTonKho()
