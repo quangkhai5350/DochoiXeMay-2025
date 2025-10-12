@@ -36,7 +36,21 @@ namespace DoChoiXeMay.Models
 
         [StringLength(20)]
         public string STT { get; set; }
-        public int ParentId {  get; set; }
+
+        public int ParentId { get; set; }
+
+        public int IDMF { get; set; }
+
+        public int IDColor { get; set; }
+
+        public int IDSize { get; set; }
+
+        public virtual Color Color { get; set; }
+
         public virtual KyTonKho KyTonKho { get; set; }
+
+        public virtual Manufacturer Manufacturer { get; set; }
+
+        public virtual Size Size { get; set; }
     }
 }

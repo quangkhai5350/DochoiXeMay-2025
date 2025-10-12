@@ -9,6 +9,7 @@
     .canhgiua {
         text-align: center !important;
     }
+
     .marginbutonkh {
         margin-top: 50%;
     }
@@ -50,55 +51,62 @@
         <p style="margin-left:2%">+ XiNhan Khói Khách Lẻ trả hàng: @ViewBag.DaTraHangKhachLeKhoi</p>
     </div>
 </div>
-    <div class="panel panel-default" style="margin-top:10px">
-        <div class="panel-heading">
+<div class="panel panel-default" style="margin-top:10px">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="pull-right label label-primary" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
+                @Session["ThongBaoKyTonKhoOK"]
+            </div>
+            <div class="pull-right label label-warning" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
+
+                @Session["ThongBaoKyTonKhoLoi"]
+            </div>
             <div class="row">
-                <div class="pull-right label label-primary" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
-                    @Session["ThongBaoKyTonKhoOK"]
-                </div>
-                <div class="pull-right label label-warning" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
+                @if (Session["quyen"] != null && Session["quyen"].ToString() == "1")
+                {
+                    <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
+                        <a class="btn btn-warning" style="margin-left:20px" href="/Admin/ThongKe/InsertKyTonKho" onclick="return confirm('Bạn muốn Thêm Mới Kỳ Tồn Kho ??')"><i class="fa fa-plus-circle"></i>&nbsp;&nbsp; Thêm mới "Kỳ Tồn Kho"</a>
 
-                    @Session["ThongBaoKyTonKhoLoi"]
-                </div>
-                <div class="row">
-                    @if (Session["quyen"].ToString() == "1")
-                    {
-                        <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
-                            <a class="btn btn-warning" style="margin-left:20px" href="/Admin/ThongKe/InsertKyTonKho" onclick="return confirm('Bạn muốn Thêm Mới Kỳ Tồn Kho ??')"><i class="fa fa-plus-circle"></i>&nbsp;&nbsp; Thêm mới "Kỳ Tồn Kho"</a>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
+                        <a class="btn btn-warning" style="margin-left:20px"> Theo dõi "Kỳ Tồn Kho"</a>
 
-                        </div>
-                    }
-                </div>
+                    </div>
+                }
             </div>
         </div>
-        <div class="panel-body">
-            @*<img id="loading" hidden src="~/Areas/Admin/Content/img/loading.gif" />*@
-            <div class="listKTK">
+    </div>
+    <div class="panel-body">
+        @*<img id="loading" hidden src="~/Areas/Admin/Content/img/loading.gif" />*@
+        <div class="listKTK">
 
-
-            </div>
-        </div>
-        <div class="panel-footer">
-
-            @*<ul class="pager">
-                    <li><a href="#"><span class="glyphicon glyphicon-step-backward"></span></a></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-step-forward"></span></a></li>
-                </ul>*@
 
         </div>
     </div>
-    <script>
-        LoadPage();
-        function LoadPage() {
-            $.ajax({
-                url: "/Admin/ThongKe/GetListKyTonKho",
-                data: {},
-                success: function (respone) {
-                    $(".listKTK").html(respone);
-                }
-            });
-        };
-    </script>
+    <div class="panel-footer">
+
+        @*<ul class="pager">
+                <li><a href="#"><span class="glyphicon glyphicon-step-backward"></span></a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-step-forward"></span></a></li>
+            </ul>*@
+
+    </div>
+</div>
+<script>
+    LoadPage();
+    function LoadPage() {
+        $.ajax({
+            url: "/Admin/ThongKe/GetListKyTonKho",
+            data: {},
+            success: function (respone) {
+                $(".listKTK").html(respone);
+            }
+        });
+    };
+</script>
 

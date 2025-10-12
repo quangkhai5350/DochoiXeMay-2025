@@ -1,0 +1,132 @@
+﻿@model DoChoiXeMay.Models.ChiTietTonKho
+
+@{
+    ViewBag.Title = "UpdateKyTonKho";
+    Layout = "~/Areas/Admin/Views/Shared/_Layoutadmin.cshtml";
+}
+<link href="~/Areas/Admin/Content/css/Info_Style.css" rel="stylesheet" />
+<script src="~/Areas/Admin/Content/jquery2.0.3.min.js"></script>
+<div class="container">
+    @using (Html.BeginForm("ThongKe", "UpdateCTTK", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <fieldset class="info_form" style="margin-top:0">
+            <div class="container">
+                @Html.HiddenFor(kh => kh.Id)
+                @Html.HiddenFor(kh => kh.IdKyTonKho)
+                @Html.HiddenFor(kh => kh.NgayTao)
+                @Html.HiddenFor(kh => kh.NgayUpdate)
+                @Html.HiddenFor(kh => kh.GhiChu)
+                @Html.HiddenFor(kh => kh.STT)
+                <h1 class="info_header">
+                    Update SP/NVL: @Model.TenHang
+                    <span class="pull-right label label-warning" style="color:white;font-family:monospace">
+                        @Html.ValidationSummary()
+                    </span>
+                </h1>
+                <div class="contentform">
+                    <div class="row">
+                        <div class="col-sm-9">
+                            <div class="form-group">
+                                <p>Tên(Giống vs tên hàng hóa thì sl tự update) <span></span></p>
+                                <span class="icon-case"><i class="glyphicon glyphicon-import"></i></span>
+                                @Html.TextBoxFor(m => m.TenHang, new { @class = "form-control", style = "width: 100%; height: 40px" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <p>Hãng Sản Xuất</p>
+                                <span class="icon-case"><i class="glyphicon glyphicon-subtitles"></i></span>
+                                @Html.DropDownList("IDMF", null, new { style = "width: 100%; height: 40px" })
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <p>Màu</p>
+                                <span class="icon-case"><i class="glyphicon glyphicon-text-background"></i></span>
+                                @Html.DropDownList("IDColor", null, new { style = "width: 100%; height: 40px" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <p>Ước Lượng đầu kỳ <span></span></p>
+                                <span class="icon-case"><i class="glyphicon glyphicon-import"></i></span>
+                                @Html.TextBoxFor(m => m.TonDauKy, new { @class = "form-control", @type = "number", style = "width: 100%; height: 40px" })
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <p>Đã Dùng <span></span></p>
+                                <span class="icon-case"><i class="glyphicon glyphicon-import"></i></span>
+                                @Html.TextBoxFor(m => m.DaRap, new { @class = "form-control", @type = "number", style = "width: 100%; height: 40px" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <p>Lỗi <span></span></p>
+                                <span class="icon-case"><i class="glyphicon glyphicon-import"></i></span>
+                                @Html.TextBoxFor(m => m.CoLoi, new { @class = "form-control", @type = "number", style = "width: 100%; height: 40px" })
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <p>Còn Lại<span></span></p>
+                                <span class="icon-case"><i class="glyphicon glyphicon-import"></i></span>
+                                @Html.TextBoxFor(m => m.ChuaRap, new { @class = "form-control", @type = "number", style = "width: 100%; height: 40px" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <div class="form-group">
+                                <p>Size</p>
+                                <span class="icon-case"><i class="glyphicon glyphicon-text-size"></i></span>
+                                @Html.DropDownList("IDSize", null, new { style = "width: 100%; height: 40px" })
+                            </div>
+                        </div>
+                        <div class="col-sm-5">
+                            <div class="form-group">
+                                <p>ParentId(SP=0) <span></span></p>
+                                <span class="icon-case"><i class="glyphicon glyphicon-import"></i></span>
+                                @Html.TextBoxFor(m => m.ParentId, new { @class = "form-control", @type = "number", style = "width: 100%; height: 40px" })
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group" style="text-align:center">
+                                <p>Sản Phẩm <span></span></p>
+                                @Html.CheckBoxFor(m => m.SanPham, new { @style = "height:20px;margin-left: 10%" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-12">
+                            <div class="text-center btn-crud">
+                                <button id="btnLuu" class="btn btn-warning" data-action="UpdateCTTK"><span class="glyphicon glyphicon-refresh"></span>&nbsp;Update SP/NVL</button>
+                                <a class="btn btn-primary" href="/Admin/ThongKe/Index" style="margin-left:10%"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;Quay Lại</a>
+                            </div>
+                            <script>
+                                $(function () {
+                                    $("button[data-action]").click(function () {
+                                        if (!confirm("Bạn Có Chắc Chắn Hành Động Của Mình?")) {
+                                            return false;
+                                        } else {
+                                            var action = $(this).attr("data-action");
+                                            this.form.action = "/Admin/ThongKe/" + action;
+                                        }
+
+                                    });
+                                });
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    }
+</div>

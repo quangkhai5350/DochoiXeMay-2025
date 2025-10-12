@@ -18,10 +18,11 @@
                 <th class="canhgiua" style="max-width: 30px; padding-left: 0;padding-right:0">Hóa Đơn</th>
                 <th class="canhgiua" style="max-width: 30px; padding-left: 0;padding-right:0">File 2</th>
                 <th class="canhgiua" style="max-width: 30px; padding-left: 0;padding-right:0">File 3</th>
-                @if (Session["quyen"].ToString() == "1")
-                {
-                    <th class="canhgiua">Trả Hàng</th>
-                }
+                <th class="canhgiua">Trả Hàng</th>
+                @*@if (Session["quyen"].ToString() == "1")
+                    {
+                        <th class="canhgiua">Trả Hàng</th>
+                    }*@
                 <th class="canhgiua">Soluong/Tên Hàng/ThôngSố/Hãng</th>
                 <th class="canhgiua">Giá Nhập</th>
                 <th class="canhgiua" style="max-width: 15px">Hình 1</th>
@@ -186,25 +187,35 @@
                                 <i class="glyphicon glyphicon-download-alt"></i>
                             </a>
                         }
-
-
                     </td>
-
                     <td>
                         @if (Item.KhachLe)
                         {
                             foreach (DoChoiXeMay.Models.ChitietXuatNhap ct in Chitiet)
                             {
-                                if(ct.TraHangKhachLe == false)
-                        {
-<a title="Khách Lẻ Trả Hàng" class="btn btn-danger" onclick="return confirm('Khách Lẻ Muốn trả Hàng ??')"
-   href="/Admin/XuatNhap/TraHangChiTietXNbyID/@ct.Id"><span class="glyphicon glyphicon-backward" style="font-size:10px"></span></a>
-        }
-        else
-                        {
-                            <span>Khách Đã Trả</span>
-                        }
-                                
+                                var KT = new XuatNhapData().kiemtraNgayCTXN(ct.Id.ToString());
+                                if (KT > 20 && ct.TraHangKhachLe == false)
+                                {
+                                    <span>Hết hạn(20 ngày)</span>
+                                }
+                                else if (KT <= 20 && ct.TraHangKhachLe == false)
+                                {
+                                    if (Session["quyen"].ToString() == "1")
+                                    {
+                                        <a title="Khách Lẻ Trả Hàng" class="btn btn-danger" onclick="return confirm('Khách Lẻ Muốn trả Hàng ??')"
+                                           href="/Admin/XuatNhap/TraHangChiTietXNbyID/@ct.Id"><span class="glyphicon glyphicon-backward" style="font-size:10px"></span></a>
+                                    }
+                                    else
+                                    {
+                                        <span></span>
+                                    }
+
+                                }
+                                else if (ct.TraHangKhachLe == true)
+                                {
+                                    <span style="background-color:bisque">Khách Đã Trả</span>
+                                }
+
                             }
                         }
                     </td>

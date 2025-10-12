@@ -49,6 +49,7 @@ namespace DoChoiXeMay.Models
 
         [StringLength(30)]
         public string DaActive { get; set; }
+
         public bool TraHangKhachLe { get; set; }
 
         public virtual Color Color { get; set; }

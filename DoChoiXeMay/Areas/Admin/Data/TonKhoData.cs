@@ -13,23 +13,51 @@ namespace DoChoiXeMay.Areas.Admin.Data
     public class TonKhoData
     {
         Model1 _context = new Model1();
-        public List<ChiTietTonKho> GetListTKhoNVLByKy(int idKytonkho)
+        
+        public List<ChiTietTonKho> GetListTKhoByKy(int idKytonkho)
         {
-            var model = _context.ChiTietTonKhoes.Where(kh => kh.IdKyTonKho == idKytonkho && kh.SanPham==false)
+            List<ChiTietTonKho> modelCuoi = new List<ChiTietTonKho>();
+            var modelCha = _context.ChiTietTonKhoes.Where(kh => kh.IdKyTonKho == idKytonkho && kh.ParentId==0)
                     .OrderByDescending(kh => kh.Id)
                     .ToList();
-            for (int i = 0; i < model.Count(); i++)
+            var modelCon = _context.ChiTietTonKhoes.Where(kh => kh.IdKyTonKho == idKytonkho && kh.ParentId >0)
+                    .OrderByDescending(kh => kh.Id)
+                    .ToList();
+
+            for (int i = 0; i < modelCha.Count(); i++)
             {
-                model[i].STT = (i + 1).ToString();
+                modelCuoi.Add(modelCha[i]);
+                for (int j = 0; j < modelCon.Count(); j++)
+                {
+                    if (modelCon[j].ParentId == modelCha[i].Id)
+                    {
+                        modelCuoi.Add(modelCon[j]);
+                    }
+                }
             }
-            return model;
+            return modelCuoi;
+        }
+        public List<ChiTietTonKho> GetListTKhoBySP(int ParenId)
+        {
+            if (ParenId > 0)
+            {
+                var model = _context.ChiTietTonKhoes.Where(kh => kh.ParentId == ParenId)
+                    .OrderByDescending(kh => kh.Id)
+                    .ToList();
+                for (int i = 0; i < model.Count(); i++)
+                {
+                    model[i].STT = (i + 1).ToString();
+                }
+                return model;
+            }
+            return null;
         }
         public bool InsertTonKhoAotu(int IdKy, string DBname)
         {
             try
             {
                 string sql = "insert into [" + DBname + "TechZone].[dbo].[ChiTietTonKho] " +
-                                            "values(" + IdKy + ",'Auto tên 1',0,0,0,0,GETDATE(),GETDATE(),0,'','',0)";
+                                            "values(" + IdKy + ",'Auto tên 1',0,0,0,0,GETDATE(),GETDATE(),0,'','',0,3,1,1)";
                 var insert_SVL = _context.Database.ExecuteSqlCommand(sql);
                 return true;
             }

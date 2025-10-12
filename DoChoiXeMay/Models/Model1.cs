@@ -62,6 +62,12 @@ namespace DoChoiXeMay.Models
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Color>()
+                .HasMany(e => e.ChiTietTonKhoes)
+                .WithRequired(e => e.Color)
+                .HasForeignKey(e => e.IDColor)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Color>()
                 .HasMany(e => e.ChitietXuatNhaps)
                 .WithRequired(e => e.Color)
                 .HasForeignKey(e => e.IDColor)
@@ -165,6 +171,12 @@ namespace DoChoiXeMay.Models
                 .HasMany(e => e.MailTeKDetails)
                 .WithRequired(e => e.MailTeK)
                 .HasForeignKey(e => e.FromIdmail)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Manufacturer>()
+                .HasMany(e => e.ChiTietTonKhoes)
+                .WithRequired(e => e.Manufacturer)
+                .HasForeignKey(e => e.IDMF)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Manufacturer>()
@@ -284,6 +296,12 @@ namespace DoChoiXeMay.Models
                 .HasMany(e => e.Ser_Chitiet_XuatSN_CN)
                 .WithRequired(e => e.Ser_XuatSN_CN)
                 .HasForeignKey(e => e.IdSN_CN)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Size>()
+                .HasMany(e => e.ChiTietTonKhoes)
+                .WithRequired(e => e.Size)
+                .HasForeignKey(e => e.IDSize)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Size>()

@@ -88,6 +88,14 @@ namespace DoChoiXeMay.Areas.Admin.Data
             }
             return model;
         }
+        public double kiemtraNgayCTXN(string id)
+        {
+            var model = _context.ChitietXuatNhaps.Find(new Guid(id));
+            DateTime ngayHienTai = DateTime.Now;
+            var kt = (ngayHienTai - model.NgayAuto).TotalDays;
+            
+            return kt;
+        }
         public List<KyXuatNhap> getXuatNhapTek(int Sec, int pageSize,int UserId)
         {
             List<KyXuatNhap> model1 = new List<KyXuatNhap>();

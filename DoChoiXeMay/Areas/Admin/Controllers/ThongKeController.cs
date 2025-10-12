@@ -3,9 +3,11 @@ using DoChoiXeMay.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Windows.Media.Media3D;
 
 namespace DoChoiXeMay.Areas.Admin.Controllers
 {
@@ -87,6 +89,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         }
         public ActionResult GetListKyTonKho()
         {
+            
             List<KyTonKho> model = new List<KyTonKho>();
             model = dbc.KyTonKhoes.Where(kh=>kh.Id>1).OrderBy(kh => kh.Id).ToList();
             for (int i = 0; i < model.Count(); i++)
@@ -151,18 +154,112 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
         }
-        public ActionResult UpdateChiTietKyTonKho(int id)
+        public ActionResult DeleteKyTonKho(int id)
+        {
+            try
+            {
+                var model = dbc.KyTonKhoes.Find(id);
+                if (model != null)
+                {
+                    dbc.KyTonKhoes.Remove(model);
+                    dbc.SaveChanges();
+                    Session["ThongBaoKyTonKhoOK"] = "Delete thành công Kỳ Tồn Kho: " + model.NgayTao.ToString("{dd/MM/yyyy}");
+                }
+            }
+            catch (Exception ex)
+            {
+                var loi = ex.Message;
+                Session["ThongBaoKyTonKhoLoi"] = "Có Lỗi Delete Kỳ Tồn Kho : "+loi;
+            }
+            return RedirectToAction("Index");
+        }
+        public ActionResult DeleteCTKyTonKho(int id)
+        {
+            try
+            {
+                var model = dbc.ChiTietTonKhoes.Find(id);
+                if (model != null)
+                {
+                    dbc.ChiTietTonKhoes.Remove(model);
+                    dbc.SaveChanges();
+                    Session["ThongBaoKyTonKhoOK"] = "Delete thành công "+model.TenHang + model.NgayTao.ToString("{dd/MM/yyyy}");
+                }
+            }
+            catch (Exception ex)
+            {
+                var loi = ex.Message;
+                Session["ThongBaoKyTonKhoLoi"] = "Có Lỗi Delete : " + loi;
+            }
+            return RedirectToAction("Index");
+        }
+        public ActionResult UpdateKyTonKho(int id)
         {
             var model = dbc.KyTonKhoes.Find(id);
             return View(model);
         }
         [HttpPost]
-        public ActionResult UpdateChiTietKyTonKho(KyTonKho modelTK)
+        public ActionResult UpdateKyTonKho(KyTonKho modelTK)
         {
-            KyTonKho model = new KyTonKho();
-            model = modelTK;
-
+            try
+            {
+                KyTonKho model = new KyTonKho();
+                model = modelTK;
+                dbc.Entry(model).State = EntityState.Modified;
+                dbc.SaveChanges();
+                Session["ThongBaoKyTonKhoOK"] = "Update thành công Kỳ Tồn Kho " + model.TenKy;
+                //tro lai trang truoc do 
+                var requestUri = Session["requestUri"] as string;
+                if (requestUri != null)
+                {
+                    return Redirect(requestUri);
+                }
+            }
+            catch (Exception ex)
+            {
+                var loi = ex.Message;
+                ModelState.AddModelError("", "Có Lỗi Update !!!!"+loi);
+                var model = dbc.KyTonKhoes.Find(modelTK.Id);
+                return View(model);
+            }
+            return RedirectToAction("Index");
+        }
+        public ActionResult UpdateCTTK(int id)
+        {
+            var model = dbc.ChiTietTonKhoes.Find(id);
+            ViewBag.IDMF = new SelectList(dbc.Manufacturers.Where(kh => kh.Sudung == true), "Id", "Name", model.IDMF);
+            ViewBag.IDColor = new SelectList(dbc.Colors.OrderByDescending(kh => kh.Id), "Id", "TenColor",model.IDColor);
+            ViewBag.IDSize = new SelectList(dbc.Sizes.OrderBy(kh => kh.Id), "Id", "TenSize",model.IDSize);
             return View(model);
+        }
+        [HttpPost]
+        public ActionResult UpdateCTTK(ChiTietTonKho CTTK)
+        {
+            try
+            {
+                ChiTietTonKho model = new ChiTietTonKho();
+                model = CTTK;
+                model.NgayUpdate = DateTime.Now;
+                dbc.Entry(model).State = EntityState.Modified;
+                dbc.SaveChanges();
+                Session["ThongBaoKyTonKhoOK"] = "Update thành công Chi Tiết SP/NVL " + model.TenHang;
+                //tro lai trang truoc do 
+                var requestUri = Session["requestUri"] as string;
+                if (requestUri != null)
+                {
+                    return Redirect(requestUri);
+                }
+            }
+            catch (Exception ex)
+            {
+                var loi = ex.Message;
+                ModelState.AddModelError("", "Có Lỗi Update !!!!" + loi);
+                var model = dbc.ChiTietTonKhoes.Find(CTTK.Id);
+                ViewBag.IDMF = new SelectList(dbc.Manufacturers.Where(kh => kh.Sudung == true), "Id", "Name", model.IDMF);
+                ViewBag.IDColor = new SelectList(dbc.Colors.OrderByDescending(kh => kh.Id), "Id", "TenColor", model.IDColor);
+                ViewBag.IDSize = new SelectList(dbc.Sizes.OrderBy(kh => kh.Id), "Id", "TenSize", model.IDSize);
+                return View(model);
+            }
+            return RedirectToAction("Index");
         }
     }
 }

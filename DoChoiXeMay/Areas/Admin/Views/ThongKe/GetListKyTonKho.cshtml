@@ -6,21 +6,25 @@
         <thead>
             <tr class="canhgiua" style="background-color: #00bcd4">
                 <th class="canhgiua" style="max-width: 15px">STT</th>
-                @if (Session["quyen"].ToString() == "1")
+                @if (Session["quyen"] != null && Session["quyen"].ToString() == "1")
                 {
                     <th class="canhgiua" style="width:30px">Update / Xóa</th>
                 }
                 <th class="canhgiua">Tên Kỳ</th>
-                <th class="canhgiua">Xuất Nhập/Số tiền </th>
-                <th class="canhgiua" style="width: 15px">Hóa Đơn</th>
-                <th class="canhgiua" style="width: 15px">File 2</th>
-                <th class="canhgiua" style="width: 15px">File 3</th>
-                @if (Session["quyen"].ToString() == "1")
+                <th class="canhgiua" style="width:100px">Lưu Kho</th>
+                <th class="canhgiua" style="width:40px">SuDung</th>
+                <th class="canhgiua" style="width:40px">Ngày bắt đầu</th>
+
+                @if (Session["quyen"] != null && Session["quyen"].ToString() == "1")
                 {
-                    <th class="canhgiua" style="width:30px">Thêm NVL</th>
+                    <th class="canhgiua" style="width:30px">Insert</th>
+                    <th class="canhgiua" style="width:30px">Update/Del</th>
                 }
-                <th class="canhgiua">Tên NVL</th>
-                <th class="canhgiua">Đầu Kỳ</th>
+                @*<th class="canhgiua">STT</th>*@
+                <th class="canhgiua" style="width:30px">Id</th>
+                <th class="canhgiua" style="width:350px !important">Tên SP/NVL</th>
+                @*<th class="canhgiua">Tên NVL</th>*@
+                <th class="canhgiua">Ban đầu(ước)</th>
                 <th class="canhgiua">Đã Dùng</th>
                 <th class="canhgiua">Lỗi</th>
                 <th class="canhgiua">Còn Lại</th>
@@ -31,82 +35,135 @@
         <tbody style="border: 2px solid black !important">
             @foreach (DoChoiXeMay.Models.KyTonKho Item in ViewBag.KyTonKho)
             {
-                var ChitietNVL = new TonKhoData().GetListTKhoNVLByKy(Item.Id);
+                var Chitiet = new TonKhoData().GetListTKhoByKy(Item.Id);
                 <tr class="canhgiua" style="border-bottom: 2px solid black !important">
                     <td>@Item.STT</td>
-                    <td>
-                        @if (Session["quyen"].ToString() == "1")
-                        {
+
+                    @if (Session["quyen"] != null && Session["quyen"].ToString() == "1")
+                    {
+                        <td>
                             <a title="Update Kỳ hiện tại" class="btn btn-primary" href="/Admin/ThongKe/UpdateKyTonKho/@Item.Id">
                                 <span class="glyphicon glyphicon-edit" style="font-size:20px"></span>
                             </a>
                             <hr />
-                            <a hidden title="Xóa Kỳ hiện tại" class="btn btn-danger" onclick="return confirm('Bạn muốn xóa Kỳ @Item.TenKy ??')"
+                            <a style="display:none" title="Xóa Kỳ hiện tại" class="btn btn-danger" onclick="return confirm('Bạn muốn xóa Kỳ @Item.TenKy ??')"
                                href="/Admin/ThongKe/DeleteKyTonKho/@Item.Id"><span class="glyphicon glyphicon-trash" style="font-size:20px"></span></a>
-                        }
-                    </td>
+                        </td>
+                    }
+
                     <td>
                         @Item.TenKy
                     </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td style="border-right: 2px solid black !important"></td>
                     <td>
-                        @if (Session["quyen"].ToString() == "1")
-                        {
+                        @Item.LuuKho
+                    </td>
+                    <td>
+                        @Item.SuDung
+                    </td>
+                    <td style="border-right: 2px solid black !important"><span>@Html.FormatValue(Item.NgayTao, "{0:dd/MM/yyyy}")</span></td>
+
+                    @if (Session["quyen"] != null && Session["quyen"].ToString() == "1")
+                    {
+                        <td>
                             <a class="marginbutonkh btn btn-warning waves-effect" href="/Admin/ThongKe/InsertChiTietKyTonKho/@Item.Id" title="Thêm NVL Auto"><span class="fa fa-plus-circle" style="font-size:30px"></span></a>
-                        }
-                    </td>
-                    <td>
-                        @foreach (DoChoiXeMay.Models.ChiTietTonKho TK in ChitietNVL)
+                        </td>
+                            }
+                        
+
+                        @if (Session["quyen"] != null && Session["quyen"].ToString() == "1")
                         {
-                            <p style="height:40px">
-                                <span>@TK.TenHang</span>
-                            </p>
+                            <td>
+                                @foreach (DoChoiXeMay.Models.ChiTietTonKho CTTK in Chitiet)
+                                {
+
+                                    var sp = CTTK.SanPham == true ? " sản phẩm" : "NVL";
+                                    <p style="height:40px">
+                                        <a title="Update @sp @CTTK.TenHang" class="btn btn-danger" onclick="return confirm('Bạn muốn update '+@sp+' ??')"
+                                           href="/Admin/ThongKe/UpdateCTTK/@CTTK.Id"><span class="glyphicon glyphicon-edit" style="font-size:10px"></span></a>
+
+                                        <a style="display:none" title="Xóa @sp @CTTK.TenHang" class="btn btn-danger" onclick="return confirm('Bạn muốn xóa  @sp @CTTK.TenHang ??')"
+                                           href="/Admin/ThongKe/DeleteCTKyTonKho/@CTTK.Id"><span class="glyphicon glyphicon-trash" style="font-size:10px"></span></a>
+                                    </p>
+                                }
+                            </td>
                         }
-                    </td>
-                    <td>
-                        @foreach (DoChoiXeMay.Models.ChiTietTonKho TK in ChitietNVL)
-                        {
-                            <p style="height:40px">
-                                <span>@TK.TonDauKy</span>
-                            </p>
-                        }
-                    </td>
-                    <td>
-                        @foreach (DoChoiXeMay.Models.ChiTietTonKho TK in ChitietNVL)
-                        {
-                            <p style="height:40px">
-                                <span>@TK.DaRap</span>
-                            </p>
-                        }
-                    </td>
-                    <td>
-                        @foreach (DoChoiXeMay.Models.ChiTietTonKho TK in ChitietNVL)
-                        {
-                            <p style="height:40px">
-                                <span>@TK.CoLoi</span>
-                            </p>
-                        }
-                    </td>
-                    <td>
-                        @foreach (DoChoiXeMay.Models.ChiTietTonKho TK in ChitietNVL)
-                        {
-                            <p style="height:40px">
-                                <span>@TK.ChuaRap</span>
-                            </p>
-                        }
-                    </td>
-                    <td>
-                        @foreach (DoChoiXeMay.Models.ChiTietTonKho TK in ChitietNVL)
-                        {
-                            <p style="height:40px">
-                                <span>@Html.FormatValue(TK.NgayUpdate, "{0:dd/MM/yyyy}")</span>
-                            </p>
-                        }
-                    </td>
-                </tr>
+                        <td>
+                            @foreach (DoChoiXeMay.Models.ChiTietTonKho CTTK in Chitiet)
+                            {
+                                if (CTTK.SanPham)
+                                {
+                                    <p style="height:40px">
+                                        <span>@CTTK.Id</span>
+                                    </p>
+                                }
+                                else
+                                {
+                                    <p style="height:40px">
+                                        <span></span>
+                                    </p>
+                                }
+
+                            }
+                        </td>
+                        <td>
+                            @foreach (DoChoiXeMay.Models.ChiTietTonKho CTTK in Chitiet)
+                            {
+                                if (CTTK.SanPham == false)
+                                {
+                                    <p style="height:40px;text-align:right">
+                                        <span>NVL: @CTTK.TenHang</span>
+                                    </p>
+                                }
+                                else
+                                {
+                                    <p style="height: 40px; background-color: bisque">
+                                        <span>SP: @CTTK.TenHang-@CTTK.Color.TenColor</span>
+                                    </p>
+                                }
+                            }
+                        </td>
+
+                        <td>
+                            @foreach (DoChoiXeMay.Models.ChiTietTonKho CTTK in Chitiet)
+                            {
+                                <p style="height:40px">
+                                    <span>@CTTK.TonDauKy</span>
+                                </p>
+                            }
+                        </td>
+                        <td>
+                            @foreach (DoChoiXeMay.Models.ChiTietTonKho CTTK in Chitiet)
+                            {
+                                <p style="height:40px">
+                                    <span>@CTTK.DaRap</span>
+                                </p>
+                            }
+                        </td>
+                        <td>
+                            @foreach (DoChoiXeMay.Models.ChiTietTonKho CTTK in Chitiet)
+                            {
+                                <p style="height:40px">
+                                    <span>@CTTK.CoLoi</span>
+                                </p>
+                            }
+                        </td>
+                        <td>
+                            @foreach (DoChoiXeMay.Models.ChiTietTonKho CTTK in Chitiet)
+                            {
+                                <p style="height:40px">
+                                    <span>@CTTK.ChuaRap</span>
+                                </p>
+                            }
+                        </td>
+                        <td>
+                            @foreach (DoChoiXeMay.Models.ChiTietTonKho CTTK in Chitiet)
+                            {
+                                <p style="height:40px">
+                                    <span>@Html.FormatValue(CTTK.NgayUpdate, "{0:dd/MM/yyyy}")</span>
+                                </p>
+                            }
+                        </td>
+                    </tr>
             }
         </tbody>
     </table>

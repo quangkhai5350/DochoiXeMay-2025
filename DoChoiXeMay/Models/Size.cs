@@ -12,6 +12,7 @@ namespace DoChoiXeMay.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Size()
         {
+            ChiTietTonKhoes = new HashSet<ChiTietTonKho>();
             ChitietXuatNhaps = new HashSet<ChitietXuatNhap>();
             HangHoas = new HashSet<HangHoa>();
             Ser_sp = new HashSet<Ser_sp>();
@@ -24,6 +25,9 @@ namespace DoChoiXeMay.Models
         public string TenSize { get; set; }
 
         public DateTime Ngay { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ChiTietTonKho> ChiTietTonKhoes { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChitietXuatNhap> ChitietXuatNhaps { get; set; }

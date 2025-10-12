@@ -12,6 +12,7 @@ namespace DoChoiXeMay.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Manufacturer()
         {
+            ChiTietTonKhoes = new HashSet<ChiTietTonKho>();
             ChitietXuatNhaps = new HashSet<ChitietXuatNhap>();
             HangHoas = new HashSet<HangHoa>();
             Ser_sp = new HashSet<Ser_sp>();
@@ -29,6 +30,9 @@ namespace DoChoiXeMay.Models
 
         [StringLength(100)]
         public string Logo { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ChiTietTonKho> ChiTietTonKhoes { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChitietXuatNhap> ChitietXuatNhaps { get; set; }

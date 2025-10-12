@@ -556,6 +556,8 @@
     <Content Include="Areas\Admin\Views\DanhMuc\UpdateHTTC.cshtml" />
     <Content Include="Areas\Admin\Views\ThongKe\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ThongKe\GetListKyTonKho.cshtml" />
+    <Content Include="Areas\Admin\Views\ThongKe\UpdateKyTonKho.cshtml" />
+    <Content Include="Areas\Admin\Views\ThongKe\UpdateCTTK.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
