@@ -180,6 +180,7 @@
     <Compile Include="Models\KhuVuc.cs" />
     <Compile Include="Models\KyTonKho.cs" />
     <Compile Include="Models\KyXuatNhap.cs" />
+    <Compile Include="Models\KyXuatNhap_LoaiHang.cs" />
     <Compile Include="Models\LoaiNoteTeK.cs" />
     <Compile Include="Models\LoaiUserTek.cs" />
     <Compile Include="Models\Loai_Socials.cs" />

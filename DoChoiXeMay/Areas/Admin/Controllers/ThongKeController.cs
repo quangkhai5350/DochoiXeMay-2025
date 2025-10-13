@@ -23,31 +23,31 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             var beg = dbc.ChitietXuatNhaps.Where(kh => kh.Ten == "Xi Nhan Wave TNT BLOCKX G2 ZEN 1"
                                     && kh.KyXuatNhap.XuatNhap == true).ToList();
             var begin = beg.Where(kh=> kh.TraHangKhachLe == false).ToList();
-            var daban = begin.Where(kh => kh.KyXuatNhap.HangMau == false).ToList();
-            var DaBanTikTok = begin.Where(kh => kh.KyXuatNhap.HangMau == false  && kh.KyXuatNhap.IdSan == 2).ToList();
-            var DaBanShopee = begin.Where(kh => kh.KyXuatNhap.HangMau == false  && kh.KyXuatNhap.IdSan == 3).ToList();
-            var DaBanLeNSan = begin.Where(kh => kh.KyXuatNhap.HangMau == false  && kh.KyXuatNhap.IdSan == 1 && kh.KyXuatNhap.KhachLe == true).ToList();
+            var daban = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1).ToList();
+            var DaBanTikTok = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1 && kh.KyXuatNhap.IdSan == 2).ToList();
+            var DaBanShopee = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1 && kh.KyXuatNhap.IdSan == 3).ToList();
+            var DaBanLeNSan = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1 && kh.KyXuatNhap.IdSan == 1 && kh.KyXuatNhap.KhachLe == true).ToList();
             var DaTraHangKhachLe = beg.Where(kh => kh.TraHangKhachLe == true).ToList();
             var DaTraHangKhachLeTrong = beg.Where(kh => kh.TraHangKhachLe == true && kh.IDColor==5).ToList();
             var DaTraHangKhachLeKhoi = beg.Where(kh => kh.TraHangKhachLe == true && kh.IDColor == 7).ToList();
-            var DaBanLSiNSan = begin.Where(kh => kh.KyXuatNhap.HangMau == false && kh.KyXuatNhap.IdSan == 1 && kh.KyXuatNhap.KhachLe == false).ToList();
+            var DaBanLSiNSan = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1 && kh.KyXuatNhap.IdSan == 1 && kh.KyXuatNhap.KhachLe == false).ToList();
 
 
-            var TrongDaBan = begin.Where(kh => kh.KyXuatNhap.HangMau == false && kh.IDColor == 5).ToList();
-            var TrongDaBanTikTok = begin.Where(kh => kh.KyXuatNhap.HangMau == false && kh.IDColor == 5 && kh.KyXuatNhap.IdSan == 2).ToList();
-            var trongDaBanShopee = begin.Where(kh => kh.KyXuatNhap.HangMau == false && kh.IDColor == 5 && kh.KyXuatNhap.IdSan == 3).ToList();
-            var trongDaBanLeNSan = begin.Where(kh => kh.KyXuatNhap.HangMau == false && kh.IDColor == 5 && kh.KyXuatNhap.IdSan == 1 && kh.KyXuatNhap.KhachLe == true).ToList();
-            var trongDaBanLSiNSan = begin.Where(kh => kh.KyXuatNhap.HangMau == false && kh.IDColor == 5 && kh.KyXuatNhap.IdSan == 1 && kh.KyXuatNhap.KhachLe == false).ToList();
+            var TrongDaBan = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1 && kh.IDColor == 5).ToList();
+            var TrongDaBanTikTok = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1 && kh.IDColor == 5 && kh.KyXuatNhap.IdSan == 2).ToList();
+            var trongDaBanShopee = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1 && kh.IDColor == 5 && kh.KyXuatNhap.IdSan == 3).ToList();
+            var trongDaBanLeNSan = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1 && kh.IDColor == 5 && kh.KyXuatNhap.IdSan == 1 && kh.KyXuatNhap.KhachLe == true).ToList();
+            var trongDaBanLSiNSan = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1 && kh.IDColor == 5 && kh.KyXuatNhap.IdSan == 1 && kh.KyXuatNhap.KhachLe == false).ToList();
             
-            var KhoiDaBan = begin.Where(kh => kh.KyXuatNhap.HangMau == false && kh.IDColor == 7).ToList();
-            var KhoiDaBanTikTok = begin.Where(kh => kh.KyXuatNhap.HangMau == false && kh.IDColor == 7 && kh.KyXuatNhap.IdSan == 2).ToList();
-            var KhoiDaBanShopee = begin.Where(kh => kh.KyXuatNhap.HangMau == false && kh.IDColor == 7 && kh.KyXuatNhap.IdSan == 3).ToList();
-            var KhoiDaBanLeNSan = begin.Where(kh => kh.KyXuatNhap.HangMau == false && kh.IDColor == 7 && kh.KyXuatNhap.IdSan == 1 && kh.KyXuatNhap.KhachLe == true).ToList();
-            var KhoiDaBanLSiNSan = begin.Where(kh => kh.KyXuatNhap.HangMau == false && kh.IDColor == 7 && kh.KyXuatNhap.IdSan == 1 && kh.KyXuatNhap.KhachLe == false).ToList();
+            var KhoiDaBan = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1 && kh.IDColor == 7).ToList();
+            var KhoiDaBanTikTok = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1 && kh.IDColor == 7 && kh.KyXuatNhap.IdSan == 2).ToList();
+            var KhoiDaBanShopee = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1 && kh.IDColor == 7 && kh.KyXuatNhap.IdSan == 3).ToList();
+            var KhoiDaBanLeNSan = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1 && kh.IDColor == 7 && kh.KyXuatNhap.IdSan == 1 && kh.KyXuatNhap.KhachLe == true).ToList();
+            var KhoiDaBanLSiNSan = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1 && kh.IDColor == 7 && kh.KyXuatNhap.IdSan == 1 && kh.KyXuatNhap.KhachLe == false).ToList();
 
-            var MauDaXuat = begin.Where(kh => kh.KyXuatNhap.HangMau == true).ToList();
-            var KhoiMauDaXuat = begin.Where(kh => kh.KyXuatNhap.HangMau == true && kh.IDColor == 7).ToList();
-            var TrongMauDaXuat = begin.Where(kh => kh.KyXuatNhap.HangMau == true && kh.IDColor == 7).ToList();
+            var MauDaXuat = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 2).ToList();
+            var KhoiMauDaXuat = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 2 && kh.IDColor == 7).ToList();
+            var TrongMauDaXuat = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 2 && kh.IDColor == 7).ToList();
             ViewBag.TongXiNhanGen1Tek = dbc.HangHoas.Where(kh => kh.Id == 55 || kh.Id == 56).Sum(kh => kh.SoLuong);
             ViewBag.TongXiNhanGen1TrongTK = dbc.HangHoas.Where(kh => kh.Id == 56).Sum(kh => kh.SoLuong);
             ViewBag.TongXiNhanGen1KhoiTK = dbc.HangHoas.Where(kh => kh.Id == 55).Sum(kh => kh.SoLuong);
@@ -239,6 +239,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 ChiTietTonKho model = new ChiTietTonKho();
                 model = CTTK;
                 model.NgayUpdate = DateTime.Now;
+                model.ChuaRap = model.TonDauKy - model.DaRap - model.CoLoi;
                 dbc.Entry(model).State = EntityState.Modified;
                 dbc.SaveChanges();
                 Session["ThongBaoKyTonKhoOK"] = "Update thành công Chi Tiết SP/NVL " + model.TenHang;

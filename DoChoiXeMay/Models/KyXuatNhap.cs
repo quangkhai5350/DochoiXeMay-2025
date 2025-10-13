@@ -72,7 +72,7 @@ namespace DoChoiXeMay.Models
 
         public int IdKhuVuc { get; set; }
 
-        public bool HangMau { get; set; }
+        public int IdLoaiHangXN { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChiTietTC> ChiTietTCs { get; set; }
@@ -83,6 +83,8 @@ namespace DoChoiXeMay.Models
         public virtual KhuVuc KhuVuc { get; set; }
 
         public virtual KyTonKho KyTonKho { get; set; }
+
+        public virtual KyXuatNhap_LoaiHang KyXuatNhap_LoaiHang { get; set; }
 
         public virtual SanThuongMai SanThuongMai { get; set; }
 

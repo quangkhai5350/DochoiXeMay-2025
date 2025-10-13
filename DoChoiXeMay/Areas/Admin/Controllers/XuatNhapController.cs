@@ -32,10 +32,11 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         }
         public ActionResult ListXuatNhapUser()
         {
-            ViewBag.IdMaTC = new SelectList(dbc.MaTCs.Where(kh => kh.SuDung == true && kh.XuatNhap==true), "Id", "GhiChu");
+            ViewBag.IdMaTC = new SelectList(dbc.MaTCs.Where(kh => kh.SuDung == true && kh.XuatNhap==true), "Id", "GhiChu",17);
             ViewBag.IdKyTonKho = new SelectList(dbc.KyTonKhoes.Where(kh=>kh.SuDung==true).ToList(), "Id", "TenKy");
             ViewBag.IdSan = new SelectList(dbc.SanThuongMais.Where(kh => kh.SuDung == true).ToList(), "Id", "TenSan");
             ViewBag.IdKhuVuc = new SelectList(dbc.KhuVucs.ToList(), "Id", "SatNhap", 36);
+            ViewBag.IdLoaiHangXN = new SelectList(dbc.KyXuatNhap_LoaiHang.ToList(), "Id", "TenLoai", 1);
             Session["requestUri"] = "/Admin/XuatNhap/ListXuatNhapUser";
             return View();
         }
@@ -83,6 +84,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ViewBag.IdKyTonKho = new SelectList(dbc.KyTonKhoes.Where(kh => kh.SuDung == true).ToList(), "Id", "TenKy", model.IdKyTonKho);
             ViewBag.IdSan = new SelectList(dbc.SanThuongMais.Where(kh => kh.SuDung == true).ToList(), "Id", "TenSan",model.IdSan);
             ViewBag.IdKhuVuc = new SelectList(dbc.KhuVucs.ToList(), "Id", "SatNhap",model.IdKhuVuc);
+            ViewBag.IdLoaiHangXN = new SelectList(dbc.KyXuatNhap_LoaiHang.ToList(), "Id", "TenLoai", model.IdLoaiHangXN);
             return View(model);
         }
         public ActionResult DayXuatNhapTek(int id,int thuchi)
@@ -132,6 +134,9 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                                 var kq = Data.XuatNhapData.GhibangHangHoa(dbc, modelct[i].Ten, modelct[i].IDMF,
                                     modelct[i].IDColor, modelct[i].IDSize, modelct[i].SoLuong, modelct[i].Gianhap,
                                     modelct[i].Hinh1, modelct[i].Hinh2, modelct[i].Hinh3);
+                                var kqtonkho = Data.TonKhoData.UpdateCTKytonKho(dbc, modelct[i].KyXuatNhap.IdKyTonKho,
+                                    modelct[i].Ten, modelct[i].IDMF, modelct[i].IDColor, modelct[i].IDSize, modelct[i].SoLuong);
+                                
                             }
                         }
                         
@@ -394,6 +399,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     ViewBag.IdKyTonKho = new SelectList(dbc.KyTonKhoes.Where(kh => kh.SuDung == true).ToList(), "Id", "TenKy", XN.IdKyTonKho);
                     ViewBag.IdSan = new SelectList(dbc.SanThuongMais.Where(kh => kh.SuDung == true).ToList(), "Id", "TenSan", XN.IdSan);
                     ViewBag.IdKhuVuc = new SelectList(dbc.KhuVucs.ToList(), "Id", "SatNhap", XN.IdKhuVuc);
+                    ViewBag.IdLoaiHangXN = new SelectList(dbc.KyXuatNhap_LoaiHang.ToList(), "Id", "TenLoai", XN.IdLoaiHangXN);
                     return View(model);
                 }
             }
@@ -406,6 +412,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 ViewBag.IdKyTonKho = new SelectList(dbc.KyTonKhoes.Where(kh => kh.SuDung == true).ToList(), "Id", "TenKy", XN.IdKyTonKho);
                 ViewBag.IdSan = new SelectList(dbc.SanThuongMais.Where(kh => kh.SuDung == true).ToList(), "Id", "TenSan", XN.IdSan);
                 ViewBag.IdKhuVuc = new SelectList(dbc.KhuVucs.ToList(), "Id", "SatNhap", XN.IdKhuVuc);
+                ViewBag.IdLoaiHangXN = new SelectList(dbc.KyXuatNhap_LoaiHang.ToList(), "Id", "TenLoai", XN.IdLoaiHangXN);
                 return View(model);
             }
         }
@@ -440,7 +447,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 model.HoaDon = ten1;
                 model.Filesave2 = ten2;
                 model.Filesave3 = ten3;
-                model.HangMau = false;
+                model.NgayXuatNhap = DateTime.Now;
                 dbc.KyXuatNhaps.Add(model);
                 int kt = dbc.SaveChanges();
                 if (kt > 0)

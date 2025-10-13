@@ -24,6 +24,7 @@ namespace DoChoiXeMay.Models
         public virtual DbSet<KhuVuc> KhuVucs { get; set; }
         public virtual DbSet<KyTonKho> KyTonKhoes { get; set; }
         public virtual DbSet<KyXuatNhap> KyXuatNhaps { get; set; }
+        public virtual DbSet<KyXuatNhap_LoaiHang> KyXuatNhap_LoaiHang { get; set; }
         public virtual DbSet<Loai_Socials> Loai_Socials { get; set; }
         public virtual DbSet<LoaiNoteTeK> LoaiNoteTeKs { get; set; }
         public virtual DbSet<LoaiUserTek> LoaiUserTeks { get; set; }
@@ -147,6 +148,12 @@ namespace DoChoiXeMay.Models
                 .HasMany(e => e.Ser_XuatSN_CN)
                 .WithRequired(e => e.KyXuatNhap)
                 .HasForeignKey(e => e.IdKyxuat)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<KyXuatNhap_LoaiHang>()
+                .HasMany(e => e.KyXuatNhaps)
+                .WithRequired(e => e.KyXuatNhap_LoaiHang)
+                .HasForeignKey(e => e.IdLoaiHangXN)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Loai_Socials>()

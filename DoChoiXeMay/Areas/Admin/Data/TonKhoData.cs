@@ -1,6 +1,7 @@
 ﻿using DoChoiXeMay.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -64,6 +65,32 @@ namespace DoChoiXeMay.Areas.Admin.Data
             catch (Exception ex)
             {
                 string loi = ex.ToString();
+                return false;
+            }
+
+        }
+        public static bool UpdateCTKytonKho(Model1 db, int IdKyton, string tenhang,int IDMF, int Color, int Size, int soluong)
+        {
+            //dùng cho kỳ nhập
+            try
+            {
+                var modelhh = db.ChiTietTonKhoes.FirstOrDefault(kh => kh.TenHang.ToLower().Trim() == tenhang.ToLower().Trim() && kh.IDMF == IDMF
+                                                && kh.IDColor == Color && kh.IDSize == Size && kh.IdKyTonKho==IdKyton && kh.ChuaRap >0);
+                if (modelhh != null)
+                {
+                    var model = db.ChiTietTonKhoes.Find(modelhh.Id);
+                    model.DaRap = model.DaRap + soluong;
+                    model.ChuaRap = model.TonDauKy-model.DaRap-model.CoLoi;
+                    model.NgayUpdate = DateTime.Now;
+                    db.Entry(model).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return true;
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                string msg = e.Message;
                 return false;
             }
 
