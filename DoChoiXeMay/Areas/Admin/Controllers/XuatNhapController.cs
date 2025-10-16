@@ -30,6 +30,20 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
 
             return Json(UserId, JsonRequestBehavior.AllowGet);
         }
+        public ActionResult LoadLoaiHangBan()
+        {
+            var IdLoaiHangXN = dbc.KyXuatNhap_LoaiHang.
+                            Select(kh => new { id = kh.Id, ten = kh.TenLoai });
+
+            return Json(IdLoaiHangXN, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult LoadSanTM()
+        {
+            var IdSan = dbc.SanThuongMais.Where(kh => kh.SuDung == true).
+                            Select(kh => new { id = kh.Id, ten = kh.TenSan });
+
+            return Json(IdSan, JsonRequestBehavior.AllowGet);
+        }
         public ActionResult ListXuatNhapUser()
         {
             ViewBag.IdMaTC = new SelectList(dbc.MaTCs.Where(kh => kh.SuDung == true && kh.XuatNhap==true), "Id", "GhiChu",17);
@@ -63,16 +77,19 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         {
             Session["requestUri"] = "/Admin/XuatNhap/ListXuatNhapTeK";
             ViewBag.UserId = new SelectList(dbc.UserTeks.Where(kh => kh.IdLoai < 3), "Id", "UserName");
+            ViewBag.IdSan = new SelectList(dbc.SanThuongMais.Where(kh => kh.SuDung ==true), "Id", "TenSan");
+            ViewBag.IdLoaiHangXN = new SelectList(dbc.KyXuatNhap_LoaiHang.ToList(), "Id", "TenLoai");
             return View();
         }
-        public ActionResult GetListKyXNTeK(int PageNo = 0, int PageSize = 8,int UserId = 0)
+        public ActionResult GetListKyXNTeK(string strk,int idLHXN = 0,int IdSan=0, int PageNo = 0, int PageSize = 8,int UserId = 0)
         {
-            ViewBag.KyXNTeK = new Data.XuatNhapData().getXuatNhapTek(PageNo, PageSize,UserId);
+            strk = strk.ToLower().Trim();
+            ViewBag.KyXNTeK = new Data.XuatNhapData().getXuatNhapTek(strk,idLHXN, IdSan, PageNo, PageSize,UserId);
             return PartialView();
         }
-        public ActionResult GetPageCountXNTek(int PageSize = 8,int UserId=0)
+        public ActionResult GetPageCountXNTek(string strk, int idLHXN = 0, int IdSan = 0, int PageSize = 8,int UserId=0)
         {
-            var num = new Data.XuatNhapData().GetPageCountXuatNhapTek(UserId);
+            var num = new Data.XuatNhapData().GetPageCountXuatNhapTek(strk, idLHXN, IdSan, UserId);
             var pageCount = Math.Ceiling(1.0 * num / PageSize);
             return Json(pageCount, JsonRequestBehavior.AllowGet);
         }

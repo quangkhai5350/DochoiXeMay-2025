@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
+using System.Windows.Media.Media3D;
 
 namespace DoChoiXeMay.Areas.Admin.Data
 {
@@ -96,24 +97,52 @@ namespace DoChoiXeMay.Areas.Admin.Data
             
             return kt;
         }
-        public List<KyXuatNhap> getXuatNhapTek(int Sec, int pageSize,int UserId)
+        public static List<KyXuatNhap> ChiTietKyXuatNhapTEK(Model1 db, string strk, int idLHXN, int IdSan, int UserId)
         {
+            List<KyXuatNhap> model = new List<KyXuatNhap>();
             List<KyXuatNhap> model1 = new List<KyXuatNhap>();
-            if (UserId == 0)
+            model = db.KyXuatNhaps.Where(kh => kh.Id > 1 && kh.AdminXNPUSH == true 
+                    && kh.UPush == true && kh.TenKy.ToLower().Contains(strk))
+                    .OrderBy(kh => kh.NgayAuto).ToList();
+            if (UserId == 0 && idLHXN == 0 && IdSan==0)
             {
-                model1 = _context.KyXuatNhaps.Where(kh => kh.Id > 1 && kh.AdminXNPUSH == true
-                    && kh.UPush == true)
-                    .OrderBy(kh => kh.NgayAuto)
-                    .ToList();
+                model1 = model; 
+            }
+            else if (UserId > 0 && idLHXN == 0 && IdSan==0)
+            {
+                model1 = model.Where(kh=> kh.UserId == UserId).ToList();
+            }else if (UserId == 0 && idLHXN > 0 && IdSan == 0)
+            {
+                model1 = model.Where(kh => kh.IdLoaiHangXN == idLHXN).ToList();
+            }
+            else if (UserId == 0 && idLHXN == 0 && IdSan > 0)
+            {
+                model1 = model.Where(kh => kh.IdSan == IdSan).ToList();
+            }
+            else if(UserId == 0 && idLHXN > 0 && IdSan > 0)
+            {
+                model1 = model.Where(kh => kh.IdLoaiHangXN == idLHXN && kh.IdSan == IdSan).ToList();
+            }
+            else if(UserId > 0 && idLHXN > 0 && IdSan == 0)
+            {
+                model1 = model.Where(kh => kh.IdLoaiHangXN == idLHXN && kh.UserId == UserId).ToList();
+            }
+            else if(UserId > 0 && idLHXN == 0 && IdSan > 0)
+            {
+                model1 = model.Where(kh => kh.IdSan == IdSan && kh.UserId == UserId).ToList();
             }
             else
             {
-                model1 = _context.KyXuatNhaps.Where(kh => kh.Id > 1 && kh.AdminXNPUSH == true
-                    && kh.UPush == true && kh.UserId == UserId)
-                    .OrderBy(kh => kh.NgayAuto)
-                    .ToList();
+                model1 = model.Where(kh => kh.IdSan == IdSan && kh.UserId == UserId && kh.IdLoaiHangXN == idLHXN).ToList();
             }
-            
+            return model1;
+        }
+        public List<KyXuatNhap> getXuatNhapTek(string strk,int idLHXN,int IdSan, int Sec, int pageSize,int UserId)
+        {
+            List<KyXuatNhap> model1 = new List<KyXuatNhap>();
+            model1 = ChiTietKyXuatNhapTEK(_context, strk, idLHXN,IdSan, UserId).ToList();
+
+
             for (int i = 0; i < model1.Count(); i++)
             {
                 model1[i].STT = (i +1).ToString();
@@ -126,19 +155,10 @@ namespace DoChoiXeMay.Areas.Admin.Data
                             .ToList();
             return model1;
         }
-        public int GetPageCountXuatNhapTek(int UserId=0)
+        public int GetPageCountXuatNhapTek(string strk,int idLHXN=0,int IdSan = 0, int UserId=0)
         {
             var model1 = 0;
-            if (UserId == 0)
-            {
-                model1 = _context.KyXuatNhaps.Where(kh => kh.Id > 1 && kh.AdminXNPUSH == true
-                        && kh.UPush == true).Count();
-            }
-            else
-            {
-                model1 = _context.KyXuatNhaps.Where(kh => kh.Id > 1 && kh.AdminXNPUSH == true
-                        && kh.UPush == true && kh.UserId == UserId).Count();
-            }
+            model1 = ChiTietKyXuatNhapTEK(_context, strk, idLHXN,IdSan, UserId).Count();
             return model1;
         }
         public static bool InsertMsgAotu(Model1 dbc,int UserId, string MsgSys,bool AdminDaxem, bool Sub2Daxem,bool Sub4Daxem,bool Sub5Daxem,bool Sub6Daxem)
