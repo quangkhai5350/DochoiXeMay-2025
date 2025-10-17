@@ -173,7 +173,8 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             }
             return Json("", JsonRequestBehavior.AllowGet);
         }
-        [HttpPost]
+        //[HttpPost]
+        [HttpPost, ValidateInput(false)]
         public ActionResult AddSNCNtoChiTiet(string Serial)
         {
             
