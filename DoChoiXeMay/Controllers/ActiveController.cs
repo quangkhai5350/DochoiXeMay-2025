@@ -148,6 +148,8 @@ namespace DoChoiXeMay.Controllers
                 return Json("22", JsonRequestBehavior.AllowGet);
             }
         }
+        //Thu nghiem 17/10
+        [HttpPost, ValidateInput(false)]
         public ActionResult KichHoatBaoHanh(bool ND,bool NPP, string Tenkh = "", string sBOX="", string sSP="", string ChiNhanh="", string gmail = "",string sdt = "",string khuvuc="") {
             try
             {
