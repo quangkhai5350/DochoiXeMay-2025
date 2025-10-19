@@ -214,6 +214,7 @@
     <Compile Include="Models\Ser_XuatSN_CN.cs" />
     <Compile Include="Models\Size.cs" />
     <Compile Include="Models\sysdiagram.cs" />
+    <Compile Include="Models\TonKhoCap.cs" />
     <Compile Include="Models\TrangThaiDuAn.cs" />
     <Compile Include="Models\UserTek.cs" />
     <Compile Include="Models\Version.cs" />
@@ -562,6 +563,7 @@
     <Content Include="Areas\Admin\Views\ThongKe\UpdateCTTK.cshtml" />
     <Content Include="Areas\Admin\Views\NhanVien\ListNhanVien.cshtml" />
     <Content Include="Areas\Admin\Views\NhanVien\GetListNhanVien.cshtml" />
+    <Content Include="Areas\Admin\Views\XuatNhap\UpdateSerialXN.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />

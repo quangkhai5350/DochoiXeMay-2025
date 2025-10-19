@@ -3,12 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Data.SqlClient;
 using System.Drawing.Printing;
 using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using System.Windows.Media.Media3D;
+using System.Xml.Linq;
 
 namespace DoChoiXeMay.Areas.Admin.Data
 {
@@ -38,13 +40,36 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 return false;
             }
         }
-        public bool UPdateChiTietKy(ChitietXuatNhap CTXN)
+        public bool UPdateChiTietKy(ChitietXuatNhap model, string DBname)
         {
             try
             {
-                _context.Entry(CTXN).State = EntityState.Modified;
-                _context.SaveChanges();
+                var update = _context.Database.ExecuteSqlCommand("update [" + DBname + "TechZone].[dbo].[ChitietXuatNhap] set " +
+                "Ten=@Ten,IdKy=@IdKy,SoLuong=@SoLuong," +
+                "Gianhap=@Gianhap,NgayAuto=@NgayAuto,Hinh1=@Hinh1,Hinh2=@Hinh2,Hinh3=@Hinh3," +
+                "IDMF=@IDMF,IDColor=@IDColor,IDSize=@IDSize,GhiChu=@GhiChu,SerialHop=@SerialHop," +
+                "SerialSP=@SerialSP,DaActive=@DaActive,TraHangKhachLe=@TraHangKhachLe " +
+                "where Id=@Id",
+                new SqlParameter("@Ten", model.Ten),
+                new SqlParameter("@IdKy", model.IdKy),
+                new SqlParameter("@SoLuong", model.SoLuong),
+                new SqlParameter("@Gianhap", model.Gianhap),
+                new SqlParameter("@NgayAuto", model.NgayAuto),
+                new SqlParameter("@Hinh1", model.Hinh1),
+                new SqlParameter("@Hinh2", model.Hinh2),
+                new SqlParameter("@Hinh3", model.Hinh3),
+                new SqlParameter("@IDMF", model.IDMF),
+                new SqlParameter("@IDColor", model.IDColor),
+                new SqlParameter("@IDSize", model.IDSize),
+                new SqlParameter("@GhiChu", ""),
+                new SqlParameter("@SerialHop", model.SerialHop),
+                new SqlParameter("@SerialSP", model.SerialSP),
+                new SqlParameter("@DaActive", model.DaActive),
+                new SqlParameter("@TraHangKhachLe", model.TraHangKhachLe),
+                new SqlParameter("@Id", model.Id));
+                if (update > 0)
                 return true;
+                else return false;
             }
             catch (Exception ex)
             {

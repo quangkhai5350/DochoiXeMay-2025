@@ -69,7 +69,7 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <p>Lỗi <span></span></p>
+                                <p>Lỗi(update thu cong) <span></span></p>
                                 <span class="icon-case"><i class="glyphicon glyphicon-import"></i></span>
                                 @Html.TextBoxFor(m => m.CoLoi, new { @class = "form-control", @type = "number", style = "width: 100%; height: 40px" })
                             </div>
@@ -101,6 +101,15 @@
                             <div class="form-group" style="text-align:center">
                                 <p>Sản Phẩm <span></span></p>
                                 @Html.CheckBoxFor(m => m.SanPham, new { @style = "height:20px;margin-left: 10%" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-9">
+                            <div class="form-group">
+                                <p>Cap So NVL <span></span></p>
+                                <span class="icon-case"><i class="glyphicon glyphicon-import"></i></span>
+                                @Html.DropDownList("IDCap", null, new { style = "width: 100%; height: 40px" })
                             </div>
                         </div>
                     </div>

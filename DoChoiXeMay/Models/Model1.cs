@@ -56,6 +56,7 @@ namespace DoChoiXeMay.Models
         public virtual DbSet<Ser_XuatSN_CN> Ser_XuatSN_CN { get; set; }
         public virtual DbSet<Size> Sizes { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<TonKhoCap> TonKhoCaps { get; set; }
         public virtual DbSet<TrangThaiDuAn> TrangThaiDuAns { get; set; }
         public virtual DbSet<UserTek> UserTeks { get; set; }
         public virtual DbSet<Version> Versions { get; set; }
@@ -327,6 +328,12 @@ namespace DoChoiXeMay.Models
                 .HasMany(e => e.Ser_sp)
                 .WithRequired(e => e.Size)
                 .HasForeignKey(e => e.IdSize)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<TonKhoCap>()
+                .HasMany(e => e.ChiTietTonKhoes)
+                .WithRequired(e => e.TonKhoCap)
+                .HasForeignKey(e => e.IDCap)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<TrangThaiDuAn>()

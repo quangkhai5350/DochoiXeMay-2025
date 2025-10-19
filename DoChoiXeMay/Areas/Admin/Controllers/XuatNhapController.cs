@@ -531,6 +531,35 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             }
             return RedirectToAction("ListXuatNhapTeK");
         }
+        public ActionResult UpdateSerialXN(String id)
+        {
+            Session["idctxn"] = id;
+            var model = dbc.ChitietXuatNhaps.Find(new Guid(id));
+            return View(model);
+        }
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult UpdateSerialXN(ChitietXuatNhap model)
+        {
+            try
+            {
+                var ctxn = dbc.ChitietXuatNhaps.Find(new Guid(Session["idctxn"].ToString()));
+                ctxn.SoLuong = model.SoLuong;
+                ctxn.SerialSP = model.SerialSP;
+                ctxn.SerialHop = model.SerialHop;
+                dbc.Entry(ctxn).State = EntityState.Modified;
+                dbc.SaveChanges();
+                
+                Session["ThongBaoXuatNhapTeK"] = "Update thanh cong Serial !!!";
+                return RedirectToAction("ListXuatNhapTeK");
+            }
+            catch (Exception ex)
+            {
+                string loi = ex.ToString();
+                ModelState.AddModelError("", "Update Thất Bại !!!! Co Loi Xay Ra.");
+            }
+            return View(model);
+        }
         [HttpGet]
         public ActionResult InsertChiTietXNbyKy(int id) {
             var ky = dbc.KyXuatNhaps.Find(id);

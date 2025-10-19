@@ -43,7 +43,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 if (kqAc)
                 {
                     kh.DaActive = "ActiveAuto";
-                    var kqAuto = new XuatNhapData().UPdateChiTietKy(kh);
+                    var kqAuto = new XuatNhapData().UPdateChiTietKy(kh,DBname);
                 }
             }
             Session["requestUri"] = "/Admin/Serial/ListSerialChuaIn";

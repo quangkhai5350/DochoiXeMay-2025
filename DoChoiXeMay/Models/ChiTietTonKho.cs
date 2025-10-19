@@ -45,6 +45,8 @@ namespace DoChoiXeMay.Models
 
         public int IDSize { get; set; }
 
+        public int IDCap { get; set; }
+
         public virtual Color Color { get; set; }
 
         public virtual KyTonKho KyTonKho { get; set; }
@@ -52,5 +54,7 @@ namespace DoChoiXeMay.Models
         public virtual Manufacturer Manufacturer { get; set; }
 
         public virtual Size Size { get; set; }
+
+        public virtual TonKhoCap TonKhoCap { get; set; }
     }
 }

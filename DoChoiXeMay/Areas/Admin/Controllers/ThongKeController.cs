@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -243,6 +244,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ViewBag.IDMF = new SelectList(dbc.Manufacturers.Where(kh => kh.Sudung == true), "Id", "Name", model.IDMF);
             ViewBag.IDColor = new SelectList(dbc.Colors.OrderByDescending(kh => kh.Id), "Id", "TenColor",model.IDColor);
             ViewBag.IDSize = new SelectList(dbc.Sizes.OrderBy(kh => kh.Id), "Id", "TenSize",model.IDSize);
+            ViewBag.IDCap = new SelectList(dbc.TonKhoCaps.OrderBy(kh => kh.Id), "Id", "Ten", model.IDCap);
             return View(model);
         }
         [HttpPost]
@@ -256,6 +258,44 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 model.ChuaRap = model.TonDauKy - model.DaRap - model.CoLoi;
                 dbc.Entry(model).State = EntityState.Modified;
                 dbc.SaveChanges();
+                if (model.ParentId == 0)
+                {
+                    var chitietNVL = dbc.ChiTietTonKhoes.Where(kh => kh.ParentId == model.Id).ToList();
+                    if (chitietNVL.Count() > 0)
+                    {
+                        foreach (var item in chitietNVL)
+                        {
+                            item.TonDauKy = model.TonDauKy * item.TonKhoCap.Cap;
+                            item.DaRap = model.DaRap * item.TonKhoCap.Cap;
+                            item.ChuaRap = item.TonDauKy - item.DaRap - item.CoLoi;
+                            item.NgayUpdate = DateTime.Now;
+                            var update = dbc.Database.ExecuteSqlCommand("update [" + DBname + "TechZone].[dbo].[ChiTietTonKho] set " +
+                            "IdKyTonKho=@IdKyTonKho,TenHang=@TenHang,TonDauKy=@TonDauKy," +
+                            "DaRap=@DaRap,CoLoi=@CoLoi,ChuaRap=@ChuaRap,NgayTao=@NgayTao,NgayUpdate=@NgayUpdate," +
+                            "SanPham=@SanPham,GhiChu=@GhiChu,STT=@STT,ParentId=@ParentId,IDMF=@IDMF," +
+                            "IDColor=@IDColor,IDSize=@IDSize,IDCap=@IDCap " +
+                            "where Id=@Id",
+                            new SqlParameter("@IdKyTonKho", item.IdKyTonKho),
+                            new SqlParameter("@TenHang", item.TenHang),
+                            new SqlParameter("@TonDauKy", item.TonDauKy),
+                            new SqlParameter("@DaRap", item.DaRap),
+                            new SqlParameter("@CoLoi", item.CoLoi),
+                            new SqlParameter("@ChuaRap", item.ChuaRap),
+                            new SqlParameter("@NgayTao", item.NgayTao),
+                            new SqlParameter("@NgayUpdate", item.NgayUpdate),
+                            new SqlParameter("@SanPham", item.SanPham),
+                            new SqlParameter("@GhiChu", ""),
+                            new SqlParameter("@STT", ""),
+                            new SqlParameter("@ParentId", item.ParentId),
+                            new SqlParameter("@IDMF", item.IDMF),
+                            new SqlParameter("@IDColor", item.IDColor),
+                            new SqlParameter("@IDSize", item.IDSize),
+                            new SqlParameter("@IDCap", item.IDCap),
+                            new SqlParameter("@Id", item.Id));
+                        }
+                    }
+                }
+                
                 Session["ThongBaoKyTonKhoOK"] = "Update thành công Chi Tiết SP/NVL " + model.TenHang;
                 //tro lai trang truoc do 
                 var requestUri = Session["requestUri"] as string;
@@ -272,6 +312,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 ViewBag.IDMF = new SelectList(dbc.Manufacturers.Where(kh => kh.Sudung == true), "Id", "Name", model.IDMF);
                 ViewBag.IDColor = new SelectList(dbc.Colors.OrderByDescending(kh => kh.Id), "Id", "TenColor", model.IDColor);
                 ViewBag.IDSize = new SelectList(dbc.Sizes.OrderBy(kh => kh.Id), "Id", "TenSize", model.IDSize);
+                ViewBag.IDCap = new SelectList(dbc.TonKhoCaps.OrderBy(kh => kh.Id), "Id", "Ten", model.IDCap);
                 return View(model);
             }
             return RedirectToAction("Index");

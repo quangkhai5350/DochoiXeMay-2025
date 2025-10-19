@@ -62,6 +62,9 @@ namespace DoChoiXeMay.Models
 
         public bool DaNghiViec { get; set; }
 
+        [StringLength(50)]
+        public string STT { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NV_ChiTietNhanVien> NV_ChiTietNhanVien { get; set; }
 

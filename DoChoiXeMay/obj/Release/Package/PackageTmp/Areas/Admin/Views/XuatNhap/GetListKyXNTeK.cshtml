@@ -18,7 +18,7 @@
                 <th class="canhgiua" style="max-width: 30px; padding-left: 0;padding-right:0">Hóa Đơn</th>
                 <th class="canhgiua" style="max-width: 30px; padding-left: 0;padding-right:0">File 2</th>
                 <th class="canhgiua" style="max-width: 30px; padding-left: 0;padding-right:0">File 3</th>
-                <th class="canhgiua">Trả Hàng</th>
+                <th class="canhgiua">Trả Hàng/Update</th>
                 @*@if (Session["quyen"].ToString() == "1")
                     {
                         <th class="canhgiua">Trả Hàng</th>
@@ -196,14 +196,20 @@
                                 var KT = new XuatNhapData().kiemtraNgayCTXN(ct.Id.ToString());
                                 if (KT > 20 && ct.TraHangKhachLe == false)
                                 {
-                                    <span>Hết hạn(20 ngày)</span>
+                                    <p style="height:40px">
+                                        <span>Hết hạn(20 ngày)</span>
+                                    </p>
                                 }
                                 else if (KT <= 20 && ct.TraHangKhachLe == false)
                                 {
                                     if (Session["quyen"].ToString() == "1")
                                     {
-                                        <a title="Khách Lẻ Trả Hàng" class="btn btn-danger" onclick="return confirm('Khách Lẻ Muốn trả Hàng ??')"
+                                    <p style="height:50px">
+                                        <a title="@ct.Id" class="btn btn-danger" onclick="return confirm('Khách Lẻ Muốn trả Hàng ??')"
                                            href="/Admin/XuatNhap/TraHangChiTietXNbyID/@ct.Id"><span class="glyphicon glyphicon-backward" style="font-size:10px"></span></a>
+                                        /<a hidden title="@ct.Id" class="btn btn-danger" onclick="return confirm('Update Serial ??')"
+                                           href="/Admin/XuatNhap/UpdateSerialXN/@ct.Id"><span class="glyphicon glyphicon-backward" style="font-size:10px"></span></a>
+                                    </p>
                                     }
                                     else
                                     {
@@ -218,7 +224,7 @@
 
                             }
                         }
-                    </td>
+                                    </td>
                     <td>
                         @foreach (DoChoiXeMay.Models.ChitietXuatNhap ct in Chitiet)
                         {
@@ -249,7 +255,7 @@
                                 }
                                 @if (ct.DaActive != null)
                                 {
-                                    <span> <span>-</span> @ct.DaActive</span>
+                                    <span style="background-color:bisque"> <span>-</span> @ct.DaActive</span>
                                 }
                             </p>
                             <hr />
