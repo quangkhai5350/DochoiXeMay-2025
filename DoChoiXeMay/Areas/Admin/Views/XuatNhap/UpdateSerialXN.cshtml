@@ -25,7 +25,6 @@
                 @Html.HiddenFor(kh => kh.IDSize)
                 @Html.HiddenFor(kh => kh.GhiChu)
                 @Html.HiddenFor(kh => kh.DaActive)
-                @Html.HiddenFor(kh => kh.TraHangKhachLe)
                 <h1 class="info_header">
                     <span style="color:black">Update @Model.Ten</span>
                     <span class="pull-right label label-warning" style="color:white;font-family:monospace">
@@ -50,6 +49,12 @@
                             <p>SerialSP </p>
                             <span class="icon-case"><i class="glyphicon glyphicon-expand"></i></span>
                             @Html.TextBoxFor(kh => kh.SerialSP, new { @class = "form-control", style = "height: 40px", @required = true })
+
+                        </div>
+                        <div class="row" style="width:95%;padding-left:15px">
+                            <p>Trả Hàng </p>
+                            <span class="icon-case"><i class="glyphicon glyphicon-expand"></i></span>
+                            @Html.DropDownList("IdDoiTra", null, new { style = "width: 100%; height: 40px" })
 
                         </div>
                         <div class="row" style="margin-top:10px">

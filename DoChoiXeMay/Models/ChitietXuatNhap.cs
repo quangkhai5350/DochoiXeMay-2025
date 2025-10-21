@@ -50,9 +50,11 @@ namespace DoChoiXeMay.Models
         [StringLength(30)]
         public string DaActive { get; set; }
 
-        public bool TraHangKhachLe { get; set; }
+        public int IdDoiTra { get; set; }
 
         public virtual Color Color { get; set; }
+
+        public virtual HangDoiTra HangDoiTra { get; set; }
 
         public virtual KyXuatNhap KyXuatNhap { get; set; }
 

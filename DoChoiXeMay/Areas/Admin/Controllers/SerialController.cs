@@ -34,7 +34,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             //Auto active Khách Lẻ mua quá 15 ngày
             DateTime ngayHienTai = DateTime.Today;
             var ListChuaActive = dbc.ChitietXuatNhaps.Where(kh =>kh.KyXuatNhap.KhachLe==true && kh.KyXuatNhap.UPush==true &&( kh.DaActive == null || kh.DaActive != "Active")
-               && kh.TraHangKhachLe==false && DbFunctions.DiffDays(kh.NgayAuto,ngayHienTai) > 14).ToList();
+               && kh.IdDoiTra == 1 && DbFunctions.DiffDays(kh.NgayAuto,ngayHienTai) > 14).ToList();
             
             foreach (var kh in ListChuaActive)
             {

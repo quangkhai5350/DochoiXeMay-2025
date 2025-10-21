@@ -175,6 +175,7 @@
     <Compile Include="Models\ChitietXuatNhap.cs" />
     <Compile Include="Models\Color.cs" />
     <Compile Include="Models\GroupDuAn.cs" />
+    <Compile Include="Models\HangDoiTra.cs" />
     <Compile Include="Models\HangHoa.cs" />
     <Compile Include="Models\HanhDong.cs" />
     <Compile Include="Models\HinhThucTC.cs" />

@@ -150,7 +150,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         public ActionResult TimSNLoHang(string Serial)
         {
             var modelct = dbc.Ser_Chitiet_XuatSN_CN.FirstOrDefault(kh => kh.Serial == Serial);
-            var modelctxn = dbc.ChitietXuatNhaps.FirstOrDefault(kh => kh.TraHangKhachLe == false && kh.SerialHop == Serial);
+            var modelctxn = dbc.ChitietXuatNhaps.FirstOrDefault(kh => kh.SerialHop == Serial && kh.IdDoiTra <4);
             if (modelct != null && modelctxn == null)
             {
                 Session["ThongBaoLoiSN_ChiNhanh"] = "";
@@ -187,14 +187,14 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 try
                 {
                     var modelct = dbc.Ser_Chitiet_XuatSN_CN.FirstOrDefault(kh => kh.Serial == Serial);
-                    var modelctxn = dbc.ChitietXuatNhaps.FirstOrDefault(kh => kh.TraHangKhachLe == false && kh.SerialHop == Serial);
-                    if (modelct != null)
+                    var modelctxn = dbc.ChitietXuatNhaps.FirstOrDefault(kh => kh.SerialHop == Serial && kh.IdDoiTra < 4);
+                    if (modelct != null && modelctxn == null)
                     {
                         Session["ThongBaotaolohang"] = "";
                         Session["ThongBaoLoitaolohang"] = "Số serial: " + Serial + " đã nằm trong lô hàng của chi nhánh "
                             + modelct.Ser_XuatSN_CN.Ser_ChiNhanh.TenChiNhanh + " có Id=" + modelct.IdSN_CN + ", không thể add !!!";
                     }
-                    else if (modelctxn != null)
+                    else if (modelctxn != null && modelct == null)
                     {
                         Session["ThongBaotaolohang"] = "";
                         Session["ThongBaoLoitaolohang"] = "Số serial: " + Serial + " đã xuất cho khách lẻ.!!!";

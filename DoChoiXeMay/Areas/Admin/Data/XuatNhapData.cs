@@ -48,7 +48,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 "Ten=@Ten,IdKy=@IdKy,SoLuong=@SoLuong," +
                 "Gianhap=@Gianhap,NgayAuto=@NgayAuto,Hinh1=@Hinh1,Hinh2=@Hinh2,Hinh3=@Hinh3," +
                 "IDMF=@IDMF,IDColor=@IDColor,IDSize=@IDSize,GhiChu=@GhiChu,SerialHop=@SerialHop," +
-                "SerialSP=@SerialSP,DaActive=@DaActive,TraHangKhachLe=@TraHangKhachLe " +
+                "SerialSP=@SerialSP,DaActive=@DaActive,IdDoiTra=@IdDoiTra " +
                 "where Id=@Id",
                 new SqlParameter("@Ten", model.Ten),
                 new SqlParameter("@IdKy", model.IdKy),
@@ -65,7 +65,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 new SqlParameter("@SerialHop", model.SerialHop),
                 new SqlParameter("@SerialSP", model.SerialSP),
                 new SqlParameter("@DaActive", model.DaActive),
-                new SqlParameter("@TraHangKhachLe", model.TraHangKhachLe),
+                new SqlParameter("@IdDoiTra", model.IdDoiTra),
                 new SqlParameter("@Id", model.Id));
                 if (update > 0)
                 return true;

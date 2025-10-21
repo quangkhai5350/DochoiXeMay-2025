@@ -18,6 +18,7 @@ namespace DoChoiXeMay.Models
         public virtual DbSet<ChitietXuatNhap> ChitietXuatNhaps { get; set; }
         public virtual DbSet<Color> Colors { get; set; }
         public virtual DbSet<GroupDuAn> GroupDuAns { get; set; }
+        public virtual DbSet<HangDoiTra> HangDoiTras { get; set; }
         public virtual DbSet<HangHoa> HangHoas { get; set; }
         public virtual DbSet<HanhDong> HanhDongs { get; set; }
         public virtual DbSet<HinhThucTC> HinhThucTCs { get; set; }
@@ -91,6 +92,12 @@ namespace DoChoiXeMay.Models
                 .HasMany(e => e.ProjectTeKs)
                 .WithRequired(e => e.GroupDuAn)
                 .HasForeignKey(e => e.GroupId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<HangDoiTra>()
+                .HasMany(e => e.ChitietXuatNhaps)
+                .WithRequired(e => e.HangDoiTra)
+                .HasForeignKey(e => e.IdDoiTra)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<HanhDong>()

@@ -501,25 +501,26 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 var model = dbc.ChitietXuatNhaps.Find(new Guid(id));
                 var ky = dbc.KyXuatNhaps.Find(model.IdKy);
 
-                if (ky.KhachLe == true && model.TraHangKhachLe == false)
+                if (ky.KhachLe == true && model.IdDoiTra == 1)
                 {
-                    model.TraHangKhachLe = true;
+                    model.IdDoiTra = 2;//mới nhận
                     model.NgayAuto = DateTime.Now;
                     dbc.Entry(model).State = EntityState.Modified;
                     var kq = dbc.SaveChanges();
-                    if (kq > 0)
-                    {
-                        var HH = dbc.HangHoas.FirstOrDefault(kh => kh.Ten == model.Ten && kh.IDMF == model.IDMF
-                                        && kh.IDColor == model.IDColor && kh.IDSize == model.IDSize);
-                        if (HH != null)
-                        {
-                            HH.SoLuong = HH.SoLuong + 1;
-                            dbc.Entry(model).State = EntityState.Modified;
-                            dbc.SaveChanges();
-                            Session["ThongBaoXuatNhapTeK"] = "Trả Hàng Thành Công, Số lượng HH tăng 1.";
-                            return RedirectToAction("ListXuatNhapTeK");
-                        }
-                    }
+                    Session["ThongBaoXuatNhapTeK"] = "Trả Hàng Thành Công, Cần Kiểm tra hàng.";
+                    //if (kq > 0)
+                    //{
+                    //    var HH = dbc.HangHoas.FirstOrDefault(kh => kh.Ten == model.Ten && kh.IDMF == model.IDMF
+                    //                    && kh.IDColor == model.IDColor && kh.IDSize == model.IDSize);
+                    //    if (HH != null)
+                    //    {
+                    //        HH.SoLuong = HH.SoLuong + 1;
+                    //        dbc.Entry(model).State = EntityState.Modified;
+                    //        dbc.SaveChanges();
+                    //        Session["ThongBaoXuatNhapTeK"] = "Trả Hàng Thành Công, Số lượng HH tăng 1.";
+                    //        return RedirectToAction("ListXuatNhapTeK");
+                    //    }
+                    //}
                 }
                 Session["ThongBaoXuatNhapTeK"] = "Không đủ đk để trả hàng.Trả Hàng Thất Bại !!!";
                 return RedirectToAction("ListXuatNhapTeK");
@@ -535,6 +536,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         {
             Session["idctxn"] = id;
             var model = dbc.ChitietXuatNhaps.Find(new Guid(id));
+            ViewBag.IdDoiTra = new SelectList(dbc.HangDoiTras.ToList(), "Id", "Ten", model.IdDoiTra);
             return View(model);
         }
         [HttpPost]
@@ -547,16 +549,31 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 ctxn.SoLuong = model.SoLuong;
                 ctxn.SerialSP = model.SerialSP;
                 ctxn.SerialHop = model.SerialHop;
+                ctxn.IdDoiTra = model.IdDoiTra;
                 dbc.Entry(ctxn).State = EntityState.Modified;
-                dbc.SaveChanges();
+                var kq=dbc.SaveChanges();
                 
                 Session["ThongBaoXuatNhapTeK"] = "Update thanh cong Serial !!!";
+                if (kq > 0 && ctxn.IdDoiTra == 4)//Không Lỗi, tồn kho
+                {
+                    var HH = dbc.HangHoas.FirstOrDefault(kh => kh.Ten == model.Ten && kh.IDMF == model.IDMF
+                                    && kh.IDColor == model.IDColor && kh.IDSize == model.IDSize);
+                    if (HH != null)
+                    {
+                        HH.SoLuong = HH.SoLuong + 1;
+                        dbc.Entry(HH).State = EntityState.Modified;
+                        dbc.SaveChanges();
+                        Session["ThongBaoXuatNhapTeK"] = "Trả Hàng Thành Công, Số lượng HH tăng 1.";
+                        return RedirectToAction("ListXuatNhapTeK");
+                    }
+                }
                 return RedirectToAction("ListXuatNhapTeK");
             }
             catch (Exception ex)
             {
                 string loi = ex.ToString();
                 ModelState.AddModelError("", "Update Thất Bại !!!! Co Loi Xay Ra.");
+                ViewBag.IdDoiTra = new SelectList(dbc.HangDoiTras.ToList(), "Id", "Ten", model.IdDoiTra);
             }
             return View(model);
         }
@@ -643,7 +660,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 {
                     model.SoLuong = 1;
                 }
-                model.TraHangKhachLe = false;
+                model.IdDoiTra = 1;
                 dbc.ChitietXuatNhaps.Add(model);
                 int kq = dbc.SaveChanges();
                 if (kq > 0)

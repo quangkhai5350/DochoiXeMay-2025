@@ -6,23 +6,25 @@ namespace DoChoiXeMay.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("TonKhoCap")]
-    public partial class TonKhoCap
+    [Table("HangDoiTra")]
+    public partial class HangDoiTra
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TonKhoCap()
+        public HangDoiTra()
         {
-            ChiTietTonKhoes = new HashSet<ChiTietTonKho>();
+            ChitietXuatNhaps = new HashSet<ChitietXuatNhap>();
         }
 
         public int Id { get; set; }
 
-        [StringLength(10)]
+        [Required]
+        [StringLength(100)]
         public string Ten { get; set; }
 
-        public int Cap { get; set; }
+        [StringLength(200)]
+        public string GiaiThich { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ChiTietTonKho> ChiTietTonKhoes { get; set; }
+        public virtual ICollection<ChitietXuatNhap> ChitietXuatNhaps { get; set; }
     }
 }

@@ -23,20 +23,20 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             Session["requestUri"] = "/Admin/ThongKe/Index";
             var beg = dbc.ChitietXuatNhaps.Where(kh => kh.Ten == "Xi Nhan Wave TNT BLOCKX G2 ZEN 1"
                                     && kh.KyXuatNhap.XuatNhap == true).ToList();
-            var begin = beg.Where(kh=> kh.TraHangKhachLe == false).ToList();
+            var begin = beg.Where(kh=> kh.IdDoiTra == 1).ToList();
             var daban = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1).ToList();
             var DaBanTikTok = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1 && kh.KyXuatNhap.IdSan == 2).ToList();
             var DaBanShopee = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1 && kh.KyXuatNhap.IdSan == 3).ToList();
             var DaBanLeNSan = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1 && kh.KyXuatNhap.IdSan == 1 && kh.KyXuatNhap.KhachLe == true).ToList();
-            var DaTraHangKhachLe = beg.Where(kh => kh.TraHangKhachLe == true).ToList();
-            var DaTraHangKhachLeTrong = beg.Where(kh => kh.TraHangKhachLe == true && kh.IDColor==5).ToList();
-            var DaTraHangKhachLeTrongTikTok = beg.Where(kh => kh.TraHangKhachLe == true && kh.IDColor == 5 && kh.KyXuatNhap.IdSan == 2).ToList();
-            var DaTraHangKhachLeTrongShopee = beg.Where(kh => kh.TraHangKhachLe == true && kh.IDColor == 5 && kh.KyXuatNhap.IdSan == 3).ToList();
-            var DaTraHangKhachLeTrongNSan = beg.Where(kh => kh.TraHangKhachLe == true && kh.IDColor == 5 && kh.KyXuatNhap.IdSan == 1).ToList();
-            var DaTraHangKhachLeKhoi = beg.Where(kh => kh.TraHangKhachLe == true && kh.IDColor == 7).ToList();
-            var DaTraHangKhachLeKhoiTikTok = beg.Where(kh => kh.TraHangKhachLe == true && kh.IDColor == 7 && kh.KyXuatNhap.IdSan == 2).ToList();
-            var DaTraHangKhachLeKhoiShopee = beg.Where(kh => kh.TraHangKhachLe == true && kh.IDColor == 7 && kh.KyXuatNhap.IdSan == 3).ToList();
-            var DaTraHangKhachLeKhoiNSan = beg.Where(kh => kh.TraHangKhachLe == true && kh.IDColor == 7 && kh.KyXuatNhap.IdSan == 1).ToList();
+            var DaTraHangKhachLe = beg.Where(kh => kh.IdDoiTra == 4).ToList(); //4:Không Lỗi//3:có lỗi//2:Mới Nhận
+            var DaTraHangKhachLeTrong = beg.Where(kh => kh.IdDoiTra == 4 && kh.IDColor==5).ToList();
+            var DaTraHangKhachLeTrongTikTok = beg.Where(kh => kh.IdDoiTra == 4 && kh.IDColor == 5 && kh.KyXuatNhap.IdSan == 2).ToList();
+            var DaTraHangKhachLeTrongShopee = beg.Where(kh => kh.IdDoiTra == 4 && kh.IDColor == 5 && kh.KyXuatNhap.IdSan == 3).ToList();
+            var DaTraHangKhachLeTrongNSan = beg.Where(kh => kh.IdDoiTra == 4 && kh.IDColor == 5 && kh.KyXuatNhap.IdSan == 1).ToList();
+            var DaTraHangKhachLeKhoi = beg.Where(kh => kh.IdDoiTra == 4 && kh.IDColor == 7).ToList();
+            var DaTraHangKhachLeKhoiTikTok = beg.Where(kh => kh.IdDoiTra == 4 && kh.IDColor == 7 && kh.KyXuatNhap.IdSan == 2).ToList();
+            var DaTraHangKhachLeKhoiShopee = beg.Where(kh => kh.IdDoiTra == 4 && kh.IDColor == 7 && kh.KyXuatNhap.IdSan == 3).ToList();
+            var DaTraHangKhachLeKhoiNSan = beg.Where(kh => kh.IdDoiTra == 4 && kh.IDColor == 7 && kh.KyXuatNhap.IdSan == 1).ToList();
             
             var DaBanLSiNSan = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1 && kh.KyXuatNhap.IdSan == 1 && kh.KyXuatNhap.KhachLe == false).ToList();
 

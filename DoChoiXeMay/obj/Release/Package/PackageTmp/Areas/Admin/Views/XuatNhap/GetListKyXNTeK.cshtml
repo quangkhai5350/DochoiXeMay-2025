@@ -194,22 +194,22 @@
                             foreach (DoChoiXeMay.Models.ChitietXuatNhap ct in Chitiet)
                             {
                                 var KT = new XuatNhapData().kiemtraNgayCTXN(ct.Id.ToString());
-                                if (KT > 20 && ct.TraHangKhachLe == false)
+                                if (KT > 20 && ct.IdDoiTra == 1)
                                 {
                                     <p style="height:40px">
                                         <span>Hết hạn(20 ngày)</span>
                                     </p>
                                 }
-                                else if (KT <= 20 && ct.TraHangKhachLe == false)
+                                else if (KT <= 20 && ct.IdDoiTra == 1)
                                 {
                                     if (Session["quyen"].ToString() == "1")
                                     {
-                                    <p style="height:50px">
-                                        <a title="@ct.Id" class="btn btn-danger" onclick="return confirm('Khách Lẻ Muốn trả Hàng ??')"
-                                           href="/Admin/XuatNhap/TraHangChiTietXNbyID/@ct.Id"><span class="glyphicon glyphicon-backward" style="font-size:10px"></span></a>
-                                        /<a hidden title="@ct.Id" class="btn btn-danger" onclick="return confirm('Update Serial ??')"
-                                           href="/Admin/XuatNhap/UpdateSerialXN/@ct.Id"><span class="glyphicon glyphicon-backward" style="font-size:10px"></span></a>
-                                    </p>
+                                        <p style="height:50px">
+                                            <a title="@ct.Id" class="btn btn-danger" onclick="return confirm('Khách Lẻ Muốn trả Hàng ??')"
+                                               href="/Admin/XuatNhap/TraHangChiTietXNbyID/@ct.Id"><span class="glyphicon glyphicon-backward" style="font-size:10px"></span></a>
+                                            /<a hidden title="@ct.Id" class="btn btn-danger" onclick="return confirm('Update Serial ??')"
+                                                href="/Admin/XuatNhap/UpdateSerialXN/@ct.Id"><span class="glyphicon glyphicon-backward" style="font-size:10px"></span></a>
+                                        </p>
                                     }
                                     else
                                     {
@@ -217,14 +217,18 @@
                                     }
 
                                 }
-                                else if (ct.TraHangKhachLe == true)
+                                else if (ct.IdDoiTra > 1)
                                 {
-                                    <span style="background-color:bisque">Khách Đã Trả</span>
+                                    <span style="background-color:bisque">@ct.HangDoiTra.Ten</span>
+                                    <span>
+                                        /<a hidden title = "@ct.Id" class="btn btn-danger" onclick="return confirm('Update Serial ??')"
+                                        href="/Admin/XuatNhap/UpdateSerialXN/@ct.Id"><span class="glyphicon glyphicon-backward" style="font-size:10px"></span></a>
+                                    </span>
                                 }
 
-                            }
                         }
-                                    </td>
+                        }
+                                </td>
                     <td>
                         @foreach (DoChoiXeMay.Models.ChitietXuatNhap ct in Chitiet)
                         {

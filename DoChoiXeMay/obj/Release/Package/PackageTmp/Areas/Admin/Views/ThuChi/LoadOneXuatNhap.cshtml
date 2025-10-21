@@ -95,10 +95,10 @@
                                         <span>Nhập Hàng</span>
                                     }
                                 </p>
-                                @if (Item.XuatNhap == true && Item.HangMau==true)
+                                @if (Item.XuatNhap == true && Item.IdLoaiHangXN >1)
                                 {
                                     <p style="font-size: 17px; height: 25px">
-                                        <span style="background-color:burlywood">Hàng Mẫu</span>
+                                        <span style="background-color:burlywood">@Item.KyXuatNhap_LoaiHang.TenLoai</span>
                                     </p>
                                 }
                                 <hr />
