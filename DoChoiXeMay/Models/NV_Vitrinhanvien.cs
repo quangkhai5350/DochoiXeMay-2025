@@ -20,17 +20,11 @@ namespace DoChoiXeMay.Models
         [StringLength(500)]
         public string TenVitri { get; set; }
 
-        public double MucLuong { get; set; }
-
         public int IdDonViTinh { get; set; }
 
         public double PhuCapChucVu { get; set; }
 
         public double PhuCapChucKhac { get; set; }
-
-        public double XangXe { get; set; }
-
-        public double TienCom { get; set; }
 
         public double TrangPhuc { get; set; }
 

@@ -508,19 +508,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     dbc.Entry(model).State = EntityState.Modified;
                     var kq = dbc.SaveChanges();
                     Session["ThongBaoXuatNhapTeK"] = "Trả Hàng Thành Công, Cần Kiểm tra hàng.";
-                    //if (kq > 0)
-                    //{
-                    //    var HH = dbc.HangHoas.FirstOrDefault(kh => kh.Ten == model.Ten && kh.IDMF == model.IDMF
-                    //                    && kh.IDColor == model.IDColor && kh.IDSize == model.IDSize);
-                    //    if (HH != null)
-                    //    {
-                    //        HH.SoLuong = HH.SoLuong + 1;
-                    //        dbc.Entry(model).State = EntityState.Modified;
-                    //        dbc.SaveChanges();
-                    //        Session["ThongBaoXuatNhapTeK"] = "Trả Hàng Thành Công, Số lượng HH tăng 1.";
-                    //        return RedirectToAction("ListXuatNhapTeK");
-                    //    }
-                    //}
+                    
                 }
                 Session["ThongBaoXuatNhapTeK"] = "Không đủ đk để trả hàng.Trả Hàng Thất Bại !!!";
                 return RedirectToAction("ListXuatNhapTeK");

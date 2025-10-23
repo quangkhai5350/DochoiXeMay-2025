@@ -11,7 +11,7 @@ namespace DoChoiXeMay.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public NV_NhanVienTek()
         {
-            NV_ChiTietNhanVien = new HashSet<NV_ChiTietNhanVien>();
+            NV_ThanhToanLuong = new HashSet<NV_ThanhToanLuong>();
         }
 
         public int Id { get; set; }
@@ -20,11 +20,15 @@ namespace DoChoiXeMay.Models
         [StringLength(100)]
         public string HoTen { get; set; }
 
+        public bool GioiTinh { get; set; }
+
+        [Required]
         [StringLength(100)]
-        public string CanCuocCongDan { get; set; }
+        public string CCCD { get; set; }
 
         public int IdKhuVucThuongTru { get; set; }
 
+        [Required]
         [StringLength(500)]
         public string DiaChiThuongTru { get; set; }
 
@@ -49,6 +53,10 @@ namespace DoChoiXeMay.Models
         [StringLength(500)]
         public string BangCapPhu { get; set; }
 
+        [StringLength(200)]
+        public string TinHoc { get; set; }
+
+        [Required]
         [StringLength(50)]
         public string Sdt { get; set; }
 
@@ -65,9 +73,9 @@ namespace DoChoiXeMay.Models
         [StringLength(50)]
         public string STT { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<NV_ChiTietNhanVien> NV_ChiTietNhanVien { get; set; }
-
         public virtual NV_Vitrinhanvien NV_Vitrinhanvien { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<NV_ThanhToanLuong> NV_ThanhToanLuong { get; set; }
     }
 }

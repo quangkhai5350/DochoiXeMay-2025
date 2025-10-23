@@ -36,9 +36,13 @@ namespace DoChoiXeMay.Models
         public virtual DbSet<MsgAotu> MsgAotus { get; set; }
         public virtual DbSet<NhatKyUTek> NhatKyUTeks { get; set; }
         public virtual DbSet<NoteKythuat> NoteKythuats { get; set; }
-        public virtual DbSet<NV_ChiTietNhanVien> NV_ChiTietNhanVien { get; set; }
+        public virtual DbSet<NV_Cong> NV_Cong { get; set; }
         public virtual DbSet<NV_DonViTinhLuong> NV_DonViTinhLuong { get; set; }
+        public virtual DbSet<NV_HeSoGio> NV_HeSoGio { get; set; }
+        public virtual DbSet<NV_Luong> NV_Luong { get; set; }
         public virtual DbSet<NV_NhanVienTek> NV_NhanVienTek { get; set; }
+        public virtual DbSet<NV_PhuCap> NV_PhuCap { get; set; }
+        public virtual DbSet<NV_ThanhToanLuong> NV_ThanhToanLuong { get; set; }
         public virtual DbSet<NV_Vitrinhanvien> NV_Vitrinhanvien { get; set; }
         public virtual DbSet<ProjectDetail> ProjectDetails { get; set; }
         public virtual DbSet<ProjectTeK> ProjectTeKs { get; set; }
@@ -218,14 +222,32 @@ namespace DoChoiXeMay.Models
                 .HasForeignKey(e => e.IdMa)
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<NV_Cong>()
+                .HasMany(e => e.NV_ThanhToanLuong)
+                .WithRequired(e => e.NV_Cong)
+                .HasForeignKey(e => e.IdCong)
+                .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<NV_DonViTinhLuong>()
                 .HasMany(e => e.NV_Vitrinhanvien)
                 .WithRequired(e => e.NV_DonViTinhLuong)
                 .HasForeignKey(e => e.IdDonViTinh)
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<NV_HeSoGio>()
+                .HasMany(e => e.NV_Luong)
+                .WithRequired(e => e.NV_HeSoGio)
+                .HasForeignKey(e => e.IdHSG)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<NV_Luong>()
+                .HasMany(e => e.NV_ThanhToanLuong)
+                .WithRequired(e => e.NV_Luong)
+                .HasForeignKey(e => e.IdLuong)
+                .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<NV_NhanVienTek>()
-                .HasMany(e => e.NV_ChiTietNhanVien)
+                .HasMany(e => e.NV_ThanhToanLuong)
                 .WithRequired(e => e.NV_NhanVienTek)
                 .HasForeignKey(e => e.IdNhanVien)
                 .WillCascadeOnDelete(false);
