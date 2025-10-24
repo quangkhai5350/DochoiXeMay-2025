@@ -508,7 +508,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     dbc.Entry(model).State = EntityState.Modified;
                     var kq = dbc.SaveChanges();
                     Session["ThongBaoXuatNhapTeK"] = "Trả Hàng Thành Công, Cần Kiểm tra hàng.";
-                    
+                    return RedirectToAction("ListXuatNhapTeK");
                 }
                 Session["ThongBaoXuatNhapTeK"] = "Không đủ đk để trả hàng.Trả Hàng Thất Bại !!!";
                 return RedirectToAction("ListXuatNhapTeK");
