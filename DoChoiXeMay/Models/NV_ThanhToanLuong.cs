@@ -36,8 +36,6 @@ namespace DoChoiXeMay.Models
 
         public virtual NV_Cong NV_Cong { get; set; }
 
-        public virtual NV_Luong NV_Luong { get; set; }
-
         public virtual NV_NhanVienTek NV_NhanVienTek { get; set; }
     }
 }

@@ -14,7 +14,26 @@ namespace DoChoiXeMay.Areas.Admin.Data
     public class TonKhoData
     {
         Model1 _context = new Model1();
-        
+        //public List<ChitietXuatNhap> GetSumToTKDaBan(string name)
+        //{
+        //    var daban = _context.ChitietXuatNhaps.Where(kh => kh.Ten == name
+        //         && kh.KyXuatNhap.XuatNhap == true && kh.IdDoiTra == 1 && kh.KyXuatNhap.IdLoaiHangXN == 1).ToList();
+        //    return daban;
+        //}
+        //public List<ChitietXuatNhap> GetSumToTKDaBanLeSi(string name, int San, bool khachLe,int IDColor)
+        //{
+        //    var daban = _context.ChitietXuatNhaps.Where(kh => kh.Ten == name
+        //         && kh.KyXuatNhap.XuatNhap == true && kh.IdDoiTra == 1 && kh.KyXuatNhap.IdLoaiHangXN == 1).ToList();
+        //    var LeSi = daban.Where(kh => kh.KyXuatNhap.IdSan == San && kh.KyXuatNhap.KhachLe == khachLe).ToList();
+        //    return LeSi;
+        //}
+        public List<ChiTietTonKho> GetTonKhobyHH(string name, int IDColor, int IDMF, int IDSize)
+        {
+            var model = _context.ChiTietTonKhoes.Where(kh=>kh.TenHang == name && kh.SanPham==false
+                    && kh.IDMF == IDMF && kh.IDColor == IDColor && kh.IDSize == IDSize && kh.KyTonKho.SuDung==true).ToList();
+
+            return model;
+        }
         public List<ChiTietTonKho> GetListTKhoByKy(int idKytonkho)
         {
             List<ChiTietTonKho> modelCuoi = new List<ChiTietTonKho>();
@@ -95,5 +114,6 @@ namespace DoChoiXeMay.Areas.Admin.Data
             }
 
         }
+
     }
 }

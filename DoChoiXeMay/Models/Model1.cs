@@ -240,10 +240,10 @@ namespace DoChoiXeMay.Models
                 .HasForeignKey(e => e.IdHSG)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<NV_Luong>()
-                .HasMany(e => e.NV_ThanhToanLuong)
-                .WithRequired(e => e.NV_Luong)
-                .HasForeignKey(e => e.IdLuong)
+            modelBuilder.Entity<NV_NhanVienTek>()
+                .HasMany(e => e.NV_Luong)
+                .WithRequired(e => e.NV_NhanVienTek)
+                .HasForeignKey(e => e.IdNhanVien)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<NV_NhanVienTek>()

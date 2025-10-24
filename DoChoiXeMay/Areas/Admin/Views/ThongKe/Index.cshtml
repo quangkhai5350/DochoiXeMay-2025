@@ -50,7 +50,7 @@
         <p style="margin-left:2%">+ XiNhan Trong Mẫu Đã Xuất: @ViewBag.TongXiNhanGen1TrongMauDaXuat</p>
         <p style="margin-left:2%">+ XiNhan Khói Mẫu Đã Xuất: @ViewBag.TongXiNhanGen1KhoiMauDaXuat</p>
         <hr />
-        <p style="background-color:burlywood">_Tổng XiNhan Gen1 Khách Lẻ trả hàng:@ViewBag.DaTraHangKhachLe</p>
+        <p style="background-color:burlywood">_Tổng XiNhan Gen1 Khách Lẻ trả hàng - Không Lỗi:@ViewBag.DaTraHangKhachLe</p>
         <p style="margin-left:2%">+ XiNhan Trong Khách Lẻ trả hàng: @ViewBag.DaTraHangKhachLeTrong</p>
         <p style="margin-left:10%">
             * TikTok: @ViewBag.DaTraHangKhachLeTrongTikTok
@@ -65,64 +65,92 @@
             <span>/ Shopee: @ViewBag.DaTraHangKhachLeKhoiShopee</span>
             <span>/ Ngoài Sàn: @ViewBag.DaTraHangKhachLeKhoiNSan</span>
         </p>
+        <hr />
+        <p style="background-color:darkorange">_Tổng XiNhan Gen1 Khách Lẻ trả hàng - Có Lỗi:@ViewBag.DaTraHangKhachLeLoi</p>
+        @if (ViewBag.DaTraHangKhachLeLoiTrong > 0)
+        {
+            <p style="margin-left:2%">+ XiNhan Trong Khách Lẻ trả hàng: @ViewBag.DaTraHangKhachLeLoiTrong</p>
+            <p style="margin-left:10%">
+                * TikTok: @ViewBag.DaTraHangKhachLeLoiTrongTikTok
+                <span>/ Shopee: @ViewBag.DaTraHangKhachLeLoiTrongShopee</span>
+                <span>/ Ngoài Sàn: @ViewBag.DaTraHangKhachLeLoiTrongNSan</span>
+            </p>
+        }
+        @if (ViewBag.DaTraHangKhachLeLoiKhoi > 0)
+        {
+            <p style="margin-left:2%">+ XiNhan Khói Khách Lẻ trả hàng: @ViewBag.DaTraHangKhachLeLoiKhoi</p>
+            <p style="margin-left:10%">
+                * TikTok: @ViewBag.DaTraHangKhachLeLoiKhoiTikTok
+                <span>/ Shopee: @ViewBag.DaTraHangKhachLeLoiKhoiShopee</span>
+                <span>/ Ngoài Sàn: @ViewBag.DaTraHangKhachLeLoiKhoiNSan</span>
+            </p>
+        }
+
+    </div>
+    <div class="omb_login col-lg-6 col-xl-6 col-md-6 col-sm-12 col-sx-12 col-12" style="padding-top: 20px">
+
+    </div>
+    <div class="omb_login col-lg-3 col-xl-3 col-md-3 col-sm-12 col-sx-12 col-12" style="padding-top: 20px">
+        @Html.Action("NVLTonKho", "ThongKe")
+        
     </div>
 </div>
-<div class="panel panel-default" style="margin-top:10px">
-    <div class="panel-heading">
-        <div class="row">
-            <div class="pull-right label label-primary" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
-                @Session["ThongBaoKyTonKhoOK"]
-            </div>
-            <div class="pull-right label label-warning" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
-
-                @Session["ThongBaoKyTonKhoLoi"]
-            </div>
+    <div class="panel panel-default" style="margin-top:10px">
+        <div class="panel-heading">
             <div class="row">
-                @if (Session["quyen"] != null && Session["quyen"].ToString() == "1")
-                {
-                    <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
-                        <a class="btn btn-warning" style="margin-left:20px" href="/Admin/ThongKe/InsertKyTonKho" onclick="return confirm('Bạn muốn Thêm Mới Kỳ Tồn Kho ??')"><i class="fa fa-plus-circle"></i>&nbsp;&nbsp; Thêm mới "Kỳ Tồn Kho"</a>
+                <div class="pull-right label label-primary" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
+                    @Session["ThongBaoKyTonKhoOK"]
+                </div>
+                <div class="pull-right label label-warning" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
 
-                    </div>
-                }
-                else
-                {
-                    <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
-                        <a class="btn btn-warning" style="margin-left:20px"> Theo dõi "Kỳ Tồn Kho"</a>
+                    @Session["ThongBaoKyTonKhoLoi"]
+                </div>
+                <div class="row">
+                    @if (Session["quyen"] != null && Session["quyen"].ToString() == "1")
+                    {
+                        <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
+                            <a class="btn btn-warning" style="margin-left:20px" href="/Admin/ThongKe/InsertKyTonKho" onclick="return confirm('Bạn muốn Thêm Mới Kỳ Tồn Kho ??')"><i class="fa fa-plus-circle"></i>&nbsp;&nbsp; Thêm mới "Kỳ Tồn Kho"</a>
 
-                    </div>
-                }
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
+                            <a class="btn btn-warning" style="margin-left:20px"> Theo dõi "Kỳ Tồn Kho"</a>
+
+                        </div>
+                    }
+                </div>
             </div>
         </div>
-    </div>
-    <div class="panel-body">
-        @*<img id="loading" hidden src="~/Areas/Admin/Content/img/loading.gif" />*@
-        <div class="listKTK">
+        <div class="panel-body">
+            @*<img id="loading" hidden src="~/Areas/Admin/Content/img/loading.gif" />*@
+            <div class="listKTK">
 
+
+            </div>
+        </div>
+        <div class="panel-footer">
+
+            @*<ul class="pager">
+                    <li><a href="#"><span class="glyphicon glyphicon-step-backward"></span></a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-step-forward"></span></a></li>
+                </ul>*@
 
         </div>
     </div>
-    <div class="panel-footer">
-
-        @*<ul class="pager">
-                <li><a href="#"><span class="glyphicon glyphicon-step-backward"></span></a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-step-forward"></span></a></li>
-            </ul>*@
-
-    </div>
-</div>
-<script>
-    LoadPage();
-    function LoadPage() {
-        $.ajax({
-            url: "/Admin/ThongKe/GetListKyTonKho",
-            data: {},
-            success: function (respone) {
-                $(".listKTK").html(respone);
-            }
-        });
-    };
-</script>
+    <script>
+        LoadPage();
+        function LoadPage() {
+            $.ajax({
+                url: "/Admin/ThongKe/GetListKyTonKho",
+                data: {},
+                success: function (respone) {
+                    $(".listKTK").html(respone);
+                }
+            });
+        };
+    </script>
 

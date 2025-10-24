@@ -1,0 +1,24 @@
+﻿@model IEnumerable<DoChoiXeMay.Models.HangHoa>
+
+<p style="background-color:bisque">Tồn Kho NVL TeK Ước Tính:</p>
+@if (Model != null)
+{
+    foreach (DoChoiXeMay.Models.HangHoa item in ViewBag.NVLTonKho)
+    {
+        var ss = new DoChoiXeMay.Areas.Admin.Data.TonKhoData().GetTonKhobyHH(item.Ten, item.IDColor, item.IDMF, item.IDSize);
+        if (ss.Count() == 0)
+        {
+            <p style="margin-left:2%;font-size:large">+ @item.Ten : @item.SoLuong</p>
+        }
+        else
+        {
+            var sl = item.SoLuong;
+            for (int i = 0; i < ss.Count(); i++)
+            {
+                sl = sl - ss[i].TonDauKy;
+            }
+            <p style="margin-left:2%;font-size:large">+ @item.Ten : @sl</p>
+        }
+
+    }
+}

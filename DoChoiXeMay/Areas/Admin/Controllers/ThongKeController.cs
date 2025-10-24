@@ -25,9 +25,10 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                                     && kh.KyXuatNhap.XuatNhap == true).ToList();
             var begin = beg.Where(kh=> kh.IdDoiTra == 1).ToList();
             var daban = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1).ToList();
-            var DaBanTikTok = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1 && kh.KyXuatNhap.IdSan == 2).ToList();
-            var DaBanShopee = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1 && kh.KyXuatNhap.IdSan == 3).ToList();
+            var DaBanTikTok = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1 && kh.KyXuatNhap.IdSan == 2 && kh.KyXuatNhap.KhachLe == true).ToList();
+            var DaBanShopee = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1 && kh.KyXuatNhap.IdSan == 3 && kh.KyXuatNhap.KhachLe == true).ToList();
             var DaBanLeNSan = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1 && kh.KyXuatNhap.IdSan == 1 && kh.KyXuatNhap.KhachLe == true).ToList();
+            
             var DaTraHangKhachLe = beg.Where(kh => kh.IdDoiTra == 4).ToList(); //4:Không Lỗi//3:có lỗi//2:Mới Nhận
             var DaTraHangKhachLeTrong = beg.Where(kh => kh.IdDoiTra == 4 && kh.IDColor==5).ToList();
             var DaTraHangKhachLeTrongTikTok = beg.Where(kh => kh.IdDoiTra == 4 && kh.IDColor == 5 && kh.KyXuatNhap.IdSan == 2).ToList();
@@ -37,7 +38,18 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             var DaTraHangKhachLeKhoiTikTok = beg.Where(kh => kh.IdDoiTra == 4 && kh.IDColor == 7 && kh.KyXuatNhap.IdSan == 2).ToList();
             var DaTraHangKhachLeKhoiShopee = beg.Where(kh => kh.IdDoiTra == 4 && kh.IDColor == 7 && kh.KyXuatNhap.IdSan == 3).ToList();
             var DaTraHangKhachLeKhoiNSan = beg.Where(kh => kh.IdDoiTra == 4 && kh.IDColor == 7 && kh.KyXuatNhap.IdSan == 1).ToList();
-            
+
+            var DaTraHangKhachLeLoi = beg.Where(kh => kh.IdDoiTra == 3).ToList(); //4:Không Lỗi//3:có lỗi//2:Mới Nhận
+            var DaTraHangKhachLeLoiTrong = beg.Where(kh => kh.IdDoiTra == 3 && kh.IDColor == 5).ToList();
+            var DaTraHangKhachLeLoiTrongTikTok = beg.Where(kh => kh.IdDoiTra == 3 && kh.IDColor == 5 && kh.KyXuatNhap.IdSan == 2).ToList();
+            var DaTraHangKhachLeLoiTrongShopee = beg.Where(kh => kh.IdDoiTra == 3 && kh.IDColor == 5 && kh.KyXuatNhap.IdSan == 3).ToList();
+            var DaTraHangKhachLeLoiTrongNSan = beg.Where(kh => kh.IdDoiTra == 3 && kh.IDColor == 5 && kh.KyXuatNhap.IdSan == 1).ToList();
+            var DaTraHangKhachLeLoiKhoi = beg.Where(kh => kh.IdDoiTra == 3 && kh.IDColor == 7).ToList();
+            var DaTraHangKhachLeLoiKhoiTikTok = beg.Where(kh => kh.IdDoiTra == 3 && kh.IDColor == 7 && kh.KyXuatNhap.IdSan == 2).ToList();
+            var DaTraHangKhachLeLoiKhoiShopee = beg.Where(kh => kh.IdDoiTra == 3 && kh.IDColor == 7 && kh.KyXuatNhap.IdSan == 3).ToList();
+            var DaTraHangKhachLeLoiKhoiNSan = beg.Where(kh => kh.IdDoiTra == 3 && kh.IDColor == 7 && kh.KyXuatNhap.IdSan == 1).ToList();
+
+
             var DaBanLSiNSan = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1 && kh.KyXuatNhap.IdSan == 1 && kh.KyXuatNhap.KhachLe == false).ToList();
 
             var TrongDaBan = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1 && kh.IDColor == 5).ToList();
@@ -55,6 +67,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             var MauDaXuat = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 2).ToList();
             var KhoiMauDaXuat = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 2 && kh.IDColor == 7).ToList();
             var TrongMauDaXuat = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 2 && kh.IDColor == 7).ToList();
+
             ViewBag.TongXiNhanGen1Tek = dbc.HangHoas.Where(kh => kh.Id == 55 || kh.Id == 56).Sum(kh => kh.SoLuong);
             ViewBag.TongXiNhanGen1TrongTK = dbc.HangHoas.Where(kh => kh.Id == 56).Sum(kh => kh.SoLuong);
             ViewBag.TongXiNhanGen1KhoiTK = dbc.HangHoas.Where(kh => kh.Id == 55).Sum(kh => kh.SoLuong);
@@ -71,11 +84,23 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ViewBag.DaTraHangKhachLeTrongTikTok = DaTraHangKhachLeTrongTikTok == null ? 0 : DaTraHangKhachLeTrongTikTok.Sum(kh => kh.SoLuong);
             ViewBag.DaTraHangKhachLeTrongShopee = DaTraHangKhachLeTrongShopee == null ? 0 : DaTraHangKhachLeTrongShopee.Sum(kh => kh.SoLuong);
             ViewBag.DaTraHangKhachLeTrongNSan = DaTraHangKhachLeTrongNSan == null ? 0 : DaTraHangKhachLeTrongNSan.Sum(kh => kh.SoLuong);
+            //Lỗi
+            ViewBag.DaTraHangKhachLeLoi = DaTraHangKhachLeLoi == null ? 0 : DaTraHangKhachLeLoi.Sum(kh => kh.SoLuong);
+            //Lỗi trong
+            ViewBag.DaTraHangKhachLeLoiTrong = DaTraHangKhachLeLoiTrong == null ? 0 : DaTraHangKhachLeLoiTrong.Sum(kh => kh.SoLuong);
+            ViewBag.DaTraHangKhachLeLoiTrongTikTok = DaTraHangKhachLeLoiTrongTikTok == null ? 0 : DaTraHangKhachLeLoiTrongTikTok.Sum(kh => kh.SoLuong);
+            ViewBag.DaTraHangKhachLeLoiTrongShopee = DaTraHangKhachLeLoiTrongShopee == null ? 0 : DaTraHangKhachLeLoiTrongShopee.Sum(kh => kh.SoLuong);
+            ViewBag.DaTraHangKhachLeLoiTrongNSan = DaTraHangKhachLeLoiTrongNSan == null ? 0 : DaTraHangKhachLeLoiTrongNSan.Sum(kh => kh.SoLuong);
 
             ViewBag.DaTraHangKhachLeKhoi = DaTraHangKhachLeKhoi == null ? 0 : DaTraHangKhachLeKhoi.Sum(kh => kh.SoLuong);
             ViewBag.DaTraHangKhachLeKhoiTikTok = DaTraHangKhachLeKhoiTikTok == null ? 0 : DaTraHangKhachLeKhoiTikTok.Sum(kh => kh.SoLuong);
             ViewBag.DaTraHangKhachLeKhoiShopee = DaTraHangKhachLeKhoiShopee == null ? 0 : DaTraHangKhachLeKhoiShopee.Sum(kh => kh.SoLuong);
             ViewBag.DaTraHangKhachLeKhoiNSan = DaTraHangKhachLeKhoiNSan == null ? 0 : DaTraHangKhachLeKhoiNSan.Sum(kh => kh.SoLuong);
+            //Lỗi Khói
+            ViewBag.DaTraHangKhachLeLoiKhoi = DaTraHangKhachLeLoiKhoi == null ? 0 : DaTraHangKhachLeLoiKhoi.Sum(kh => kh.SoLuong);
+            ViewBag.DaTraHangKhachLeLoiKhoiTikTok = DaTraHangKhachLeLoiKhoiTikTok == null ? 0 : DaTraHangKhachLeLoiKhoiTikTok.Sum(kh => kh.SoLuong);
+            ViewBag.DaTraHangKhachLeLoiKhoiShopee = DaTraHangKhachLeLoiKhoiShopee == null ? 0 : DaTraHangKhachLeLoiKhoiShopee.Sum(kh => kh.SoLuong);
+            ViewBag.DaTraHangKhachLeLoiKhoiNSan = DaTraHangKhachLeLoiKhoiNSan == null ? 0 : DaTraHangKhachLeLoiKhoiNSan.Sum(kh => kh.SoLuong);
 
             ViewBag.TongXiNhanGen1TrongDaBan = TrongDaBan==null?0:TrongDaBan.Sum(kh => kh.SoLuong);
 
@@ -101,6 +126,13 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
 
             ViewBag.DaSanXuat = ViewBag.daban + ViewBag.TongXiNhanGen1Tek + ViewBag.TongXiNhanGen1MauDaXuat;
             return View();
+        }
+        public ActionResult NVLTonKho()
+        {
+            //IDKy==1 => NVL
+            var model = dbc.HangHoas.Where(kh => kh.IDKy == 1 && kh.IDMF == 5).ToList();
+            ViewBag.NVLTonKho = model;
+            return PartialView(model);
         }
         public ActionResult GetListKyTonKho()
         {

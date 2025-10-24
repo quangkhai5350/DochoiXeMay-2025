@@ -13,7 +13,6 @@
             <div class="container">
                 @Html.HiddenFor(kh => kh.Id)
                 @Html.HiddenFor(kh => kh.GhiChu)
-                @Html.HiddenFor(kh => kh.NgayTao)
                 @Html.HiddenFor(kh => kh.STT)
                 <h1 class="info_header">
                     Update Kỳ Tồn Kho: @Model.TenKy
@@ -43,6 +42,15 @@
                             <div class="form-group">
                                 <p>Sử dụng <span></span></p>
                                 @Html.CheckBoxFor(m => m.SuDung, new { @style = "height:20px;margin-left: 10%" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-9">
+                            <div class="form-group">
+                                <p>Ngày bắt đầu <span></span></p>
+                                <span class="icon-case"><i class="glyphicon glyphicon-import"></i></span>
+                                @Html.TextBoxFor(kh => kh.NgayTao, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date", style = "height: 40px" })
                             </div>
                         </div>
                     </div>

@@ -569,6 +569,7 @@
     <Content Include="Areas\Admin\Views\NhanVien\ListNhanVien.cshtml" />
     <Content Include="Areas\Admin\Views\NhanVien\GetListNhanVien.cshtml" />
     <Content Include="Areas\Admin\Views\XuatNhap\UpdateSerialXN.cshtml" />
+    <Content Include="Areas\Admin\Views\ThongKe\NVLTonKho.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
