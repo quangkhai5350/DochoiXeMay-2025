@@ -577,8 +577,14 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ViewBag.IDMF = new SelectList(dbc.Manufacturers.Where(kh => kh.Sudung == true), "Id", "Name",5);
             ViewBag.IDColor = new SelectList(dbc.Colors.OrderByDescending(kh => kh.Id), "Id", "TenColor",7);
             ViewBag.IDSize = new SelectList(dbc.Sizes.OrderBy(kh => kh.Id), "Id", "TenSize",1);
-            ViewBag.NameSP = dbc.HangHoas.DistinctBy(kh=>kh.Ten);
-            
+            if(ky.XuatNhap==true && ky.KhachLe == true)
+            {
+                ViewBag.NameSP = dbc.HangHoas.Where(kh=>kh.IDKy==0).DistinctBy(kh => kh.Ten);
+            }
+            else
+            {
+                ViewBag.NameSP = dbc.HangHoas.DistinctBy(kh => kh.Ten);
+            }
             return View();
         }
         [HttpPost]
@@ -588,6 +594,15 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ViewBag.IDColor = new SelectList(dbc.Colors.OrderByDescending(kh => kh.Id), "Id", "TenColor",7);
             ViewBag.IDSize = new SelectList(dbc.Sizes.OrderBy(kh => kh.Id), "Id", "TenSize",1);
             ViewBag.NameSP = dbc.HangHoas.DistinctBy(kh => kh.Ten);
+            if (Session["xuatnhap"] !=null && Session["KhachLe"] !=null && Session["xuatnhap"].ToString() == "Xuat" 
+                && Session["KhachLe"].ToString() == "KhachLe")
+            {
+                ViewBag.NameSP = dbc.HangHoas.Where(kh => kh.IDKy == 0).DistinctBy(kh => kh.Ten);
+            }
+            else
+            {
+                ViewBag.NameSP = dbc.HangHoas.DistinctBy(kh => kh.Ten);
+            }
             //check trùng hàng cùng kỳ
             var Checkctxn = dbc.ChitietXuatNhaps.FirstOrDefault(kh => kh.IdKy == ctxn.IdKy && kh.Ten.ToLower().Trim() == ctxn.Ten.ToLower().Trim() && kh.IDMF == ctxn.IDMF
                                                 && kh.IDColor == ctxn.IDColor && kh.IDSize == ctxn.IDSize);
