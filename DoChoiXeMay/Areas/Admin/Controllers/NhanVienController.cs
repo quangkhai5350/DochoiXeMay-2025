@@ -34,5 +34,10 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
 
             return PartialView();
         }
+        public ActionResult TinhGioCong()
+        {
+            ViewBag.IdVitrinhanvien = new SelectList(dbc.NV_NhanVienTek.Where(kh => kh.NV_Vitrinhanvien.Id==2), "Id", "HoTen");
+            return View();
+        }
     }
 }

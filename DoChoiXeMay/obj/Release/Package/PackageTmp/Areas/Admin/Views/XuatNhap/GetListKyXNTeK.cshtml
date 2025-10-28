@@ -139,7 +139,15 @@
                             }
                         }
                         <hr />
-                        <p>(Ngày: @Html.FormatValue(Item.NgayXuatNhap, "{0:dd/MM/yyyy}"))</p>
+                        @if (Item.XuatNhap != false && Item.KhachLe != false)
+                        {
+
+                        }
+                        else
+                        {
+                            <p>(Ngày: @Html.FormatValue(Item.NgayXuatNhap, "{0:dd/MM/yyyy}"))</p>
+                        }
+                        
                     </td>
 
                     <td>
@@ -149,21 +157,28 @@
                                 if (Item.KhachLe == true)
                                 {
                                     <span style="background-color:burlywood">Xuất Hàng/KhachLe</span>
-                                }
-                                else
-                                {
-                                    <span style="background-color:burlywood">Xuất Hàng/ĐaiLy</span>
-                                }
+                                <span>(Ngày: @Html.FormatValue(Item.NgayXuatNhap, "{0:dd/MM/yyyy}"))</span>
                             }
                             else
                             {
-                                <span>Nhập Hàng</span>
+                                <span style="background-color:burlywood">Xuất Hàng/ĐaiLy</span>
                             }
-                        </p>
-                        <hr />
-                        <p style="font-size:20px">Tổng: @Html.FormatValue(Item.TongTienAuto, "{0:#,###,###}")</p>
+                        }
+                        else
+                        {
+                            <span>Nhập Hàng</span>
+                        }
+                            </p>
+                            <hr />
+                            @if (Item.XuatNhap != false && Item.KhachLe != false)
+                            {
 
-                    </td>
+                            }
+                            else
+                            {
+                                <p style="font-size:20px">Tổng: @Html.FormatValue(Item.TongTienAuto, "{0:#,###,###}")</p>
+                            }
+                        </td>
                     <td>
                         @if (File.Exists(Request.MapPath("~/Content/imgxuatnhap/" + Item.HoaDon)))
                         {

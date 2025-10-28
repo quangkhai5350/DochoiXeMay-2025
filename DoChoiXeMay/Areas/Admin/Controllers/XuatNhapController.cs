@@ -47,7 +47,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         public ActionResult ListXuatNhapUser()
         {
             ViewBag.IdMaTC = new SelectList(dbc.MaTCs.Where(kh => kh.SuDung == true && kh.XuatNhap==true), "Id", "GhiChu",17);
-            ViewBag.IdKyTonKho = new SelectList(dbc.KyTonKhoes.Where(kh=>kh.SuDung==true).ToList(), "Id", "TenKy");
+            ViewBag.IdKyTonKho = new SelectList(dbc.KyTonKhoes.Where(kh=>kh.SuDung==true && kh.HoanThanh == false).ToList(), "Id", "TenKy");
             ViewBag.IdSan = new SelectList(dbc.SanThuongMais.Where(kh => kh.SuDung == true).ToList(), "Id", "TenSan");
             ViewBag.IdKhuVuc = new SelectList(dbc.KhuVucs.ToList(), "Id", "SatNhap", 36);
             ViewBag.IdLoaiHangXN = new SelectList(dbc.KyXuatNhap_LoaiHang.ToList(), "Id", "TenLoai", 1);
@@ -98,7 +98,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         {
             var model = dbc.KyXuatNhaps.Find(id);
             ViewBag.IdMaTC = new SelectList(dbc.MaTCs.Where(kh => kh.SuDung == true && kh.XuatNhap == true), "Id", "GhiChu",model.IdMaTC);
-            ViewBag.IdKyTonKho = new SelectList(dbc.KyTonKhoes.Where(kh => kh.SuDung == true).ToList(), "Id", "TenKy", model.IdKyTonKho);
+            ViewBag.IdKyTonKho = new SelectList(dbc.KyTonKhoes.Where(kh => kh.SuDung == true && kh.HoanThanh==false).ToList(), "Id", "TenKy", model.IdKyTonKho);
             ViewBag.IdSan = new SelectList(dbc.SanThuongMais.Where(kh => kh.SuDung == true).ToList(), "Id", "TenSan",model.IdSan);
             ViewBag.IdKhuVuc = new SelectList(dbc.KhuVucs.ToList(), "Id", "SatNhap",model.IdKhuVuc);
             ViewBag.IdLoaiHangXN = new SelectList(dbc.KyXuatNhap_LoaiHang.ToList(), "Id", "TenLoai", model.IdLoaiHangXN);
@@ -413,7 +413,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     ModelState.AddModelError("", "Update Kỳ XN Thất Bại !!!!");
                     var model = dbc.ChiTietTCs.Find(XN.Id);
                     ViewBag.IdMaTC = new SelectList(dbc.MaTCs.Where(kh => kh.SuDung == true && kh.XuatNhap == true), "Id", "GhiChu", XN.IdMaTC);
-                    ViewBag.IdKyTonKho = new SelectList(dbc.KyTonKhoes.Where(kh => kh.SuDung == true).ToList(), "Id", "TenKy", XN.IdKyTonKho);
+                    ViewBag.IdKyTonKho = new SelectList(dbc.KyTonKhoes.Where(kh => kh.SuDung == true && kh.HoanThanh == false).ToList(), "Id", "TenKy", XN.IdKyTonKho);
                     ViewBag.IdSan = new SelectList(dbc.SanThuongMais.Where(kh => kh.SuDung == true).ToList(), "Id", "TenSan", XN.IdSan);
                     ViewBag.IdKhuVuc = new SelectList(dbc.KhuVucs.ToList(), "Id", "SatNhap", XN.IdKhuVuc);
                     ViewBag.IdLoaiHangXN = new SelectList(dbc.KyXuatNhap_LoaiHang.ToList(), "Id", "TenLoai", XN.IdLoaiHangXN);
@@ -426,7 +426,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 ModelState.AddModelError("", "Update Xuất Nhập Thất Bại !!!! Có Lỗi hệ thống.");
                 var model = dbc.ChiTietTCs.Find(XN.Id);
                 ViewBag.IdMaTC = new SelectList(dbc.MaTCs.Where(kh => kh.SuDung == true && kh.XuatNhap == true), "Id", "GhiChu", XN.IdMaTC);
-                ViewBag.IdKyTonKho = new SelectList(dbc.KyTonKhoes.Where(kh => kh.SuDung == true).ToList(), "Id", "TenKy", XN.IdKyTonKho);
+                ViewBag.IdKyTonKho = new SelectList(dbc.KyTonKhoes.Where(kh => kh.SuDung == true && kh.HoanThanh == false).ToList(), "Id", "TenKy", XN.IdKyTonKho);
                 ViewBag.IdSan = new SelectList(dbc.SanThuongMais.Where(kh => kh.SuDung == true).ToList(), "Id", "TenSan", XN.IdSan);
                 ViewBag.IdKhuVuc = new SelectList(dbc.KhuVucs.ToList(), "Id", "SatNhap", XN.IdKhuVuc);
                 ViewBag.IdLoaiHangXN = new SelectList(dbc.KyXuatNhap_LoaiHang.ToList(), "Id", "TenLoai", XN.IdLoaiHangXN);
@@ -541,7 +541,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 dbc.Entry(ctxn).State = EntityState.Modified;
                 var kq=dbc.SaveChanges();
                 
-                Session["ThongBaoXuatNhapTeK"] = "Update thanh cong Serial !!!";
+                Session["ThongBaoXuatNhapTeK"] = "Update thanh cong Serial !!! Không tăng sl HH.";
                 if (kq > 0 && ctxn.IdDoiTra == 4)//Không Lỗi, tồn kho
                 {
                     var HH = dbc.HangHoas.FirstOrDefault(kh => kh.Ten == model.Ten && kh.IDMF == model.IDMF

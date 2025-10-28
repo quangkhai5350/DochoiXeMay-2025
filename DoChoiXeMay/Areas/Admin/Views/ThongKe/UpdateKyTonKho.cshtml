@@ -31,7 +31,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-6">
+                        <div class="col-sm-5">
                             <div class="form-group">
                                 <p>Tên Kho <span></span></p>
                                 <span class="icon-case"><i class="glyphicon glyphicon-import"></i></span>
@@ -42,6 +42,12 @@
                             <div class="form-group">
                                 <p>Sử dụng <span></span></p>
                                 @Html.CheckBoxFor(m => m.SuDung, new { @style = "height:20px;margin-left: 10%" })
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <p>DaXong<span></span></p>
+                                @Html.CheckBoxFor(m => m.HoanThanh, new { @style = "height:20px;margin-left: 10%" })
                             </div>
                         </div>
                     </div>

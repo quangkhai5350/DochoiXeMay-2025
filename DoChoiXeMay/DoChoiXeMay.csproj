@@ -195,7 +195,6 @@
     <Compile Include="Models\NhatKyUTek.cs" />
     <Compile Include="Models\NoteKythuat.cs" />
     <Compile Include="Models\NV_Cong.cs" />
-    <Compile Include="Models\NV_DonViTinhLuong.cs" />
     <Compile Include="Models\NV_HeSoGio.cs" />
     <Compile Include="Models\NV_Luong.cs" />
     <Compile Include="Models\NV_NhanVienTek.cs" />
@@ -570,6 +569,7 @@
     <Content Include="Areas\Admin\Views\NhanVien\GetListNhanVien.cshtml" />
     <Content Include="Areas\Admin\Views\XuatNhap\UpdateSerialXN.cshtml" />
     <Content Include="Areas\Admin\Views\ThongKe\NVLTonKho.cshtml" />
+    <Content Include="Areas\Admin\Views\NhanVien\TinhGioCong.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />

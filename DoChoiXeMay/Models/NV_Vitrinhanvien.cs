@@ -20,7 +20,9 @@ namespace DoChoiXeMay.Models
         [StringLength(500)]
         public string TenVitri { get; set; }
 
-        public int IdDonViTinh { get; set; }
+        [Required]
+        [StringLength(50)]
+        public string DonViTinh { get; set; }
 
         public double PhuCapChucVu { get; set; }
 
@@ -34,8 +36,6 @@ namespace DoChoiXeMay.Models
         public int SoNgayNghitrongtuan { get; set; }
 
         public int SoNgayNghitrongthang { get; set; }
-
-        public virtual NV_DonViTinhLuong NV_DonViTinhLuong { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NV_NhanVienTek> NV_NhanVienTek { get; set; }

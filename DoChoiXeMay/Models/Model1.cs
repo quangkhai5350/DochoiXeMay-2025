@@ -37,7 +37,6 @@ namespace DoChoiXeMay.Models
         public virtual DbSet<NhatKyUTek> NhatKyUTeks { get; set; }
         public virtual DbSet<NoteKythuat> NoteKythuats { get; set; }
         public virtual DbSet<NV_Cong> NV_Cong { get; set; }
-        public virtual DbSet<NV_DonViTinhLuong> NV_DonViTinhLuong { get; set; }
         public virtual DbSet<NV_HeSoGio> NV_HeSoGio { get; set; }
         public virtual DbSet<NV_Luong> NV_Luong { get; set; }
         public virtual DbSet<NV_NhanVienTek> NV_NhanVienTek { get; set; }
@@ -226,12 +225,6 @@ namespace DoChoiXeMay.Models
                 .HasMany(e => e.NV_ThanhToanLuong)
                 .WithRequired(e => e.NV_Cong)
                 .HasForeignKey(e => e.IdCong)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<NV_DonViTinhLuong>()
-                .HasMany(e => e.NV_Vitrinhanvien)
-                .WithRequired(e => e.NV_DonViTinhLuong)
-                .HasForeignKey(e => e.IdDonViTinh)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<NV_HeSoGio>()

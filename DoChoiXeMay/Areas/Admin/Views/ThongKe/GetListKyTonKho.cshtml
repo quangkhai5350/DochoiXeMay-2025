@@ -12,6 +12,7 @@
                 }
                 <th class="canhgiua">Tên Kỳ</th>
                 <th class="canhgiua" style="width:100px">Lưu Kho</th>
+                <th class="canhgiua" style="width:40px">DaXong</th>
                 <th class="canhgiua" style="width:40px">SuDung</th>
                 <th class="canhgiua" style="width:40px">Ngày bắt đầu</th>
 
@@ -58,6 +59,9 @@
                         @Item.LuuKho
                     </td>
                     <td>
+                        @Item.HoanThanh
+                    </td>
+                    <td>
                         @Item.SuDung
                     </td>
                     <td style="border-right: 2px solid black !important"><span>@Html.FormatValue(Item.NgayTao, "{0:dd/MM/yyyy}")</span></td>
@@ -67,103 +71,103 @@
                         <td>
                             <a class="marginbutonkh btn btn-warning waves-effect" href="/Admin/ThongKe/InsertChiTietKyTonKho/@Item.Id" title="Thêm NVL Auto"><span class="fa fa-plus-circle" style="font-size:30px"></span></a>
                         </td>
-                            }
-                        
+                    }
 
-                        @if (Session["quyen"] != null && Session["quyen"].ToString() == "1")
+
+                    @if (Session["quyen"] != null && Session["quyen"].ToString() == "1")
+                    {
+                        <td>
+                            @foreach (DoChoiXeMay.Models.ChiTietTonKho CTTK in Chitiet)
+                            {
+
+                                var sp = CTTK.SanPham == true ? " sản phẩm" : "NVL";
+                                <p style="height:40px">
+                                    <a title="Update @sp @CTTK.TenHang" class="btn btn-danger" onclick="return confirm('Bạn muốn update '+@sp+' ??')"
+                                       href="/Admin/ThongKe/UpdateCTTK/@CTTK.Id"><span class="glyphicon glyphicon-edit" style="font-size:10px"></span></a>
+
+                                    <a style="display:none" title="Xóa @sp @CTTK.TenHang" class="btn btn-danger" onclick="return confirm('Bạn muốn xóa  @sp @CTTK.TenHang ??')"
+                                       href="/Admin/ThongKe/DeleteCTKyTonKho/@CTTK.Id"><span class="glyphicon glyphicon-trash" style="font-size:10px"></span></a>
+                                </p>
+                            }
+                        </td>
+                    }
+                    <td>
+                        @foreach (DoChoiXeMay.Models.ChiTietTonKho CTTK in Chitiet)
                         {
-                            <td>
-                                @foreach (DoChoiXeMay.Models.ChiTietTonKho CTTK in Chitiet)
-                                {
+                            if (CTTK.SanPham)
+                            {
+                                <p style="height:40px">
+                                    <span>@CTTK.Id</span>
+                                </p>
+                            }
+                            else
+                            {
+                                <p style="height:40px">
+                                    <span></span>
+                                </p>
+                            }
 
-                                    var sp = CTTK.SanPham == true ? " sản phẩm" : "NVL";
-                                    <p style="height:40px">
-                                        <a title="Update @sp @CTTK.TenHang" class="btn btn-danger" onclick="return confirm('Bạn muốn update '+@sp+' ??')"
-                                           href="/Admin/ThongKe/UpdateCTTK/@CTTK.Id"><span class="glyphicon glyphicon-edit" style="font-size:10px"></span></a>
-
-                                        <a style="display:none" title="Xóa @sp @CTTK.TenHang" class="btn btn-danger" onclick="return confirm('Bạn muốn xóa  @sp @CTTK.TenHang ??')"
-                                           href="/Admin/ThongKe/DeleteCTKyTonKho/@CTTK.Id"><span class="glyphicon glyphicon-trash" style="font-size:10px"></span></a>
-                                    </p>
-                                }
-                            </td>
                         }
-                        <td>
-                            @foreach (DoChoiXeMay.Models.ChiTietTonKho CTTK in Chitiet)
+                    </td>
+                    <td>
+                        @foreach (DoChoiXeMay.Models.ChiTietTonKho CTTK in Chitiet)
+                        {
+                            if (CTTK.SanPham == false)
                             {
-                                if (CTTK.SanPham)
-                                {
-                                    <p style="height:40px">
-                                        <span>@CTTK.Id</span>
-                                    </p>
-                                }
-                                else
-                                {
-                                    <p style="height:40px">
-                                        <span></span>
-                                    </p>
-                                }
+                                <p style="height:40px;text-align:right">
+                                    <span>NVL: @CTTK.TenHang</span>
+                                </p>
+                            }
+                            else
+                            {
+                                <p style="height: 40px; background-color: bisque">
+                                    <span>SP: @CTTK.TenHang-@CTTK.Color.TenColor</span>
+                                </p>
+                            }
+                        }
+                    </td>
 
-                            }
-                        </td>
-                        <td>
-                            @foreach (DoChoiXeMay.Models.ChiTietTonKho CTTK in Chitiet)
-                            {
-                                if (CTTK.SanPham == false)
-                                {
-                                    <p style="height:40px;text-align:right">
-                                        <span>NVL: @CTTK.TenHang</span>
-                                    </p>
-                                }
-                                else
-                                {
-                                    <p style="height: 40px; background-color: bisque">
-                                        <span>SP: @CTTK.TenHang-@CTTK.Color.TenColor</span>
-                                    </p>
-                                }
-                            }
-                        </td>
-
-                        <td>
-                            @foreach (DoChoiXeMay.Models.ChiTietTonKho CTTK in Chitiet)
-                            {
-                                <p style="height:40px">
-                                    <span>@CTTK.TonDauKy</span>
-                                </p>
-                            }
-                        </td>
-                        <td>
-                            @foreach (DoChoiXeMay.Models.ChiTietTonKho CTTK in Chitiet)
-                            {
-                                <p style="height:40px">
-                                    <span>@CTTK.DaRap</span>
-                                </p>
-                            }
-                        </td>
-                        <td>
-                            @foreach (DoChoiXeMay.Models.ChiTietTonKho CTTK in Chitiet)
-                            {
-                                <p style="height:40px">
-                                    <span>@CTTK.CoLoi</span>
-                                </p>
-                            }
-                        </td>
-                        <td>
-                            @foreach (DoChoiXeMay.Models.ChiTietTonKho CTTK in Chitiet)
-                            {
-                                <p style="height:40px">
-                                    <span>@CTTK.ChuaRap</span>
-                                </p>
-                            }
-                        </td>
-                        <td>
-                            @foreach (DoChoiXeMay.Models.ChiTietTonKho CTTK in Chitiet)
-                            {
-                                <p style="height:40px">
-                                    <span>@Html.FormatValue(CTTK.NgayUpdate, "{0:dd/MM/yyyy}")</span>
-                                </p>
-                            }
-                        </td>
-                    </tr>
+                    <td>
+                        @foreach (DoChoiXeMay.Models.ChiTietTonKho CTTK in Chitiet)
+                        {
+                            <p style="height:40px">
+                                <span>@CTTK.TonDauKy</span>
+                            </p>
+                        }
+                    </td>
+                    <td>
+                        @foreach (DoChoiXeMay.Models.ChiTietTonKho CTTK in Chitiet)
+                        {
+                            <p style="height:40px">
+                                <span>@CTTK.DaRap</span>
+                            </p>
+                        }
+                    </td>
+                    <td>
+                        @foreach (DoChoiXeMay.Models.ChiTietTonKho CTTK in Chitiet)
+                        {
+                            <p style="height:40px">
+                                <span>@CTTK.CoLoi</span>
+                            </p>
+                        }
+                    </td>
+                    <td>
+                        @foreach (DoChoiXeMay.Models.ChiTietTonKho CTTK in Chitiet)
+                        {
+                            <p style="height:40px">
+                                <span>@CTTK.ChuaRap</span>
+                            </p>
+                        }
+                    </td>
+                    <td>
+                        @foreach (DoChoiXeMay.Models.ChiTietTonKho CTTK in Chitiet)
+                        {
+                            <p style="height:40px">
+                                <span>@Html.FormatValue(CTTK.NgayUpdate, "{0:dd/MM/yyyy}")</span>
+                            </p>
+                        }
+                    </td>
+                </tr>
             }
         </tbody>
     </table>

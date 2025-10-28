@@ -126,9 +126,28 @@ namespace DoChoiXeMay.Areas.Admin.Data
         {
             List<KyXuatNhap> model = new List<KyXuatNhap>();
             List<KyXuatNhap> model1 = new List<KyXuatNhap>();
-            model = db.KyXuatNhaps.Where(kh => kh.Id > 1 && kh.AdminXNPUSH == true 
+            
+            var ctxnbySerial = db.ChitietXuatNhaps.FirstOrDefault(kh=>kh.IdDoiTra !=3 && (kh.SerialHop.ToLower() == strk || kh.SerialSP.ToLower() == strk));
+            var ctxnbySerialCoLoi = db.ChitietXuatNhaps.FirstOrDefault(kh => kh.IdDoiTra == 3 && (kh.SerialHop.ToLower() == strk || kh.SerialSP.ToLower() == strk));
+            if (ctxnbySerial == null && ctxnbySerialCoLoi==null)//Không phải Serial thì dò theo tên
+            {
+                model = db.KyXuatNhaps.Where(kh => kh.Id > 1 && kh.AdminXNPUSH == true
                     && kh.UPush == true && kh.TenKy.ToLower().Contains(strk))
                     .OrderBy(kh => kh.NgayAuto).ToList();
+            }
+            else if(ctxnbySerial !=null)
+            {
+                model = db.KyXuatNhaps.Where(kh => kh.Id > 1 && kh.AdminXNPUSH == true
+                    && kh.UPush == true && kh.Id==ctxnbySerial.IdKy)
+                    .OrderBy(kh => kh.NgayAuto).ToList();
+            }
+            else
+            {
+                model = db.KyXuatNhaps.Where(kh => kh.Id > 1 && kh.AdminXNPUSH == true
+                    && kh.UPush == true && kh.Id == ctxnbySerialCoLoi.IdKy)
+                    .OrderBy(kh => kh.NgayAuto).ToList();
+            }
+            
             if (UserId == 0 && idLHXN == 0 && IdSan==0)
             {
                 model1 = model; 

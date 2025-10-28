@@ -158,6 +158,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 model.GhiChu = "";
                 model.NgayTao =DateTime.Now;
                 model.SuDung = false;
+                model.HoanThanh = false;
                 dbc.KyTonKhoes.Add(model);
                 dbc.SaveChanges();
                 Session["ThongBaoKyTonKhoOK"] = "Auto thêm mới kỳ tồn kho thành công, cần update để sử dụng.";
