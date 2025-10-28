@@ -280,6 +280,12 @@ namespace DoChoiXeMay.Models
                 .HasForeignKey(e => e.IDSer_box)
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<Ser_box>()
+                .HasMany(e => e.Ser_sp)
+                .WithRequired(e => e.Ser_box)
+                .HasForeignKey(e => e.IdSerBox)
+                .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<Ser_ChiNhanh>()
                 .HasMany(e => e.Ser_XuatSN_CN)
                 .WithRequired(e => e.Ser_ChiNhanh)

@@ -103,41 +103,8 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ViewBag.IdLoai = new SelectList(dbc.Ser_LoaiHang.ToList(), "Id", "Name");
             try
             {
-                //tạo S/N SP
-                string loai = dbc.Ser_LoaiHang.Find(SerSP.IdLoai).Viettat;
-                for (int i = 0; i < SoSerialN; i++)
-                {
-                    //loSanxuat =>ngaythang // 5 ký tự Random
-                    SerSP.LoSanXuat = soloSTT;
-                    string SN = Utils.XString.MakeAotuSN(5);
-                    var kt = dbc.Ser_sp.Where(kh => kh.SerialSP.Contains(SN)).ToList();
-                    if (kt.Count() > 0)
-                    {
-                        //Nếu S/N bị trùng, random 50 lần
-                        for (int j = 0; j < 50; j++) {
-                            SN= Utils.XString.MakeAotuSN(5);
-                            kt = dbc.Ser_sp.Where(kh => kh.SerialSP.Contains(SN)).ToList();
-                            if (kt.Count() == 0)
-                            {
-                                SerSP.SerialSP = SN;
-                                break;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        SerSP.SerialSP = SN;
-                    }
-                    SerSP.QRcode = "";
-                    SerSP.Stt = (i + 1).ToString();
-                    var kq = new Data.SerialData().InsertSer_sp(SerSP);
-                    if (kq==false)
-                    {
-                        Session["ThongBaoSerialSPchuaIn"] = "Có lỗi Insert Serial SP.";
-                        break;
-                    }
-                }
                 //tạo S/N Box
+                string loai = dbc.Ser_LoaiHang.Find(SerSP.IdLoai).Viettat;
                 for (int i = 0; i < SoSerialN; i++)
                 {
                     //loSanxuat =>ngaythang // loaihang = NEW
@@ -168,13 +135,51 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     SerSP.QRcode = "";
                     SerSP.Stt = (i + 1).ToString();
 
-                    var kq = new Data.SerialData().InsertSer_Box(SerSP.IdLoai,SerSP.NgayUpdate.ToString(),SerSP.LoSanXuat,SerSP.SerialSP,SerSP.Sudung,SerSP.Stt,SerSP.Ghichu,SerSP.QRcode);
+                    var kq = new Data.SerialData().InsertSer_Box(SerSP.IdLoai, SerSP.NgayUpdate.ToString(), SerSP.LoSanXuat, SerSP.SerialSP, SerSP.Sudung, SerSP.Stt, SerSP.Ghichu, SerSP.QRcode);
                     if (kq == false)
                     {
                         Session["ThongBaoSerialBoxchuaIn"] = "Có lỗi Insert Serial Box.";
                         break;
                     }
                 }
+                //tạo S/N SP
+                for (int i = 0; i < SoSerialN; i++)
+                {
+                    //loSanxuat =>ngaythang // 5 ký tự Random
+                    SerSP.LoSanXuat = soloSTT;
+                    string SN = Utils.XString.MakeAotuSN(5);
+                    var kt = dbc.Ser_sp.Where(kh => kh.SerialSP.Contains(SN)).ToList();
+                    if (kt.Count() > 0)
+                    {
+                        //Nếu S/N bị trùng, random 50 lần
+                        for (int j = 0; j < 50; j++) {
+                            SN= Utils.XString.MakeAotuSN(5);
+                            kt = dbc.Ser_sp.Where(kh => kh.SerialSP.Contains(SN)).ToList();
+                            if (kt.Count() == 0)
+                            {
+                                SerSP.SerialSP = SN;
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        SerSP.SerialSP = SN;
+                    }
+                    SerSP.QRcode = "";
+                    SerSP.Stt = (i + 1).ToString();
+                    //Lấy IdSerBox mới tạo
+                    var SerBoxChuaIn = dbc.Ser_box.FirstOrDefault(kh => kh.DaIn == false && kh.Stt==SerSP.Stt
+                        && dbc.Ser_sp.FirstOrDefault(kk=>kk.IdSerBox==kh.Id)==null);
+                    SerSP.IdSerBox = SerBoxChuaIn.Id;
+                    var kq = new Data.SerialData().InsertSer_sp(SerSP);
+                    if (kq==false)
+                    {
+                        Session["ThongBaoSerialSPchuaIn"] = "Có lỗi Insert Serial SP.";
+                        break;
+                    }
+                }
+                
                 Session["ThongBaoSerialSPchuaIn"] = "Tạo mới thành công "+SoSerialN+" Serial SP.";
                 Session["ThongBaoSerialBoxchuaIn"] = "Tạo mới thành công " + SoSerialN + " Serial Box.";
                 //SMS hệ thống
@@ -195,18 +200,19 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             {
                 if (bang == 2)
                 {
-                    var SN = dbc.Ser_box.Where(kh => kh.DaIn == false).OrderBy(kh => kh.NgayTao)
-                        .Skip(0)
-                        .Take(soluong)
-                        .ToList();
-                    var countImg = Math.Ceiling(1.0 * SN.Count() / 2);
+                    //29thang12
+                    //var SN = dbc.Ser_box.Where(kh => kh.DaIn == false).OrderBy(kh => kh.NgayTao)
+                    //    .Skip(0)
+                    //    .Take(soluong)
+                    //    .ToList();
+                    //var countImg = Math.Ceiling(1.0 * SN.Count() / 2);
 
-                    InFromData(null, SN, mayin);
-                    Session["ThongBaoSerialBoxchuaIn"] = "Đã in "+soluong+" serial, thành công.";
-                    //SMS hệ thống
-                    string sms = " đã in " + soluong + " serial Box, thành công.";
-                    new Data.UserData().SMSvaNhatKy(dbc, Session["UserId"].ToString(), Session["UserName"].ToString()
-                        , Session["quyen"].ToString(), sms);
+                    //InFromDataNew(null, SN, mayin);
+                    //Session["ThongBaoSerialBoxchuaIn"] = "Đã in "+soluong+" serial, thành công.";
+                    ////SMS hệ thống
+                    //string sms = " đã in " + soluong + " serial Box, thành công.";
+                    //new Data.UserData().SMSvaNhatKy(dbc, Session["UserId"].ToString(), Session["UserName"].ToString()
+                    //    , Session["quyen"].ToString(), sms);
                 }
                 else
                 {
@@ -216,7 +222,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                         .ToList();
                     var countImg = Math.Ceiling(1.0 * SN.Count() / 2);
 
-                    InFromData(SN, null, mayin);
+                    InFromDataNew(SN, null, mayin);
                     Session["ThongBaoSerialSPchuaIn"] = "Đã in " + soluong + " serial, thành công.";
                     //SMS hệ thống
                     string sms = " đã in " + soluong + " serial SP, thành công.";
@@ -232,108 +238,139 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 return RedirectToAction("ListSerialChuaIn");
             }
         }
-        void InFromData(List<Ser_sp> sp, List<Ser_box> box, string mayin)
+        void InFromDataNew(List<Ser_sp> sp, List<Ser_box> box, string mayin)
         {
-            double countImg;
-            if (box != null)
+            for (int i = 0; i < sp.Count(); i++)
             {
-                //Tính xem có bao nhiêu cặp?
-                countImg = Math.Ceiling(1.0 * box.Count() / 2);
-                for (int i = 0; i < countImg; i++)
-                {
-                    var SNIMG = box.Skip(i * 2).Take(2).ToList();
-                    if (SNIMG.Count() == 2)
-                    {
-                        string sn1 = new Data.SerialData().getImgtextBOX(SNIMG[0].Serial, true);
-                        string qr1 = new Data.SerialData().getQRcode(SNIMG[0].Serial);
-                        Session["Img641"] = new Data.SerialData().getMergeImg(sn1, qr1);
-                        string sn2 = new Data.SerialData().getImgtextBOX(SNIMG[1].Serial, true);
-                        string qr2 = new Data.SerialData().getQRcode(SNIMG[1].Serial);
-                        Session["Img642"] = new Data.SerialData().getMergeImg(sn2, qr2);
-                        //Session["Img643"] = SNIMG[2].QRcode;
-                    }
-                    else if (SNIMG.Count() == 1)
-                    {
-                        string sn1 = new Data.SerialData().getImgtextBOX(SNIMG[0].Serial, true);
-                        string qr1 = new Data.SerialData().getQRcode(SNIMG[0].Serial);
-                        Session["Img641"] = new Data.SerialData().getMergeImg(sn1, qr1);
-                        Session["Img642"] = "NOSERIALNUMBER";
-                    }
+                string sn1 = new Data.SerialData().getImgtextBOX(sp[i].SerialSP, false);
+                string qr1 = new Data.SerialData().getQRcode(sp[i].SerialSP);
+                Session["Img641"] = new Data.SerialData().getMergeImg(sn1, qr1);
+                string sn2 = new Data.SerialData().getImgtextBOX(sp[i].Ser_box.Serial, false);
+                string qr2 = new Data.SerialData().getQRcode(sp[i].Ser_box.Serial);
+                Session["Img642"] = new Data.SerialData().getMergeImg(sn2, qr2);
+                
 
-                    PrintDocument pd = new PrintDocument();
+                PrintDocument pd = new PrintDocument();
+                //pd.DefaultPageSettings.Landscape = false;
+                pd.DefaultPageSettings.Margins.Left = 4;
+                pd.DefaultPageSettings.Margins.Top = 2;
+                pd.DefaultPageSettings.Margins.Right = 0;
+                pd.DefaultPageSettings.Margins.Bottom = 5;
+                pd.OriginAtMargins = true;
+                pd.PrintPage += new PrintPageEventHandler(pd_PrintPage);
 
-                    //pd.DefaultPageSettings.Landscape = false;
-                    pd.DefaultPageSettings.Margins.Left = 4;
-                    pd.DefaultPageSettings.Margins.Top = 2;
-                    pd.DefaultPageSettings.Margins.Right = 0;
-                    pd.DefaultPageSettings.Margins.Bottom = 5;
-                    pd.OriginAtMargins = true;
-                    pd.PrintPage += new PrintPageEventHandler(pd_PrintPage);
-
-                    pd.PrinterSettings.PrinterName = mayin;
-                    pd.Print();
-                    Session.Remove("Img641"); Session.Remove("Img642");
-                    if (SNIMG.Count() == 2)
-                    {
-                        string sql = "Update [" + DBname + "TechZone].[dbo].[Ser_box] set DaIn=1 where Id = '" + SNIMG[0].Id + "' or Id= '" + SNIMG[1].Id + "'";
-                        var UpdateSerBox = dbc.Database.ExecuteSqlCommand(sql);
-                    }
-                    else if (SNIMG.Count() == 1)
-                    {
-                        string sql = "Update [" + DBname + "TechZone].[dbo].[Ser_box] set DaIn=1 where Id = '" + SNIMG[0].Id + "'";
-                        var UpdateSerBox = dbc.Database.ExecuteSqlCommand(sql);
-                    }
-                }
-            }
-            else
-            {
-                countImg = Math.Ceiling(1.0 * sp.Count() / 2);
-                for (int i = 0; i < countImg; i++)
-                {
-                    var SNIMG = sp.Skip(i * 2).Take(2).ToList();
-                    if (SNIMG.Count() == 2)
-                    {
-                        string sn1 = new Data.SerialData().getImgtextBOX(SNIMG[0].SerialSP, false);
-                        string qr1 = new Data.SerialData().getQRcode(SNIMG[0].SerialSP);
-                        Session["Img641"] = new Data.SerialData().getMergeImg(sn1, qr1);
-                        string sn2 = new Data.SerialData().getImgtextBOX(SNIMG[1].SerialSP, false);
-                        string qr2 = new Data.SerialData().getQRcode(SNIMG[1].SerialSP);
-                        Session["Img642"] = new Data.SerialData().getMergeImg(sn2, qr2);
-                        //Session["Img643"] = SNIMG[2].QRcode;
-                    }
-                    else if (SNIMG.Count() == 1)
-                    {
-                        string sn1 = new Data.SerialData().getImgtextBOX(SNIMG[0].SerialSP, false);
-                        string qr1 = new Data.SerialData().getQRcode(SNIMG[0].SerialSP);
-                        Session["Img641"] = new Data.SerialData().getMergeImg(sn1,qr1);
-                        Session["Img642"] = "NOSERIALNUMBER";
-                    }
-
-                    PrintDocument pd = new PrintDocument();
-                    //pd.DefaultPageSettings.Landscape = false;
-                    pd.DefaultPageSettings.Margins.Left = 4;
-                    pd.DefaultPageSettings.Margins.Top = 2;
-                    pd.DefaultPageSettings.Margins.Right = 0;
-                    pd.DefaultPageSettings.Margins.Bottom = 5;
-                    pd.OriginAtMargins = true;
-                    pd.PrintPage += new PrintPageEventHandler(pd_PrintPage);
-
-                    pd.PrinterSettings.PrinterName = mayin;
-                    pd.Print();
-                    Session.Remove("Img641"); Session.Remove("Img642");
-                    if (SNIMG.Count() == 2)
-                    {
-                        string sql = "Update [" + DBname + "TechZone].[dbo].[Ser_sp] set DaIn=1 where Id = '" + SNIMG[0].Id + "' or Id= '" + SNIMG[1].Id + "'";
-                        var UpdateSerBox = dbc.Database.ExecuteSqlCommand(sql);
-                    }
-                    else if (SNIMG.Count() == 1)
-                    {
-                        string sql = "Update [" + DBname + "TechZone].[dbo].[Ser_sp] set DaIn=1 where Id = '" + SNIMG[0].Id + "'";
-                        var UpdateSerBox = dbc.Database.ExecuteSqlCommand(sql);
-                    }
-                }
+                pd.PrinterSettings.PrinterName = mayin;
+                pd.Print();
+                Session.Remove("Img641"); Session.Remove("Img642");
+                string sql = "Update [" + DBname + "TechZone].[dbo].[Ser_sp] set DaIn=1 where Id = '" + sp[i].Id + "'";
+                var UpdateSerSP = dbc.Database.ExecuteSqlCommand(sql);
+                //
+                string sqlBox = "Update [" + DBname + "TechZone].[dbo].[Ser_box] set DaIn=1 where Id = '" + sp[i].Ser_box.Id + "'";
+                var UpdateSerBox = dbc.Database.ExecuteSqlCommand(sqlBox);
             }
         }
+        //void InFromData(List<Ser_sp> sp, List<Ser_box> box, string mayin)
+        //{
+        //    double countImg;
+        //    if (box != null)
+        //    {
+        //        //Tính xem có bao nhiêu cặp?
+        //        countImg = Math.Ceiling(1.0 * box.Count() / 2);
+        //        for (int i = 0; i < countImg; i++)
+        //        {
+        //            var SNIMG = box.Skip(i * 2).Take(2).ToList();
+        //            if (SNIMG.Count() == 2)
+        //            {
+        //                string sn1 = new Data.SerialData().getImgtextBOX(SNIMG[0].Serial, true);
+        //                string qr1 = new Data.SerialData().getQRcode(SNIMG[0].Serial);
+        //                Session["Img641"] = new Data.SerialData().getMergeImg(sn1, qr1);
+        //                string sn2 = new Data.SerialData().getImgtextBOX(SNIMG[1].Serial, true);
+        //                string qr2 = new Data.SerialData().getQRcode(SNIMG[1].Serial);
+        //                Session["Img642"] = new Data.SerialData().getMergeImg(sn2, qr2);
+        //                //Session["Img643"] = SNIMG[2].QRcode;
+        //            }
+        //            else if (SNIMG.Count() == 1)
+        //            {
+        //                string sn1 = new Data.SerialData().getImgtextBOX(SNIMG[0].Serial, true);
+        //                string qr1 = new Data.SerialData().getQRcode(SNIMG[0].Serial);
+        //                Session["Img641"] = new Data.SerialData().getMergeImg(sn1, qr1);
+        //                Session["Img642"] = "NOSERIALNUMBER";
+        //            }
+
+        //            PrintDocument pd = new PrintDocument();
+
+        //            //pd.DefaultPageSettings.Landscape = false;
+        //            pd.DefaultPageSettings.Margins.Left = 4;
+        //            pd.DefaultPageSettings.Margins.Top = 2;
+        //            pd.DefaultPageSettings.Margins.Right = 0;
+        //            pd.DefaultPageSettings.Margins.Bottom = 5;
+        //            pd.OriginAtMargins = true;
+        //            pd.PrintPage += new PrintPageEventHandler(pd_PrintPage);
+
+        //            pd.PrinterSettings.PrinterName = mayin;
+        //            pd.Print();
+        //            Session.Remove("Img641"); Session.Remove("Img642");
+        //            if (SNIMG.Count() == 2)
+        //            {
+        //                string sql = "Update [" + DBname + "TechZone].[dbo].[Ser_box] set DaIn=1 where Id = '" + SNIMG[0].Id + "' or Id= '" + SNIMG[1].Id + "'";
+        //                var UpdateSerBox = dbc.Database.ExecuteSqlCommand(sql);
+        //            }
+        //            else if (SNIMG.Count() == 1)
+        //            {
+        //                string sql = "Update [" + DBname + "TechZone].[dbo].[Ser_box] set DaIn=1 where Id = '" + SNIMG[0].Id + "'";
+        //                var UpdateSerBox = dbc.Database.ExecuteSqlCommand(sql);
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        countImg = Math.Ceiling(1.0 * sp.Count() / 2);
+        //        for (int i = 0; i < countImg; i++)
+        //        {
+        //            var SNIMG = sp.Skip(i * 2).Take(2).ToList();
+        //            if (SNIMG.Count() == 2)
+        //            {
+        //                string sn1 = new Data.SerialData().getImgtextBOX(SNIMG[0].SerialSP, false);
+        //                string qr1 = new Data.SerialData().getQRcode(SNIMG[0].SerialSP);
+        //                Session["Img641"] = new Data.SerialData().getMergeImg(sn1, qr1);
+        //                string sn2 = new Data.SerialData().getImgtextBOX(SNIMG[1].SerialSP, false);
+        //                string qr2 = new Data.SerialData().getQRcode(SNIMG[1].SerialSP);
+        //                Session["Img642"] = new Data.SerialData().getMergeImg(sn2, qr2);
+        //                //Session["Img643"] = SNIMG[2].QRcode;
+        //            }
+        //            else if (SNIMG.Count() == 1)
+        //            {
+        //                string sn1 = new Data.SerialData().getImgtextBOX(SNIMG[0].SerialSP, false);
+        //                string qr1 = new Data.SerialData().getQRcode(SNIMG[0].SerialSP);
+        //                Session["Img641"] = new Data.SerialData().getMergeImg(sn1,qr1);
+        //                Session["Img642"] = "NOSERIALNUMBER";
+        //            }
+
+        //            PrintDocument pd = new PrintDocument();
+        //            //pd.DefaultPageSettings.Landscape = false;
+        //            pd.DefaultPageSettings.Margins.Left = 4;
+        //            pd.DefaultPageSettings.Margins.Top = 2;
+        //            pd.DefaultPageSettings.Margins.Right = 0;
+        //            pd.DefaultPageSettings.Margins.Bottom = 5;
+        //            pd.OriginAtMargins = true;
+        //            pd.PrintPage += new PrintPageEventHandler(pd_PrintPage);
+
+        //            pd.PrinterSettings.PrinterName = mayin;
+        //            pd.Print();
+        //            Session.Remove("Img641"); Session.Remove("Img642");
+        //            if (SNIMG.Count() == 2)
+        //            {
+        //                string sql = "Update [" + DBname + "TechZone].[dbo].[Ser_sp] set DaIn=1 where Id = '" + SNIMG[0].Id + "' or Id= '" + SNIMG[1].Id + "'";
+        //                var UpdateSerBox = dbc.Database.ExecuteSqlCommand(sql);
+        //            }
+        //            else if (SNIMG.Count() == 1)
+        //            {
+        //                string sql = "Update [" + DBname + "TechZone].[dbo].[Ser_sp] set DaIn=1 where Id = '" + SNIMG[0].Id + "'";
+        //                var UpdateSerBox = dbc.Database.ExecuteSqlCommand(sql);
+        //            }
+        //        }
+        //    }
+        //}
         void pd_PrintPage(object sender, PrintPageEventArgs ev)
         {
             if(Session["Img641"] != null && Session["Img642"]!=null)

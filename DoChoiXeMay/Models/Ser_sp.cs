@@ -16,6 +16,8 @@ namespace DoChoiXeMay.Models
 
         public Guid Id { get; set; }
 
+        public Guid IdSerBox { get; set; }
+
         [Required]
         [StringLength(200)]
         public string LoSanXuat { get; set; }
@@ -60,6 +62,8 @@ namespace DoChoiXeMay.Models
         public virtual Color Color { get; set; }
 
         public virtual Manufacturer Manufacturer { get; set; }
+
+        public virtual Ser_box Ser_box { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Ser_kichhoat> Ser_kichhoat { get; set; }

@@ -12,6 +12,7 @@ namespace DoChoiXeMay.Models
         public Ser_box()
         {
             Ser_kichhoat = new HashSet<Ser_kichhoat>();
+            Ser_sp = new HashSet<Ser_sp>();
         }
 
         public Guid Id { get; set; }
@@ -46,5 +47,8 @@ namespace DoChoiXeMay.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Ser_kichhoat> Ser_kichhoat { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Ser_sp> Ser_sp { get; set; }
     }
 }
