@@ -72,12 +72,13 @@ namespace DoChoiXeMay.Areas.Admin.Data
             }
             return null;
         }
-        public bool InsertTonKhoAotu(int IdKy, string DBname)
+        public bool InsertTonKhoAotu(int IdKy, string ten, int parId, string DBname)
         {
             try
             {
+
                 string sql = "insert into [" + DBname + "TechZone].[dbo].[ChiTietTonKho] " +
-                                            "values(" + IdKy + ",'Auto tên 1',0,0,0,0,GETDATE(),GETDATE(),0,'','',0,3,1,1,1)";
+                                            "values(" + IdKy + ",N'"+ten+"',0,0,0,0,GETDATE(),GETDATE(),0,'','',"+parId+",5,1,1,1)";
                 var insert_SVL = _context.Database.ExecuteSqlCommand(sql);
                 return true;
             }

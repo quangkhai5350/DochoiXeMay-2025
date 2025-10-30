@@ -15,6 +15,7 @@ using System.Drawing.Text;
 using System.Web.Helpers;
 using System.Net;
 using System.Web.Services.Description;
+using System.Windows.Documents;
 
 namespace DoChoiXeMay.Areas.Admin.Data
 {
@@ -334,21 +335,19 @@ namespace DoChoiXeMay.Areas.Admin.Data
             Image img = getScaleImg2(merS);
             return img;
         }
-        //Khoong dung nua
-        //public Image getScaleImg(string base641)
-        //{
-        //    base641 = Cleanbase64(base641);
-        //    byte[] imageBytes = Convert.FromBase64String(base641);
-        //    WebImage webi = new WebImage(imageBytes);
+        public List<Ser_sp> listSerSPDaInChuaAc(DateTime Ngaytao, string str)
+        {
+            var model = _context.Ser_sp.Where(kh => kh.DaIn == true && kh.Sudung == false
+            && kh.NgayTao.Day == Ngaytao.Day && kh.NgayTao.Month == Ngaytao.Month
+                                && kh.NgayTao.Year == Ngaytao.Year).OrderByDescending(kh => kh.NgayTao)
+                .ThenBy(kh => kh.Sudung)
+                .ToList();
+            if (str.Trim() != "")
+            {
+                model = _context.Ser_sp.Where(kh=>kh.SerialSP==str || kh.Ser_box.Serial==str).ToList();
+            }
             
-        //        webi.Resize(1000, 300);
-        //    byte[] imageBytes2 = webi.GetBytes();
-        //    //
-        //    string base64String = Convert.ToBase64String(imageBytes2);
-        //    //
-        //    Image img2 = Base64toImg(base64String);
-
-        //    return img2;
-        //}
+            return model;
+        }
     }
 }

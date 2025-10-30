@@ -21,8 +21,8 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         public ActionResult Index()
         {
             Session["requestUri"] = "/Admin/ThongKe/Index";
-            var beg = dbc.ChitietXuatNhaps.Where(kh => kh.Ten == "Xi Nhan Wave TNT BLOCKX G2 ZEN 1"
-                                    && kh.KyXuatNhap.XuatNhap == true).ToList();
+            var be = dbc.ChitietXuatNhaps.Where(kh => kh.Ten == "Xi Nhan Wave TNT BLOCKX G2 ZEN 1").ToList();
+            var beg = be.Where(kh=>kh.KyXuatNhap.XuatNhap == true).ToList();
             var begin = beg.Where(kh=> kh.IdDoiTra == 1).ToList();
             var daban = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1).ToList();
             var DaBanTikTok = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1 && kh.KyXuatNhap.IdSan == 2 && kh.KyXuatNhap.KhachLe == true).ToList();
@@ -39,15 +39,15 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             var DaTraHangKhachLeKhoiShopee = beg.Where(kh => kh.IdDoiTra == 4 && kh.IDColor == 7 && kh.KyXuatNhap.IdSan == 3).ToList();
             var DaTraHangKhachLeKhoiNSan = beg.Where(kh => kh.IdDoiTra == 4 && kh.IDColor == 7 && kh.KyXuatNhap.IdSan == 1).ToList();
 
-            var DaTraHangKhachLeLoi = beg.Where(kh => kh.IdDoiTra == 3).ToList(); //4:Không Lỗi//3:có lỗi//2:Mới Nhận
-            var DaTraHangKhachLeLoiTrong = beg.Where(kh => kh.IdDoiTra == 3 && kh.IDColor == 5).ToList();
-            var DaTraHangKhachLeLoiTrongTikTok = beg.Where(kh => kh.IdDoiTra == 3 && kh.IDColor == 5 && kh.KyXuatNhap.IdSan == 2).ToList();
-            var DaTraHangKhachLeLoiTrongShopee = beg.Where(kh => kh.IdDoiTra == 3 && kh.IDColor == 5 && kh.KyXuatNhap.IdSan == 3).ToList();
-            var DaTraHangKhachLeLoiTrongNSan = beg.Where(kh => kh.IdDoiTra == 3 && kh.IDColor == 5 && kh.KyXuatNhap.IdSan == 1).ToList();
-            var DaTraHangKhachLeLoiKhoi = beg.Where(kh => kh.IdDoiTra == 3 && kh.IDColor == 7).ToList();
-            var DaTraHangKhachLeLoiKhoiTikTok = beg.Where(kh => kh.IdDoiTra == 3 && kh.IDColor == 7 && kh.KyXuatNhap.IdSan == 2).ToList();
-            var DaTraHangKhachLeLoiKhoiShopee = beg.Where(kh => kh.IdDoiTra == 3 && kh.IDColor == 7 && kh.KyXuatNhap.IdSan == 3).ToList();
-            var DaTraHangKhachLeLoiKhoiNSan = beg.Where(kh => kh.IdDoiTra == 3 && kh.IDColor == 7 && kh.KyXuatNhap.IdSan == 1).ToList();
+            var DaTraHangKhachLeLoi = be.Where(kh => kh.IdDoiTra == 3).ToList(); //4:Không Lỗi//3:có lỗi//2:Mới Nhận
+            var DaTraHangKhachLeLoiTrong = be.Where(kh => kh.IdDoiTra == 3 && kh.IDColor == 5).ToList();
+            var DaTraHangKhachLeLoiTrongTikTok = be.Where(kh => kh.IdDoiTra == 3 && kh.IDColor == 5 && kh.KyXuatNhap.IdSan == 2).ToList();
+            var DaTraHangKhachLeLoiTrongShopee = be.Where(kh => kh.IdDoiTra == 3 && kh.IDColor == 5 && kh.KyXuatNhap.IdSan == 3).ToList();
+            var DaTraHangKhachLeLoiTrongNSan = be.Where(kh => kh.IdDoiTra == 3 && kh.IDColor == 5 && kh.KyXuatNhap.IdSan == 1).ToList();
+            var DaTraHangKhachLeLoiKhoi = be.Where(kh => kh.IdDoiTra == 3 && kh.IDColor == 7).ToList();
+            var DaTraHangKhachLeLoiKhoiTikTok = be.Where(kh => kh.IdDoiTra == 3 && kh.IDColor == 7 && kh.KyXuatNhap.IdSan == 2).ToList();
+            var DaTraHangKhachLeLoiKhoiShopee = be.Where(kh => kh.IdDoiTra == 3 && kh.IDColor == 7 && kh.KyXuatNhap.IdSan == 3).ToList();
+            var DaTraHangKhachLeLoiKhoiNSan = be.Where(kh => kh.IdDoiTra == 3 && kh.IDColor == 7 && kh.KyXuatNhap.IdSan == 1).ToList();
 
 
             var DaBanLSiNSan = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1 && kh.KyXuatNhap.IdSan == 1 && kh.KyXuatNhap.KhachLe == false).ToList();
@@ -124,7 +124,8 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ViewBag.TongXiNhanGen1TrongMauDaXuat = TrongMauDaXuat == null ? 0 : TrongMauDaXuat.Sum(kh => kh.SoLuong);
 
 
-            ViewBag.DaSanXuat = ViewBag.daban + ViewBag.TongXiNhanGen1Tek + ViewBag.TongXiNhanGen1MauDaXuat;
+            ViewBag.DaSanXuat = ViewBag.daban + ViewBag.TongXiNhanGen1Tek + ViewBag.TongXiNhanGen1MauDaXuat
+                                + ViewBag.DaTraHangKhachLeLoi;
             return View();
         }
         public ActionResult NVLTonKho()
@@ -181,7 +182,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         {
             try
             {
-                var kq = new Data.TonKhoData().InsertTonKhoAotu(id,DBname);
+                var kq = new Data.TonKhoData().InsertTonKhoAotu(id,"Auto Kỳ",0,DBname);
                 if (kq)
                 {
                     Session["ThongBaoKyTonKhoOK"] = "Auto thêm mới CT kỳ tồn kho thành công, cần update để sử dụng.";
@@ -291,6 +292,17 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 model.ChuaRap = model.TonDauKy - model.DaRap - model.CoLoi;
                 dbc.Entry(model).State = EntityState.Modified;
                 dbc.SaveChanges();
+                var getcoutNVL = dbc.ChiTietTonKhoes.FirstOrDefault(kh => kh.ParentId == model.Id);
+                if (model.SanPham ==true && getcoutNVL==null)
+                {
+                    new Data.TonKhoData().InsertTonKhoAotu(model.IdKyTonKho, "Đế Sáng phải", model.Id, DBname);
+                    new Data.TonKhoData().InsertTonKhoAotu(model.IdKyTonKho, "Đế Sáng trái", model.Id, DBname);
+                    new Data.TonKhoData().InsertTonKhoAotu(model.IdKyTonKho, "Đế đen và mạch điện", model.Id, DBname);
+                    new Data.TonKhoData().InsertTonKhoAotu(model.IdKyTonKho, "Nanh Sáng ngắn Xi Nhan Wave", model.Id, DBname);
+                    new Data.TonKhoData().InsertTonKhoAotu(model.IdKyTonKho, "Thanh Sáng dài Xi Nhan Wave phải", model.Id, DBname);
+                    new Data.TonKhoData().InsertTonKhoAotu(model.IdKyTonKho, "Thanh Sáng dài Xi Nhan Wave trái", model.Id, DBname);
+                    new Data.TonKhoData().InsertTonKhoAotu(model.IdKyTonKho, "Kính trong/khói Xi nhan wave", model.Id, DBname);
+                }
                 if (model.ParentId == 0)
                 {
                     var chitietNVL = dbc.ChiTietTonKhoes.Where(kh => kh.ParentId == model.Id).ToList();

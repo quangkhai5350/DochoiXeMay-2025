@@ -1,4 +1,4 @@
-﻿
+﻿@model DoChoiXeMay.Models.Ser_sp
 @{
     ViewBag.Title = "ListSerialDaIn";
     Layout = "~/Areas/Admin/Views/Shared/_Layoutadmin.cshtml";
@@ -10,7 +10,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-8">
+    <div class="">
         <div class="row">
             <div class="pull-right label label-warning" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
                 @Session["ThongBaoSerialSPDaIn"]
@@ -20,14 +20,21 @@
             <div class="panel-heading">
                 <div class="row">
                     @*<div class="col-md-6">
-                        <a class="btn btn-danger" style="margin-left:20px" href="/Admin/Serial/DeleteSerialSP" onclick="return confirm('Bạn muốn Xóa tất cả S/N Sản Phẩm còn lại ??')">
-                            <i class="glyphicon glyphicon-remove"></i>&nbsp;&nbsp; Xóa S/N Sản Phẩm
-                        </a>
-                    </div>*@
+            <a class="btn btn-danger" style="margin-left:20px" href="/Admin/Serial/DeleteSerialSP" onclick="return confirm('Bạn muốn Xóa tất cả S/N Sản Phẩm còn lại ??')">
+                <i class="glyphicon glyphicon-remove"></i>&nbsp;&nbsp; Xóa S/N Sản Phẩm
+            </a>
+        </div>*@
                     <div class="col-md-6">
-                        <h5>List Serial SP Đã In</h5>
+                        <h5>@ViewBag.TotalSerialSPDaIn Serial Đã In - Chưa Active</h5>
                     </div>
-
+                    <div class="col-lg-3 col-xl-3 col-md-3 col-sm-12">
+                        <input type="text" class="form-control input-sm pull-right" style="margin-top: 10px;font-size: medium; height: 40px; width: 95%" name="KeywordsTT" id="KeywordsTT" onchange="TimKiemsp()" placeholder="Enter Tìm Theo số Serial." />
+                    </div>
+                    <div class="col-lg-3 col-xl-3 col-md-3 col-sm-12 col-12" style="text-align: center; margin-top: 15px">
+                        <span class="icon-case"><i class="glyphicon glyphicon-calendar"></i>Ngày</span>
+                        
+                        <input type="date" name="Ngay" id="Ngay" />
+                    </div>
                 </div>
 
             </div>
@@ -39,130 +46,87 @@
                 </div>
             </div>
             <div class="panel-footer">
-                <div class="row">
-                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12 col-12">
-                        <input type="text" style="width:30%" placeholder="Chọn serial để xóa." name="serialsp" id="serialsp" />
-                        <button id="Xoasp" class="btn btn-danger" style="margin-left:10px" href="/Admin/Serial/DeleteSerialSP" onclick="XoaSNSP()">
-                            <i class="glyphicon glyphicon-remove"></i>&nbsp;&nbsp; Xóa Serial Number cụ thể
-                        </button>
-                    </div>
-                    
-            
-            <script>
-                function XoaSNSP() {
-                    var serialsp = $('#serialsp').val();
-                    if (serialsp.length > 0) {
-                        if (!confirm("Bạn muốn xóa serial: " + serialsp + "  ??")) {
-                            return false;
-                        } else {
-                            $.ajax({
-                                url: "/Admin/Serial/XoaserialSP",
-                                data: { serialsp: serialsp },
-                                success: function (respone) {
-                                    location.reload();
-                                    //$('.TongSanPham').html(pagesp + '/' + TongSP + ' trang');
-                                }
-                            });
-                        }
-                    } else {
-                        alert("Bạn chưa chọn Serial để xóa.")
-                    }
-                };
-            </script>
-        
-                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 col-12" style="text-align:right">
-                        @ViewBag.TotalSerialSPDaIn S/N
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="row">
-            <div class="pull-right label label-warning" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
-                @Session["ThongBaoSerialBoxDaIn"]
-            </div>
-        </div>
-        <div class="panel panel-default" style="margin-top:10px">
-            <div class="panel-heading">
-                <div class="row">
-                    @*<div class="col-md-6">
-                        <a class="btn btn-danger" style="margin-left:20px" href="/Admin/Serial/DeleteSerialBox" onclick="return confirm('Bạn đã chọn số lượng và máy In ?')">
-                            <i class="glyphicon glyphicon-remove"></i>&nbsp;&nbsp; Xóa S/N Box
-                        </a>
-                    </div>*@
-                    <div class="col-md-6">
-                        <h5>Serial Box Đã In</h5>
-                    </div>
-                </div>
+                @if (Session["quyen"].ToString() == "1")
+                {
+                    <div class="row">
+                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12 col-12">
+                            <input type="text" style="width:30%" placeholder="Chọn serial để xóa." name="serialsp" id="serialsp" />
+                            <button id="Xoasp" class="btn btn-danger" style="margin-left:10px" href="/Admin/Serial/DeleteSerialSP" onclick="XoaSNSP()">
+                                <i class="glyphicon glyphicon-remove"></i>&nbsp;&nbsp; Xóa Serial Number cụ thể
+                            </button>
+                        </div>
 
-            </div>
-            <div class="panel-body">
-                <img id="loading" hidden src="~/Areas/Admin/Content/img/loading.gif" />
-                <div class="listSerBoxDaIn" style="max-height: 600px; overflow: auto">
-
-
-                </div>
-            </div>
-            <div class="panel-footer">
-
-                <div class="row">
-                    @*<div class="col-md-10">
-                        <input type="number" style="width:100px" min="0" title="Chọn số lượng để In." name="SoSNBOX" id="SoSNBOX" required />
-                        <button id="InBox" class="btn btn-success" style="margin-left:20px" data-action="InSNmoitaoBox?bang=2&soluong=" onclick="InBox()">
-                            <i class="glyphicon glyphicon-print"></i>&nbsp;&nbsp; In S/N Box
-                        </button>
 
                         <script>
-                            function InBox() {
-                                var ma = $('#SoSNBOX').val();
-                                var mayin = $('#MayIn').val();
-                                if (ma > 0) {
-                                    if (!confirm("Bạn muốn In " + ma + " S/N box ??")) {
+                            function XoaSNSP() {
+                                var serialsp = $('#serialsp').val();
+                                if (serialsp.length > 0) {
+                                    if (!confirm("Bạn muốn xóa serial: " + serialsp + "  ??")) {
                                         return false;
                                     } else {
                                         $.ajax({
-                                            url: "/Admin/Serial/InSNmoitaoBox",
-                                            data: { bang: 2, soluong: ma, mayin: mayin },
+                                            url: "/Admin/Serial/XoaserialSP",
+                                            data: { serialsp: serialsp },
                                             success: function (respone) {
                                                 location.reload();
                                                 //$('.TongSanPham').html(pagesp + '/' + TongSP + ' trang');
                                             }
                                         });
                                     }
+                                } else {
+                                    alert("Bạn chưa chọn Serial để xóa.")
                                 }
                             };
                         </script>
-                    </div>*@
-                    <div class="col-md-2" style="">
-                        @ViewBag.TotalSerialBoXDaIn S/N
-                    </div>
 
-                </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 col-12" style="text-align:right">
+                            <span class="TongChuaIn"></span> S/N
+                        </div>
+                    </div>
+                }
+
             </div>
         </div>
     </div>
 
 </div>
 <script>
-
-    LoadPage();
-    function LoadPage() {
+    $(function () {
+        TongSP = 0;
+        Ngay = $("#Ngay").val();
+        KeywordsTT = $('#KeywordsTT').val();
+        getTongSanPham(Ngay, KeywordsTT);
+    });
+    function LoadPage(Ngay, KeywordsTT) {
         $.ajax({
             url: "/Admin/Serial/GetListSer_SPDaIn",
-            data: {},
+            data: { Ngay: Ngay, KeywordsTT: KeywordsTT },
             success: function (respone) {
                 $(".listSerSPDaIn").html(respone);
-                //$('.TongSanPham').html(pagesp + '/' + TongSP + ' trang');
+                $('.TongChuaIn').html(TongSP );
             }
         });
+        
+    };
+    function getTongSanPham(Ngay, KeywordsTT) {
         $.ajax({
-            url: "/Admin/Serial/GetListSer_BoxDaIn",
-            data: {},
+            url: "/Admin/Serial/GetCountChuaActi",
+            data: { Ngay: Ngay, KeywordsTT: KeywordsTT },
             success: function (respone) {
-                $(".listSerBoxDaIn").html(respone);
-                //$('.TongSanPham').html(pagesp + '/' + TongSP + ' trang');
+                TongSP = respone;
+                LoadPage(Ngay, KeywordsTT);
             }
         });
+    };
+    $("#Ngay").change(function () {
+        Ngay = $("#Ngay").val();
+        $('#KeywordsTT').val('');
+        KeywordsTT = $('#KeywordsTT').val();
+        getTongSanPham(Ngay, KeywordsTT);
+    });
+    function TimKiemsp() {
+        Ngay = $("#Ngay").val();
+        KeywordsTT = $('#KeywordsTT').val();
+        getTongSanPham(Ngay, KeywordsTT);
     };
 </script>

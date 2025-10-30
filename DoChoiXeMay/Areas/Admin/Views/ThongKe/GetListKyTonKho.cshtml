@@ -21,8 +21,6 @@
                     <th class="canhgiua" style="width:30px">Insert</th>
                     <th class="canhgiua" style="width:30px">Update/Del</th>
                 }
-                @*<th class="canhgiua">STT</th>*@
-                <th class="canhgiua" style="width:30px">Id</th>
                 <th class="canhgiua" style="width:350px !important">Tên SP/NVL</th>
                 @*<th class="canhgiua">Tên NVL</th>*@
                 <th class="canhgiua">Ban đầu(ước)</th>
@@ -69,7 +67,7 @@
                     @if (Session["quyen"] != null && Session["quyen"].ToString() == "1")
                     {
                         <td>
-                            <a class="marginbutonkh btn btn-warning waves-effect" href="/Admin/ThongKe/InsertChiTietKyTonKho/@Item.Id" title="Thêm NVL Auto"><span class="fa fa-plus-circle" style="font-size:30px"></span></a>
+                            <a class="marginbutonkh btn btn-warning waves-effect" href="/Admin/ThongKe/InsertChiTietKyTonKho/@Item.Id" title="Thêm NVL Auto"><span class="fa fa-plus-circle" style="font-size:20px"></span></a>
                         </td>
                     }
 
@@ -82,7 +80,7 @@
 
                                 var sp = CTTK.SanPham == true ? " sản phẩm" : "NVL";
                                 <p style="height:40px">
-                                    <a title="Update @sp @CTTK.TenHang" class="btn btn-danger" onclick="return confirm('Bạn muốn update '+@sp+' ??')"
+                                    <a title="Update @sp @CTTK.TenHang" class="btn btn-primary" onclick="return confirm('Bạn muốn update '+@sp+' ??')"
                                        href="/Admin/ThongKe/UpdateCTTK/@CTTK.Id"><span class="glyphicon glyphicon-edit" style="font-size:10px"></span></a>
 
                                     <a style="display:none" title="Xóa @sp @CTTK.TenHang" class="btn btn-danger" onclick="return confirm('Bạn muốn xóa  @sp @CTTK.TenHang ??')"
@@ -91,24 +89,7 @@
                             }
                         </td>
                     }
-                    <td>
-                        @foreach (DoChoiXeMay.Models.ChiTietTonKho CTTK in Chitiet)
-                        {
-                            if (CTTK.SanPham)
-                            {
-                                <p style="height:40px">
-                                    <span>@CTTK.Id</span>
-                                </p>
-                            }
-                            else
-                            {
-                                <p style="height:40px">
-                                    <span></span>
-                                </p>
-                            }
-
-                        }
-                    </td>
+                    
                     <td>
                         @foreach (DoChoiXeMay.Models.ChiTietTonKho CTTK in Chitiet)
                         {

@@ -81,8 +81,10 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             Session["requestUri"] = "/Admin/Serial/ListSerialDaIn";
             ViewBag.TotalSerialSPDaIn = dbc.Ser_sp.Where(kh => kh.DaIn == true && kh.Sudung==false).Count();
             ViewBag.TotalSerialBoXDaIn = dbc.Ser_box.Where(kh => kh.DaIn == true && kh.Sudung == false).Count();
+            
             return View();
         }
+        
         public ActionResult AddNewSerial()
         {
             ViewBag.IDMF = new SelectList(dbc.Manufacturers.Where(kh => kh.Sudung == true), "Id", "Name",5);
@@ -499,19 +501,46 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ViewBag.SerBoxchuaIn = dbc.Ser_box.Where(kh => kh.DaIn == false).OrderBy(kh => kh.NgayTao).ToList();
             return PartialView();
         }
-        public ActionResult GetListSer_SPDaIn()
+        public ActionResult GetListSer_SPDaIn(string Ngay="", string KeywordsTT="")
         {
-            ViewBag.SerSPDaIn = dbc.Ser_sp.Where(kh => kh.DaIn == true && kh.Sudung==false).OrderBy(kh => kh.NgayTao)
-                .ThenBy(kh=>kh.Sudung)
-                .ToList();
+
+            var list = dbc.Ser_sp.Where(kh => kh.DaIn == true && kh.Sudung == false)
+                        .OrderByDescending(kh => kh.NgayTao)
+                        .Take(1).Single();
+            if (Ngay == "")
+            {
+                var model = new Data.SerialData().listSerSPDaInChuaAc(list.NgayTao,KeywordsTT);
+                ViewBag.SerSPDaIn=model;
+            }
+            else
+            {
+                var ngayIn = DateTime.Parse(Ngay);
+                ViewBag.SerSPDaIn = new Data.SerialData().listSerSPDaInChuaAc(ngayIn, KeywordsTT);
+            }
             return PartialView();
         }
-        public ActionResult GetListSer_BoxDaIn()
+        public ActionResult GetCountChuaActi(string Ngay = "",string KeywordsTT="")
         {
-            ViewBag.SerBoxDaIn = dbc.Ser_box.Where(kh => kh.DaIn == true && kh.Sudung==false).OrderBy(kh => kh.NgayTao)
-                .ThenBy(kh=>kh.Sudung)
-                .ToList();
-            return PartialView();
+            var count = 0;
+            var list = dbc.Ser_sp.Where(kh => kh.DaIn == true && kh.Sudung == false)
+                        .OrderByDescending(kh => kh.NgayTao)
+                        .Take(1).Single();
+            if (Ngay == "")
+            {
+                count = new Data.SerialData().listSerSPDaInChuaAc(list.NgayTao,KeywordsTT).Count();
+            }
+            else {
+                var ngayIn = DateTime.Parse(Ngay);
+                count = new Data.SerialData().listSerSPDaInChuaAc(ngayIn, KeywordsTT).Count();
+            }
+            return Json(count, JsonRequestBehavior.AllowGet);
         }
+        //public ActionResult GetListSer_BoxDaIn()
+        //{
+        //    ViewBag.SerBoxDaIn = dbc.Ser_box.Where(kh => kh.DaIn == true && kh.Sudung==false).OrderBy(kh => kh.NgayTao)
+        //        .ThenBy(kh=>kh.Sudung)
+        //        .ToList();
+        //    return PartialView();
+        //}
     }
 }
