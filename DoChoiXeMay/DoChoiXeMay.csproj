@@ -152,6 +152,7 @@
     <Compile Include="Areas\Admin\Controllers\XuatNhapController.cs" />
     <Compile Include="Areas\Admin\Data\ActiveData.cs" />
     <Compile Include="Areas\Admin\Data\ChiNhanhData.cs" />
+    <Compile Include="Areas\Admin\Data\NhanVien.cs" />
     <Compile Include="Areas\Admin\Data\NoteKyThuatData.cs" />
     <Compile Include="Areas\Admin\Data\ProjectTeKData.cs" />
     <Compile Include="Areas\Admin\Data\SerialData.cs" />
@@ -195,6 +196,7 @@
     <Compile Include="Models\NhatKyUTek.cs" />
     <Compile Include="Models\NoteKythuat.cs" />
     <Compile Include="Models\NV_Cong.cs" />
+    <Compile Include="Models\NV_GioCong.cs" />
     <Compile Include="Models\NV_HeSoGio.cs" />
     <Compile Include="Models\NV_Luong.cs" />
     <Compile Include="Models\NV_NhanVienTek.cs" />
@@ -437,6 +439,7 @@
     <Content Include="Content\imgTeK\favicon.jpg" />
     <Content Include="Content\imgTeK\loading.gif" />
     <Content Include="Content\imgTeK\Namn.png" />
+    <Content Include="Content\imgTeK\Tocdai.png" />
     <Content Include="Content\js\bootstrap.min.js" />
     <Content Include="Content\js\jquery-1.11.0.min.js" />
     <Content Include="Content\js\jquery.appear.js" />

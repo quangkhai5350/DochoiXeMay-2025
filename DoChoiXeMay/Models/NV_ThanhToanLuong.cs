@@ -14,8 +14,6 @@ namespace DoChoiXeMay.Models
 
         public int IdCong { get; set; }
 
-        public int IdLuong { get; set; }
-
         public int Thang { get; set; }
 
         public int Nam { get; set; }

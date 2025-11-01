@@ -11,6 +11,7 @@ namespace DoChoiXeMay.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public NV_NhanVienTek()
         {
+            NV_GioCong = new HashSet<NV_GioCong>();
             NV_Luong = new HashSet<NV_Luong>();
             NV_ThanhToanLuong = new HashSet<NV_ThanhToanLuong>();
         }
@@ -73,6 +74,9 @@ namespace DoChoiXeMay.Models
 
         [StringLength(50)]
         public string STT { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<NV_GioCong> NV_GioCong { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NV_Luong> NV_Luong { get; set; }

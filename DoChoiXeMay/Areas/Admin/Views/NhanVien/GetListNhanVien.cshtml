@@ -3,7 +3,7 @@
     <table class="table table-hover table-striped" style="margin-bottom:0">
         <thead>
             <tr class="canhgiua" style="background-color: #00bcd4">
-                @*<th class="canhgiua" style="width:10px">STT</th>*@
+                <th class="canhgiua" style="width:10px">STT</th>
                 @*<th class="canhgiua" style="width:10px">GioiTinh</th>*@
                 <th class="canhgiua">HinhDaiDien</th>
                 <th class="canhgiua" style="width:100px">Tên NV</th>
@@ -32,70 +32,94 @@
             @foreach (DoChoiXeMay.Models.NV_NhanVienTek Item in ViewBag.GetListNV)
             {
                 <tr class="canhgiua" style="border: 2px solid black !important">
-                    
-                        @if (Item.HinhDaiDien != null && Item.HinhDaiDien != "")
+                    <td>
+                        @Item.STT
+                    </td>
+                    @if (Item.HinhDaiDien != null && Item.HinhDaiDien != "")
+                    {
+                        <td><img src="~/Content/imgTeK/@Item.HinhDaiDien" alt="" class="avatartek" /></td>
+                    }
+                    else
+                    {
+                        if (Item.GioiTinh == false)
                         {
-                            <td><img src="~/Content/imgTeK/@Item.HinhDaiDien" alt="" class="avatartek" /></td>
+                            <td><img src="~/Content/imgTeK/Tocdai.png" alt="" class="avatartek" /></td>
                         }
                         else
                         {
                             <td><img src="~/Content/imgTeK/Namn.png" alt="" class="avatartek" /></td>
                         }
-                        <td>
-                            @Item.HoTen
-                        </td>
-                        <td style="font-size:15px">
-                            @Item.CCCD
-                        </td>
 
-                        <td style="font-size:15px">
-                            @Item.DiaChiThuongTru
-                        </td>
-                        <td>
-                            @Item.DiaChiHienTai
-                        </td>
-                        <td>
-                            @Item.CongViec
-                        </td>
-                        <td>
-                            @Item.BangCapChinh
-                        </td>
-                        <td>
-                            @Item.NV_Vitrinhanvien.TenVitri
-                        </td>
-                        <td>
-                            @Item.ThuViec
-                        </td>
-                        <td>
-                            @Item.DaNghiViec
-                        </td>
-                        <td>
-                            @if (File.Exists(Request.MapPath("~/Content/imgTeK/" + Item.HinhCanCuocTruoc)))
-                            {
-                                <a target="_blank" href="~/Content/imgTeK/@Item.HinhCanCuocTruoc">
-                                    <i class="glyphicon glyphicon-download-alt"></i>
-                                </a>
-                            }
-                        </td>
-                        <td style="border-right: 2px solid black !important">
-                            @if (File.Exists(Request.MapPath("~/Content/imgTeK/" + Item.HinhCanCuocSau)))
-                            {
-                                <a target="_blank" href="~/Content/imgTeK/@Item.HinhCanCuocSau">
-                                    <i class="glyphicon glyphicon-download-alt"></i>
-                                </a>
-                            }
-                        </td>
-                        <td>
-                            @Html.FormatValue(Item.NgayTao, "{0:dd/MM/yyyy}")
-                        </td>
-                        @if (Session["quyen"].ToString() == "1")
+                    }
+                    <td>
+                        @Item.HoTen
+                    </td>
+                    <td style="font-size:15px">
+                        @Item.CCCD
+                    </td>
+
+                    <td style="font-size:15px">
+                        @Item.DiaChiThuongTru
+                    </td>
+                    <td>
+                        @Item.DiaChiHienTai
+                    </td>
+                    <td>
+                        @Item.CongViec
+                    </td>
+                    <td>
+                        @Item.BangCapChinh
+                    </td>
+                    <td>
+                        @Item.NV_Vitrinhanvien.TenVitri
+                    </td>
+                    <td>
+                        @if (Item.ThuViec)
                         {
-                            <td>
-                                <a class="btn btn-danger" href="/Admin/NhanVien/UpdateNhanVien/@Item.Id"><span class="glyphicon glyphicon-edit"></span></a>
-                                <a style="display:none" class="btn btn-warning" onclick="return confirm('Bạn muốn xóa NV: '+@Item.HoTen+'??')" href="/Admin/NhanVien/DeleteNhanVien/@Item.Id"><span class="glyphicon glyphicon-trash"></span></a>
-                            </td>
+                            <span style="background-color:burlywood">@Item.ThuViec</span>
                         }
-                    </tr>
+                        else
+                        {
+                            <span>@Item.ThuViec</span>
+                        }
+                    </td>
+                    <td>
+                        @if (Item.DaNghiViec)
+                        {
+                            <span style="background-color:burlywood">@Item.DaNghiViec</span>
+                        }
+                        else
+                        {
+                            <span>@Item.DaNghiViec</span>
+                        }
+                    </td>
+                    <td>
+                        @if (File.Exists(Request.MapPath("~/Content/imgTeK/" + Item.HinhCanCuocTruoc)))
+                        {
+                            <a target="_blank" href="~/Content/imgTeK/@Item.HinhCanCuocTruoc">
+                                <i class="glyphicon glyphicon-download-alt"></i>
+                            </a>
+                        }
+                    </td>
+                    <td style="border-right: 2px solid black !important">
+                        @if (File.Exists(Request.MapPath("~/Content/imgTeK/" + Item.HinhCanCuocSau)))
+                        {
+                            <a target="_blank" href="~/Content/imgTeK/@Item.HinhCanCuocSau">
+                                <i class="glyphicon glyphicon-download-alt"></i>
+                            </a>
+                        }
+                    </td>
+                    <td>
+                        @Html.FormatValue(Item.NgayTao, "{0:dd/MM/yyyy}")
+                    </td>
+                    @if (Session["quyen"].ToString() == "1")
+                    {
+                        <td>
+                            <a class="btn btn-danger" href="/Admin/NhanVien/UpdateNhanVien/@Item.Id"><span class="glyphicon glyphicon-edit"></span></a>
+                            <a style="display:none" class="btn btn-warning" onclick="return confirm('Bạn muốn xóa NV: '+@Item.HoTen+'??')" href="/Admin/NhanVien/DeleteNhanVien/@Item.Id"><span class="glyphicon glyphicon-trash"></span></a>
+                        </td>
+                    }
+                </tr>
             }
         </tbody>
     </table>

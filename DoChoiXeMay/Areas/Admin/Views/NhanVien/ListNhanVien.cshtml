@@ -18,7 +18,7 @@
     @if (Session["quyen"].ToString() == "1")
     {
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-6">
-            <a class="btn btn-warning" style="margin-left:5px" href="/Admin/NhanVien/ListNhanVien" onclick="return confirm('Bạn muốn Thêm Mới Nhân Viên TeK ??')">
+            <a class="btn btn-warning" style="margin-left:5px" href="/Admin/NhanVien/AddNhanVienAuto" onclick="return confirm('Bạn muốn Thêm Mới Nhân Viên TeK ??')">
                 <i class="fa fa-plus-circle"></i>&nbsp;&nbsp; Thêm mới "Nhân Viên TeK"
             </a>
         </div>
@@ -28,15 +28,17 @@
     <div class="panel-heading">
         <div class="row">
             <div class="pull-right label label-warning" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
+                @Session["ThongBaoNhanVienTEKLoi"]
+            </div>
+            <div class="pull-right label label-success" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
                 @Session["ThongBaoNhanVienTEK"]
             </div>
-
             <div class="row">
 
-                
+
                 @*<div class="col-lg-4 col-xl-4 col-md-4 col-sm-12" style="text-align:center">
-                    <input type="text" class="form-control input-sm" style="margin-top: 5px;font-size: medium; height: 40px; width: 95%" name="KeywordsTT" id="KeywordsTT" onchange="TimKiemsp()" placeholder="Enter Tìm Theo UserName - Nội Dung - Mã TC - Hình Thức TC - Kỳ Xuất Nhập." />
-                </div>*@
+                <input type="text" class="form-control input-sm" style="margin-top: 5px;font-size: medium; height: 40px; width: 95%" name="KeywordsTT" id="KeywordsTT" onchange="TimKiemsp()" placeholder="Enter Tìm Theo UserName - Nội Dung - Mã TC - Hình Thức TC - Kỳ Xuất Nhập." />
+            </div>*@
             </div>
         </div>
     </div>
