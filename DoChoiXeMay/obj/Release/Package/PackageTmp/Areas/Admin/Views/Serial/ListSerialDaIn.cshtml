@@ -46,41 +46,45 @@
                 </div>
             </div>
             <div class="panel-footer">
-                <div class="row">
-                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12 col-12">
-                        <input type="text" style="width:30%" placeholder="Chọn serial để xóa." name="serialsp" id="serialsp" />
-                        <button id="Xoasp" class="btn btn-danger" style="margin-left:10px" href="/Admin/Serial/DeleteSerialSP" onclick="XoaSNSP()">
-                            <i class="glyphicon glyphicon-remove"></i>&nbsp;&nbsp; Xóa Serial Number cụ thể
-                        </button>
-                    </div>
-                    
-            
-            <script>
-                function XoaSNSP() {
-                    var serialsp = $('#serialsp').val();
-                    if (serialsp.length > 0) {
-                        if (!confirm("Bạn muốn xóa serial: " + serialsp + "  ??")) {
-                            return false;
-                        } else {
-                            $.ajax({
-                                url: "/Admin/Serial/XoaserialSP",
-                                data: { serialsp: serialsp },
-                                success: function (respone) {
-                                    location.reload();
-                                    //$('.TongSanPham').html(pagesp + '/' + TongSP + ' trang');
+                @if (Session["quyen"].ToString() == "1")
+                {
+                    <div class="row">
+                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12 col-12">
+                            <input type="text" style="width:30%" placeholder="Chọn serial để xóa." name="serialsp" id="serialsp" />
+                            <button id="Xoasp" class="btn btn-danger" style="margin-left:10px" href="/Admin/Serial/DeleteSerialSP" onclick="XoaSNSP()">
+                                <i class="glyphicon glyphicon-remove"></i>&nbsp;&nbsp; Xóa Serial Number cụ thể
+                            </button>
+                        </div>
+
+
+                        <script>
+                            function XoaSNSP() {
+                                var serialsp = $('#serialsp').val();
+                                if (serialsp.length > 0) {
+                                    if (!confirm("Bạn muốn xóa serial: " + serialsp + "  ??")) {
+                                        return false;
+                                    } else {
+                                        $.ajax({
+                                            url: "/Admin/Serial/XoaserialSP",
+                                            data: { serialsp: serialsp },
+                                            success: function (respone) {
+                                                location.reload();
+                                                //$('.TongSanPham').html(pagesp + '/' + TongSP + ' trang');
+                                            }
+                                        });
+                                    }
+                                } else {
+                                    alert("Bạn chưa chọn Serial để xóa.")
                                 }
-                            });
-                        }
-                    } else {
-                        alert("Bạn chưa chọn Serial để xóa.")
-                    }
-                };
-            </script>
-        
-            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 col-12" style="text-align:right">
-                <span class="TongChuaIn"></span> S/N
-            </div>
-                </div>
+                            };
+                        </script>
+
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 col-12" style="text-align:right">
+                            <span class="TongChuaIn"></span> S/N
+                        </div>
+                    </div>
+                }
+
             </div>
         </div>
     </div>

@@ -1,11 +1,14 @@
-﻿using DoChoiXeMay.Filters;
+﻿using DoChoiXeMay.Areas.Admin.Data;
+using DoChoiXeMay.Filters;
 using DoChoiXeMay.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using static System.Net.WebRequestMethods;
 
 namespace DoChoiXeMay.Areas.Admin.Controllers
 {
@@ -90,6 +93,65 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 return RedirectToAction("ListNhanVien");
             }
             
+        }
+        public ActionResult UpdateNhanVien(int Id)
+        {
+            var model = dbc.NV_NhanVienTek.Find(Id);
+            ViewBag.IdVitrinhanvien = new SelectList(dbc.NV_Vitrinhanvien.ToList(), "Id", "TenVitri", model.IdVitrinhanvien);
+            ViewBag.IdKhuVucThuongTru = new SelectList(dbc.KhuVucs.ToList(), "Id", "TenKhuvuc", model.IdKhuVucThuongTru);
+            return View(model);
+        }
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult UpdateNhanVien(NV_NhanVienTek model)
+        {
+            try
+            {
+                var file1 = Request.Files["Dinhkem1"];
+                var file2 = Request.Files["Dinhkem2"];
+                var file3 = Request.Files["Dinhkem3"];
+                if (file1.ContentLength > 0)
+                {
+                    //Xoa hinh cu
+                    bool xoahinhcu = XstringAdmin.Xoahinhcu("imgTeK/", model.HinhDaiDien);
+                    model.HinhDaiDien = XstringAdmin.saveFile(file1, "imgTeK/");
+                }
+                if (file2.ContentLength > 0)
+                {
+                    //Xoa hinh cu
+                    bool xoahinhcu = XstringAdmin.Xoahinhcu("imgTeK/", model.HinhCanCuocTruoc);
+                    model.HinhCanCuocTruoc = XstringAdmin.saveFile(file2, "imgTeK/");
+                }
+                if (file3.ContentLength > 0)
+                {
+                    //Xoa hinh cu
+                    bool xoahinhcu = XstringAdmin.Xoahinhcu("imgTeK/", model.HinhCanCuocSau);
+                    model.HinhCanCuocSau = XstringAdmin.saveFile(file3, "imgTeK/");
+                }
+                dbc.Entry(model).State = EntityState.Modified;
+                dbc.SaveChanges();
+                Session["ThongBaoNhanVienTEKLoi"] = "";
+                Session["ThongBaoNhanVienTEK"] = "Update nhân viên "+model.HoTen+" thành công.";
+                //SMS hệ thống
+                var sms = "Update thông tin nhân viên " + model.HoTen + ", thành công.";
+                new Data.UserData().SMSvaNhatKy(dbc, Session["UserId"].ToString(), Session["UserName"].ToString()
+                    , Session["quyen"].ToString(), sms);
+                //tro lai trang truoc do 
+                var requestUri = Session["requestUri"] as string;
+                if (requestUri != null)
+                {
+                    return Redirect(requestUri);
+                }
+                return RedirectToAction("ListNhanVien");
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                ViewBag.IdVitrinhanvien = new SelectList(dbc.NV_Vitrinhanvien.ToList(), "Id", "TenVitri", model.IdVitrinhanvien);
+                ViewBag.IdKhuVucThuongTru = new SelectList(dbc.KhuVucs.ToList(), "Id", "TenKhuvuc", model.IdKhuVucThuongTru);
+                ModelState.AddModelError("", "Update Thất Bại !!!!" + message);
+                return View(model);
+            }
         }
     }
 }

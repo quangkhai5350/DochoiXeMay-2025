@@ -157,17 +157,21 @@
                                 if (Item.KhachLe == true)
                                 {
                                     <span style="background-color:burlywood">Xuất Hàng/KhachLe</span>
-                                <span>(Ngày: @Html.FormatValue(Item.NgayXuatNhap, "{0:dd/MM/yyyy}"))</span>
+                                    <span>(Ngày: @Html.FormatValue(Item.NgayXuatNhap, "{0:dd/MM/yyyy}"))</span>
+                                }
+                                else
+                                {
+                                    <span style="background-color:burlywood">Xuất Hàng/ĐaiLy</span>
+                                }
+                                if (Item.IdLoaiHangXN == 3)
+                                {
+                                    <span style="background-color:burlywood">@Item.KyXuatNhap_LoaiHang.TenLoai</span>
+                                }
                             }
                             else
                             {
-                                <span style="background-color:burlywood">Xuất Hàng/ĐaiLy</span>
+                                <span>Nhập Hàng</span>
                             }
-                        }
-                        else
-                        {
-                            <span>Nhập Hàng</span>
-                        }
                             </p>
                             <hr />
                             @if (Item.XuatNhap != false && Item.KhachLe != false)
@@ -178,6 +182,7 @@
                             {
                                 <p style="font-size:20px">Tổng: @Html.FormatValue(Item.TongTienAuto, "{0:#,###,###}")</p>
                             }
+
                         </td>
                     <td>
                         @if (File.Exists(Request.MapPath("~/Content/imgxuatnhap/" + Item.HoaDon)))
