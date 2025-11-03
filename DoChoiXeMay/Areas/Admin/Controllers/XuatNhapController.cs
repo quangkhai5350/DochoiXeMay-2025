@@ -574,7 +574,9 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             Session["KhachLe"] = ky.KhachLe == true ? "KhachLe" : "ĐaiLy";
             Session["CKphantram"] = ky.CKphantram;
             Session["CKtienmat"] = ky.CKtienmat;
-            ViewBag.IDMF = new SelectList(dbc.Manufacturers.Where(kh => kh.Sudung == true), "Id", "Name",5);
+
+            ViewBag.IDMF = new SelectList(dbc.Manufacturers.Where(kh => kh.Sudung == true), "Id", "Name", 5);
+
             ViewBag.IDColor = new SelectList(dbc.Colors.OrderByDescending(kh => kh.Id), "Id", "TenColor",7);
             ViewBag.IDSize = new SelectList(dbc.Sizes.OrderBy(kh => kh.Id), "Id", "TenSize",1);
             if(ky.XuatNhap==true && ky.KhachLe == true)
