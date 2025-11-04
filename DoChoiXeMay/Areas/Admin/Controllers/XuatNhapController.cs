@@ -696,6 +696,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             }
             
         }
+
         public ActionResult XoaChiTietXNbyID(string id)
         {
             var model = dbc.ChitietXuatNhaps.Find(new Guid(id));
@@ -926,6 +927,11 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         {
             var araylistHH = Data.XuatNhapData.CheckHHTEKaotu(dbc,Tenhh, Hangsx, Mau, Size);
             return Json(araylistHH, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult GetSerialSPbyBox(string str)
+        {
+            string ser = Data.XuatNhapData.GetSerialbySerial(dbc, str);
+            return Json(ser, JsonRequestBehavior.AllowGet);
         }
         public double TinhTongtienKy(int id , int VAT, double ship, double CKtienmat, int CKphantram)
         {

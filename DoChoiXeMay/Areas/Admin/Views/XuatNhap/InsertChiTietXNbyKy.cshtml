@@ -263,7 +263,22 @@
             ShowThongBao(Ten, IDMF, IDColor, IDSize)
         }
     });
-    
+    $("#SerialHop").change(function () {
+        var box = $("#SerialHop").val();
+        $.ajax({
+            url: "/Admin/XuatNhap/GetSerialSPbyBox",
+            type: 'POST',
+            datatype: 'JSON',
+            contentType: 'application/json;charset=utf-8;',
+            data: JSON.stringify({ str:box }),
+            async: true,
+            success: function (res) {
+                $("#SerialSP").val(res);
+            }, error: function (err) {
+                console.log(err, ':Loi Load Serial SP');
+            }
+        });
+    });
     function ShowThongBao(Ten, IDMF, IDColor, IDSize) {
         $('#TBHHTeK').css("display", "block");
             $.ajax({
