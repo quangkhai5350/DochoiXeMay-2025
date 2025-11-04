@@ -25,7 +25,7 @@
                 @Session["ThongBaoXuatNhapUser"]
             </div>
             <div class="pull-right label label-warning" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
-                
+
                 @Session["ThongBaoXuatNhapUserct"]
             </div>
             <div class="row">
@@ -72,7 +72,7 @@
                                         <div class="row" style="text-align:center;margin-top:15px">
                                             <input id="TenKy" placeholder="Tên Kỳ xuất nhập ..." name="TenKy" style="margin-right:10px;width:100%" required />
                                         </div>
-                                        
+
                                         <div class="row" style="margin-top:10px">
                                             <span>Loại Hàng Xuất/Nhập</span>
                                             @Html.DropDownList("IdMaTC", null, new { style = "width: 100%; height: 40px" })
@@ -81,7 +81,7 @@
                                             <span>Khu Vực</span>
                                             @Html.DropDownList("IdKhuVuc", null, new { style = "width: 100%; height: 40px" })
                                         </div>
-                                        
+
                                         <div class="row" style="margin-top:10px">
                                             <div class="col-md-6">
                                                 <span>Tồn Kho(Kỳ Nhập)</span>
@@ -140,9 +140,9 @@
                                         </div>
 
                                     </div>
-                                    }
+                                }
                             </div>
-                            </div>
+                        </div>
 
                     </div>
                 </div>
@@ -211,7 +211,7 @@
         } else {
             $('.XuatKhachLe').removeClass('hidden');
         }
-        
+
     });
     $("#KhachLe").change(function () {
         var XuatNhap = $('#XuatNhap').is(':checked');
