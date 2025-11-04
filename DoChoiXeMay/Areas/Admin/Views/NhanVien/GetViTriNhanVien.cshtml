@@ -1,0 +1,65 @@
+﻿<div class="table-responsive">
+    <table class="table table-hover table-striped" style="margin-bottom:0">
+        <thead>
+            <tr class="canhgiua" style="background-color: #00bcd4">
+                @*<th class="canhgiua" style="width:10px">GioiTinh</th>*@
+                <th class="canhgiua">Tên Vị Trí</th>
+                <th class="canhgiua" style="width:100px">Đơn Vị</th>
+                <th class="canhgiua">PhuCapChucVu</th>
+                <th class="canhgiua">PhuCapKhac</th>
+                <th class="canhgiua">TrangPhuc</th>
+
+                <th class="canhgiua">GhiChu</th>
+                <th class="canhgiua">SoNgayNghiTrongTuan</th>
+                <th class="canhgiua">SoNgayNghiTrongThang</th>
+                @if (Session["quyen"].ToString() == "1")
+                {
+                    <th class="canhgiua" style="width:120px">Sửa/Xóa</th>
+                }
+
+            </tr>
+        </thead>
+        <tbody style="border: 2px solid black !important">
+            @foreach (DoChoiXeMay.Models.NV_Vitrinhanvien Item in ViewBag.ListVitri)
+            {
+                <tr class="canhgiua" style="border: 2px solid black !important">
+                    
+                    <td>
+                        @Item.TenVitri
+                    </td>
+                    <td style="font-size:15px">
+                        @Item.DonViTinh
+                    </td>
+
+                    <td style="font-size:15px">
+                        @Item.PhuCapChucVu
+                    </td>
+                    <td>
+                        @Item.PhuCapChucKhac
+                    </td>
+                    <td>
+                        @Item.TrangPhuc
+                    </td>
+                    <td>
+                        @Item.GhiChuThem
+                    </td>
+                    <td>
+                        @Item.SoNgayNghitrongtuan
+                    </td>
+                    <td>
+                        @Item.SoNgayNghitrongthang
+                    </td>
+
+                    @if (Session["quyen"].ToString() == "1")
+                    {
+                        <td>
+                            <a class="btn btn-danger" href="/Admin/NhanVien/UpdateViTriNhanVien/@Item.Id"><span class="glyphicon glyphicon-edit"></span></a>
+                            <a style="display:none" class="btn btn-warning" onclick="return confirm('Bạn muốn xóa vị trí : '+@Item.TenVitri+'??')" href="/Admin/NhanVien/DeleteVTNhanVien/@Item.Id"><span class="glyphicon glyphicon-trash"></span></a>
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

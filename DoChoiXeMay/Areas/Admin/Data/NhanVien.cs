@@ -32,5 +32,22 @@ namespace DoChoiXeMay.Areas.Admin.Data
             }
 
         }
+        public bool InsertViTriNVAuto(string DBname)
+        {
+            try
+            {
+                var tenvitri = "TeK Auto";
+                var dvt = "Gio";
+                string sql = "insert into [" + DBname + "TechZone].[dbo].[NV_Vitrinhanvien] "+
+                    "values(N'"+tenvitri+"','"+dvt+"',0,0,0,'',1,4)";
+                var insert_SVL = _context.Database.ExecuteSqlCommand(sql);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                string loi = ex.ToString();
+                return false;
+            }
+        }
     }
 }

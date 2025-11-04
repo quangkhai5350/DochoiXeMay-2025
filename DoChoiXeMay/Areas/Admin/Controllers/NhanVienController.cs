@@ -29,12 +29,12 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         }
         public ActionResult GetListNhanVien()
         {
-            var model =dbc.NV_NhanVienTek
+            var model = dbc.NV_NhanVienTek
                 .OrderByDescending(kh => kh.DaNghiViec)
                 .ThenByDescending(kh => kh.ThuViec)
                 .ThenByDescending(kh => kh.IdVitrinhanvien)
                 .ThenByDescending(kh => kh.HoTen).ToList();
-            
+
             for (int i = 0; i < model.Count(); i++)
             {
                 model[i].STT = (i + 1).ToString();
@@ -44,7 +44,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         }
         public ActionResult TinhGioCong()
         {
-            ViewBag.IdVitrinhanvien = new SelectList(dbc.NV_NhanVienTek.Where(kh => kh.NV_Vitrinhanvien.Id==2), "Id", "HoTen");
+            ViewBag.IdVitrinhanvien = new SelectList(dbc.NV_NhanVienTek.Where(kh => kh.NV_Vitrinhanvien.Id == 2), "Id", "HoTen");
             return View();
         }
         public ActionResult AddNhanVienAuto()
@@ -81,8 +81,8 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     Session["ThongBaoNhanVienTEK"] = "";
                 }
                 //Nhân Viên chưa nghỉ việc thì không cho delete
-                
-                
+
+
                 return RedirectToAction("ListNhanVien");
             }
             catch (Exception ex)
@@ -92,7 +92,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 Session["ThongBaoNhanVienTEKLoi"] = "Delete nhân viên thất bại !!!.";
                 return RedirectToAction("ListNhanVien");
             }
-            
+
         }
         public ActionResult UpdateNhanVien(int Id)
         {
@@ -131,7 +131,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 dbc.Entry(model).State = EntityState.Modified;
                 dbc.SaveChanges();
                 Session["ThongBaoNhanVienTEKLoi"] = "";
-                Session["ThongBaoNhanVienTEK"] = "Update nhân viên "+model.HoTen+" thành công.";
+                Session["ThongBaoNhanVienTEK"] = "Update nhân viên " + model.HoTen + " thành công.";
                 //SMS hệ thống
                 var sms = "Update thông tin nhân viên " + model.HoTen + ", thành công.";
                 new Data.UserData().SMSvaNhatKy(dbc, Session["UserId"].ToString(), Session["UserName"].ToString()
@@ -149,6 +149,64 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 string message = ex.Message;
                 ViewBag.IdVitrinhanvien = new SelectList(dbc.NV_Vitrinhanvien.ToList(), "Id", "TenVitri", model.IdVitrinhanvien);
                 ViewBag.IdKhuVucThuongTru = new SelectList(dbc.KhuVucs.ToList(), "Id", "TenKhuvuc", model.IdKhuVucThuongTru);
+                ModelState.AddModelError("", "Update Thất Bại !!!!" + message);
+                return View(model);
+            }
+        }
+        public ActionResult ViTriNhanVien()
+        {
+            Session["requestUri"] = "/Admin/NhanVien/ViTriNhanVien";
+            ViewBag.ListVitri = dbc.NV_Vitrinhanvien.ToList();
+            return View();
+        }
+        public ActionResult GetViTriNhanVien()
+        {
+            var model = dbc.NV_Vitrinhanvien.ToList();
+            ViewBag.ListVitri = model;
+            return PartialView();
+        }
+        public ActionResult AddVTNVAuto()
+        {
+            var kq = new Data.NhanVien().InsertViTriNVAuto(DBname);
+            if (kq)
+            {
+                Session["ThongBaoVTNVTEKLoi"] = "";
+                Session["ThongBaoVTNVTEK"] = "Thêm mới vị trí nhân viên thành công, cần update để sử dụng.";
+                return RedirectToAction("ViTriNhanVien");
+            }
+            else
+            {
+                Session["ThongBaoVTNVTEK"] = "";
+                Session["ThongBaoVTNVTEKLoi"] = "Thêm mới vị trí nhân viên thất bại !!!.";
+                return RedirectToAction("ViTriNhanVien");
+            }
+        }
+        public ActionResult UpdateViTriNhanVien(int Id)
+        {
+            var model = dbc.NV_Vitrinhanvien.Find(Id);
+            return View(model);
+        }
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult UpdateViTriNhanVien(NV_Vitrinhanvien model)
+        {
+            try
+            {
+                dbc.Entry(model).State = EntityState.Modified;
+                dbc.SaveChanges();
+                Session["ThongBaoVTNVTEKLoi"] = "";
+                Session["ThongBaoVTNVTEK"] = "Update vị trí " + model.TenVitri + " thành công.";
+                //tro lai trang truoc do 
+                var requestUri = Session["requestUri"] as string;
+                if (requestUri != null)
+                {
+                    return Redirect(requestUri);
+                }
+                return RedirectToAction("ViTriNhanVien");
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
                 ModelState.AddModelError("", "Update Thất Bại !!!!" + message);
                 return View(model);
             }

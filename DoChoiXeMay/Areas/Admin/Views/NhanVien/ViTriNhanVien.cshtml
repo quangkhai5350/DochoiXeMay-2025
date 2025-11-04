@@ -1,0 +1,89 @@
+﻿
+@{
+    ViewBag.Title = "ViTriNhanVien";
+    Layout = "~/Areas/Admin/Views/Shared/_Layoutadmin.cshtml";
+}
+<script src="~/Areas/Admin/Content/jquery2.0.3.min.js"></script>
+<style>
+    .canhgiua {
+        text-align: center !important;
+    }
+</style>
+<div class="row">
+    <div class="Title_Notin" style="text-align:center">
+        <span>Vị Trí NV</span>
+    </div>
+</div>
+<div class="row">
+    @if (Session["quyen"].ToString() == "1")
+    {
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-6">
+            <a class="btn btn-warning" style="margin-left:5px" href="/Admin/NhanVien/AddVTNVAuto" onclick="return confirm('Bạn muốn Thêm Mới Nhân Viên TeK ??')">
+                <i class="fa fa-plus-circle"></i>&nbsp;&nbsp; Thêm mới "Vị trí Nhân Viên TeK"
+            </a>
+        </div>
+    }
+</div>
+<div class="panel panel-default" style="margin-top:10px">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="pull-right label label-warning" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
+                @Session["ThongBaoVTNVTEKLoi"]
+            </div>
+            <div class="pull-right label label-success" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
+                @Session["ThongBaoVTNVTEK"]
+            </div>
+            <div class="row">
+
+
+                @*<div class="col-lg-4 col-xl-4 col-md-4 col-sm-12" style="text-align:center">
+                        <input type="text" class="form-control input-sm" style="margin-top: 5px;font-size: medium; height: 40px; width: 95%" name="KeywordsTT" id="KeywordsTT" onchange="TimKiemsp()" placeholder="Enter Tìm Theo UserName - Nội Dung - Mã TC - Hình Thức TC - Kỳ Xuất Nhập." />
+                    </div>*@
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        <img id="loading" hidden src="~/Areas/Admin/Content/img/loading.gif" />
+        <div class="listVTNV">
+
+
+        </div>
+    </div>
+    <div class="panel-footer">
+
+        <div class="row">
+            <div class="col-md-8">
+                <span class="TongSanPham"></span>
+            </div>
+            <div class="col-md-4" style="text-align: right">
+                <span class="TongSanPham"></span>
+            </div>
+        </div>
+
+        @*<ul class="pager">
+                <li><a href="#"><span class="glyphicon glyphicon-step-backward"></span></a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-step-forward"></span></a></li>
+            </ul>*@
+
+    </div>
+</div>
+<script>
+
+    LoadPage();
+    function LoadPage() {
+        $.ajax({
+            url: "/Admin/NhanVien/GetViTriNhanVien",
+            data: {},
+            success: function (respone) {
+                $(".listVTNV").html(respone);
+                //var pagesp = pageNo + 1;
+                //$('.TongSanPham').html(pagesp + '/' + TongSP + ' trang');
+            }
+        });
+    };
+</script>
+
+
+
