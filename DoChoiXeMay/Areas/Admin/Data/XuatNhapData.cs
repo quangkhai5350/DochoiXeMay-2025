@@ -407,5 +407,20 @@ namespace DoChoiXeMay.Areas.Admin.Data
             }
             return true;
         }
+        public static string GetSerialbySerial(Model1 db, string str)
+        {
+            string kq = "";
+            if (str !=null && str.Length == 14)
+            {
+                var kq1 = db.Ser_sp.FirstOrDefault(kh => kh.Ser_box.Serial == str);
+                kq = kq1 != null ? kq1.SerialSP : "";
+            }
+            if (str != null && str.Length == 11)
+            {
+                var kq2 = db.Ser_sp.FirstOrDefault(kh => kh.SerialSP == str);
+                kq = kq2 != null ? kq2.Ser_box.Serial : "";
+            }
+                return kq;
         }
+     }
 }
