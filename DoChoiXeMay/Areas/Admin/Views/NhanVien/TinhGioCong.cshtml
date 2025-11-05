@@ -20,112 +20,122 @@
                 @Session["ThongBaoUserTEK"]
             </div>
             <div class="row" style="margin-top:20px">
-                    <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 col-12" style="text-align: center">
-                        <span class="icon-case"><i class="glyphicon glyphicon-calendar"></i>Chọn Tháng Năm</span>
-                        <input type="date" name="ThangNam" value="@DateTime.Now.ToString("yyyy-MM-dd")" id="ThangNam" />
-                    </div>
-                    <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 col-12" style="text-align: center">
-                        <span class="icon-case"><i class="glyphicon glyphicon-calendar"></i>Chọn Nhân Viên</span>
-                        @Html.DropDownList("IdVitrinhanvien", null, new { style = "width: 70%; height: 30px" })
-                    </div>
-            </div>
-            <div class="row">
-                <div class="table-responsive">
-                    <table class="table table-hover table-striped" style="margin-bottom:0">
-                        <thead>
-                            <tr class="canhgiua" style="background-color: #00bcd4">
-                                <th class="canhgiua" style="max-width: 15px">STT</th>
-                                <th class="canhgiua">Tên Sản Phẩm</th>
-                                <th class="canhgiua">Loại</th>
-                                <th class="canhgiua">Số Lượng</th>
-                                <th class="canhgiua" style="width:230px">Giá Nhập Cuối</th>
-
-                                <th class="canhgiua" style="max-width: 40px;padding:0">Img 1</th>
-                                <th class="canhgiua" style="max-width: 40px; padding: 0">Img 2</th>
-                                <th class="canhgiua" style="max-width: 40px; padding: 0">Img 3</th>
-                                <th class="canhgiua" style="min-width: 30px">Update</th>
-                            </tr>
-                        </thead>
-                        @*<tbody style="border: 2px solid black !important">
-                            @foreach (DoChoiXeMay.Models.HangHoa Item in ViewBag.HHTEK)
-                            {
-                                <tr class="canhgiua" style="border-bottom: 2px solid black !important">
-                                    <td>@Item.GhiChu</td>
-                                    <td>
-                                        @Item.Ten
-                                        @if (Item.IDColor > 1)
-                                        {
-                                            <span> <span>-</span>@Item.Color.TenColor</span>
-                                        }
-                                        @if (Item.IDMF != 3)
-                                        {
-                                            <span> <span>-</span>@Item.Manufacturer.Name</span>
-                                        }
-                                        @if (Item.IDSize != 1)
-                                        {
-                                            <span> <span>-</span>size @Item.Size.TenSize</span>
-                                        }
-                                    </td>
-                                    <td>
-                                        @if (Item.IDKy == 1)
-                                        {
-                                            <span>NVL</span>
-                                        }
-                                        else
-                                        {
-                                            <span>SP</span>
-                                        }
-                                    </td>
-                                    <td>@Item.SoLuong</td>
-                                    <td>@Html.FormatValue(Item.GiaNhap, "{0:#,###,###}")</td>
-
-                                    <td>
-                                        @if (File.Exists(Request.MapPath("~/Content/imgxuatnhap/" + Item.Hinh1)))
-                                        {
-                                            <a target="_blank" href="~/Content/imgxuatnhap/@Item.Hinh1">
-                                                <i class="glyphicon glyphicon-download-alt"></i>
-                                            </a>
-                                        }
-                                    </td>
-                                    <td>
-                                        @if (File.Exists(Request.MapPath("~/Content/imgxuatnhap/" + Item.Hinh2)))
-                                        {
-                                            <a target="_blank" href="~/Content/imgxuatnhap/@Item.Hinh2">
-                                                <i class="glyphicon glyphicon-download-alt"></i>
-                                            </a>
-                                        }
-                                    </td>
-                                    <td style="border-right: 2px solid black !important">
-                                        @if (File.Exists(Request.MapPath("~/Content/imgxuatnhap/" + Item.Hinh3)))
-                                        {
-                                            <a target="_blank" href="~/Content/imgxuatnhap/@Item.Hinh3">
-                                                <i class="glyphicon glyphicon-download-alt"></i>
-                                            </a>
-                                        }
-                                    </td>
-                                    <td>
-                                        @if (int.Parse(Session["quyen"].ToString()) < 5)
-                                        {
-                                            <a class="btn btn-danger" href="/Admin/Home/UpdateHinhSP/@Item.Id"><span class="glyphicon glyphicon-edit"></span></a>
-                                        }
-                                    </td>
-                                </tr>
-
-                            }
-                        </tbody>*@
-                        <tfoot>
-                            <tr class="canhgiua">
-                                <td style="color:chocolate">TeK hiện có:</td>
-                                <td style="color:chocolate">@ViewBag.TongLoai Loại</td>
-                                <td style="color:chocolate">Gồm @ViewBag.Tongsp sản phẩm</td>
-                                <td style="color:chocolate">Tổng Vốn: @Html.FormatValue(ViewBag.TongTien, "{0:#,###,###}") (vnd)</td>
-
-                            </tr>
-                        </tfoot>
-                    </table>
-
+                <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 col-12" style="text-align: center">
+                    <span class="icon-case"><i class="glyphicon glyphicon-calendar"></i>Chọn Tháng Năm</span>
+                    <input type="month" name="ThangNam" value="@DateTime.Now.ToString("yyyy-MM")" id="ThangNam" />
                 </div>
+                <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 col-12" style="text-align: center;margin-bottom:10px">
+                    <span class="icon-case"><i class="glyphicon glyphicon-calendar"></i>Chọn Nhân Viên</span>
+                    @Html.DropDownList("IdVitrinhanvien", null, new { style = "width: 70%; height: 30px" })
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover table-striped" style="margin-bottom:0">
+                    <thead>
+                        <tr class="canhgiua" style="background-color: #00bcd4">
+                            <th class="canhgiua" style="max-width: 15px">STT</th>
+                            <th class="canhgiua">GioVaoS</th>
+                            <th class="canhgiua">GioRaS</th>
+                            <th class="canhgiua">GioVaoC</th>
+                            <th class="canhgiua">GioRaC</th>
+                            <th class="canhgiua">GioVaoTC</th>
+                            <th class="canhgiua">GioRaTC</th>
+                            <th class="canhgiua">GioVaoLe</th>
+                            <th class="canhgiua">GioRaLe</th>
+                            <th class="canhgiua">Tổng Giờ</th>
+                            <th class="canhgiua">Ngày</th>
+                            
+                            <th class="canhgiua" style="min-width: 30px">Update</th>
+                        </tr>
+                    </thead>
+                    @*<tbody style="border: 2px solid black !important">
+                    @foreach (DoChoiXeMay.Models.HangHoa Item in ViewBag.HHTEK)
+                    {
+                        <tr class="canhgiua" style="border-bottom: 2px solid black !important">
+                            <td>@Item.GhiChu</td>
+                            <td>
+                                @Item.Ten
+                                @if (Item.IDColor > 1)
+                                {
+                                    <span> <span>-</span>@Item.Color.TenColor</span>
+                                }
+                                @if (Item.IDMF != 3)
+                                {
+                                    <span> <span>-</span>@Item.Manufacturer.Name</span>
+                                }
+                                @if (Item.IDSize != 1)
+                                {
+                                    <span> <span>-</span>size @Item.Size.TenSize</span>
+                                }
+                            </td>
+                            <td>
+                                @if (Item.IDKy == 1)
+                                {
+                                    <span>NVL</span>
+                                }
+                                else
+                                {
+                                    <span>SP</span>
+                                }
+                            </td>
+                            <td>@Item.SoLuong</td>
+                            <td>@Html.FormatValue(Item.GiaNhap, "{0:#,###,###}")</td>
+
+                            <td>
+                                @if (File.Exists(Request.MapPath("~/Content/imgxuatnhap/" + Item.Hinh1)))
+                                {
+                                    <a target="_blank" href="~/Content/imgxuatnhap/@Item.Hinh1">
+                                        <i class="glyphicon glyphicon-download-alt"></i>
+                                    </a>
+                                }
+                            </td>
+                            <td>
+                                @if (File.Exists(Request.MapPath("~/Content/imgxuatnhap/" + Item.Hinh2)))
+                                {
+                                    <a target="_blank" href="~/Content/imgxuatnhap/@Item.Hinh2">
+                                        <i class="glyphicon glyphicon-download-alt"></i>
+                                    </a>
+                                }
+                            </td>
+                            <td style="border-right: 2px solid black !important">
+                                @if (File.Exists(Request.MapPath("~/Content/imgxuatnhap/" + Item.Hinh3)))
+                                {
+                                    <a target="_blank" href="~/Content/imgxuatnhap/@Item.Hinh3">
+                                        <i class="glyphicon glyphicon-download-alt"></i>
+                                    </a>
+                                }
+                            </td>
+                            <td>
+                                @if (int.Parse(Session["quyen"].ToString()) < 5)
+                                {
+                                    <a class="btn btn-danger" href="/Admin/Home/UpdateHinhSP/@Item.Id"><span class="glyphicon glyphicon-edit"></span></a>
+                                }
+                            </td>
+                        </tr>
+
+                    }
+                </tbody>*@
+                    <tfoot>
+                        @*<tr class="canhgiua">
+                        <td style="color:chocolate">TeK hiện có:</td>
+                        <td style="color:chocolate">@ViewBag.TongLoai Loại</td>
+                        <td style="color:chocolate">Gồm @ViewBag.Tongsp sản phẩm</td>
+                        <td style="color:chocolate">Tổng Vốn: @Html.FormatValue(ViewBag.TongTien, "{0:#,###,###}") (vnd)</td>
+
+                    </tr>*@
+                    </tfoot>
+                </table>
+
             </div>
         </div>
         </div>
     </div>
+<script>
+    $("#ThangNam").change(function () {
+        var tn = $('#ThangNam').val();
+        var namTh = tn.split("-");
+        alert(namTh[1]);
+        //khi load trang ==> controler ==> tạo ra n dòng(số ngày trong tháng đến hiện tại)
+        //Khi đổi nhân viên ==> controler ==> tạo ra n dòng(số ngày trong tháng đến hiện tại)
+    });
+</script>
