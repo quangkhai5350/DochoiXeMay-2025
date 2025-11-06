@@ -6,6 +6,7 @@
                 <th class="canhgiua" style="width:10px">STT</th>
                 @*<th class="canhgiua" style="width:10px">GioiTinh</th>*@
                 <th class="canhgiua">HinhDaiDien</th>
+                <th class="canhgiua">GioiTinh</th>
                 <th class="canhgiua" style="width:100px">Tên NV</th>
                 <th class="canhgiua">CanCuocCongDan</th>
                 <th class="canhgiua">DiaChiThuongTru</th>
@@ -35,7 +36,7 @@
                     <td>
                         @Item.STT
                     </td>
-                    @if (Item.HinhDaiDien != null && Item.HinhDaiDien != "")
+                    @if (Item.HinhDaiDien != null || Item.HinhDaiDien != "")
                     {
                         <td><img src="~/Content/imgTeK/@Item.HinhDaiDien" alt="" class="avatartek" /></td>
                     }
@@ -51,6 +52,16 @@
                         }
 
                     }
+                    <td>
+                        @if (Item.GioiTinh == false)
+                        {
+                            <span>Nữ</span>
+                        }
+                        else
+                        {
+                            <span>Nam</span>
+                        }
+                    </td>
                     <td>
                         @Item.HoTen
                     </td>

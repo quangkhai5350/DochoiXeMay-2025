@@ -33,22 +33,31 @@ namespace DoChoiXeMay.Areas.Admin.Data
 
         }
         //đang làm 6/11
-        public bool InsertNgayGioCongAuto(string DBname, int ngay)
+        public bool InsertNgayGioCongAuto(string DBname, DateTime dtInput, int NV)
         {
             try
             {
                 //Tổng số ngày trong tháng;
-                DateTime dtResult = DateTime.Now;
+                DateTime dtResult = dtInput;
                 dtResult = dtResult.AddMonths(1);
                 dtResult = dtResult.AddDays(-(dtResult.Day));
                 var kq= dtResult.Day;
                 //Duyệt vòng lặp từ ngày + 1 đến ngày cuối tháng ==> Insert bảng giờ công
-                var hoten = "TeK Auto";
-                var cccd = "1111111111";
-                string sql = "insert into [" + DBname + "TechZone].[dbo].[NV_NhanVienTek] " +
-                              "values(N'" + hoten + "',0,'" + cccd + "',27,N'',N'',N'Tocdai.png',N''," +
-                              "N'',N'',N'',N'',N'',N'0987654321',2,1,GETDATE(),GETDATE(),1,'')";
-                var insert_SVL = _context.Database.ExecuteSqlCommand(sql);
+                var checkngaygio = _context.NV_GioCong.Where(kh=>kh.Month==dtInput.Month && kh.Year==dtInput.Year 
+                                && kh.IdNhanVien==NV).ToList();
+                if(checkngaygio.Count() < kq)
+                {
+                    for (int i = checkngaygio.Count() + 1; i < kq+1; i++)
+                    {
+                        var Id = Guid.NewGuid();
+                        DateTime date = DateTime.Now;
+                        string sql = "insert into [" + DBname + "TechZone].[dbo].[NV_GioCong] " +
+                                      "values(N'" + Id.ToString() + "'," + NV + ",'00:00','00:00','00:00','00:00'" +
+                                      ",'00:00','00:00','00:00','00:00'," + i + "," + dtInput.Month + "," + dtInput.Year + "," +
+                                      "'" + date.ToShortDateString() + "','')";
+                        var insert_SVL = _context.Database.ExecuteSqlCommand(sql);
+                    }
+                }
                 return true;
             }
             catch (Exception ex)

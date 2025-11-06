@@ -44,12 +44,29 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         }
         public ActionResult TinhGioCong()
         {
-            ViewBag.IdVitrinhanvien = new SelectList(dbc.NV_NhanVienTek.Where(kh => kh.NV_Vitrinhanvien.Id == 2), "Id", "HoTen");
+            ViewBag.Idnhanvien = new SelectList(dbc.NV_NhanVienTek.Where(kh => kh.NV_Vitrinhanvien.Id == 2 
+                            && kh.DaNghiViec==false), "Id", "HoTen");
             return View();
         }
-        public ActionResult InsertAutoNgayThang(string str)
+        public ActionResult EditGioCong(string id)
         {
-            var ser = new Data.NhanVien().InsertNgayGioCongAuto(DBname,3);
+            var model = dbc.NV_GioCong.Find(new Guid(id));
+            return PartialView(model);
+        }
+        public ActionResult GetListTinhGioCong(DateTime dtInput, int Id = 0)
+        {
+            var nv = dbc.NV_NhanVienTek.Find(Id);
+            var model=dbc.NV_GioCong.Where(kh => kh.Month == dtInput.Month && kh.Year == dtInput.Year
+                                && kh.IdNhanVien == Id)
+                        .OrderByDescending(kh=>kh.Day)
+                        .ToList();
+            ViewBag.NgayGioCong = model;
+            ViewBag.Hoten = nv.HoTen;
+            return PartialView(model);
+        }
+        public ActionResult InsertAutoNgayThang(DateTime dtInput, int Id=0)
+        {
+            var ser = new Data.NhanVien().InsertNgayGioCongAuto(DBname,dtInput,Id);
             return Json(ser, JsonRequestBehavior.AllowGet);
         }
         public ActionResult AddNhanVienAuto()

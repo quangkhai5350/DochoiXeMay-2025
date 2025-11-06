@@ -1,0 +1,103 @@
+﻿@model IEnumerable<DoChoiXeMay.Models.NV_GioCong>
+<script src="~/Areas/Admin/Content/jquery2.0.3.min.js"></script>
+<table class="table">
+    <tr>
+        <th></th>
+        <th>Ngày</th>
+        <th>HoTen</th>
+        <th>VaoSang</th>
+        <th>RaSang</th>
+        <th>VaoChieu</th>
+        <th>RaChieu</th>
+        <th>V-TangCa</th>
+        <th>R-TangCa</th>
+        <th>V-TangCaLe</th>
+        <th>R-TangCaLe</th>
+        <th>NgayUpdate</th>
+        <th>Tổng Giờ</th>
+    </tr>
+
+@foreach (DoChoiXeMay.Models.NV_GioCong item in ViewBag.NgayGioCong) {
+    var Id = item.Id.ToString();
+    <tr>
+        <td>
+            @*@Html.ActionLink("Edit", "EditGioCong", new { id = item.Id })*@
+            <a class="btn btn-warning" style="margin-left:20px" onclick="EditGioCong('@Id')"><i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp; Edit</a>
+        </td>
+        <td>
+            @item.Day/@item.Month/@item.Year
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NV_NhanVienTek.HoTen)
+        </td>
+        <td>
+            @item.GioVaoSang.ToString(@"hh\:mm")
+        </td>
+        <td>
+            @item.GioRaSang.ToString(@"hh\:mm")
+        </td>
+        <td>
+            @item.GioVaoChieu.ToString(@"hh\:mm")
+        </td>
+        <td>
+            @item.GioRaChieu.ToString(@"hh\:mm")
+        </td>
+        <td>
+            @item.GioVaoTangCa.ToString(@"hh\:mm")
+        </td>
+        <td>
+            @item.GioRaTangCa.ToString(@"hh\:mm")
+        </td>
+        <td>
+            @item.GioVaoTangCaLe.ToString(@"hh\:mm")
+        </td>
+        <td>
+            @item.GioRaTangCaLe.ToString(@"hh\:mm")
+        </td>
+        <td>
+            @Html.FormatValue(item.NgayUpdate, "{0:dd/MM/yyyy}")
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GhiChu)
+        </td>
+
+    </tr>
+}
+
+</table>
+<div id="myModal" class="modal fade" role="dialog" style="opacity: 1">
+    <div class="modal-dialog modal-lg" style="left:0; width: 700px; height: 600px; margin-top: 10% !important; background-position: center center; background-repeat: no-repeat; background-size: cover;box-sizing:border-box ">
+        <div class="modal-content" style="height: 450px; overflow: auto">
+            <div class="modal-header">
+                <button type="button" class="close" onclick="closemodal()">&times;</button>
+                <h4 class="modal-title text-center" style="font-weight:bold;font-size:24px">Update Giờ Công @ViewBag.Hoten</h4>
+            </div>
+            <div class="modal-body" style="box-shadow: 1px 0 3px #8ba6c5">
+                <div style="padding:0 !important" id="modal-gio">
+                    
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    function EditGioCong(Id) {
+        
+        $.ajax({
+            url: "/Admin/NhanVien/EditGioCong",
+            data: { id: Id },
+            success: function (respone) {
+                $("#modal-gio").html(respone);
+                $("#myModal").addClass("show");
+                //var pagesp = pageNo + 1;
+                //$('.TongSanPham').html(pagesp + '/' + TongSP + ' trang');
+            }, error: function (err) {
+                console.log(err, ':Loi get List');
+            }
+        });
+    };
+    function closemodal() {
+        $("#myModal").removeClass("show");
+    }
+</script>
