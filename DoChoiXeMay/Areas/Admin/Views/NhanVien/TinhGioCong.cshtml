@@ -131,6 +131,22 @@
         </div>
     </div>
 <script>
+    Load();
+    function Load() {
+        $.ajax({
+            url: "/Admin/NhanVien/InsertAutoNgayThang",
+            type: 'POST',
+            datatype: 'JSON',
+            contentType: 'application/json;charset=utf-8;',
+            data: JSON.stringify({  }),
+            async: true,
+            success: function (res) {
+                
+            }, error: function (err) {
+                console.log(err, ':Loi Check Hang Hóa');
+            }
+        });
+    }
     $("#ThangNam").change(function () {
         var tn = $('#ThangNam').val();
         var namTh = tn.split("-");

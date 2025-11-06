@@ -47,6 +47,11 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ViewBag.IdVitrinhanvien = new SelectList(dbc.NV_NhanVienTek.Where(kh => kh.NV_Vitrinhanvien.Id == 2), "Id", "HoTen");
             return View();
         }
+        public ActionResult InsertAutoNgayThang(string str)
+        {
+            var ser = new Data.NhanVien().InsertNgayGioCongAuto(DBname,3);
+            return Json(ser, JsonRequestBehavior.AllowGet);
+        }
         public ActionResult AddNhanVienAuto()
         {
             var kq = new Data.NhanVien().InsertNhanVienAuto(DBname);
