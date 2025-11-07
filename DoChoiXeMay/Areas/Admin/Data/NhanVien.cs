@@ -20,7 +20,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 var hoten = "TeK Auto";
                 var cccd = "1111111111";
                 string sql = "insert into [" + DBname + "TechZone].[dbo].[NV_NhanVienTek] " +
-                              "values(N'" + hoten + "',0,'" + cccd + "',27,N'',N'',N'Tocdai.png',N''," +
+                              "values(N'" + hoten + "',0,'" + cccd + "',27,N'',N'',N'',N''," +
                               "N'',N'',N'',N'',N'',N'0987654321',2,1,GETDATE(),GETDATE(),1,'')";
                 var insert_SVL = _context.Database.ExecuteSqlCommand(sql);
                 return true;
@@ -42,7 +42,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 dtResult = dtResult.AddMonths(1);
                 dtResult = dtResult.AddDays(-(dtResult.Day));
                 var kq= dtResult.Day;
-                //Duyệt vòng lặp từ ngày + 1 đến ngày cuối tháng ==> Insert bảng giờ công
+                //Duyệt vòng lặp từ ngày + 1 đến ngày hien tai ==> Insert bảng giờ công
                 var checkngaygio = _context.NV_GioCong.Where(kh=>kh.Month==dtInput.Month && kh.Year==dtInput.Year 
                                 && kh.IdNhanVien==NV).ToList();
                 if(checkngaygio.Count() < kq)

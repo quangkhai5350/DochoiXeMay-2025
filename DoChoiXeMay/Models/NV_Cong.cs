@@ -23,12 +23,9 @@ namespace DoChoiXeMay.Models
         public double SoNgayLeTangCa { get; set; }
 
         public int SLCom { get; set; }
-
-        public int SLComTangCa { get; set; }
-
         public int SLGiaoHang { get; set; }
 
-        public double NghiHL { get; set; }
+        public int SLHoTro { get; set; }
 
         public double SoGioCongThang { get; set; }
 

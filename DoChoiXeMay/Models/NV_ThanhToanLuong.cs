@@ -13,11 +13,12 @@ namespace DoChoiXeMay.Models
         public int IdNhanVien { get; set; }
 
         public int IdCong { get; set; }
-
-        public int Thang { get; set; }
-
-        public int Nam { get; set; }
-
+        public double TienCong { get; set; }
+        public double TienCom { get; set; }
+        public double PCGiaoHang { get; set; }
+        public double PCXangXe { get; set; }
+        public double PCChucVu { get; set; }
+        public double PCKhac { get; set; }
         public double Thuong { get; set; }
 
         public double KhauTruBH { get; set; }
@@ -28,6 +29,9 @@ namespace DoChoiXeMay.Models
 
         public bool DaNhanLuong { get; set; }
 
+        public int Thang { get; set; }
+
+        public int Nam { get; set; }
         public DateTime NgayTao { get; set; }
 
         public DateTime NgayUpdate { get; set; }

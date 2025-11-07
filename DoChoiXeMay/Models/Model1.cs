@@ -39,7 +39,7 @@ namespace DoChoiXeMay.Models
         public virtual DbSet<NV_Cong> NV_Cong { get; set; }
         public virtual DbSet<NV_GioCong> NV_GioCong { get; set; }
         public virtual DbSet<NV_HeSoGio> NV_HeSoGio { get; set; }
-        public virtual DbSet<NV_Luong> NV_Luong { get; set; }
+        public virtual DbSet<NV_ChiTietNangLuong> NV_Luong { get; set; }
         public virtual DbSet<NV_NhanVienTek> NV_NhanVienTek { get; set; }
         public virtual DbSet<NV_PhuCap> NV_PhuCap { get; set; }
         public virtual DbSet<NV_ThanhToanLuong> NV_ThanhToanLuong { get; set; }

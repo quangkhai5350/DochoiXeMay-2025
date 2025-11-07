@@ -12,7 +12,7 @@ namespace DoChoiXeMay.Models
         public NV_NhanVienTek()
         {
             NV_GioCong = new HashSet<NV_GioCong>();
-            NV_Luong = new HashSet<NV_Luong>();
+            NV_Luong = new HashSet<NV_ChiTietNangLuong>();
             NV_ThanhToanLuong = new HashSet<NV_ThanhToanLuong>();
         }
 
@@ -79,7 +79,7 @@ namespace DoChoiXeMay.Models
         public virtual ICollection<NV_GioCong> NV_GioCong { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<NV_Luong> NV_Luong { get; set; }
+        public virtual ICollection<NV_ChiTietNangLuong> NV_Luong { get; set; }
 
         public virtual NV_Vitrinhanvien NV_Vitrinhanvien { get; set; }
 

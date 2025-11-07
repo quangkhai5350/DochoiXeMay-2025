@@ -36,11 +36,7 @@
                     <td>
                         @Item.STT
                     </td>
-                    @if (Item.HinhDaiDien != null || Item.HinhDaiDien != "")
-                    {
-                        <td><img src="~/Content/imgTeK/@Item.HinhDaiDien" alt="" class="avatartek" /></td>
-                    }
-                    else
+                    @if (Item.HinhDaiDien == null || Item.HinhDaiDien.Trim() == "")
                     {
                         if (Item.GioiTinh == false)
                         {
@@ -50,8 +46,12 @@
                         {
                             <td><img src="~/Content/imgTeK/Namn.png" alt="" class="avatartek" /></td>
                         }
-
                     }
+                    else
+                    {
+                        <td><img src="~/Content/imgTeK/@Item.HinhDaiDien" alt="" class="avatartek" /></td>
+                    }
+                    
                     <td>
                         @if (Item.GioiTinh == false)
                         {

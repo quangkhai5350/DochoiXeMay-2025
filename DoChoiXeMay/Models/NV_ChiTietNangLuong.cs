@@ -6,7 +6,7 @@ namespace DoChoiXeMay.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class NV_Luong
+    public partial class NV_ChiTietNangLuong
     {
         public int Id { get; set; }
 
@@ -17,7 +17,9 @@ namespace DoChoiXeMay.Models
         public int IdHSG { get; set; }
 
         public DateTime NgayApDung { get; set; }
-
+        public bool SuDung { get; set; }
+        [StringLength(500)]
+        public string Ghichu { get; set; }
         public virtual NV_HeSoGio NV_HeSoGio { get; set; }
 
         public virtual NV_NhanVienTek NV_NhanVienTek { get; set; }
