@@ -124,8 +124,18 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ViewBag.TongXiNhanGen1TrongMauDaXuat = TrongMauDaXuat == null ? 0 : TrongMauDaXuat.Sum(kh => kh.SoLuong);
 
 
+            
+            var kytrabaohanhct = be.Where(kh => kh.KyXuatNhap.XuatNhap == false && kh.KyXuatNhap.IdLoaiHangXN == 3).ToList();
+            if (kytrabaohanhct.Count() == 0)
+            {
+                ViewBag.TongtraBH = 0;
+            }
+            else
+            {
+                ViewBag.TongtraBH = kytrabaohanhct.Sum(kh=>kh.SoLuong);
+            }
             ViewBag.DaSanXuat = ViewBag.daban + ViewBag.TongXiNhanGen1Tek + ViewBag.TongXiNhanGen1MauDaXuat
-                                + ViewBag.DaTraHangKhachLeLoi;
+                                + ViewBag.DaTraHangKhachLeLoi + ViewBag.TongtraBH;
             return View();
         }
         public ActionResult NVLTonKho()

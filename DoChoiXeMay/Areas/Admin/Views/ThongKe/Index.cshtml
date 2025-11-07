@@ -5,6 +5,7 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layoutadmin.cshtml";
 }
 <script src="~/Areas/Admin/Content/jquery2.0.3.min.js"></script>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <style>
     .canhgiua {
         text-align: center !important;
@@ -21,14 +22,19 @@
 </div>
 <div class="container" style="width:100%;background-color: white; margin-top: 20px; border-radius: 4px 4px; box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.32);">
     <div class="omb_login col-lg-3 col-xl-3 col-md-3 col-sm-12 col-sx-12 col-12" style="padding-top: 20px">
-        <p>(Đã sx = Tồn Kho + Đã Bán + Hàng Mẫu + Có Lỗi= @ViewBag.DaSanXuat)</p>
+        <p>(Đã sx = Tồn Kho + Đã Bán + Hàng Mẫu + Có Lỗi + Trả BH= @ViewBag.DaSanXuat)</p>
         <p style="background-color:bisque">_Tổng xinhan Gen1 Tồn Kho: @ViewBag.TongXiNhanGen1Tek</p>
+        <input id="TTonKho" value="@ViewBag.TongXiNhanGen1Tek" hidden />
 
         <p style="margin-left:2%">+ XiNhan Trong Tồn Kho: @ViewBag.TongXiNhanGen1TrongTK</p>
         <p style="margin-left:2%">+ XiNhan Khói Tồn Kho: @ViewBag.TongXiNhanGen1KhoiTK</p>
         <hr style="width:40%" />
         <p style="background-color:bisque">_Tổng XiNhan Gen1 Đã Bán:@ViewBag.daban</p>
-        <p>(TikTok: @ViewBag.DaBanTikTok, Shopee: @ViewBag.DaBanShopee, Ngoài Sàn: @ViewBag.DaBanLeNSan, Bán Sỉ: @ViewBag.DaBanLSiNSan)</p>
+        <p>(TikTok: @ViewBag.DaBanTikTok, Shopee: @ViewBag.DaBanShopee, Lẻ Ngoài Sàn: @ViewBag.DaBanLeNSan, Bán Sỉ: @ViewBag.DaBanLSiNSan)</p>
+        <input id="BanTikTok" value="@ViewBag.DaBanTikTok" hidden />
+        <input id="BanShopee" value="@ViewBag.DaBanShopee" hidden />
+        <input id="LeNgoaiSan" value="@ViewBag.DaBanLeNSan" hidden />
+        <input id="SiNSan" value="@ViewBag.DaBanLSiNSan" hidden />
 
         <p style="margin-left:2%">+ XiNhan Trong đã bán:@ViewBag.TongXiNhanGen1TrongDaBan</p>
         <p style="margin-left:10%">
@@ -85,10 +91,12 @@
                 <span>/ Ngoài Sàn: @ViewBag.DaTraHangKhachLeLoiKhoiNSan</span>
             </p>
         }
-
+        <hr />
+        <p style="background-color:darkorange">_Tổng XiNhan Gen1 Trả BH: @ViewBag.TongtraBH</p>
     </div>
     <div class="omb_login col-lg-6 col-xl-6 col-md-6 col-sm-12 col-sx-12 col-12" style="padding-top: 20px">
-
+        @*Đồ thị*@
+        <div id="chartContainer" style="height: 300px; width: 100%;"></div>
     </div>
     <div class="omb_login col-lg-3 col-xl-3 col-md-3 col-sm-12 col-sx-12 col-12" style="padding-top: 20px">
         @Html.Action("NVLTonKho", "ThongKe")
@@ -142,6 +150,30 @@
         </div>
     </div>
     <script>
+        
+        window.onload = function () {
+
+            var chart = new CanvasJS.Chart("chartContainer", {
+                animationEnabled: true,
+                title: {
+                    text: "Thị phần công cụ tìm kiếm trên desktop - 2016"
+                },
+                data: [{
+                    type: "pie",
+                    startAngle: 240,
+                    yValueFormatString: "##0.00\"%\"",
+                    indexLabel: "{label} {y}",
+                    dataPoints: [
+                        { y: 79.45, label: "Google" },
+                        { y: 7.31, label: "Bing" },
+                        { y: 7.06, label: "Baidu" },
+                        { y: 4.91, label: "Yahoo" },
+                        { y: 1.26, label: "Others" }
+                    ]
+                }]
+            });
+            chart.render();
+        }
         LoadPage();
         function LoadPage() {
             $.ajax({
