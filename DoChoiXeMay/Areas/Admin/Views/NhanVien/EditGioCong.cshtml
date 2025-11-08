@@ -1,30 +1,39 @@
 ﻿@model DoChoiXeMay.Models.NV_GioCong
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("EditGioCong", "NhanVien", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
+
 <div class="form-horizontal">
     <h4>
         Ngày @Html.EditorFor(model => model.Day, new { htmlAttributes = new { @style = "width: 15% !important", @disabled = true } })/
-        @Html.EditorFor(model => model.Month, new { htmlAttributes = new { @style = "width: 15% !important", @disabled = true } })
+        @Html.EditorFor(model => model.Month, new { htmlAttributes = new { @style = "width: 15% !important", @disabled = true } })/
+        @Html.EditorFor(model => model.Year, new { htmlAttributes = new { @style = "width: 15% !important", @disabled = true } })
     </h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.GhiChu)
+    @Html.HiddenFor(model => model.NgayUpdate)
+    @Html.HiddenFor(model => model.IdNhanVien)
+    @Html.HiddenFor(model => model.Day)
+    @Html.HiddenFor(model => model.Month)
+    @Html.HiddenFor(model => model.Year)
     <div class="form-group">
         <div class="row">
             <div class="col-md-6">
                 @Html.LabelFor(model => model.GioVaoSang, htmlAttributes: new { @class = "control-label col-md-4" })
                 <div class="col-md-8">
-                    @Html.EditorFor(model => model.GioVaoSang, "{0:HH:mm}", new { htmlAttributes = new { @type = "time", @class = "form-control" } })
+                    <input name="VaoSang" value="@Model.GioVaoSang.TimeOfDay" class = "form-control" type="time"/>
+                    @Html.HiddenFor(kh => kh.GioVaoSang)
                     @Html.ValidationMessageFor(model => model.GioVaoSang, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="col-md-6">
                 @Html.LabelFor(model => model.GioRaSang, htmlAttributes: new { @class = "control-label col-md-4" })
                 <div class="col-md-8">
-                    @Html.EditorFor(model => model.GioRaSang, "{0:HH:mm}", new { htmlAttributes = new { @type = "time", @class = "form-control" } })
+                    <input name="RaSang" value="@Model.GioRaSang.TimeOfDay" class="form-control" type="time" />
+                    @Html.HiddenFor(kh => kh.GioRaSang)
                     @Html.ValidationMessageFor(model => model.GioRaSang, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -36,14 +45,16 @@
             <div class="col-md-6">
                 @Html.LabelFor(model => model.GioVaoChieu, htmlAttributes: new { @class = "control-label col-md-4" })
                 <div class="col-md-8">
-                    @Html.EditorFor(model => model.GioVaoChieu, "{0:HH:mm}", new { htmlAttributes = new { @type = "time", @class = "form-control" } })
+                    <input name="VaoChieu" value="@Model.GioVaoChieu.TimeOfDay" class="form-control" type="time" />
+                    @Html.HiddenFor(kh => kh.GioVaoChieu)
                     @Html.ValidationMessageFor(model => model.GioVaoChieu, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="col-md-6">
                 @Html.LabelFor(model => model.GioRaChieu, htmlAttributes: new { @class = "control-label col-md-4" })
                 <div class="col-md-8">
-                    @Html.EditorFor(model => model.GioRaChieu, "{0:HH:mm}", new { htmlAttributes = new { @type = "time", @class = "form-control" } })
+                    <input name="RaChieu" value="@Model.GioRaChieu.TimeOfDay" class="form-control" type="time" />
+                    @Html.HiddenFor(kh => kh.GioRaChieu)
                     @Html.ValidationMessageFor(model => model.GioRaChieu, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -55,14 +66,16 @@
             <div class="col-md-6">
                 @Html.LabelFor(model => model.GioVaoTangCa, htmlAttributes: new { @class = "control-label col-md-4" })
                 <div class="col-md-8">
-                    @Html.EditorFor(model => model.GioVaoTangCa, "{0:HH:mm}", new { htmlAttributes = new { @type = "time", @class = "form-control" } })
+                    <input name="VaoTangCa" value="@Model.GioVaoTangCa.TimeOfDay" class="form-control" type="time" />
+                    @Html.HiddenFor(kh => kh.GioVaoTangCa)
                     @Html.ValidationMessageFor(model => model.GioVaoTangCa, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="col-md-6">
                 @Html.LabelFor(model => model.GioRaTangCa, htmlAttributes: new { @class = "control-label col-md-4" })
                 <div class="col-md-8">
-                    @Html.EditorFor(model => model.GioRaTangCa, "{0:HH:mm}", new { htmlAttributes = new { @type = "time", @class = "form-control" } })
+                    <input name="RaTangCa" value="@Model.GioRaTangCa.TimeOfDay" class="form-control" type="time" />
+                    @Html.HiddenFor(kh => kh.GioRaTangCa)
                     @Html.ValidationMessageFor(model => model.GioRaTangCa, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -74,31 +87,41 @@
             <div class="col-md-6">
                 @Html.LabelFor(model => model.GioVaoTangCaLe, htmlAttributes: new { @class = "control-label col-md-4" })
                 <div class="col-md-8">
-                    @Html.EditorFor(model => model.GioVaoTangCaLe, "{0:HH:mm}", new { htmlAttributes = new { @type = "time", @class = "form-control" } })
+                    <input name="VaoLe" value="@Model.GioVaoTangCaLe.TimeOfDay" class="form-control" type="time" />
+                    @Html.HiddenFor(kh => kh.GioVaoTangCaLe)
                     @Html.ValidationMessageFor(model => model.GioVaoTangCaLe, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="col-md-6">
                 @Html.LabelFor(model => model.GioRaTangCaLe, htmlAttributes: new { @class = "control-label col-md-4" })
                 <div class="col-md-8">
-                    @Html.EditorFor(model => model.GioRaTangCaLe, "{0:HH:mm}", new { htmlAttributes = new { @type = "time", @class = "form-control" } })
+                    <input name="RaLe" value="@Model.GioRaTangCaLe.TimeOfDay" class="form-control" type="time" />
+                    @Html.HiddenFor(kh => kh.GioRaTangCaLe)
                     @Html.ValidationMessageFor(model => model.GioRaTangCaLe, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
     </div>
     <hr />
-    <div class="form-group">
-        @Html.LabelFor(model => model.GhiChu, htmlAttributes: new { @class = "control-label col-md-3" })
-        <div class="col-md-9">
-            @Html.EditorFor(model => model.GhiChu, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.GhiChu, "", new { @class = "text-danger" })
-        </div>
-    </div>
+    <div class="row" style="margin-top:10px">
+        <div class="form-group col-sm-12">
+            <div class="text-center btn-crud">
+                <button id="btnLuu" class="btn btn-warning" data-action="EditGioCong"><span class="glyphicon glyphicon-refresh"></span>&nbsp;Update</button>
 
-    <div class="form-group">
-        <div class="col-md-offset-3 col-md-9">
-            <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+            <script>
+                $(function () {
+                    $("button[data-action]").click(function () {
+                        if (!confirm("Bạn Có Chắc Chắn Hành Động Của Mình?")) {
+                            return false;
+                        } else {
+                            var action = $(this).attr("data-action");
+                            this.form.action = "/Admin/NhanVien/" + action;
+                        }
+
+                    });
+                });
+            </script>
         </div>
     </div>
 </div>

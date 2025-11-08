@@ -1,6 +1,7 @@
 ﻿using DoChoiXeMay.Areas.Admin.Data;
 using DoChoiXeMay.Filters;
 using DoChoiXeMay.Models;
+using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -44,6 +45,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         }
         public ActionResult TinhGioCong()
         {
+            Session["requestUri"] = "/Admin/NhanVien/TinhGioCong";
             ViewBag.Idnhanvien = new SelectList(dbc.NV_NhanVienTek.Where(kh => kh.NV_Vitrinhanvien.Id == 2 
                             && kh.DaNghiViec==false), "Id", "HoTen");
             return View();
@@ -53,21 +55,73 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             var model = dbc.NV_GioCong.Find(new Guid(id));
             return PartialView(model);
         }
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult EditGioCong(NV_GioCong model, TimeSpan VaoSang, TimeSpan RaSang, TimeSpan VaoChieu
+            , TimeSpan RaChieu, TimeSpan VaoTangCa, TimeSpan RaTangCa, TimeSpan VaoLe, TimeSpan RaLe)
+        {
+            //đã thanh toán lương, thì không cho update giờ
+            //Update giờ thì thêm 1 dòng vào bảng Công (hoặc thay đổi)
+            //Update giờ thì thêm 1 dòng vào bảng thanh toán lương (hoặc thay đổi)
+            var kq = new Data.NhanVien().UpdateGioCong(model, VaoSang, RaSang, VaoChieu
+            , RaChieu, VaoTangCa, RaTangCa, VaoLe, RaLe);
+            if (kq)
+            {
+                Session["ThongBaoGioCongTEK"] = "Update giờ ngày "+model.Day+" thành công.";
+                Session["ThongBaoGioCongTEKLoi"] = "";
+            }
+            else
+            {
+                Session["ThongBaoGioCongTEK"] = "";
+                Session["ThongBaoGioCongTEKLoi"] = "Có Lỗi,Update giờ ngày "+model.Day+" không thành công !!!.";
+            }
+            //tro lai trang truoc do 
+            var requestUri = Session["requestUri"] as string;
+            if (requestUri != null)
+            {
+                return Redirect(requestUri);
+            }
+            return RedirectToAction("TinhGioCong");
+        }
+        static String TangCa = ConfigurationManager.AppSettings["TangCa"];
+        static String Le = ConfigurationManager.AppSettings["Le"];
         public ActionResult GetListTinhGioCong(DateTime dtInput, int Id = 0)
         {
             var nv = dbc.NV_NhanVienTek.Find(Id);
             var model=dbc.NV_GioCong.Where(kh => kh.Month == dtInput.Month && kh.Year == dtInput.Year
-                                && kh.IdNhanVien == Id)
+                                && kh.IdNhanVien == Id && kh.Day <= DateTime.Now.Day)
                         .OrderByDescending(kh=>kh.Day)
                         .ToList();
+            for(int i=0; i<model.Count(); i++)
+            {
+                var kqT = (model[i].GioRaSang - model[i].GioVaoSang+
+                    (model[i].GioRaChieu - model[i].GioVaoChieu)).TotalHours;
+                var kqTC = (model[i].GioRaTangCa - model[i].GioVaoTangCa).TotalHours * float.Parse(TangCa);
+                var kqLe = (model[i].GioRaTangCaLe - model[i].GioVaoTangCaLe).TotalHours * float.Parse(Le);
+                model[i].GhiChu = (kqT+kqTC + kqLe).ToString("0.00");
+            }
             ViewBag.NgayGioCong = model;
             ViewBag.Hoten = nv.HoTen;
             return PartialView(model);
         }
         public ActionResult InsertAutoNgayThang(DateTime dtInput, int Id=0)
         {
-            var ser = new Data.NhanVien().InsertNgayGioCongAuto(DBname,dtInput,Id);
-            return Json(ser, JsonRequestBehavior.AllowGet);
+            //(chưa nghỉ việc && Ngày vào cty <= dtInput) && dtInput.Month <= thanght && dtInput.Year<=namht
+            if(dtInput.Month <= DateTime.Now.Month && dtInput.Year<= DateTime.Now.Year)
+            {
+                var ktnv = dbc.NV_NhanVienTek.FirstOrDefault(kh => kh.DaNghiViec == false
+                && kh.NgayTao.Month <= dtInput.Month && kh.Id ==Id);
+                if (ktnv != null) {
+                    var ser = new Data.NhanVien().InsertNgayGioCongAuto(DBname, dtInput, Id);
+                    return Json(ser, JsonRequestBehavior.AllowGet);
+                }
+                return Json(null, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(null, JsonRequestBehavior.AllowGet);
+            }
+            
         }
         public ActionResult AddNhanVienAuto()
         {

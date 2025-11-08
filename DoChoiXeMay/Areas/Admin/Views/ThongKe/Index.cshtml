@@ -92,7 +92,7 @@
             </p>
         }
         <hr />
-        <p style="background-color:darkorange">_Tổng XiNhan Gen1 Trả BH: @ViewBag.TongtraBH</p>
+        <p style="background-color:darkorange">_Tổng XiNhan Gen1 trả BH: @ViewBag.TongtraBH</p>
     </div>
     <div class="omb_login col-lg-6 col-xl-6 col-md-6 col-sm-12 col-sx-12 col-12" style="padding-top: 20px">
         @*Đồ thị*@
@@ -181,6 +181,7 @@
                 data: {},
                 success: function (respone) {
                     $(".listKTK").html(respone);
+                    $(".canvasjs-chart-credit").css("display", "none");
                 }
             });
         };

@@ -12,21 +12,21 @@ namespace DoChoiXeMay.Models
 
         public int IdNhanVien { get; set; }
 
-        public TimeSpan GioVaoSang { get; set; }
+        public DateTime GioVaoSang { get; set; }
 
-        public TimeSpan GioRaSang { get; set; }
+        public DateTime GioRaSang { get; set; }
 
-        public TimeSpan GioVaoChieu { get; set; }
+        public DateTime GioVaoChieu { get; set; }
 
-        public TimeSpan GioRaChieu { get; set; }
+        public DateTime GioRaChieu { get; set; }
 
-        public TimeSpan GioVaoTangCa { get; set; }
+        public DateTime GioVaoTangCa { get; set; }
 
-        public TimeSpan GioRaTangCa { get; set; }
+        public DateTime GioRaTangCa { get; set; }
 
-        public TimeSpan GioVaoTangCaLe { get; set; }
+        public DateTime GioVaoTangCaLe { get; set; }
 
-        public TimeSpan GioRaTangCaLe { get; set; }
+        public DateTime GioRaTangCaLe { get; set; }
 
         public int Day { get; set; }
 

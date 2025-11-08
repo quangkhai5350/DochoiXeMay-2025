@@ -17,7 +17,10 @@
     <div class="panel-heading">
         <div class="row">
             <div class="pull-right label label-warning" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
-                @Session["ThongBaoUserTEK"]
+                @Session["ThongBaoGioCongTEKLoi"]
+            </div>
+            <div class="pull-right label label-success" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
+                @Session["ThongBaoGioCongTEK"]
             </div>
             <div class="row" style="margin-top:20px">
                 <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 col-12" style="text-align: center">
@@ -32,7 +35,7 @@
             <div id="ListTinhGio">
 
             </div>
-            
+
         </div>
         </div>
     </div>
@@ -54,6 +57,7 @@
             success: function (res) {
                 GetListTinhGio();
             }, error: function (err) {
+                GetListTinhGio();
                 console.log(err, ':Loi Check Hang Hóa');
             }
         });

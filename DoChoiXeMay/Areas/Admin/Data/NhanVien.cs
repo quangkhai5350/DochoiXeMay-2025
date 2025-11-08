@@ -1,6 +1,7 @@
 ﻿using DoChoiXeMay.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
@@ -42,18 +43,25 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 dtResult = dtResult.AddMonths(1);
                 dtResult = dtResult.AddDays(-(dtResult.Day));
                 var kq= dtResult.Day;
-                //Duyệt vòng lặp từ ngày + 1 đến ngày hien tai ==> Insert bảng giờ công
+                //Duyệt vòng lặp từ ngày + 1 đến ngày cuối tháng ==> Insert bảng giờ công
                 var checkngaygio = _context.NV_GioCong.Where(kh=>kh.Month==dtInput.Month && kh.Year==dtInput.Year 
                                 && kh.IdNhanVien==NV).ToList();
                 if(checkngaygio.Count() < kq)
                 {
+                    var y = dtInput.Year; var m= dtInput.Month;
                     for (int i = checkngaygio.Count() + 1; i < kq+1; i++)
                     {
                         var Id = Guid.NewGuid();
                         DateTime date = DateTime.Now;
+                        DateTime date2= new DateTime(y, m, i,0,0,0);
+                        string date3 = date2.ToString("yyyy-MM-dd HH:mm:ss");
                         string sql = "insert into [" + DBname + "TechZone].[dbo].[NV_GioCong] " +
-                                      "values(N'" + Id.ToString() + "'," + NV + ",'00:00','00:00','00:00','00:00'" +
-                                      ",'00:00','00:00','00:00','00:00'," + i + "," + dtInput.Month + "," + dtInput.Year + "," +
+                                      "values(N'" + Id.ToString() + "'," + NV + "" +
+                                      ",convert(datetime,'" + date3 + "',120),convert(datetime,'" + date3 + "',120)" +
+                                      ",convert(datetime,'" + date3 + "',120),convert(datetime,'" + date3 + "',120)" +
+                                      ",convert(datetime,'" + date3 + "',120),convert(datetime,'" + date3 + "',120)" +
+                                      ",convert(datetime,'" + date3 + "',120),convert(datetime,'" + date3 + "',120)" +
+                                      "," + i + "," + dtInput.Month + "," + dtInput.Year + "," +
                                       "'" + date.ToShortDateString() + "','')";
                         var insert_SVL = _context.Database.ExecuteSqlCommand(sql);
                     }
@@ -83,5 +91,48 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 return false;
             }
         }
+        public bool UpdateGioCong(NV_GioCong model, TimeSpan VaoSang, TimeSpan RaSang, TimeSpan VaoChieu
+            , TimeSpan RaChieu, TimeSpan VaoTangCa, TimeSpan RaTangCa, TimeSpan VaoLe, TimeSpan RaLe)
+        {
+            try
+            {
+                model.GioVaoSang = new DateTime(model.Year, model.Month, model.Day, 0, 0, 0);
+                var VS = model.GioVaoSang.Add(VaoSang);
+                model.GioRaSang = new DateTime(model.Year, model.Month, model.Day, 0, 0, 0);
+                var RS = model.GioRaSang.Add(RaSang);
+                model.GioVaoChieu = new DateTime(model.Year, model.Month, model.Day, 0, 0, 0);
+                var VC = model.GioVaoChieu.Add(VaoChieu);
+                model.GioRaChieu = new DateTime(model.Year, model.Month, model.Day, 0, 0, 0);
+                var RC = model.GioRaChieu.Add(RaChieu);
+                model.GioVaoTangCa = new DateTime(model.Year, model.Month, model.Day, 0, 0, 0);
+                var VTC = model.GioVaoTangCa.Add(VaoTangCa);
+                model.GioRaTangCa = new DateTime(model.Year, model.Month, model.Day, 0, 0, 0);
+                var RTC = model.GioRaTangCa.Add(RaTangCa);
+                model.GioVaoTangCaLe = new DateTime(model.Year, model.Month, model.Day, 0, 0, 0);
+                var VL = model.GioVaoTangCaLe.Add(VaoLe);
+                model.GioRaTangCaLe = new DateTime(model.Year, model.Month, model.Day, 0, 0, 0);
+                var RL = model.GioRaTangCaLe.Add(RaLe);
+
+                model.GioVaoSang = VS;
+                model.GioRaSang = RS;
+                model.GioVaoChieu = VC;
+                model.GioRaChieu = RC;
+                model.GioVaoTangCa = VTC;
+                model.GioRaTangCa = RTC;
+                model.GioVaoTangCaLe = VL;
+                model.GioRaTangCaLe = RL;
+                model.NgayUpdate = DateTime.Now;
+
+                _context.Entry(model).State = EntityState.Modified;
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                string loi = ex.ToString();
+                return false;
+            }
+        }
+        
     }
 }

@@ -125,7 +125,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
 
 
             
-            var kytrabaohanhct = be.Where(kh => kh.KyXuatNhap.XuatNhap == false && kh.KyXuatNhap.IdLoaiHangXN == 3).ToList();
+            var kytrabaohanhct = beg.Where(kh=>kh.KyXuatNhap.IdLoaiHangXN == 3).ToList();
             if (kytrabaohanhct.Count() == 0)
             {
                 ViewBag.TongtraBH = 0;
