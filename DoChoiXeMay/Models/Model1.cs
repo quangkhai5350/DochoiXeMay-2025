@@ -36,10 +36,10 @@ namespace DoChoiXeMay.Models
         public virtual DbSet<MsgAotu> MsgAotus { get; set; }
         public virtual DbSet<NhatKyUTek> NhatKyUTeks { get; set; }
         public virtual DbSet<NoteKythuat> NoteKythuats { get; set; }
+        public virtual DbSet<NV_ChiTietNangLuong> NV_ChiTietNangLuong { get; set; }
         public virtual DbSet<NV_Cong> NV_Cong { get; set; }
         public virtual DbSet<NV_GioCong> NV_GioCong { get; set; }
         public virtual DbSet<NV_HeSoGio> NV_HeSoGio { get; set; }
-        public virtual DbSet<NV_ChiTietNangLuong> NV_Luong { get; set; }
         public virtual DbSet<NV_NhanVienTek> NV_NhanVienTek { get; set; }
         public virtual DbSet<NV_PhuCap> NV_PhuCap { get; set; }
         public virtual DbSet<NV_ThanhToanLuong> NV_ThanhToanLuong { get; set; }
@@ -222,58 +222,26 @@ namespace DoChoiXeMay.Models
                 .HasForeignKey(e => e.IdMa)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<NV_Cong>()
-                .HasMany(e => e.NV_ThanhToanLuong)
-                .WithRequired(e => e.NV_Cong)
-                .HasForeignKey(e => e.IdCong)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<NV_GioCong>()
-                .Property(e => e.GioVaoSang)
-                .HasPrecision(0);
-
-            modelBuilder.Entity<NV_GioCong>()
-                .Property(e => e.GioRaSang)
-                .HasPrecision(0);
-
-            modelBuilder.Entity<NV_GioCong>()
-                .Property(e => e.GioVaoChieu)
-                .HasPrecision(0);
-
-            modelBuilder.Entity<NV_GioCong>()
-                .Property(e => e.GioRaChieu)
-                .HasPrecision(0);
-
-            modelBuilder.Entity<NV_GioCong>()
-                .Property(e => e.GioVaoTangCa)
-                .HasPrecision(0);
-
-            modelBuilder.Entity<NV_GioCong>()
-                .Property(e => e.GioRaTangCa)
-                .HasPrecision(0);
-
-            modelBuilder.Entity<NV_GioCong>()
-                .Property(e => e.GioVaoTangCaLe)
-                .HasPrecision(0);
-
-            modelBuilder.Entity<NV_GioCong>()
-                .Property(e => e.GioRaTangCaLe)
-                .HasPrecision(0);
-
             modelBuilder.Entity<NV_HeSoGio>()
-                .HasMany(e => e.NV_Luong)
+                .HasMany(e => e.NV_ChiTietNangLuong)
                 .WithRequired(e => e.NV_HeSoGio)
                 .HasForeignKey(e => e.IdHSG)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<NV_NhanVienTek>()
-                .HasMany(e => e.NV_GioCong)
+                .HasMany(e => e.NV_ChiTietNangLuong)
                 .WithRequired(e => e.NV_NhanVienTek)
                 .HasForeignKey(e => e.IdNhanVien)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<NV_NhanVienTek>()
-                .HasMany(e => e.NV_Luong)
+                .HasMany(e => e.NV_Cong)
+                .WithRequired(e => e.NV_NhanVienTek)
+                .HasForeignKey(e => e.IdNhanVien)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<NV_NhanVienTek>()
+                .HasMany(e => e.NV_GioCong)
                 .WithRequired(e => e.NV_NhanVienTek)
                 .HasForeignKey(e => e.IdNhanVien)
                 .WillCascadeOnDelete(false);

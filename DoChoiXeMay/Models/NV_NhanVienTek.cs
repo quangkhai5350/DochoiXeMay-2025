@@ -11,8 +11,9 @@ namespace DoChoiXeMay.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public NV_NhanVienTek()
         {
+            NV_ChiTietNangLuong = new HashSet<NV_ChiTietNangLuong>();
+            NV_Cong = new HashSet<NV_Cong>();
             NV_GioCong = new HashSet<NV_GioCong>();
-            NV_Luong = new HashSet<NV_ChiTietNangLuong>();
             NV_ThanhToanLuong = new HashSet<NV_ThanhToanLuong>();
         }
 
@@ -76,10 +77,13 @@ namespace DoChoiXeMay.Models
         public string STT { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<NV_GioCong> NV_GioCong { get; set; }
+        public virtual ICollection<NV_ChiTietNangLuong> NV_ChiTietNangLuong { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<NV_ChiTietNangLuong> NV_Luong { get; set; }
+        public virtual ICollection<NV_Cong> NV_Cong { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<NV_GioCong> NV_GioCong { get; set; }
 
         public virtual NV_Vitrinhanvien NV_Vitrinhanvien { get; set; }
 

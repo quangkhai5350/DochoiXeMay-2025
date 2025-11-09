@@ -153,6 +153,7 @@
     <Compile Include="Areas\Admin\Controllers\XuatNhapController.cs" />
     <Compile Include="Areas\Admin\Data\ActiveData.cs" />
     <Compile Include="Areas\Admin\Data\ChiNhanhData.cs" />
+    <Compile Include="Areas\Admin\Data\Cong_ThanhToan.cs" />
     <Compile Include="Areas\Admin\Data\NhanVien.cs" />
     <Compile Include="Areas\Admin\Data\NoteKyThuatData.cs" />
     <Compile Include="Areas\Admin\Data\ProjectTeKData.cs" />
@@ -196,10 +197,10 @@
     <Compile Include="Models\MsgAotu.cs" />
     <Compile Include="Models\NhatKyUTek.cs" />
     <Compile Include="Models\NoteKythuat.cs" />
+    <Compile Include="Models\NV_ChiTietNangLuong.cs" />
     <Compile Include="Models\NV_Cong.cs" />
     <Compile Include="Models\NV_GioCong.cs" />
     <Compile Include="Models\NV_HeSoGio.cs" />
-    <Compile Include="Models\NV_ChiTietNangLuong.cs" />
     <Compile Include="Models\NV_NhanVienTek.cs" />
     <Compile Include="Models\NV_PhuCap.cs" />
     <Compile Include="Models\NV_ThanhToanLuong.cs" />

@@ -24,9 +24,9 @@ namespace DoChoiXeMay.Models
 
         public DateTime GioRaTangCa { get; set; }
 
-        public DateTime GioVaoTangCaLe { get; set; }
+        public DateTime GioVaoLe { get; set; }
 
-        public DateTime GioRaTangCaLe { get; set; }
+        public DateTime GioRaLe { get; set; }
 
         public int Day { get; set; }
 

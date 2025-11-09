@@ -63,18 +63,68 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             //đã thanh toán lương, thì không cho update giờ
             //Update giờ thì thêm 1 dòng vào bảng Công (hoặc thay đổi)
             //Update giờ thì thêm 1 dòng vào bảng thanh toán lương (hoặc thay đổi)
-            var kq = new Data.NhanVien().UpdateGioCong(model, VaoSang, RaSang, VaoChieu
-            , RaChieu, VaoTangCa, RaTangCa, VaoLe, RaLe);
-            if (kq)
+            var ktthanhtoan = dbc.NV_ThanhToanLuong.FirstOrDefault(kh => kh.Thang == model.Month && kh.Nam == model.Year 
+                                    && kh.DaNhanLuong==true && kh.IdNhanVien == model.IdNhanVien);
+            if (ktthanhtoan == null)
             {
-                Session["ThongBaoGioCongTEK"] = "Update giờ ngày "+model.Day+" thành công.";
-                Session["ThongBaoGioCongTEKLoi"] = "";
+                var kq = new Data.NhanVien().UpdateGioCong(model, VaoSang, RaSang, VaoChieu
+            , RaChieu, VaoTangCa, RaTangCa, VaoLe, RaLe);
+                if (kq)
+                {
+                    Session["ThongBaoGioCongTEK"] = "Update giờ ngày " + model.Day + " thành công.";
+                    Session["ThongBaoGioCongTEKLoi"] = "";
+                    //Lay gio Cong
+                    double kqgc = 0; double kqtc = 0; double kqle = 0;
+                    var modelkt = dbc.NV_GioCong.Where(kh => kh.IdNhanVien == model.IdNhanVien && kh.Month == model.Month
+                                && kh.Year == model.Year && kh.Day <= DateTime.Now.Day).ToList();
+                    for (int i = 0; i < modelkt.Count(); i++)
+                    {
+                        kqgc = kqgc + (modelkt[i].GioRaSang - modelkt[i].GioVaoSang +
+                            (modelkt[i].GioRaChieu - modelkt[i].GioVaoChieu)).TotalHours;
+                        kqtc = kqtc + (modelkt[i].GioRaTangCa - modelkt[i].GioVaoTangCa).TotalHours;
+                        kqle = kqle + (modelkt[i].GioRaLe - modelkt[i].GioVaoLe).TotalHours;
+                    }
+                    //kiểm tra bảng Công
+                    var ktCong = dbc.NV_Cong.FirstOrDefault(kh => kh.Thang == model.Month && kh.Nam == model.Year
+                                    && kh.IdNhanVien == model.IdNhanVien);
+                    if (ktCong == null)
+                    {
+                        //insert 1 dòng
+                        var iserpt = new Data.Cong_ThanhToan().InsertCong(DBname, model.IdNhanVien, 0, 0, 0, 0, 0, 0,
+                            kqgc, kqtc, kqle, model.Month, model.Year);
+                    }
+                    else
+                    {
+                        //update
+                        ktCong.SoGioCongThang=kqgc;
+                        ktCong.SoGioTangCaThang = kqtc;
+                        ktCong.SoGioLeThang = kqle;
+                        var updateCong=new Data.Cong_ThanhToan().UPdateCong(ktCong,DBname);
+                    }
+                    //kiểm tra bảng thanh toan luong
+                    var ktbangthanhtoan = dbc.NV_ThanhToanLuong.FirstOrDefault(kh => kh.Thang == model.Month && kh.Nam == model.Year
+                                    && kh.IdNhanVien == model.IdNhanVien);
+                    if (ktbangthanhtoan == null)
+                    {
+                        //insert 1 dòng
+                    }
+                    else
+                    {
+                        //update
+                    }
+                }
+                else
+                {
+                    Session["ThongBaoGioCongTEK"] = "";
+                    Session["ThongBaoGioCongTEKLoi"] = "Có Lỗi,Update giờ ngày " + model.Day + " không thành công !!!.";
+                }
             }
             else
             {
-                Session["ThongBaoGioCongTEK"] = "";
-                Session["ThongBaoGioCongTEKLoi"] = "Có Lỗi,Update giờ ngày "+model.Day+" không thành công !!!.";
+                Session["ThongBaoGioCongTEK"] = "Tháng " + model.Month + ","+ model.NV_NhanVienTek.HoTen+" đã nhận lương, không thể thay đổi giờ !!!.";
+                Session["ThongBaoGioCongTEKLoi"] = "";
             }
+            
             //tro lai trang truoc do 
             var requestUri = Session["requestUri"] as string;
             if (requestUri != null)
@@ -97,7 +147,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 var kqT = (model[i].GioRaSang - model[i].GioVaoSang+
                     (model[i].GioRaChieu - model[i].GioVaoChieu)).TotalHours;
                 var kqTC = (model[i].GioRaTangCa - model[i].GioVaoTangCa).TotalHours * float.Parse(TangCa);
-                var kqLe = (model[i].GioRaTangCaLe - model[i].GioVaoTangCaLe).TotalHours * float.Parse(Le);
+                var kqLe = (model[i].GioRaLe - model[i].GioVaoLe).TotalHours * float.Parse(Le);
                 model[i].GhiChu = (kqT+kqTC + kqLe).ToString("0.00");
             }
             ViewBag.NgayGioCong = model;
@@ -145,7 +195,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             {
                 var model = dbc.NV_NhanVienTek.Find(Id);
                 if (model.DaNghiViec)
-                {
+                {//Nhân Viên chưa nghỉ việc thì không cho delete
                     dbc.NV_NhanVienTek.Remove(model);
                     dbc.SaveChanges();
                     Session["ThongBaoNhanVienTEKLoi"] = "";
@@ -156,9 +206,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     Session["ThongBaoNhanVienTEKLoi"] = "Nhân viên Chưa nghỉ việc, Delete nhân viên Không thành công !!!";
                     Session["ThongBaoNhanVienTEK"] = "";
                 }
-                //Nhân Viên chưa nghỉ việc thì không cho delete
-
-
+                
                 return RedirectToAction("ListNhanVien");
             }
             catch (Exception ex)

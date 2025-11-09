@@ -11,7 +11,7 @@ namespace DoChoiXeMay.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public NV_HeSoGio()
         {
-            NV_Luong = new HashSet<NV_ChiTietNangLuong>();
+            NV_ChiTietNangLuong = new HashSet<NV_ChiTietNangLuong>();
         }
 
         public int Id { get; set; }
@@ -23,6 +23,6 @@ namespace DoChoiXeMay.Models
         public double HeSo { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<NV_ChiTietNangLuong> NV_Luong { get; set; }
+        public virtual ICollection<NV_ChiTietNangLuong> NV_ChiTietNangLuong { get; set; }
     }
 }

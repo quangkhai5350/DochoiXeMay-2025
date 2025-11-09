@@ -52,7 +52,8 @@ namespace DoChoiXeMay.Areas.Admin.Data
                     for (int i = checkngaygio.Count() + 1; i < kq+1; i++)
                     {
                         var Id = Guid.NewGuid();
-                        DateTime date = DateTime.Now;
+                        DateTime date1 = DateTime.Now;
+                        string date = date1.ToString("yyyy-MM-dd HH:mm:ss");
                         DateTime date2= new DateTime(y, m, i,0,0,0);
                         string date3 = date2.ToString("yyyy-MM-dd HH:mm:ss");
                         string sql = "insert into [" + DBname + "TechZone].[dbo].[NV_GioCong] " +
@@ -61,8 +62,8 @@ namespace DoChoiXeMay.Areas.Admin.Data
                                       ",convert(datetime,'" + date3 + "',120),convert(datetime,'" + date3 + "',120)" +
                                       ",convert(datetime,'" + date3 + "',120),convert(datetime,'" + date3 + "',120)" +
                                       ",convert(datetime,'" + date3 + "',120),convert(datetime,'" + date3 + "',120)" +
-                                      "," + i + "," + dtInput.Month + "," + dtInput.Year + "," +
-                                      "'" + date.ToShortDateString() + "','')";
+                                      "," + i + "," + dtInput.Month + "," + dtInput.Year + "" +
+                                      ",convert(datetime, '" + date + "', 120),'')";
                         var insert_SVL = _context.Database.ExecuteSqlCommand(sql);
                     }
                 }
@@ -108,10 +109,10 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 var VTC = model.GioVaoTangCa.Add(VaoTangCa);
                 model.GioRaTangCa = new DateTime(model.Year, model.Month, model.Day, 0, 0, 0);
                 var RTC = model.GioRaTangCa.Add(RaTangCa);
-                model.GioVaoTangCaLe = new DateTime(model.Year, model.Month, model.Day, 0, 0, 0);
-                var VL = model.GioVaoTangCaLe.Add(VaoLe);
-                model.GioRaTangCaLe = new DateTime(model.Year, model.Month, model.Day, 0, 0, 0);
-                var RL = model.GioRaTangCaLe.Add(RaLe);
+                model.GioVaoLe = new DateTime(model.Year, model.Month, model.Day, 0, 0, 0);
+                var VL = model.GioVaoLe.Add(VaoLe);
+                model.GioRaLe = new DateTime(model.Year, model.Month, model.Day, 0, 0, 0);
+                var RL = model.GioRaLe.Add(RaLe);
 
                 model.GioVaoSang = VS;
                 model.GioRaSang = RS;
@@ -119,8 +120,8 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 model.GioRaChieu = RC;
                 model.GioVaoTangCa = VTC;
                 model.GioRaTangCa = RTC;
-                model.GioVaoTangCaLe = VL;
-                model.GioRaTangCaLe = RL;
+                model.GioVaoLe = VL;
+                model.GioRaLe = RL;
                 model.NgayUpdate = DateTime.Now;
 
                 _context.Entry(model).State = EntityState.Modified;

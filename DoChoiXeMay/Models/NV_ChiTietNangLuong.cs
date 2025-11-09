@@ -17,9 +17,12 @@ namespace DoChoiXeMay.Models
         public int IdHSG { get; set; }
 
         public DateTime NgayApDung { get; set; }
+
         public bool SuDung { get; set; }
+
         [StringLength(500)]
-        public string Ghichu { get; set; }
+        public string GhiChu { get; set; }
+
         public virtual NV_HeSoGio NV_HeSoGio { get; set; }
 
         public virtual NV_NhanVienTek NV_NhanVienTek { get; set; }

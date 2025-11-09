@@ -85,19 +85,19 @@
     <div class="form-group">
         <div class="row">
             <div class="col-md-6">
-                @Html.LabelFor(model => model.GioVaoTangCaLe, htmlAttributes: new { @class = "control-label col-md-4" })
+                @Html.LabelFor(model => model.GioVaoLe, htmlAttributes: new { @class = "control-label col-md-4" })
                 <div class="col-md-8">
-                    <input name="VaoLe" value="@Model.GioVaoTangCaLe.TimeOfDay" class="form-control" type="time" />
-                    @Html.HiddenFor(kh => kh.GioVaoTangCaLe)
-                    @Html.ValidationMessageFor(model => model.GioVaoTangCaLe, "", new { @class = "text-danger" })
+                    <input name="VaoLe" value="@Model.GioVaoLe.TimeOfDay" class="form-control" type="time" />
+                    @Html.HiddenFor(kh => kh.GioVaoLe)
+                    @Html.ValidationMessageFor(model => model.GioVaoLe, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="col-md-6">
-                @Html.LabelFor(model => model.GioRaTangCaLe, htmlAttributes: new { @class = "control-label col-md-4" })
+                @Html.LabelFor(model => model.GioRaLe, htmlAttributes: new { @class = "control-label col-md-4" })
                 <div class="col-md-8">
-                    <input name="RaLe" value="@Model.GioRaTangCaLe.TimeOfDay" class="form-control" type="time" />
-                    @Html.HiddenFor(kh => kh.GioRaTangCaLe)
-                    @Html.ValidationMessageFor(model => model.GioRaTangCaLe, "", new { @class = "text-danger" })
+                    <input name="RaLe" value="@Model.GioRaLe.TimeOfDay" class="form-control" type="time" />
+                    @Html.HiddenFor(kh => kh.GioRaLe)
+                    @Html.ValidationMessageFor(model => model.GioRaLe, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>

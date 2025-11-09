@@ -8,21 +8,18 @@ namespace DoChoiXeMay.Models
 
     public partial class NV_Cong
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public NV_Cong()
-        {
-            NV_ThanhToanLuong = new HashSet<NV_ThanhToanLuong>();
-        }
-
         public int Id { get; set; }
+
+        public int IdNhanVien { get; set; }
 
         public double SoNgayCong { get; set; }
 
         public double SoNgayTangCa { get; set; }
 
-        public double SoNgayLeTangCa { get; set; }
+        public double SoNgayLe { get; set; }
 
         public int SLCom { get; set; }
+
         public int SLGiaoHang { get; set; }
 
         public int SLHoTro { get; set; }
@@ -31,7 +28,7 @@ namespace DoChoiXeMay.Models
 
         public double SoGioTangCaThang { get; set; }
 
-        public double SoGioTangCaLeThang { get; set; }
+        public double SoGioLeThang { get; set; }
 
         public int Thang { get; set; }
 
@@ -42,7 +39,6 @@ namespace DoChoiXeMay.Models
         [StringLength(200)]
         public string GiaiThich { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<NV_ThanhToanLuong> NV_ThanhToanLuong { get; set; }
+        public virtual NV_NhanVienTek NV_NhanVienTek { get; set; }
     }
 }
