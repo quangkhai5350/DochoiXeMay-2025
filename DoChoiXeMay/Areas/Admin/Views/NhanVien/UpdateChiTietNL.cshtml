@@ -1,0 +1,74 @@
+﻿@model DoChoiXeMay.Models.NV_ChiTietNangLuong
+
+@{
+    ViewBag.Title = "UpdateChiTietNL";
+    Layout = "~/Areas/Admin/Views/Shared/_Layoutadmin.cshtml";
+}
+
+<link href="~/Areas/Admin/Content/css/Info_Style.css" rel="stylesheet" />
+<script src="~/Areas/Admin/Content/jquery2.0.3.min.js"></script>
+<div class="container">
+    @using (Html.BeginForm("UpdateChiTietNL", "NhanVien", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <fieldset class="info_form" style="margin-top:0">
+            <div class="container">
+                @Html.HiddenFor(kh => kh.Id)
+                @Html.HiddenFor(kh => kh.IdNhanVien)
+                @Html.HiddenFor(kh => kh.SuDung)
+                @Html.HiddenFor(kh => kh.NgayApDung)
+                <h1 class="info_header">
+                    <span style="color:black">Update Bậc lương @Model.NV_NhanVienTek.NV_Vitrinhanvien.TenVitri: @Session["Hoten"].ToString()</span>
+                    <span class="pull-right label label-warning" style="color:white;font-family:monospace">
+                        @Html.ValidationSummary()
+                    </span>
+                </h1>
+                <div class="contentform">
+                    <div class="form-group">
+                        <div class="row" style="width:95%;padding-left:15px">
+                            <p>Mức Lương </p>
+                            <h5>(Dùng cho nhân viên chính thức)</h5>
+                            <span class="icon-case"><i class="glyphicon glyphicon-user"></i></span>
+                            @Html.TextBoxFor(m => m.MucLuong, new { @class = "form-control", @type = "number", style = "height: 40px", @required = true })
+
+                        </div>
+                        <div class="row" style="width:95%;padding-left:15px">
+                            <p>Hệ Số Giờ (Partime) </p>
+                            <span class="icon-case"><i class="glyphicon glyphicon-duplicate"></i></span>
+                            @Html.DropDownList("IdHSG", null, new { @class = "form-control", style = "width: 75%; height: 40px" })
+
+                        </div>
+                        <div class="row" style="width:95%;padding-left:15px">
+                            <p>Ghi Chú </p>
+                            <span class="icon-case"><i class="glyphicon glyphicon-expand"></i></span>
+                            @Html.TextBoxFor(m => m.GhiChu, new { @class = "form-control", style = "height: 40px", @required = true })
+
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-sm-12">
+                                <div class="text-center btn-crud">
+                                    <button id="btnLuu" class="btn btn-warning" data-action="UpdateChiTietNL"><span class="glyphicon glyphicon-refresh"></span>&nbsp;Update</button>
+                                    <a class="btn btn-primary" href="/Admin/NhanVien/ChitietNangLuong" style="margin-left:10%"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;Quay Lại</a>
+                                </div>
+                                <script>
+                                    $(function () {
+                                        $("button[data-action]").click(function () {
+                                            if (!confirm("Bạn Có Chắc Chắn Hành Động Của Mình?")) {
+                                                return false;
+                                            } else {
+                                                var action = $(this).attr("data-action");
+                                                this.form.action = "/Admin/NhanVien/" + action;
+                                            }
+
+                                        });
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </fieldset>
+    }
+</div>
+

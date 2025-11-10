@@ -18,6 +18,9 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
     {
         // GET: Admin/NhanVien
         Model1 dbc = new Model1();
+        static String TangCa = ConfigurationManager.AppSettings["TangCa"];
+        static String Le = ConfigurationManager.AppSettings["Le"];
+        static String luongcb = ConfigurationManager.AppSettings["MucLuongCoBan"];
         string DBname = ConfigurationManager.AppSettings["DBname"];
         public ActionResult Index()
         {
@@ -106,7 +109,15 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                                     && kh.IdNhanVien == model.IdNhanVien);
                     if (ktbangthanhtoan == null)
                     {
-                        //insert 1 dòng
+                        //insert 1 dòng / chua test
+                        var id = Guid.NewGuid();
+                        var hsg = model.NV_NhanVienTek.NV_ChiTietNangLuong.FirstOrDefault(kh=>kh.SuDung==true).NV_HeSoGio.HeSo;
+                        var tiencong = (kqgc + kqtc* float.Parse(TangCa) + kqle * float.Parse(Le))*hsg;
+                        var pccv = model.NV_NhanVienTek.NV_Vitrinhanvien.PhuCapChucVu;
+                        var pck = model.NV_NhanVienTek.NV_Vitrinhanvien.PhuCapChucKhac;
+                        var thuclinh =tiencong + pccv + pck;
+                        var iserpt = new Data.Cong_ThanhToan().InsertThanhToanLuong(DBname,id,model.IdNhanVien
+                            ,tiencong,0,0,0, pccv, pck,0,0,0,thuclinh,model.Month,model.Year);
                     }
                     else
                     {
@@ -133,8 +144,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             }
             return RedirectToAction("TinhGioCong");
         }
-        static String TangCa = ConfigurationManager.AppSettings["TangCa"];
-        static String Le = ConfigurationManager.AppSettings["Le"];
+        
         public ActionResult GetListTinhGioCong(DateTime dtInput, int Id = 0)
         {
             var nv = dbc.NV_NhanVienTek.Find(Id);
@@ -254,6 +264,17 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 }
                 dbc.Entry(model).State = EntityState.Modified;
                 dbc.SaveChanges();
+                if (model.DaNghiViec == false)
+                {
+                    //Lan dau update Khong co thi Insert, if ktnl==false thi phai them 1 dong
+                    var ktnl = dbc.NV_ChiTietNangLuong.FirstOrDefault(kh => kh.IdNhanVien == model.Id);
+                    if (ktnl == null) {
+                        var idhsl = 1;
+                        var mucluong= model.NV_Vitrinhanvien.DonViTinh == "Gio" ? 0 : int.Parse(luongcb);
+                        idhsl = model.NV_Vitrinhanvien.DonViTinh == "Gio" ? 2 : 1;
+                        var kqnl = new Data.Cong_ThanhToan().InsertChiTietNangLuong(DBname, model.Id, mucluong,idhsl);
+                    }
+                }
                 Session["ThongBaoNhanVienTEKLoi"] = "";
                 Session["ThongBaoNhanVienTEK"] = "Update nhân viên " + model.HoTen + " thành công.";
                 //SMS hệ thống
@@ -331,6 +352,51 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 string message = ex.Message;
+                ModelState.AddModelError("", "Update Thất Bại !!!!" + message);
+                return View(model);
+            }
+        }
+        public ActionResult ChitietNangLuong()
+        {
+            Session["requestUri"] = "/Admin/NhanVien/ChitietNangLuong";
+            return View();
+        }
+        public ActionResult GetListBacLuong()
+        {
+            ViewBag.BacLuong = dbc.NV_ChiTietNangLuong
+                .OrderByDescending(kh=>kh.NV_NhanVienTek.DaNghiViec)
+                .ThenByDescending(kh=>kh.NV_NhanVienTek.IdVitrinhanvien)
+                .ToList();
+            return PartialView();
+        }
+        public ActionResult UpdateChiTietNL(int Id)
+        {
+            var model =  dbc.NV_ChiTietNangLuong.Find(Id);
+            Session["Hoten"] = model.NV_NhanVienTek.HoTen;
+            ViewBag.IdHSG = new SelectList(dbc.NV_HeSoGio.ToList(), "Id", "HeSo", model.IdHSG);
+            return View(model);
+        }
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult UpdateChiTietNL(NV_ChiTietNangLuong model)
+        {
+            try
+            {
+                dbc.Entry(model).State = EntityState.Modified;
+                dbc.SaveChanges();
+                Session["ThongBaoBacLuong"] = "Update Lương cho nhân viên "+ Session["Hoten"].ToString() + " thành công.";
+                //tro lai trang truoc do 
+                var requestUri = Session["requestUri"] as string;
+                if (requestUri != null)
+                {
+                    return Redirect(requestUri);
+                }
+                return RedirectToAction("ChitietNangLuong");
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                ViewBag.IdHSG = new SelectList(dbc.NV_HeSoGio.ToList(), "Id", "HeSo", model.IdHSG);
                 ModelState.AddModelError("", "Update Thất Bại !!!!" + message);
                 return View(model);
             }

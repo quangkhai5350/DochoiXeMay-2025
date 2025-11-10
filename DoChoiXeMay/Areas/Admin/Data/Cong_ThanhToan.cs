@@ -128,5 +128,23 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 return false;
             }
         }
+        public bool InsertChiTietNangLuong(string DBname, int Idnv, int mucluong,int idhsl)
+        {
+            try
+            {
+                DateTime date1 = DateTime.Now;
+                string ngaytao = date1.ToString("yyyy-MM-dd HH:mm:ss");
+                string sql = "insert into [" + DBname + "TechZone].[dbo].[NV_ChiTietNangLuong] " +
+                    "values(" + Idnv + "," + mucluong + "," + idhsl + ",convert(datetime, '" + ngaytao + "', 120)" +
+                    ",1,N'Auto')";
+                var insert_SVL = _context.Database.ExecuteSqlCommand(sql);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                string loi = ex.ToString();
+                return false;
+            }
+        }
     }
 }

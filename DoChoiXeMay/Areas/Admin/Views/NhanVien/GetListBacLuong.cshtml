@@ -1,0 +1,47 @@
+﻿
+
+<div class="table-responsive">
+    <table class="table table-hover table-striped" style="margin-bottom:0">
+        <thead>
+            <tr class="canhgiua" style="background-color: #00bcd4">
+                <th class="canhgiua">Stt</th>
+                <th class="canhgiua">Tên NV</th>
+                <th class="canhgiua">Vị trí</th>
+                <th class="canhgiua">Mức Lương</th>
+                <th class="canhgiua">Hệ Số Giờ</th>
+                <th class="canhgiua">Ngày áp dụng</th>
+                <th class="canhgiua">ghichu</th>
+                <th class="canhgiua"></th>
+            </tr>
+        </thead>
+            <tbody style="border: 2px solid black !important">
+                @foreach (DoChoiXeMay.Models.NV_ChiTietNangLuong Item in ViewBag.BacLuong)
+                {
+                    <tr class="canhgiua" style="border-bottom: 2px solid black !important">
+                        <td></td>
+                        <td>@Item.NV_NhanVienTek.HoTen</td>
+                        <td>@Item.NV_NhanVienTek.NV_Vitrinhanvien.TenVitri</td>
+                        <td>@Item.MucLuong</td>
+                        <td>
+                            @Item.NV_HeSoGio.HeSo
+                        </td>
+                        <td>
+                            @Item.NgayApDung
+                        </td>
+                        <td>
+                            @Item.GhiChu
+                        </td>
+                        <td>
+                            @if (int.Parse(Session["quyen"].ToString()) == 1)
+                            {
+                                <a class="btn btn-danger" href="/Admin/NhanVien/UpdateChiTietNL/@Item.Id"><span class="glyphicon glyphicon-edit"></span></a>
+                            }
+                        </td>
+                    </tr>
+
+                }
+            </tbody>
+    </table>
+
+</div>
+
