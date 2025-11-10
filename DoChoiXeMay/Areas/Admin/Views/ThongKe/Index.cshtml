@@ -31,10 +31,15 @@
         <hr style="width:40%" />
         <p style="background-color:bisque">_Tổng XiNhan Gen1 Đã Bán:@ViewBag.daban</p>
         <p>(TikTok: @ViewBag.DaBanTikTok, Shopee: @ViewBag.DaBanShopee, Lẻ Ngoài Sàn: @ViewBag.DaBanLeNSan, Bán Sỉ: @ViewBag.DaBanLSiNSan)</p>
-        <input id="BanTikTok" value="@ViewBag.DaBanTikTok" hidden />
-        <input id="BanShopee" value="@ViewBag.DaBanShopee" hidden />
-        <input id="LeNgoaiSan" value="@ViewBag.DaBanLeNSan" hidden />
-        <input id="SiNSan" value="@ViewBag.DaBanLSiNSan" hidden />
+        @*<input id="BanTikTok" value="@ViewBag.DaBanTikTok" hidden />*@
+        <input id="DaBan" value="@ViewBag.daban" hidden />
+        @*<input id="BanShopee" value="@ViewBag.DaBanShopee" hidden />
+        <input id="LeNgoaiSan" value="@ViewBag.DaBanLeNSan" hidden />*@
+        @*<input id="SiNSan" value="@ViewBag.DaBanLSiNSan" hidden />*@
+        <input id="CoLoi" value="@ViewBag.DaTraHangKhachLeLoi" hidden />
+        <input id="TraBH" value="@ViewBag.TongtraBH" hidden />
+        <input id="TonKho" value="@ViewBag.TongXiNhanGen1Tek" hidden />
+        <input id="HangMau" value="@ViewBag.TongXiNhanGen1MauDaXuat" hidden />
 
         <p style="margin-left:2%">+ XiNhan Trong đã bán:@ViewBag.TongXiNhanGen1TrongDaBan</p>
         <p style="margin-left:10%">
@@ -96,7 +101,8 @@
     </div>
     <div class="omb_login col-lg-6 col-xl-6 col-md-6 col-sm-12 col-sx-12 col-12" style="padding-top: 20px">
         @*Đồ thị*@
-        <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+        @Html.Action("DoThiThongKe", "ThongKe")
+        
     </div>
     <div class="omb_login col-lg-3 col-xl-3 col-md-3 col-sm-12 col-sx-12 col-12" style="padding-top: 20px">
         @Html.Action("NVLTonKho", "ThongKe")
@@ -151,29 +157,7 @@
     </div>
     <script>
         
-        window.onload = function () {
-
-            var chart = new CanvasJS.Chart("chartContainer", {
-                animationEnabled: true,
-                title: {
-                    text: "Thị phần công cụ tìm kiếm trên desktop - 2016"
-                },
-                data: [{
-                    type: "pie",
-                    startAngle: 240,
-                    yValueFormatString: "##0.00\"%\"",
-                    indexLabel: "{label} {y}",
-                    dataPoints: [
-                        { y: 79.45, label: "Google" },
-                        { y: 7.31, label: "Bing" },
-                        { y: 7.06, label: "Baidu" },
-                        { y: 4.91, label: "Yahoo" },
-                        { y: 1.26, label: "Others" }
-                    ]
-                }]
-            });
-            chart.render();
-        }
+        
         LoadPage();
         function LoadPage() {
             $.ajax({

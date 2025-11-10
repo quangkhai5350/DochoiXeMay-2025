@@ -581,6 +581,7 @@
     <Content Include="Areas\Admin\Views\NhanVien\UpdateViTriNhanVien.cshtml" />
     <Content Include="Areas\Admin\Views\NhanVien\GetListTinhGioCong.cshtml" />
     <Content Include="Areas\Admin\Views\NhanVien\EditGioCong.cshtml" />
+    <Content Include="Areas\Admin\Views\ThongKe\DoThiThongKe.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />

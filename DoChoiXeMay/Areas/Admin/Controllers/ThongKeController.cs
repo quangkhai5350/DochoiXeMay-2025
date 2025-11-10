@@ -66,12 +66,12 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
 
             var MauDaXuat = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 2).ToList();
             var KhoiMauDaXuat = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 2 && kh.IDColor == 7).ToList();
-            var TrongMauDaXuat = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 2 && kh.IDColor == 7).ToList();
+            var TrongMauDaXuat = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 2 && kh.IDColor == 5).ToList();
 
             ViewBag.TongXiNhanGen1Tek = dbc.HangHoas.Where(kh => kh.Id == 55 || kh.Id == 56).Sum(kh => kh.SoLuong);
             ViewBag.TongXiNhanGen1TrongTK = dbc.HangHoas.Where(kh => kh.Id == 56).Sum(kh => kh.SoLuong);
             ViewBag.TongXiNhanGen1KhoiTK = dbc.HangHoas.Where(kh => kh.Id == 55).Sum(kh => kh.SoLuong);
-            
+
             
             ViewBag.daban = daban ==null?0: daban.Sum(kh => kh.SoLuong);
             ViewBag.DaBanTikTok=DaBanTikTok==null?0: DaBanTikTok.Sum(kh => kh.SoLuong);
@@ -122,8 +122,6 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ViewBag.TongXiNhanGen1MauDaXuat = MauDaXuat == null ? 0 : MauDaXuat.Sum(kh => kh.SoLuong);
             ViewBag.TongXiNhanGen1KhoiMauDaXuat = KhoiMauDaXuat == null ? 0 : KhoiMauDaXuat.Sum(kh => kh.SoLuong);
             ViewBag.TongXiNhanGen1TrongMauDaXuat = TrongMauDaXuat == null ? 0 : TrongMauDaXuat.Sum(kh => kh.SoLuong);
-
-
             
             var kytrabaohanhct = beg.Where(kh=>kh.KyXuatNhap.IdLoaiHangXN == 3).ToList();
             if (kytrabaohanhct.Count() == 0)
@@ -134,9 +132,17 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             {
                 ViewBag.TongtraBH = kytrabaohanhct.Sum(kh=>kh.SoLuong);
             }
-            ViewBag.DaSanXuat = ViewBag.daban + ViewBag.TongXiNhanGen1Tek + ViewBag.TongXiNhanGen1MauDaXuat
+            var dsx= ViewBag.daban + ViewBag.TongXiNhanGen1Tek + ViewBag.TongXiNhanGen1MauDaXuat
                                 + ViewBag.DaTraHangKhachLeLoi + ViewBag.TongtraBH;
+            ViewBag.DaSanXuat=dsx;
+            Session["daban"] = daban == null ? 0 : daban.Sum(kh => kh.SoLuong);
+            Session["daSX"] = dsx;
             return View();
+        }
+        public ActionResult DoThiThongKe()
+        {
+            var phantramdaban = 100* float.Parse(Session["daban"].ToString())/ float.Parse(Session["daSX"].ToString());
+            return PartialView();
         }
         public ActionResult NVLTonKho()
         {
