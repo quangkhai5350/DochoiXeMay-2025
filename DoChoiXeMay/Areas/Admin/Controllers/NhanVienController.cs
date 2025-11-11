@@ -264,14 +264,15 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 }
                 dbc.Entry(model).State = EntityState.Modified;
                 dbc.SaveChanges();
+                var dvt= dbc.NV_Vitrinhanvien.Find(model.IdVitrinhanvien).DonViTinh;
                 if (model.DaNghiViec == false)
                 {
                     //Lan dau update Khong co thi Insert, if ktnl==false thi phai them 1 dong
                     var ktnl = dbc.NV_ChiTietNangLuong.FirstOrDefault(kh => kh.IdNhanVien == model.Id);
                     if (ktnl == null) {
                         var idhsl = 1;
-                        var mucluong= model.NV_Vitrinhanvien.DonViTinh == "Gio" ? 0 : int.Parse(luongcb);
-                        idhsl = model.NV_Vitrinhanvien.DonViTinh == "Gio" ? 2 : 1;
+                        var mucluong= dvt == "Gio" ? 0 : int.Parse(luongcb);
+                        idhsl = dvt == "Gio" ? 2 : 1;
                         var kqnl = new Data.Cong_ThanhToan().InsertChiTietNangLuong(DBname, model.Id, mucluong,idhsl);
                     }
                 }

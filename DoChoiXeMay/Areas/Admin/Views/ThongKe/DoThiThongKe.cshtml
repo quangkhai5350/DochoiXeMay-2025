@@ -1,24 +1,45 @@
 ﻿
+<input id="phantramdaban" value="@ViewBag.phantramdaban" hidden />
+<input id="phantramTraHangLeLoi" value="@ViewBag.phantramTraHangLeLoi" hidden />
+<input id="phantramTongtraBH" value="@ViewBag.phantramTongtraBH" hidden />
+<input id="phantramTonkho" value="@ViewBag.phantramTonkho" hidden />
+<input id="phantramMauDaXuat" value="@ViewBag.phantramMauDaXuat" hidden />
+
 <div id="chartContainer" style="height: 300px; width: 100%;"></div>
 <script>
     window.onload = function () {
-
+        var daban = $("#phantramdaban").val()
+        var tdaban = parseFloat(daban)    
+        var TraHangLeLoi = $("#phantramTraHangLeLoi").val()
+        var tTraHangLeLoi = Number.parseFloat(TraHangLeLoi)
+        var traBH = $("#phantramTongtraBH").val()
+        var ttraBH = Number.parseFloat(traBH)
+        var Tonkho = $("#phantramTonkho").val()
+        var tTonkho = Number.parseFloat(Tonkho)
+        var MauDaXuat = $("#phantramMauDaXuat").val()
+        var tMauDaXuat = Number.parseFloat(MauDaXuat)
+        alert(tdaban)
         var chart = new CanvasJS.Chart("chartContainer", {
             animationEnabled: true,
             title: {
-                text: "Thị phần công cụ tìm kiếm trên desktop - 2016"
+                text: "Xi Nhan Wave TNT BLOCKX G2 ZEN 1"
             },
             data: [{
                 type: "pie",
                 startAngle: 240,
-                yValueFormatString: "##0.00\"%\"",
+                yValueFormatString: "##0.00"%"",
                 indexLabel: "{label} {y}",
                 dataPoints: [
-                    { y: 79.45, label: "Google" },
-                    { y: 7.31, label: "Bing" },
-                    { y: 7.06, label: "Baidu" },
-                    { y: 4.91, label: "Yahoo" },
-                    { y: 1.26, label: "Others" }
+                    { y: tdaban, label: "Đã Bán" },
+                    { y: tTraHangLeLoi, label: "TraHangLeLoi" },
+                    { y: ttraBH, label: "Trả BH" },
+                    { y: tTonkho, label: "Tồn kho" },
+                    { y: tMauDaXuat, label: "Hàng Mẫu" }
+                    //{ y: 79.45, label: "Đã Bán" },
+                    //{ y: 7.31, label: "TraHangLeLoi" },
+                    //{ y: 7.06, label: "Trả BH" },
+                    //{ y: 4.91, label: "Tồn kho" },
+                    //{ y: 1.26, label: "Hàng Mẫu" }
                 ]
             }]
         });
