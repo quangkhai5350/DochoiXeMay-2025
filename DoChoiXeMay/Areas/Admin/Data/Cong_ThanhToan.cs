@@ -21,9 +21,16 @@ namespace DoChoiXeMay.Areas.Admin.Data
             {
                 DateTime date1 = DateTime.Now;
                 string date = date1.ToString("yyyy-MM-dd HH:mm:ss");
+                var snc1 = float.Parse(snc.ToString());
+                var sntc1 = float.Parse(sntc.ToString());
+                var snle1 = float.Parse(snle.ToString());
+                var sgcongthang1 = float.Parse(sgcongthang.ToString());
+                var sgtcathang1 = float.Parse(sgtcathang.ToString());
+                var sglethang1 = float.Parse(sglethang.ToString());
+
                 string sql = "insert into [" + DBname + "TechZone].[dbo].[NV_Cong] " +
-                              "values(" + idnv + "," + snc + "," + sntc + ","+snle+","+slcom+","+slgiaohang+"" +
-                              ","+slhotro+","+sgcongthang+","+sgtcathang+","+sglethang+","+thang+","+nam+ "" +
+                              "values(" + idnv + "," + snc1 + "," + sntc1 + ","+snle1+","+slcom+","+slgiaohang+"" +
+                              ","+slhotro+","+ sgcongthang1 + ","+sgtcathang1+","+sglethang1+","+thang+","+nam+ "" +
                               ",convert(datetime, '" + date + "', 120),N'Insert Auto')";
                 var insert_SVL = _context.Database.ExecuteSqlCommand(sql);
                 return true;
@@ -75,9 +82,10 @@ namespace DoChoiXeMay.Areas.Admin.Data
         {
             try
             {
-
+                //Số tiền, không có dấu phẩy, không lỗi, không cần float
                 DateTime date1 = DateTime.Now;
                 string ngaytao = date1.ToString("yyyy-MM-dd HH:mm:ss");
+
                 string sql = "insert into [" + DBname + "TechZone].[dbo].[NV_ThanhToanLuong] " +
                               "values('" + Id.ToString() + "'," + idnv + "," + tiencong + "," + tiencom + "," + pcgiaohang + "," + pcxangxe + "" +
                               "," + pcchucvu + "," + pckhac + "," + thuong + "," + khautrubh + "," + Ungluong + "," + thuclinh + "" +
@@ -99,7 +107,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 var update = _context.Database.ExecuteSqlCommand("update [" + DBname + "TechZone].[dbo].[NV_ThanhToanLuong] set " +
                 "IdNhanVien=@IdNhanVien,TienCong=@TienCong,TienCom=@TienCom," +
                 "PCGiaoHang=@PCGiaoHang,PCXangXe=@PCXangXe,PCChucVu=@PCChucVu,PCKhac=@PCKhac,Thuong=@Thuong," +
-                "KhauTruBH=@KhauTruBH,DaUngLuong=@DaUngLuong,ThucLinh=@ThucLinh,DaNhanLuong=@DaNhanLuong" +
+                "KhauTruBH=@KhauTruBH,DaUngLuong=@DaUngLuong,ThucLinh=@ThucLinh,DaNhanLuong=@DaNhanLuong," +
                 "Thang=@Thang,Nam=@Nam,NgayTao=@NgayTao,NgayUpdate=@NgayUpdate where Id=@Id",
                 new SqlParameter("@IdNhanVien", model.IdNhanVien),
                 new SqlParameter("@TienCong", model.TienCong),
@@ -115,7 +123,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 new SqlParameter("@DaNhanLuong", model.DaNhanLuong),
                 new SqlParameter("@Thang", model.Thang),
                 new SqlParameter("@Nam", model.Nam),
-                new SqlParameter("@NgayTao", DateTime.Now),
+                new SqlParameter("@NgayTao", model.NgayTao),
                 new SqlParameter("@NgayUpdate", DateTime.Now),
                 new SqlParameter("@Id", model.Id));
                 if (update > 0)

@@ -9,6 +9,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Windows.Interop;
 using static System.Net.WebRequestMethods;
 
 namespace DoChoiXeMay.Areas.Admin.Controllers
@@ -21,6 +22,9 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         static String TangCa = ConfigurationManager.AppSettings["TangCa"];
         static String Le = ConfigurationManager.AppSettings["Le"];
         static String luongcb = ConfigurationManager.AppSettings["MucLuongCoBan"];
+        static String TCom = ConfigurationManager.AppSettings["TCom"];
+        static String GiaoHang = ConfigurationManager.AppSettings["GiaoHang"];
+        static String HoTro = ConfigurationManager.AppSettings["HoTro"];
         string DBname = ConfigurationManager.AppSettings["DBname"];
         public ActionResult Index()
         {
@@ -95,6 +99,12 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                         //insert 1 dòng
                         var iserpt = new Data.Cong_ThanhToan().InsertCong(DBname, model.IdNhanVien, 0, 0, 0, 0, 0, 0,
                             kqgc, kqtc, kqle, model.Month, model.Year);
+                        if (iserpt == false)
+                        {
+                            Session["ThongBaoGioCongTEK"] = "";
+                            Session["ThongBaoGioCongTEKLoi"] = "Có lỗi Insert bảng Công !!!";
+                            return RedirectToAction("TinhGioCong");
+                        }
                     }
                     else
                     {
@@ -103,25 +113,58 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                         ktCong.SoGioTangCaThang = kqtc;
                         ktCong.SoGioLeThang = kqle;
                         var updateCong=new Data.Cong_ThanhToan().UPdateCong(ktCong,DBname);
+                        if (updateCong == false)
+                        {
+                            Session["ThongBaoGioCongTEK"] = "";
+                            Session["ThongBaoGioCongTEKLoi"] = "Có lỗi Update bảng Công !!!";
+                            return RedirectToAction("TinhGioCong");
+                        }
                     }
                     //kiểm tra bảng thanh toan luong
                     var ktbangthanhtoan = dbc.NV_ThanhToanLuong.FirstOrDefault(kh => kh.Thang == model.Month && kh.Nam == model.Year
                                     && kh.IdNhanVien == model.IdNhanVien);
+                    var hsg = dbc.NV_ChiTietNangLuong.FirstOrDefault(kh => kh.IdNhanVien == model.IdNhanVien).NV_HeSoGio.HeSo;
                     if (ktbangthanhtoan == null)
                     {
-                        //insert 1 dòng / chua test
+                        //insert 1 dòng
                         var id = Guid.NewGuid();
-                        var hsg = model.NV_NhanVienTek.NV_ChiTietNangLuong.FirstOrDefault(kh=>kh.SuDung==true).NV_HeSoGio.HeSo;
+                        var nhanvien = dbc.NV_NhanVienTek.Find(model.IdNhanVien);
+                        
                         var tiencong = (kqgc + kqtc* float.Parse(TangCa) + kqle * float.Parse(Le))*hsg;
-                        var pccv = model.NV_NhanVienTek.NV_Vitrinhanvien.PhuCapChucVu;
-                        var pck = model.NV_NhanVienTek.NV_Vitrinhanvien.PhuCapChucKhac;
+                        var pccv = nhanvien.NV_Vitrinhanvien.PhuCapChucVu;
+                        var pck = nhanvien.NV_Vitrinhanvien.PhuCapChucKhac;
                         var thuclinh =tiencong + pccv + pck;
                         var iserpt = new Data.Cong_ThanhToan().InsertThanhToanLuong(DBname,id,model.IdNhanVien
                             ,tiencong,0,0,0, pccv, pck,0,0,0,thuclinh,model.Month,model.Year);
+                        if (iserpt == false)
+                        {
+                            Session["ThongBaoGioCongTEK"] = "";
+                            Session["ThongBaoGioCongTEKLoi"] = "Có lỗi Insert bảng thanh toán lương !!!";
+                            return RedirectToAction("TinhGioCong");
+                        }
                     }
                     else
                     {
-                        //update
+                        //update b1: lấy bảng Công lần nữa
+                        var ktCong2 = dbc.NV_Cong.FirstOrDefault(kh => kh.Thang == model.Month && kh.Nam == model.Year
+                                    && kh.IdNhanVien == model.IdNhanVien);
+                        
+                        var tiencong = (kqgc + kqtc * float.Parse(TangCa) + kqle * float.Parse(Le)) * hsg;
+                        ktbangthanhtoan.TienCong = tiencong;
+                        ktbangthanhtoan.TienCom = ktCong2.SLCom * float.Parse(TCom);
+                        ktbangthanhtoan.PCGiaoHang = ktCong2.SLGiaoHang * float.Parse(GiaoHang);
+                        ktbangthanhtoan.PCKhac = ktCong2.SLHoTro * float.Parse(HoTro);
+                        ktbangthanhtoan.ThucLinh = tiencong + ktbangthanhtoan.TienCom + ktbangthanhtoan.PCGiaoHang
+                            + ktbangthanhtoan.PCXangXe + ktbangthanhtoan.PCChucVu + ktbangthanhtoan.PCKhac
+                            + ktbangthanhtoan.Thuong - ktbangthanhtoan.KhauTruBH - ktbangthanhtoan.DaUngLuong
+                            + ktbangthanhtoan.PCKhac;
+                        var updateThanhToan = new Data.Cong_ThanhToan().UPdateThanhToanLuong(ktbangthanhtoan, DBname);
+                        if (updateThanhToan == false)
+                        {
+                            Session["ThongBaoGioCongTEK"] = "";
+                            Session["ThongBaoGioCongTEKLoi"] = "Có lỗi update bảng thanh toán lương !!!";
+                            return RedirectToAction("TinhGioCong");
+                        }
                     }
                 }
                 else

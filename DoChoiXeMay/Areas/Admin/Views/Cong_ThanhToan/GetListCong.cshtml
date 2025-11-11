@@ -1,0 +1,85 @@
+﻿<div class="table-responsive">
+    <table class="table table-hover table-striped" style="margin-bottom:0">
+        <thead>
+            <tr class="canhgiua" style="background-color: #00bcd4">
+                @*<th class="canhgiua" style="width:10px">GioiTinh</th>*@
+                <th class="canhgiua">Tên Vị Trí</th>
+                <th class="canhgiua">Tên NV</th>
+                <th class="canhgiua">SNCong</th>
+                <th class="canhgiua">SNTangCa</th>
+                <th class="canhgiua">SNLe</th>
+
+                <th class="canhgiua">SLcom</th>
+                <th class="canhgiua">SLGiaoHang</th>
+                <th class="canhgiua">SLHoTro</th>
+
+                <th class="canhgiua">GioCong</th>
+                <th class="canhgiua">GioTangCa</th>
+                <th class="canhgiua">GioLe</th>
+                <th class="canhgiua">Thang/Nam</th>
+                <th class="canhgiua">NgayUpdate</th>
+                @if (Session["quyen"].ToString() == "1")
+                {
+                    <th class="canhgiua" style="width:120px">Update</th>
+                }
+
+            </tr>
+        </thead>
+        <tbody style="border: 2px solid black !important">
+            @foreach (DoChoiXeMay.Models.NV_Cong Item in ViewBag.GetListCong)
+            {
+                <tr class="canhgiua" style="border: 2px solid black !important">
+
+                    <td>
+                        @Item.NV_NhanVienTek.NV_Vitrinhanvien.TenVitri
+                    </td>
+                    <td style="font-size:15px">
+                        @Item.NV_NhanVienTek.HoTen
+                    </td>
+
+                    <td style="font-size:15px">
+                        @Item.SoNgayCong
+                    </td>
+                    <td>
+                        @Item.SoNgayTangCa
+                    </td>
+                    <td>
+                        @Item.SoNgayLe
+                    </td>
+                    <td>
+                        @Item.SLCom
+                    </td>
+                    <td>
+                        @Item.SLGiaoHang
+                    </td>
+                    <td>
+                        @Item.SLHoTro
+                    </td>
+                    <td>
+                        @Item.SoGioCongThang
+                    </td>
+                    <td>
+                        @Item.SoGioTangCaThang
+                    </td>
+                    <td>
+                        @Item.SoGioLeThang
+                    </td>
+                    <td>
+                        @Item.Thang/@Item.Nam
+                    </td>
+                    <td>
+                        @Html.FormatValue(Item.NgayUpdate, "{0:dd/MM/yyyy}")
+                    </td>
+
+                    @if (Session["quyen"].ToString() == "1")
+                    {
+                        <td>
+                            <a class="btn btn-danger" href="/Admin/Cong_ThanhToan/UpdateCong/@Item.Id"><span class="glyphicon glyphicon-edit"></span></a>
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

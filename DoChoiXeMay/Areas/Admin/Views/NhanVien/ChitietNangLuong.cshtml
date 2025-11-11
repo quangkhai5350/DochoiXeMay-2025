@@ -18,21 +18,24 @@
     <div class="panel panel-default" style="margin-top:10px">
         <div class="panel-heading">
             <div class="row">
-                
-                <div class="pull-right label label-success" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
-                    @Session["ThongBaoBacLuong"]
+                Bậc lương sẽ tự thêm vào khi có nhân viên mới.
+            </div>
+                <div class="row">
+
+                    <div class="pull-right label label-success" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
+                        @Session["ThongBaoBacLuong"]
+                    </div>
+                </div>
+
+            </div>
+            <div class="panel-body">
+                @*<img id="loading" hidden src="~/Areas/Admin/Content/img/loading.gif" />*@
+                <div class="listBac">
+
+
                 </div>
             </div>
-
         </div>
-        <div class="panel-body">
-            @*<img id="loading" hidden src="~/Areas/Admin/Content/img/loading.gif" />*@
-            <div class="listBac">
-
-
-            </div>
-        </div>
-    </div>
 </div>
 <script>
     LoadPage();
