@@ -589,6 +589,9 @@
     <Content Include="Areas\Admin\Views\Cong_ThanhToan\ListCong.cshtml" />
     <Content Include="Areas\Admin\Views\Cong_ThanhToan\GetListCong.cshtml" />
     <Content Include="Areas\Admin\Views\Cong_ThanhToan\UpdateCong.cshtml" />
+    <Content Include="Areas\Admin\Views\Cong_ThanhToan\ListThanhToan.cshtml" />
+    <Content Include="Areas\Admin\Views\Cong_ThanhToan\GetListThanhToan.cshtml" />
+    <Content Include="Areas\Admin\Views\Cong_ThanhToan\UpdateThanhToanLuong.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />

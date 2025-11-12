@@ -1,15 +1,25 @@
 ﻿using DoChoiXeMay.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Xml.Linq;
 
 namespace DoChoiXeMay.Areas.Admin.Data
 {
     public class Cong_ThanhToan
     {
         Model1 _context;
+        static String TangCa = ConfigurationManager.AppSettings["TangCa"];
+        static String Le = ConfigurationManager.AppSettings["Le"];
+        static String luongcb = ConfigurationManager.AppSettings["MucLuongCoBan"];
+        static String TCom = ConfigurationManager.AppSettings["TCom"];
+        static String GiaoHang = ConfigurationManager.AppSettings["GiaoHang"];
+        static String HoTro = ConfigurationManager.AppSettings["HoTro"];
+        static String NgayCong = ConfigurationManager.AppSettings["NgayCong"];
+        string DBname = ConfigurationManager.AppSettings["DBname"];
         public Cong_ThanhToan()
         {
             _context = new Model1();
@@ -153,6 +163,126 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 string loi = ex.ToString();
                 return false;
             }
+        }
+        public bool ThanhToanLuongAuto(int Idnv, int thang, int nam,string dvt, double giocong, double tangca, double gioLe)
+        {
+            try
+            {
+                //kiểm tra bảng thanh toan luong
+                var ktbangthanhtoan = _context.NV_ThanhToanLuong.FirstOrDefault(kh => kh.Thang == thang && kh.Nam == nam
+                                && kh.IdNhanVien == Idnv);
+                var hsg = _context.NV_ChiTietNangLuong.FirstOrDefault(kh => kh.IdNhanVien == Idnv).NV_HeSoGio.HeSo;
+                if (ktbangthanhtoan == null)
+                {
+                    //insert 1 dòng
+                    double tiencong = 0;
+                    var ktCong1 = _context.NV_Cong.FirstOrDefault(kh => kh.Thang == thang && kh.Nam == nam
+                                && kh.IdNhanVien == Idnv);
+                    var id = Guid.NewGuid();
+                    var nhanvien = _context.NV_NhanVienTek.Find(Idnv);
+                    if (dvt == "Gio")//pratime
+                    {
+                        tiencong = (giocong + tangca * float.Parse(TangCa) + gioLe * float.Parse(Le)) * hsg;
+                    }
+                    else //chính thức ==>lấy mucluong tư bảng NV_ChiTietNangLuong
+                    {
+                        if (ktCong1 == null)
+                        {
+                            var mucluong = _context.NV_ChiTietNangLuong.FirstOrDefault(kh => kh.IdNhanVien == Idnv);
+                            tiencong = mucluong.MucLuong;
+                        }
+                        else
+                        {
+                            tiencong = ktCong1.SoNgayCong * float.Parse(NgayCong);
+                        }
+                        
+                    }
+                    var pccv = nhanvien.NV_Vitrinhanvien.PhuCapChucVu;
+                        var pck = nhanvien.NV_Vitrinhanvien.PhuCapChucKhac;
+                        var thuclinh = tiencong + pccv + pck;
+                        var iserpt = InsertThanhToanLuong(DBname, id, Idnv
+                            , tiencong, 0, 0, 0, pccv, pck, 0, 0, 0, thuclinh, thang, nam);
+                    if (iserpt == false) return false;
+                }
+                else
+                {
+                    //update b1: lấy bảng Công
+                    double tiencong = 0;
+                    var ktCong2 = _context.NV_Cong.FirstOrDefault(kh => kh.Thang == thang && kh.Nam == nam
+                                && kh.IdNhanVien == Idnv);
+                    if (dvt == "Gio")
+                    {
+                        tiencong = (giocong + tangca * float.Parse(TangCa) + gioLe * float.Parse(Le)) * hsg;
+                    }
+                    else
+                    {
+                        tiencong = ktCong2.SoNgayCong * float.Parse(NgayCong)
+                                + ktCong2.SoNgayTangCa * float.Parse(NgayCong) * float.Parse(TangCa)
+                                + ktCong2.SoNgayLe * float.Parse(NgayCong) * float.Parse(Le);
+                    }
+                    ktbangthanhtoan.TienCong = tiencong;
+                    ktbangthanhtoan.TienCom = ktCong2.SLCom * float.Parse(TCom);
+                    ktbangthanhtoan.PCGiaoHang = ktCong2.SLGiaoHang * float.Parse(GiaoHang);
+                    ktbangthanhtoan.PCKhac = ktCong2.SLHoTro * float.Parse(HoTro);
+                    ktbangthanhtoan.ThucLinh = tiencong + ktbangthanhtoan.TienCom + ktbangthanhtoan.PCGiaoHang
+                        + ktbangthanhtoan.PCXangXe + ktbangthanhtoan.PCChucVu + ktbangthanhtoan.PCKhac
+                        + ktbangthanhtoan.Thuong - ktbangthanhtoan.KhauTruBH - ktbangthanhtoan.DaUngLuong
+                        + ktbangthanhtoan.PCKhac;
+                    var updateThanhToan = UPdateThanhToanLuong(ktbangthanhtoan, DBname);
+                    if (updateThanhToan == false) return false;
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                string loi = ex.ToString();
+                return false;
+            }
+        }
+        public bool TinhCongAutoPartime(NV_GioCong model, double giocong, double tangca, double gioLe)
+        {
+            var ktCong = _context.NV_Cong.FirstOrDefault(kh => kh.Thang == model.Month && kh.Nam == model.Year
+                                    && kh.IdNhanVien == model.IdNhanVien);
+            if (ktCong == null)
+            {
+                //insert 1 dòng
+                var iserpt = InsertCong(DBname, model.IdNhanVien, 0, 0, 0, 0, 0, 0,
+                    giocong, tangca, gioLe, model.Month, model.Year);
+                if (iserpt == false)return false;
+            }
+            else
+            {
+                //update
+                ktCong.SoGioCongThang = giocong;
+                ktCong.SoGioTangCaThang = tangca;
+                ktCong.SoGioLeThang = gioLe;
+                var updateCong = new Data.Cong_ThanhToan().UPdateCong(ktCong, DBname);
+                if (updateCong == false) return false;
+            }
+            return true;
+        }
+        public bool AddCongAutoChinhThuc()
+        {
+            var date = DateTime.Now;
+            var listChinhThuc = _context.NV_NhanVienTek.Where(kh => kh.DaNghiViec == false && kh.NV_Vitrinhanvien.DonViTinh != "Gio").ToList();
+            var ktfirt = _context.NV_Cong.Where(kh => kh.Thang == date.Month && kh.Nam == date.Year
+                    && kh.NV_NhanVienTek.NV_Vitrinhanvien.DonViTinh != "Gio" && kh.NV_NhanVienTek.DaNghiViec ==false).ToList();
+            if(listChinhThuc.Count() != ktfirt.Count())
+            {
+                foreach (NV_NhanVienTek item in listChinhThuc)
+                {
+                    var ktCong = _context.NV_Cong.FirstOrDefault(kh => kh.Thang == date.Month && kh.Nam == date.Year
+                        && kh.IdNhanVien == item.Id);
+                    if (ktCong == null)
+                    {
+                        var iserpt = InsertCong(DBname, item.Id, 0, 0, 0, 0, 0, 0, 0, 0, 0, date.Month, date.Year);
+                        
+                    }
+
+                }
+            }
+            
+            return true;
         }
     }
 }

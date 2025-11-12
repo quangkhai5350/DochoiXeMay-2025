@@ -1,8 +1,9 @@
 ﻿
 @{
-    ViewBag.Title = "ListCong";
+    ViewBag.Title = "ListThanhToan";
     Layout = "~/Areas/Admin/Views/Shared/_Layoutadmin.cshtml";
 }
+
 <script src="~/Areas/Admin/Content/jquery2.0.3.min.js"></script>
 <style>
     .canhgiua {
@@ -11,27 +12,17 @@
 </style>
 <div class="row">
     <div class="Title_Notin" style="text-align:center">
-        <span>Bảng Công NV TeK</span>
+        <span>Thanh Toán Lương NV TeK</span>
     </div>
 </div>
-@*<div class="row">
-    @if (Session["quyen"].ToString() == "1")
-    {
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-6">
-            <a class="btn btn-warning" style="margin-left:5px" href="/Admin/Cong_ThanhToan/AddCongChinhThuc" onclick="return confirm('Bạn muốn Thêm Mới 1 Công cho nhân viên Chính Thức ??')">
-                <i class="fa fa-plus-circle"></i>&nbsp;&nbsp; Thêm mới "bảng Công cho Nhân Viên Chính Thức"
-            </a>
-        </div>
-    }
-</div>*@
 <div class="panel panel-default" style="margin-top:10px">
     <div class="panel-heading">
         <div class="row">
             <div class="pull-right label label-warning" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
-                @Session["ThongBaoCongTEKLoi"]
+                @Session["ThongBaoThanhToanTEKLoi"]
             </div>
             <div class="pull-right label label-success" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
-                @Session["ThongBaoCongTEK"]
+                @Session["ThongBaoThanhToanTEK"]
             </div>
             <div class="row">
 
@@ -44,7 +35,7 @@
     </div>
     <div class="panel-body">
         <img id="loading" hidden src="~/Areas/Admin/Content/img/loading.gif" />
-        <div class="listCong">
+        <div class="listThanhToan">
 
 
         </div>
@@ -74,10 +65,10 @@
     LoadPage();
     function LoadPage() {
         $.ajax({
-            url: "/Admin/Cong_ThanhToan/GetListCong",
+            url: "/Admin/Cong_ThanhToan/GetListThanhToan",
             data: {},
             success: function (respone) {
-                $(".listCong").html(respone);
+                $(".listThanhToan").html(respone);
                 //var pagesp = pageNo + 1;
                 //$('.TongSanPham').html(pagesp + '/' + TongSP + ' trang');
             }

@@ -1,0 +1,94 @@
+﻿<div class="table-responsive">
+    <table class="table table-hover table-striped" style="margin-bottom:0">
+        <thead>
+            <tr class="canhgiua" style="background-color: #00bcd4">
+                @*<th class="canhgiua" style="width:10px">GioiTinh</th>*@
+                <th class="canhgiua">Tên Vị Trí</th>
+                <th class="canhgiua">Tên NV</th>
+                <th class="canhgiua">TienCong</th>
+                <th class="canhgiua">TienCom</th>
+                <th class="canhgiua">PCGiaoHang</th>
+
+                <th class="canhgiua">PCXangXe</th>
+                <th class="canhgiua">PCChucVu</th>
+                <th class="canhgiua">PCKhac</th>
+
+                <th class="canhgiua">Thuong</th>
+                <th class="canhgiua">KhautruBH</th>
+                <th class="canhgiua">UngLuong</th>
+                <th class="canhgiua">ThucLinh</th>
+                <th class="canhgiua">DaNhan</th>
+                <th class="canhgiua">Thang/Nam</th>
+                <th class="canhgiua">NgayUpdate</th>
+
+                @if (Session["quyen"].ToString() == "1")
+                {
+                    <th class="canhgiua" style="width:120px">Update</th>
+                }
+
+            </tr>
+        </thead>
+        <tbody style="border: 2px solid black !important">
+            @foreach (DoChoiXeMay.Models.NV_ThanhToanLuong Item in ViewBag.GetThanhToan)
+            {
+                <tr class="canhgiua" style="border: 2px solid black !important">
+
+                    <td>
+                        @Item.NV_NhanVienTek.NV_Vitrinhanvien.TenVitri
+                    </td>
+                    <td style="font-size:15px">
+                        @Item.NV_NhanVienTek.HoTen
+                    </td>
+
+                    <td style="font-size:15px">
+                        @Html.FormatValue(Item.TienCong, "{0:#,###,###}")
+                    </td>
+                    <td>
+                        @Html.FormatValue(Item.TienCom, "{0:#,###,###}")
+                    </td>
+                    <td>
+                        @Html.FormatValue(Item.PCGiaoHang, "{0:#,###,###}")
+                    </td>
+                    <td>
+                        @Html.FormatValue(Item.PCXangXe, "{0:#,###,###}")
+                    </td>
+                    <td>
+                        @Html.FormatValue(Item.PCChucVu, "{0:#,###,###}")
+                    </td>
+                    <td>
+                        @Html.FormatValue(Item.PCKhac, "{0:#,###,###}")
+                    </td>
+                    <td>
+                        @Html.FormatValue(Item.Thuong, "{0:#,###,###}")
+                    </td>
+                    <td>
+                        @Html.FormatValue(Item.KhauTruBH, "{0:#,###,###}")
+                    </td>
+                    <td>
+                        @Html.FormatValue(Item.DaUngLuong, "{0:#,###,###}")
+                    </td>
+                    <td>
+                        @Html.FormatValue(Item.ThucLinh, "{0:#,###,###}")
+                    </td>
+                    <td>
+                        @Item.DaNhanLuong
+                    </td>
+                    <td>
+                        @Item.Thang/@Item.Nam
+                    </td>
+                    <td>
+                        @Html.FormatValue(Item.NgayUpdate, "{0:dd/MM/yyyy}")
+                    </td>
+
+                    @if (Session["quyen"].ToString() == "1")
+                    {
+                        <td>
+                            <a class="btn btn-danger" href="/Admin/Cong_ThanhToan/UpdateThanhToanLuong/@Item.Id"><span class="glyphicon glyphicon-edit"></span></a>
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
