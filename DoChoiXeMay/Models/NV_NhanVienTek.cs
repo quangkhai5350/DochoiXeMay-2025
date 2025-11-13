@@ -14,6 +14,7 @@ namespace DoChoiXeMay.Models
             NV_ChiTietNangLuong = new HashSet<NV_ChiTietNangLuong>();
             NV_Cong = new HashSet<NV_Cong>();
             NV_GioCong = new HashSet<NV_GioCong>();
+            NV_LichTuanParTime = new HashSet<NV_LichTuanParTime>();
             NV_ThanhToanLuong = new HashSet<NV_ThanhToanLuong>();
         }
 
@@ -76,6 +77,8 @@ namespace DoChoiXeMay.Models
         [StringLength(50)]
         public string STT { get; set; }
 
+        public int IdUser { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NV_ChiTietNangLuong> NV_ChiTietNangLuong { get; set; }
 
@@ -85,7 +88,12 @@ namespace DoChoiXeMay.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NV_GioCong> NV_GioCong { get; set; }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<NV_LichTuanParTime> NV_LichTuanParTime { get; set; }
+
         public virtual NV_Vitrinhanvien NV_Vitrinhanvien { get; set; }
+
+        public virtual UserTek UserTek { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NV_ThanhToanLuong> NV_ThanhToanLuong { get; set; }

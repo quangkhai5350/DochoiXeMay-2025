@@ -254,7 +254,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             model.IdLoai = 2;
             model.LoaiConnection = "";
             model.EmailConnection = "email@gmail.com";
-            model.Islocked = true;
+            model.Islocked = false;
             model.lastPasswordChangedate = DateTime.Now;
             model.LastLokedChangedate = DateTime.Now;
             model.Createdate = DateTime.Now;

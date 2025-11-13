@@ -37,6 +37,95 @@ namespace DoChoiXeMay.Controllers
 
             return View();
         }
+        public ActionResult LoginWebStaff()
+        {
+            ViewBag.UserName = "";
+            ViewBag.Password = "";
+            ViewBag.reme = "";
+            return View();
+        }
+        [HttpPost]
+        public ActionResult LoginWebStaff(String UserName, String Password)
+        {
+            TaiKhoanInfo tk_check = new TaiKhoanInfo();
+            //tài khoản không phân biệt hoa thường.
+            var user = dbc.UserTeks.Where(p => p.UserName.ToLower() == UserName.ToLower() && (p.IdLoai == 3 ||
+                                    p.IdLoai==4)).SingleOrDefault();
+            if (user != null)
+            {
+                var time_locked = user.LastLokedChangedate;
+                var check_time = DateTime.Now - time_locked;
+
+                // Kiểm tra xem thời giạn bị khóa trên 5 chưa ? Nếu trên 5p reset lại thành false
+                if (check_time.Minutes > 4 && user.Islocked == true)
+                {
+                    user.Islocked = false;
+                    user.CountFailedPassword = 0;
+                    dbc.SaveChanges();
+                }
+                // Sau khi kiểm tra tình trạng khóa tài khoản thì kiểm tra đăng nhập
+                if (user.Islocked == true)
+                {
+                    ModelState.AddModelError("", "Tài khoản của bạn đã bị khóa.Vui lòng đăng nhập sau " + (4 - check_time.Minutes) + " phút " + (60 - check_time.Seconds) + " giây");
+                }
+                else
+                {
+                    string check_pass = tk_check.EnCryptDotNetNukePassword(Password, "", user.PasswordSalt);//pass ma hoa
+                    if (user.Password == check_pass)
+                    {
+                        int UserFirt = user.Id;
+                        // đăng nhập thành công set lại số lần nhập sai = 0
+                        if (user.CountFailedPassword > 0)
+                        {
+                            user.CountFailedPassword = 0;
+                            dbc.Entry(user).State = EntityState.Modified;
+                            dbc.SaveChanges();
+                        }
+                        string[] user_log = new string[2];
+                        user_log[0] = UserName;
+                        user_log[1] = Password;
+                        Session["UserName"] = UserName;
+                        Session["UserId"] = UserFirt;
+                        //
+                        Session["quyen"] = user.LoaiUserTek.Id;
+                        Session["avatar"] = user.Avatar;
+                        var uID = UserFirt;
+                        //var model_uid = dbc.UserTeks.Find(UserFirt);
+                        bool nhatky = Areas.Admin.Data.XuatNhapData.InsertNhatKy_Admin(dbc, UserFirt, Session["quyen"].ToString()
+                , Session["UserName"].ToString(), "LoginWeb", "");
+                        ////
+                        Session["idNhanVien"] = dbc.NV_NhanVienTek.FirstOrDefault(kh => kh.IdUser == uID).Id;
+                        return RedirectToAction("IndexStaff", "StaffTeK");
+                    }
+                    else
+                    {
+                        //đếm số lần nhập sai
+                        user.CountFailedPassword = user.CountFailedPassword + 1;
+                        if (user.CountFailedPassword == 5)
+                        {
+                            //Sai 5 lần tài khoản bị khóa
+                            user.Islocked = true;
+                            user.lastPasswordChangedate = DateTime.Now;
+                            user.LastLokedChangedate = DateTime.Now;
+                            dbc.Entry(user).State = EntityState.Modified;
+                            var kqlo = dbc.SaveChanges();
+                            ModelState.AddModelError("", "Nhập sai password liên tiếp 5 lần !!! Tài khoản của bạn bị khóa trong 5p !!!");
+                        }
+                        else
+                        {
+                            dbc.Entry(user).State = EntityState.Modified;
+                            dbc.SaveChanges();
+                            ModelState.AddModelError("", "Nhập sai password lần: " + user.CountFailedPassword + ".Tài khoản của bạn sẽ bị khóa nếu nhập sai 5 lần liên tiếp !!!");
+                        }
+                    }
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("", "Sai tên đăng nhập");
+            }
+            return View();
+        }
         public ActionResult LoginWebGuest()
         {
             ViewBag.UserName = "";

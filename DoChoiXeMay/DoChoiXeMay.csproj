@@ -167,6 +167,7 @@
     <Compile Include="Controllers\ActiveController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AccountWebController.cs" />
+    <Compile Include="Controllers\StaffTeKController.cs" />
     <Compile Include="Filters\ProtectAttribute.cs" />
     <Compile Include="Filters\ProtectNVAttribute.cs" />
     <Compile Include="Filters\ProtectKHAttribute.cs" />
@@ -202,6 +203,7 @@
     <Compile Include="Models\NV_Cong.cs" />
     <Compile Include="Models\NV_GioCong.cs" />
     <Compile Include="Models\NV_HeSoGio.cs" />
+    <Compile Include="Models\NV_LichTuanParTime.cs" />
     <Compile Include="Models\NV_NhanVienTek.cs" />
     <Compile Include="Models\NV_PhuCap.cs" />
     <Compile Include="Models\NV_ThanhToanLuong.cs" />
@@ -627,6 +629,8 @@
     <Content Include="Views\Active\GetListSNofchinhanhbyLo.cshtml" />
     <Content Include="Views\Active\GetListSNobyLo.cshtml" />
     <Content Include="Views\Home\LoadVideo.cshtml" />
+    <Content Include="Views\Home\LoginWebStaff.cshtml" />
+    <Content Include="Views\StaffTeK\IndexStaff.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\imgthuchi\" />

@@ -40,6 +40,7 @@ namespace DoChoiXeMay.Models
         public virtual DbSet<NV_Cong> NV_Cong { get; set; }
         public virtual DbSet<NV_GioCong> NV_GioCong { get; set; }
         public virtual DbSet<NV_HeSoGio> NV_HeSoGio { get; set; }
+        public virtual DbSet<NV_LichTuanParTime> NV_LichTuanParTime { get; set; }
         public virtual DbSet<NV_NhanVienTek> NV_NhanVienTek { get; set; }
         public virtual DbSet<NV_PhuCap> NV_PhuCap { get; set; }
         public virtual DbSet<NV_ThanhToanLuong> NV_ThanhToanLuong { get; set; }
@@ -247,6 +248,12 @@ namespace DoChoiXeMay.Models
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<NV_NhanVienTek>()
+                .HasMany(e => e.NV_LichTuanParTime)
+                .WithRequired(e => e.NV_NhanVienTek)
+                .HasForeignKey(e => e.IdNhanVien)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<NV_NhanVienTek>()
                 .HasMany(e => e.NV_ThanhToanLuong)
                 .WithRequired(e => e.NV_NhanVienTek)
                 .HasForeignKey(e => e.IdNhanVien)
@@ -417,6 +424,12 @@ namespace DoChoiXeMay.Models
                 .HasMany(e => e.NoteKythuats)
                 .WithRequired(e => e.UserTek)
                 .HasForeignKey(e => e.UserId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<UserTek>()
+                .HasMany(e => e.NV_NhanVienTek)
+                .WithRequired(e => e.UserTek)
+                .HasForeignKey(e => e.IdUser)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<UserTek>()
