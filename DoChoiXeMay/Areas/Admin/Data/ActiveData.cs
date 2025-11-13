@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
+using static QRCoder.PayloadGenerator;
 
 namespace DoChoiXeMay.Areas.Admin.Data
 {
@@ -159,6 +161,23 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 }
             }
             return kq;
+        }
+        public string ChuoiHDKichHoatBH(string sBOX = "", string sSP = "", int chinhanh=0, string email="", string tenkh = "", string sdt = "", string khuvuc = "")
+        {
+            var serial = _context.Ser_sp.FirstOrDefault(kh => kh.SerialSP == sSP && kh.DaIn == true && kh.Sudung == false);
+            var serialb = _context.Ser_box.FirstOrDefault(kh => kh.Serial == sBOX && kh.DaIn == true && kh.Sudung == false);
+            
+            var Ac = InsertKichHoatBH(
+                         serialb.Id.ToString(), serial.Id.ToString(), chinhanh, email, tenkh, sdt, khuvuc);
+            if (Ac > -1)
+            {
+                var kqBox = new SerialData().UpdateSer_box(serialb.Id.ToString(),
+                    true, true, serialb.NgayUpdate, "Active");
+                var kqSP = new SerialData().UpdateSer_SP(serial.Id.ToString(),
+                    true, true, serial.NgayUpdate, serial.HangTangKhongBan);
+                return Ac.ToString();
+            }
+            return Ac.ToString();
         }
     }
 }

@@ -75,11 +75,16 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
 
             var modeldaban = daban == null ? 0 : daban.Sum(kh => kh.SoLuong);
             ViewBag.daban = modeldaban;
-            ViewBag.DaBanTikTok=DaBanTikTok==null?0: DaBanTikTok.Sum(kh => kh.SoLuong);
-            ViewBag.DaBanShopee = DaBanShopee == null ? 0 : DaBanShopee.Sum(kh => kh.SoLuong);
-            ViewBag.DaBanLeNSan = DaBanLeNSan == null ? 0 : DaBanLeNSan.Sum(kh => kh.SoLuong);
-            ViewBag.DaBanLSiNSan = DaBanLSiNSan == null ? 0 : DaBanLSiNSan.Sum(kh => kh.SoLuong);
-            
+            var modelDaBanTikTok = DaBanTikTok == null ? 0 : DaBanTikTok.Sum(kh => kh.SoLuong);
+            ViewBag.DaBanTikTok = modelDaBanTikTok;
+            var modelDaBanShopee = DaBanShopee == null ? 0 : DaBanShopee.Sum(kh => kh.SoLuong);
+            ViewBag.DaBanShopee = modelDaBanShopee;
+            var modelDaBanLeNSan = DaBanLeNSan == null ? 0 : DaBanLeNSan.Sum(kh => kh.SoLuong);
+            ViewBag.DaBanLeNSan = modelDaBanLeNSan;
+            var modelDaBanLSiNSan = DaBanLSiNSan == null ? 0 : DaBanLSiNSan.Sum(kh => kh.SoLuong);
+            ViewBag.DaBanLSiNSan = modelDaBanLSiNSan;
+
+
             ViewBag.DaTraHangKhachLe = DaTraHangKhachLe == null ? 0 : DaTraHangKhachLe.Sum(kh => kh.SoLuong);
             ViewBag.DaTraHangKhachLeTrong = DaTraHangKhachLeTrong == null ? 0 : DaTraHangKhachLeTrong.Sum(kh => kh.SoLuong);
             ViewBag.DaTraHangKhachLeTrongTikTok = DaTraHangKhachLeTrongTikTok == null ? 0 : DaTraHangKhachLeTrongTikTok.Sum(kh => kh.SoLuong);
@@ -137,13 +142,18 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             var dsx= ViewBag.daban + ViewBag.TongXiNhanGen1Tek + ViewBag.TongXiNhanGen1MauDaXuat
                                 + ViewBag.DaTraHangKhachLeLoi + ViewBag.TongtraBH;
             ViewBag.DaSanXuat=dsx;
-            //Vẽ đồ thị
+            //Vẽ đồ thị pie
             Session["daban"] = modeldaban;
             Session["DaTraHangKhachLeLoi"] = TraHangLeLoi;
             Session["TongtraBH"] = kytrabaohanhct.Count() == 0 ? 0 : kytrabaohanhct.Sum(kh => kh.SoLuong);
             Session["TonKhoXiNhanGen1Tek"] = Tonkho;
             Session["MauDaXuat"] = modelMauDaXuat;
             Session["daSX"] = dsx;
+            //Đồ thị dạng cột
+            Session["DaBanTikTok"] = modelDaBanTikTok;
+            Session["DaBanShopee"] = modelDaBanShopee;
+            Session["DaBanLeNSan"] = modelDaBanLeNSan;
+            Session["DaBanSiNSan"] = modelDaBanLSiNSan;
             return View();
         }
         public ActionResult DoThiThongKe()
@@ -153,6 +163,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ViewBag.phantramTongtraBH = (100 * float.Parse(Session["TongtraBH"].ToString()) / float.Parse(Session["daSX"].ToString())).ToString("#0.00");
             ViewBag.phantramTonkho = (100 * float.Parse(Session["TonKhoXiNhanGen1Tek"].ToString()) / float.Parse(Session["daSX"].ToString())).ToString("#0.00");
             ViewBag.phantramMauDaXuat = (100 * float.Parse(Session["MauDaXuat"].ToString()) / float.Parse(Session["daSX"].ToString())).ToString("#0.00");
+
 
             return PartialView();
         }

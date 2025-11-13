@@ -230,9 +230,12 @@
                                 $("#thongbaoActive").html("Có Lỗi Hệ Thống, Kích Hoạt không thành công !!!")
                                 $("#thongbaoBox").html("")
                                 $("#thongbaoSP").html("")
-                            } else if (parseInt(response) > -1) {
+                            }else if(response == "555") {
+                                $("#thongbaoBox").html("S/N không Trùng Khớp!!!")
+                            }
+                            else if (parseInt(response) > -1) {
                                 $("#thongbaoAcTC").html("Bạn đã kích hoạt bảo hành thành công S/N: " + serialSP + ", hạn bảo hành " + response + " tháng.")
-                                
+
                                 $("#thongbaoBox").html("")
                                 $("#thongbaoSP").html("")
                             }
@@ -258,7 +261,7 @@
                         alert("Bạn chưa điền gmail người dùng !!!")
                     } else if (SDTND.length == 0) {
                         alert("Bạn chưa điền sdt của người dùng !!!")
-                    } 
+                    }
                     else {
                         var postData = JSON.stringify({
                             ND: false, NPP: true, Tenkh: tenkh, sBOX: serialBox
@@ -281,13 +284,15 @@
                                     $("#thongbaoSP").html("S/N không đúng, hoặc đã kích hoạt !!!")
                                 } else if (response == "333") {
                                     $("#thongbaoActive").html("Có Lỗi Hệ Thống, Kích Hoạt không thành công !!!")
-                                    
+
                                 } else if (response == "444") {
                                     $("#thongbaoActive").html("Tên của đại lý/NPP không đúng, không thể kích hoạt !!!")
+                                }else if(response == "555") {
+                                    $("#thongbaoBox").html("S/N không Trùng Khớp!!!")
                                 }
                                 else if (parseInt(response) >-1) {
                                     $("#thongbaoAcTC").html("Bạn đã kích hoạt bảo hành thành công S/N: " + serialSP + ", hạn bảo hành " + response + " tháng.")
-                                    
+
                                     $("#SerialBox").val('')
                                     $("#SerialSP").val('')
                                     $("#SerialSP").focus()

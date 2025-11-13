@@ -5,20 +5,26 @@
 <input id="phantramTonkho" value="@ViewBag.phantramTonkho" hidden />
 <input id="phantramMauDaXuat" value="@ViewBag.phantramMauDaXuat" hidden />
 
+<input id="DaBanTikTok" value="@Session["DaBanTikTok"].ToString()" hidden />
+<input id="DaBanShopee" value="@Session["DaBanShopee"].ToString()" hidden />
+<input id="DaBanLeNSan" value="@Session["DaBanLeNSan"].ToString()" hidden />
+<input id="DaBanSiNSan" value="@Session["DaBanSiNSan"].ToString()" hidden />
+
 <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+<div id="chartContainer2" style="height: 300px; width: 100%;"></div>
 <script>
     window.onload = function () {
-        var daban = $("#phantramdaban").val()
-        var tdaban = parseFloat(daban)    
-        var TraHangLeLoi = $("#phantramTraHangLeLoi").val()
-        var tTraHangLeLoi = Number.parseFloat(TraHangLeLoi)
-        var traBH = $("#phantramTongtraBH").val()
-        var ttraBH = Number.parseFloat(traBH)
-        var Tonkho = $("#phantramTonkho").val()
-        var tTonkho = Number.parseFloat(Tonkho)
-        var MauDaXuat = $("#phantramMauDaXuat").val()
-        var tMauDaXuat = Number.parseFloat(MauDaXuat)
-        alert(tdaban)
+        const daban = $("#phantramdaban").val().replace(',', '.')
+        const tdaban = parseFloat(daban).toFixed(2);  
+        var TraHangLeLoi = $("#phantramTraHangLeLoi").val().replace(',', '.')
+        var tTraHangLeLoi = parseFloat(TraHangLeLoi)
+        var traBH = $("#phantramTongtraBH").val().replace(',', '.')
+        var ttraBH = parseFloat(traBH)
+        var Tonkho = $("#phantramTonkho").val().replace(',', '.')
+        var tTonkho = parseFloat(Tonkho)
+        var MauDaXuat = $("#phantramMauDaXuat").val().replace(',', '.')
+        var tMauDaXuat = parseFloat(MauDaXuat)
+
         var chart = new CanvasJS.Chart("chartContainer", {
             animationEnabled: true,
             title: {
@@ -27,7 +33,7 @@
             data: [{
                 type: "pie",
                 startAngle: 240,
-                yValueFormatString: "##0.00"%"",
+                yValueFormatString: "##0.00\"%\"",
                 indexLabel: "{label} {y}",
                 dataPoints: [
                     { y: tdaban, label: "Đã Bán" },
@@ -35,14 +41,38 @@
                     { y: ttraBH, label: "Trả BH" },
                     { y: tTonkho, label: "Tồn kho" },
                     { y: tMauDaXuat, label: "Hàng Mẫu" }
-                    //{ y: 79.45, label: "Đã Bán" },
-                    //{ y: 7.31, label: "TraHangLeLoi" },
-                    //{ y: 7.06, label: "Trả BH" },
-                    //{ y: 4.91, label: "Tồn kho" },
-                    //{ y: 1.26, label: "Hàng Mẫu" }
                 ]
             }]
         });
+        const TikTok = $("#DaBanTikTok").val()
+        var tTikTok = parseInt(TikTok);
+        const Shopee = $("#DaBanShopee").val()
+        var tShopee = parseInt(Shopee);
+        const LeNSan = $("#DaBanLeNSan").val()
+        var tLeNSan = parseInt(LeNSan);
+        const SiNSan = $("#DaBanSiNSan").val()
+        var tSiNSan = parseInt(SiNSan);
+
+        var chart2 = new CanvasJS.Chart("chartContainer2", {
+            theme: "light1", // "light2", "dark1", "dark2"
+            animationEnabled: true, // change to true		
+            title: {
+                text: "Đã Bán"
+            },
+            data: [
+                {
+                    // Change type to "bar", "area", "spline", "pie",etc.
+                    type: "column",
+                    dataPoints: [
+                        { label: "Lẽ NSan", y: tLeNSan },
+                        { label: "Shopee", y: tShopee },
+                        { label: "TikTok", y: tTikTok },
+                        { label: "Sỉ", y: tSiNSan },
+                    ]
+                }
+            ]
+        });
         chart.render();
+        chart2.render();
     }
 </script>
