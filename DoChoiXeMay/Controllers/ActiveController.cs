@@ -153,6 +153,7 @@ namespace DoChoiXeMay.Controllers
         public ActionResult KichHoatBaoHanh(bool ND,bool NPP, string Tenkh = "", string sBOX="", string sSP="", string ChiNhanh="", string gmail = "",string sdt = "",string khuvuc="") {
             try
             {
+                //Chưa test
                 Session["thongtin1"] = ""; Session["thongtin2"] = ""; 
                 Session["thongtin3"] = ""; Session["thongtin4"] = ""; Session["ThongbaoActive"] = "";
                 var serial = dbc.Ser_sp.FirstOrDefault(kh => kh.SerialSP == sSP && kh.DaIn == true && kh.Sudung == false);
@@ -160,30 +161,42 @@ namespace DoChoiXeMay.Controllers
                 var tenchinhanh = dbc.Ser_ChiNhanh.FirstOrDefault(x => x.TenChiNhanh == ChiNhanh.Trim());
                 if (ND)
                 {
-                        if (serial != null)
+                    
+                    if (serial != null)
+                    {
+                        if (serial.Ser_box.Serial == "NEWOOOOOOOOOOF")
                         {
+                            //Serial Củ
                             if (serialb != null)
                             {
-                                var Ac = new ActiveData().InsertKichHoatBH(
-                                    serialb.Id.ToString(), serial.Id.ToString(), 1, gmail, Tenkh, sdt, khuvuc);
-                                if (Ac > -1)
-                                {
-                                    var kqBox = new SerialData().UpdateSer_box(serialb.Id.ToString(),
-                                        true, true, serialb.NgayUpdate, "Active");
-                                    var kqSP = new SerialData().UpdateSer_SP(serial.Id.ToString(),
-                                        true, true, serial.NgayUpdate, serial.HangTangKhongBan);
-                                    return Json(Ac.ToString(), JsonRequestBehavior.AllowGet);
-                                }
+                                var kqkichhoat = new ActiveData().ChuoiHDKichHoatBH(sBOX, sSP, 1, gmail, Tenkh, sdt, khuvuc);
+                                
+                                return Json(kqkichhoat, JsonRequestBehavior.AllowGet);
                             }
                             else
                             {
                                 return Json("111", JsonRequestBehavior.AllowGet);
                             }
                         }
-                        else
+                        else //Serial Mới
                         {
-                            return Json("222", JsonRequestBehavior.AllowGet);
+                            if(serial.Ser_box.Serial == sBOX)
+                            {
+                                var kqkichhoat = new ActiveData().ChuoiHDKichHoatBH(sBOX, sSP, 1, gmail, Tenkh, sdt, khuvuc);
+
+                                return Json(kqkichhoat, JsonRequestBehavior.AllowGet);
+                            }
+                            else
+                            {
+                                return Json("555", JsonRequestBehavior.AllowGet);
+                            }
                         }
+                        
+                    }
+                    else
+                    {
+                        return Json("222", JsonRequestBehavior.AllowGet);
+                    }
                     
                 }else if (NPP)
                 {
@@ -191,24 +204,34 @@ namespace DoChoiXeMay.Controllers
                     {
                         if (serial != null)
                         {
-                            if (serialb != null)
+                            if (serial.Ser_box.Serial == "NEWOOOOOOOOOOF")
                             {
-                                
-                                var Ac = new ActiveData().InsertKichHoatBH(
-                                    serialb.Id.ToString(), serial.Id.ToString(), tenchinhanh.Id, gmail, Tenkh, sdt, khuvuc);
-                                if (Ac > -1)
+                                //Serial Củ
+                                if (serialb != null)
                                 {
-                                    var kqBox = new SerialData().UpdateSer_box(serialb.Id.ToString(),
-                                        true, true, serialb.NgayUpdate, "Active");
-                                    var kqSP = new SerialData().UpdateSer_SP(serial.Id.ToString(),
-                                        true, true, serial.NgayUpdate, serial.HangTangKhongBan);
-                                    return Json(Ac.ToString(), JsonRequestBehavior.AllowGet);
+                                    var kqkichhoat = new ActiveData().ChuoiHDKichHoatBH(sBOX, sSP, tenchinhanh.Id, gmail, Tenkh, sdt, khuvuc);
+
+                                    return Json(kqkichhoat, JsonRequestBehavior.AllowGet);
+                                }
+                                else
+                                {
+                                    return Json("111", JsonRequestBehavior.AllowGet);
                                 }
                             }
-                            else
+                            else //Serial Mới
                             {
-                                return Json("111", JsonRequestBehavior.AllowGet);
+                                if (serial.Ser_box.Serial == sBOX)
+                                {
+                                    var kqkichhoat = new ActiveData().ChuoiHDKichHoatBH(sBOX, sSP, tenchinhanh.Id, gmail, Tenkh, sdt, khuvuc);
+
+                                    return Json(kqkichhoat, JsonRequestBehavior.AllowGet);
+                                }
+                                else
+                                {
+                                    return Json("555", JsonRequestBehavior.AllowGet);
+                                }
                             }
+
                         }
                         else
                         {
