@@ -35,7 +35,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         public ActionResult GetListNhanVien()
         {
             var model = dbc.NV_NhanVienTek
-                .OrderByDescending(kh => kh.DaNghiViec)
+                .OrderBy(kh => kh.DaNghiViec)
                 .ThenByDescending(kh => kh.ThuViec)
                 .ThenByDescending(kh => kh.IdVitrinhanvien)
                 .ThenByDescending(kh => kh.HoTen).ToList();
@@ -50,7 +50,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         public ActionResult TinhGioCong()
         {
             Session["requestUri"] = "/Admin/NhanVien/TinhGioCong";
-            ViewBag.Idnhanvien = new SelectList(dbc.NV_NhanVienTek.Where(kh => kh.NV_Vitrinhanvien.Id == 2 
+            ViewBag.Idnhanvien = new SelectList(dbc.NV_NhanVienTek.Where(kh => kh.NV_Vitrinhanvien.DonViTinh == "Gio" 
                             && kh.DaNghiViec==false), "Id", "HoTen");
             return View();
         }

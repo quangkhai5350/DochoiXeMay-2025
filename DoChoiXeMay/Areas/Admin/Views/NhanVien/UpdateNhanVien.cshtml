@@ -15,7 +15,7 @@
                 @Html.HiddenFor(kh => kh.Id)
                 @Html.HiddenFor(kh => kh.STT)
                 @Html.HiddenFor(kh => kh.IdUser)
-                @Html.HiddenFor(kh => kh.HinhDaiDien)
+                
                 <h1 class="info_header">
                     <span class="pull-right label label-warning" style="color:white;font-family:monospace">
                         @Html.ValidationSummary()
@@ -94,14 +94,14 @@
                         </div>
                     </div>
                     <div class="rightcontact">
-                        @*<div class="row">
+                        <div class="row">
                             <div class="col-sm-9">
                                 <div class="form-group">
                                     <p>Hình Đại Diện (giới hạn 7MB) <span></span></p>
                                     <span class="icon-case"><i class="glyphicon glyphicon-info-sign"></i></span>
                                     <input type="file" name="Dinhkem1" id="Dinhkem1" />
                                     <p id="thongbaosite1" style="color:red; display:none">File quá lớn !!!</p>
-
+                                    @Html.HiddenFor(kh => kh.HinhDaiDien)
                                 </div>
                             </div>
                             <div class="col-sm-3">
@@ -110,7 +110,7 @@
                                     <img class="img-responsive img-thumbnail" src="~/Content/imgTeK/@Model.HinhDaiDien" style="max-width:100%;max-height:100px" />
                                 }
                             </div>
-                        </div>*@
+                        </div>
                         <div class="row">
                             <div class="col-sm-9">
                                 <div class="form-group">

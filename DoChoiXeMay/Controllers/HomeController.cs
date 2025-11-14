@@ -122,7 +122,7 @@ namespace DoChoiXeMay.Controllers
             }
             else
             {
-                ModelState.AddModelError("", "Sai tên đăng nhập");
+                ModelState.AddModelError("", "Sai tên đăng nhập, hoặc nhập sai chổ.");
             }
             return View();
         }
@@ -212,7 +212,7 @@ namespace DoChoiXeMay.Controllers
             }
             else
             {
-                ModelState.AddModelError("", "Sai tên đăng nhập");
+                ModelState.AddModelError("", "Sai tên đăng nhập, hoặc nhập sai chổ.");
             }
             return View();
         }
@@ -230,7 +230,7 @@ namespace DoChoiXeMay.Controllers
             var requestUri = Session["requestUri"] as string;
             TaiKhoanInfo tk_check = new TaiKhoanInfo();
             //tài khoản không phân biệt hoa thường.
-            var user = dbc.UserTeks.Where(p => p.UserName.ToLower() == UserName.ToLower()).SingleOrDefault();
+            var user = dbc.UserTeks.Where(p => p.UserName.ToLower() == UserName.ToLower() && p.IdLoai <3).SingleOrDefault();
             if (user != null)
             {
                 var time_locked = user.LastLokedChangedate;
@@ -336,7 +336,7 @@ namespace DoChoiXeMay.Controllers
             }
             else
             {
-                ModelState.AddModelError("", "Sai tên đăng nhập");
+                ModelState.AddModelError("", "Sai tên đăng nhập, hoặc nhập sai chổ.");
             }
             return View();
         }
@@ -344,6 +344,11 @@ namespace DoChoiXeMay.Controllers
         {
             Session.Clear();
             return Redirect("/warranty");
+        }
+        public ActionResult LogOutS()
+        {
+            Session.Clear();
+            return Redirect("/Home/LoginWebStaff");
         }
         public ActionResult LoadVideo()
         {

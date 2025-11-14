@@ -27,29 +27,13 @@
                     <div class="leftcontact">
                         <div class="form-group">
                             <p>Tên Hàng Hóa</p>
-                            @if (Session["xuatnhap"].ToString() == "Nhap")
-                            {
-                                <input name="Ten" id="Ten" onchange="CheckspTek()" list="listname" style="width: 100%; height: 40px" required />
-                                <datalist id="listname">
-                                    @foreach (DoChoiXeMay.Models.HangHoa Item in ViewBag.NameSP)
-                                    {
-                                        <option value="@Item.Ten"></option>
-                                    }
-
-                                </datalist>
-                            }
-                            else
-                            {
-                                //Xuất hàng bằng dropdownlist
-                                @*@Html.TextBoxFor(m => m.Ten, new { @class = "form-control", style = "width: 100%; height: 40px", @required = true })*@
-                                <input name="Ten" id="Ten" onchange="CheckspTek()" list="listname" style="width: 100%; height: 40px" required />
-                                <datalist id="listname" style="width:200px!important;height:30px">
-                                    @foreach (DoChoiXeMay.Models.HangHoa Item in ViewBag.NameSP)
-                                    {
-                                        <option value="@Item.Ten"></option>
-                                    }
-                                </datalist>
-                            }
+                            <input name="Ten" id="Ten" onchange="CheckspTek()" list="listname" style="width: 100%; height: 40px" required />
+                            <datalist id="listname" style="width:200px!important;height:30px">
+                                @foreach (DoChoiXeMay.Models.HangHoa Item in ViewBag.NameSP)
+                                {
+                                    <option value="@Item.Ten"></option>
+                                }
+                            </datalist>
                         </div>
 
                         <div class="form-group">
@@ -279,7 +263,22 @@
             ShowThongBao(Ten, IDMF, IDColor, IDSize)
         }
     });
-    
+    $("#SerialHop").change(function () {
+        var box = $("#SerialHop").val();
+        $.ajax({
+            url: "/Admin/XuatNhap/GetSerialSPbyBox",
+            type: 'POST',
+            datatype: 'JSON',
+            contentType: 'application/json;charset=utf-8;',
+            data: JSON.stringify({ str:box }),
+            async: true,
+            success: function (res) {
+                $("#SerialSP").val(res);
+            }, error: function (err) {
+                console.log(err, ':Loi Load Serial SP');
+            }
+        });
+    });
     function ShowThongBao(Ten, IDMF, IDColor, IDSize) {
         $('#TBHHTeK').css("display", "block");
             $.ajax({

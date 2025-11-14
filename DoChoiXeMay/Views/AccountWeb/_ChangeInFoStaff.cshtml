@@ -22,82 +22,80 @@
     }
     @using (Html.BeginForm("_ChangeInFoStaffJson", "AccountWeb", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
-        <div class="row omb_row-sm-offset-3">
+        <div class="row col-md-offset-2">
             
                 <form class="omb_loginForm" action="" autocomplete="off" method="post">
 
                     @Html.HiddenFor(kh => kh.Id)
                     @Html.HiddenFor(kh => kh.HoTen)
                     @Html.HiddenFor(kh => kh.IdVitrinhanvien)
-                    @Html.HiddenFor(kh => kh.NgayUpdate)
                     @Html.HiddenFor(kh => kh.DaNghiViec)
-                    <h4 class="info_header">
-                        <span class="pull-right label label-warning" style="color:white;font-family:monospace">
-                            @Html.ValidationSummary()
-                        </span>
-                    </h4>
+                    @Html.HiddenFor(kh => kh.ThuViec)
+                    @Html.HiddenFor(kh => kh.STT)
+                    @Html.HiddenFor(kh => kh.IdUser)
+                    @Html.HiddenFor(kh => kh.NgayTao)
                     <div class="contentform">
                         <div class="form-group">
-                            <div class="row" style="padding-left:15px">
-                                <div class="col-md-2">
-                                    <p>Số CCCD</p>
+                            <div class="row" style="padding-left: 15px; padding-right: 15px ">
+                                <div class="col-md-3 col-xs-6">
+                                    <p>Số CCCD**</p>
                                     @Html.TextBoxFor(m => m.CCCD, new { @class = "form-control", style = "height: 40px", @required = true })
 
                                 </div>
-                                <div class="col-md-2" style="text-align:center">
+                                <div class="col-md-2 col-xs-6" style="text-align:center">
                                     <p>Nam</p>
-                                    @Html.CheckBoxFor(m => m.GioiTinh, new { @class = "form-control", style = "height: 30px;margin-left:40px" })
+                                    @Html.CheckBoxFor(m => m.GioiTinh, new { @class = "form-control", style = "height: 30px" })
 
                                 </div>
-                                <div class="col-md-2">
-                                    <p>SDT</p>
+                                <div class="col-md-3 col-xs-12">
+                                    <p>SDT**</p>
                                     @Html.TextBoxFor(m => m.Sdt, new { @class = "form-control", style = "height: 40px" })
 
                                 </div>
                             </div>
-                            <div class="row" style="padding-left:15px">
+                            <div class="row" style="padding-left:15px;padding-right:15px">
                                 <div class="col-md-2">
                                     <p>KV Thường Trú</p>
                                     @Html.DropDownList("IdKhuVucThuongTru", null, new { style = "width: 100%; height: 40px" })
                                 </div>
                                 <div class="col-md-6">
-                                    <p>Đc Thường Trú</p>
+                                    <p>Đc Thường Trú**</p>
                                     @Html.TextBoxFor(m => m.DiaChiThuongTru, new { @class = "form-control", style = "height: 40px", @required = true })
 
                                 </div>
                             </div>
-                            <div class="row" style="padding-left:15px">
+                            <div class="row" style="padding-left: 15px; padding-right: 15px">
                                 <div class="col-md-8">
                                     <p>Đc Hiện Tại</p>
                                     @Html.TextBoxFor(m => m.DiaChiHienTai, new { @class = "form-control", style = "height: 40px", @required = true })
 
                                 </div>
                             </div>
-                            <div class="row" style="padding-left:15px">
+                            <div class="row" style="padding-left: 15px; padding-right: 15px">
                                 <div class="col-md-8">
                                     <p>Kinh nghiệm đã làm </p>
-                                    @Html.TextBoxFor(m => m.CongViec, new { @class = "form-control", style = "height: 40px" })
+                                    @Html.TextBoxFor(m => m.CongViec, new { @class = "form-control", @placeholder = "Kinh nghiệm ...", style = "height: 40px" })
 
                                 </div>
                             </div>
-                            <div class="row" style="padding-left:15px">
+                            <div class="row" style="padding-left: 15px; padding-right: 15px">
                                 <div class="col-md-8">
                                     <p>Bằng Cấp Chính </p>
-                                    @Html.TextBoxFor(m => m.BangCapChinh, new { @class = "form-control", style = "height: 40px" })
+                                    @Html.TextBoxFor(m => m.BangCapChinh, new { @class = "form-control", @placeholder = "Bằng cấp  ...", style = "height: 40px" })
                                 </div>
 
                             </div>
-                            <div class="row" style="padding-left:15px">
+                            <div class="row" style="padding-left: 15px; padding-right: 15px">
                                 <div class="col-sm-4">
                                     <p>Bằng Cấp Phụ </p>
-                                    @Html.TextBoxFor(m => m.BangCapPhu, new { @class = "form-control", style = "height: 40px" })
+                                    @Html.TextBoxFor(m => m.BangCapPhu, new { @class = "form-control", @placeholder = "Bằng cấp ...", style = "height: 40px" })
                                 </div>
                                 <div class="col-sm-4">
                                     <p>Tin Học </p>
-                                    @Html.TextBoxFor(m => m.TinHoc, new { @class = "form-control", style = "height: 40px" })
+                                    @Html.TextBoxFor(m => m.TinHoc, new { @class = "form-control", @placeholder = "Tin học ...", style = "height: 40px" })
                                 </div>
                             </div>
-                            <div class="row" style="padding-left:15px">
+                            <div class="row" style="padding-left: 15px; padding-right: 15px">
                                 <div class="col-sm-4">
                                     <p>Ngày Vào Cty</p>
                                     @Html.TextBoxFor(kh => kh.NgayTao, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date", style = "height: 40px", @disabled = true })
@@ -107,10 +105,113 @@
                                     @Html.TextBoxFor(kh => kh.NgayUpdate, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date", style = "height: 40px", @disabled = true })
                                 </div>
                             </div>
-                            <div class="row" style="padding-left:15px">
+                            <div class="row" style="padding-left: 15px">
+                                <div class="col-sm-7 col-xs-8">
+                                    <div class="form-group">
+                                        <p>Hình Đại Diện (giới hạn 7MB) <span></span></p>
+                                        <input type="file" name="Dinhkem1" id="Dinhkem1" style="border: 1px solid #b4a3a3" />
+                                        <p id="thongbaosite1" style="color:red; display:none">File quá lớn !!!</p>
+                                        @Html.HiddenFor(kh => kh.HinhDaiDien)
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 col-xs-4">
+                                    @if (File.Exists(Request.MapPath("~/Content/imgTeK/" + Model.HinhDaiDien)))
+                                    {
+                                        <img class="img-responsive img-thumbnail" src="~/Content/imgTeK/@Model.HinhDaiDien" style="max-width:100%;max-height:100px" />
+                                    }
+                                </div>
+                            </div>
+                            <div class="row" style="padding-left: 15px">
+                                <div class="col-sm-7 col-xs-8">
+                                    <div class="form-group">
+                                        <p>Hình CC trước (giới hạn 7MB) <span></span></p>
+                                        <input type="file" name="Dinhkem2" id="Dinhkem2" style="border: 1px solid #b4a3a3" />
+                                        <p id="thongbaosite2" style="color:red; display:none">File quá lớn !!!</p>
+                                        @Html.HiddenFor(kh => kh.HinhCanCuocTruoc)
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 col-xs-4">
+                                    @if (File.Exists(Request.MapPath("~/Content/imgTeK/" + Model.HinhCanCuocTruoc)))
+                                    {
+                                        <img class="img-responsive img-thumbnail" src="~/Content/imgTeK/@Model.HinhCanCuocTruoc" style="max-width:100%;max-height:80px" />
+                                    }
+                                </div>
+                            </div>
+                            <div class="row" style="padding-left: 15px">
+                                <div class="col-sm-7 col-xs-8">
+                                    <div class="form-group">
+                                        <p>Hình CC sau (giới hạn 7MB) <span></span></p>
+                                        <input type="file" name="Dinhkem3" id="Dinhkem3" style="border: 1px solid #b4a3a3" />
+                                        <p id="thongbaosite3" style="color:red; display:none">File quá lớn !!!</p>
+                                        @Html.HiddenFor(kh => kh.HinhCanCuocSau)
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 col-xs-4">
+                                    @if (File.Exists(Request.MapPath("~/Content/imgTeK/" + Model.HinhCanCuocSau)))
+                                    {
+                                        <img class="img-responsive img-thumbnail" src="~/Content/imgTeK/@Model.HinhCanCuocSau" style="max-width:100%;max-height:80px" />
+                                    }
+                                </div>
+                            </div>
+                            <script>
+                                var kt1 = true;
+                                var kt2 = true;
+                                var kt3 = true;
+                                $('#Dinhkem1').bind('change', function () {
+                                    //this.files[0].size gets the size of your file.
+                                    var size = this.files[0].size;
+                                    const file = Math.round((size / 1024));
+                                    if (file >= 7200) {
+                                        $("#thongbaosite1").css('display', 'block');
+                                        kt1 = false;
+                                        KtLuu();
+                                    } else {
+                                        $("#thongbaosite1").css('display', 'none')
+                                        kt1 = true;
+                                        KtLuu();
+                                    }
+                                });
+                                $('#Dinhkem2').bind('change', function () {
+                                    //this.files[0].size gets the size of your file.
+                                    var size = this.files[0].size;
+                                    const file = Math.round((size / 1024));
+                                    if (file >= 7200) {
+                                        $("#thongbaosite2").css('display', 'block');
+                                        kt2 = false;
+                                        KtLuu();
+                                    } else {
+                                        $("#thongbaosite2").css('display', 'none')
+                                        kt2 = true;
+                                        KtLuu();
+                                    }
+                                });
+                                $('#Dinhkem3').bind('change', function () {
+                                    //this.files[0].size gets the size of your file.
+                                    var size = this.files[0].size;
+                                    const file = Math.round((size / 1024));
+                                    if (file >= 7200) {
+                                        $("#thongbaosite3").css('display', 'block');
+                                        kt3 = false;
+                                        KtLuu();
+                                    } else {
+                                        $("#thongbaosite3").css('display', 'none')
+                                        kt3 = true;
+                                        KtLuu();
+                                    }
+                                });
+                                function KtLuu() {
+                                    if (kt1 == true && kt2 == true && kt3 == true) {
+                                        document.getElementById('btnLuu').disabled = false;
+                                    } else {
+                                        document.getElementById('btnLuu').disabled = true;
+                                    }
+                                }
+
+                            </script>
+                            <div class="row" style="padding-left: 15px">
                                 <div class="col-sm-8">
                                     <div class="input-group" style="width:100%;margin-bottom:15px;margin-top:15px">
-                                        <div style="width: 49%; border: 1px dashed #423333; float: left">
+                                        <div style="border: 1px dashed #423333; float: left">
                                             <label class="checkbox text-danger" style="margin-left:5px">
                                                 <input type="checkbox" id="ND" dirname="" value="" name="Check" />
                                                 <span>Thay đổi pass word</span>
@@ -124,7 +225,7 @@
                                 <div class="col-sm-5">
                                     <div id="pwc" style="display:none">
                                         <p>PassWord củ</p>
-                                        <input type="text" id="PW" value="" name="PW" required />
+                                        <input type="text" id="PW" value="" name="PW" />
                                         <span class="label label-warning" id="thongbaopwc"></span>
                                     </div>
                                 </div>
@@ -134,7 +235,7 @@
                                 <div class="col-sm-5">
                                     <div id="pwm" style="display: none">
                                         <p>PassWord mới</p>
-                                        <input type="text" id="PWM" name="PWM" required />
+                                        <input type="text" id="PWM" name="PWM" />
                                         <span class="label label-warning" id="thongbaopwm"></span>
                                     </div>
                                 </div>
@@ -144,21 +245,17 @@
                                 <div class="col-sm-5">
                                     <div id="lpwm" style="display: none">
                                         <p>Lặp lại PassWord mới</p>
-                                        <input type="text" id="PWMM" name="PWMM" required />
+                                        <input type="text" id="PWMM" name="PWMM" />
                                         <span class="label label-warning" id="thongbaolpwm"></span>
                                     </div>
                                 </div>
 
                             </div>
-                            
-                            
-                            
-
-                            <div class="row" style="margin-top:20px">
+                            <div class="row" style="margin-top: 20px; padding-left: 15px">
                                 <div class="form-group col-sm-12">
                                     <div class="btn-crud">
-                                        <a id="btnLuu" class="btn btn-warning" onclick="UpdateThongtin()"><span class="glyphicon glyphicon-refresh"></span>&nbsp;Update User</a>
-                                        <a class="btn btn-primary" href="/Active/IndexDL" style="margin-left:10%"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;Quay Lại</a>
+                                        <button id="btnLuu" class="btn btn-warning" data-action="_ChangeInFoStaffJson" onclick="UpdateThongtin()"><span class="glyphicon glyphicon-refresh"></span>&nbsp;Update NV</button>
+                                        <a class="btn btn-primary" href="/StaffTeK/IndexStaff" style="margin-left:10%"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;Quay Lại</a>
                                     </div>
 
                                 </div>
@@ -168,7 +265,12 @@
 
 
 
-                        </div>
+                    </div>
+                    <h4 class="info_header">
+                        <span class="pull-right label label-warning" style="color:white;font-family:monospace">
+                            @Html.ValidationSummary()
+                        </span>
+                    </h4>
                 </form>
             
         </div>
@@ -211,23 +313,44 @@
                 } else if (pwmm == null || pwmm.trim() == "" || pwmm.trim() != pwm) {
                     $("#thongbaolpwm").html("Lặp lại Pass word không đúng !!!")
                 } else {
-                    var postData = JSON.stringify({
-                        Id: id, DaiDien: daidien, SDT: sdt, DiaChi: diachi, Gmail: gmail
-                        , PW: pw, PWM: pwm, PWMM: pwmm
-                    });
-                    $.ajax({
-                        contentType: "application/json; charset=utf-8",
-                        url: "/AccountWeb/ChangeInFoJson",
-                        dataType: 'json',
-                        type: 'POST',
-                        data: postData,
-                        success: function (response) {
-                            location.reload();
+                    $("button[data-action]").click(function () {
+                        alert("Vo 2")
+                        if (!confirm("Bạn Có Chắc Chắn Hành Động Của Mình?")) {
+                            return false;
+                        } else {
+                            var action = $(this).attr("data-action");
+                            this.form.action = "/StaffTeK/" + action;
                         }
+
                     });
+                    //var postData = JSON.stringify({
+                    //    Id: id, DaiDien: daidien, SDT: sdt, DiaChi: diachi, Gmail: gmail
+                    //    , PW: pw, PWM: pwm, PWMM: pwmm
+                    //});
+                    //$.ajax({
+                    //    contentType: "application/json; charset=utf-8",
+                    //    url: "/AccountWeb/ChangeInFoJson",
+                    //    dataType: 'json',
+                    //    type: 'POST',
+                    //    data: postData,
+                    //    success: function (response) {
+                    //        location.reload();
+                    //    }
+                    //});
                 }
 
             }
+        } else {
+            $("button[data-action]").click(function () {
+                alert("Vo 1")
+                if (!confirm("Bạn Có Chắc Chắn Hành Động Của Mình?")) {
+                    return false;
+                } else {
+                    var action = $(this).attr("data-action");
+                    this.form.action = "/AccountWeb/" + action;
+                }
+
+            });
         }
      }
 </script>
