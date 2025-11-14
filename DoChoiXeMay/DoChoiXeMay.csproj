@@ -631,6 +631,7 @@
     <Content Include="Views\Home\LoadVideo.cshtml" />
     <Content Include="Views\Home\LoginWebStaff.cshtml" />
     <Content Include="Views\StaffTeK\IndexStaff.cshtml" />
+    <Content Include="Views\AccountWeb\_ChangeInFoStaff.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\imgthuchi\" />
