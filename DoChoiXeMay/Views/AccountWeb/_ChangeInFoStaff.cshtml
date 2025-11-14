@@ -5,8 +5,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-<link href="~/Areas/Admin/Content/css/Info_Style.css" rel="stylesheet" />
-@*<link href="~/Content/Login_Style.css" rel="stylesheet" />*@
+@*<link href="~/Areas/Admin/Content/css/Info_Style.css" rel="stylesheet" />*@
+<link href="~/Content/Login_Style.css" rel="stylesheet" />
 <script src="~/Areas/Admin/Content/jquery2.0.3.min.js"></script>
 <div class="container" style="width:100%;background-color: white; margin-top: 150px; border-radius: 4px 4px; box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.32);">
     <div class="omb_login">
@@ -22,14 +22,15 @@
     }
     @using (Html.BeginForm("_ChangeInFoStaffJson", "AccountWeb", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
-        <div class="row">
-            <div class="col-xs-12 col-md-12" style="padding-bottom:10px">
+        <div class="row omb_row-sm-offset-3">
+            
                 <form class="omb_loginForm" action="" autocomplete="off" method="post">
 
                     @Html.HiddenFor(kh => kh.Id)
                     @Html.HiddenFor(kh => kh.HoTen)
                     @Html.HiddenFor(kh => kh.IdVitrinhanvien)
                     @Html.HiddenFor(kh => kh.NgayUpdate)
+                    @Html.HiddenFor(kh => kh.DaNghiViec)
                     <h4 class="info_header">
                         <span class="pull-right label label-warning" style="color:white;font-family:monospace">
                             @Html.ValidationSummary()
@@ -37,97 +38,121 @@
                     </h4>
                     <div class="contentform">
                         <div class="form-group">
-                            <div class="row" style="width:95%;padding-left:15px">
-                                <div class="col-md-4">
+                            <div class="row" style="padding-left:15px">
+                                <div class="col-md-2">
                                     <p>Số CCCD</p>
                                     @Html.TextBoxFor(m => m.CCCD, new { @class = "form-control", style = "height: 40px", @required = true })
 
                                 </div>
-                                <div class="col-md-4" style="text-align:center">
+                                <div class="col-md-2" style="text-align:center">
                                     <p>Nam</p>
-                                    @Html.CheckBoxFor(m => m.GioiTinh, new { @class = "form-control", style = "height: 40px;margin-left:40px" })
+                                    @Html.CheckBoxFor(m => m.GioiTinh, new { @class = "form-control", style = "height: 30px;margin-left:40px" })
 
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-2">
                                     <p>SDT</p>
                                     @Html.TextBoxFor(m => m.Sdt, new { @class = "form-control", style = "height: 40px" })
 
                                 </div>
                             </div>
-                        </div>
-                            <div class="row" style="width:95%;padding-left:15px">
-                                <div class="col-md-4">
-                                    <p>ThuongTru</p>
+                            <div class="row" style="padding-left:15px">
+                                <div class="col-md-2">
+                                    <p>KV Thường Trú</p>
                                     @Html.DropDownList("IdKhuVucThuongTru", null, new { style = "width: 100%; height: 40px" })
                                 </div>
-                                <div class="col-md-8">
-                                    <p>Đc ThuongTru</p>
+                                <div class="col-md-6">
+                                    <p>Đc Thường Trú</p>
                                     @Html.TextBoxFor(m => m.DiaChiThuongTru, new { @class = "form-control", style = "height: 40px", @required = true })
 
                                 </div>
                             </div>
-                            <div class="row" style="width:95%;padding-left:15px">
-                                <p>Đc Hiện Tại</p>
-                                @Html.TextBoxFor(m => m.DiaChiHienTai, new { @class = "form-control", style = "height: 40px", @required = true })
+                            <div class="row" style="padding-left:15px">
+                                <div class="col-md-8">
+                                    <p>Đc Hiện Tại</p>
+                                    @Html.TextBoxFor(m => m.DiaChiHienTai, new { @class = "form-control", style = "height: 40px", @required = true })
+
+                                </div>
+                            </div>
+                            <div class="row" style="padding-left:15px">
+                                <div class="col-md-8">
+                                    <p>Kinh nghiệm đã làm </p>
+                                    @Html.TextBoxFor(m => m.CongViec, new { @class = "form-control", style = "height: 40px" })
+
+                                </div>
+                            </div>
+                            <div class="row" style="padding-left:15px">
+                                <div class="col-md-8">
+                                    <p>Bằng Cấp Chính </p>
+                                    @Html.TextBoxFor(m => m.BangCapChinh, new { @class = "form-control", style = "height: 40px" })
+                                </div>
 
                             </div>
-                            <div class="row" style="width:95%;padding-left:15px">
-                                <p>Kinh nghiệm đã làm </p>
-                                <span class="icon-case"><i class="glyphicon glyphicon-ice-lolly-tasted"></i></span>
-                                @Html.TextBoxFor(m => m.CongViec, new { @class = "form-control", style = "height: 40px" })
-
-                            </div>
-                            <div class="row" style="width:95%;padding-left:15px">
-                                <p>Bằng Cấp Chính </p>
-                                <span class="icon-case"><i class="glyphicon glyphicon-education"></i></span>
-                                @Html.TextBoxFor(m => m.BangCapChinh, new { @class = "form-control", style = "height: 40px" })
-                            </div>
-                            <div class="row" style="width:95%;padding-left:15px">
-                                <div class="col-sm-6">
+                            <div class="row" style="padding-left:15px">
+                                <div class="col-sm-4">
                                     <p>Bằng Cấp Phụ </p>
                                     @Html.TextBoxFor(m => m.BangCapPhu, new { @class = "form-control", style = "height: 40px" })
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-4">
                                     <p>Tin Học </p>
                                     @Html.TextBoxFor(m => m.TinHoc, new { @class = "form-control", style = "height: 40px" })
                                 </div>
                             </div>
-                            <div class="row" style="width:95%;padding-left:15px">
-                                <div class="col-sm-6">
+                            <div class="row" style="padding-left:15px">
+                                <div class="col-sm-4">
                                     <p>Ngày Vào Cty</p>
-                                    <span class="icon-case"><i class="glyphicon glyphicon-time"></i></span>
-                                    @Html.TextBoxFor(kh => kh.NgayTao, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date", style = "height: 40px", @disabled=true })
+                                    @Html.TextBoxFor(kh => kh.NgayTao, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date", style = "height: 40px", @disabled = true })
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-4">
                                     <p>Ngày Update</p>
-                                    <span class="icon-case"><i class="glyphicon glyphicon-time"></i></span>
                                     @Html.TextBoxFor(kh => kh.NgayUpdate, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date", style = "height: 40px", @disabled = true })
                                 </div>
                             </div>
-                            <div class="input-group" style="width:100%;margin-bottom:15px;margin-top:15px">
-                                <div style="width: 49%; border: 1px dashed #423333; float: left">
-                                    <label class="checkbox text-danger" style="margin-left:5px">
-                                        <input type="checkbox" id="ND" dirname="" value="" name="Check" />
-                                        <span>Thay đổi pass word</span>
-                                    </label>
+                            <div class="row" style="padding-left:15px">
+                                <div class="col-sm-8">
+                                    <div class="input-group" style="width:100%;margin-bottom:15px;margin-top:15px">
+                                        <div style="width: 49%; border: 1px dashed #423333; float: left">
+                                            <label class="checkbox text-danger" style="margin-left:5px">
+                                                <input type="checkbox" id="ND" dirname="" value="" name="Check" />
+                                                <span>Thay đổi pass word</span>
+                                            </label>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="padding-left:15px">
+                                <div class="col-sm-5">
+                                    <div id="pwc" style="display:none">
+                                        <p>PassWord củ</p>
+                                        <input type="text" id="PW" value="" name="PW" required />
+                                        <span class="label label-warning" id="thongbaopwc"></span>
+                                    </div>
                                 </div>
 
                             </div>
-                            <div class="row" id="pwc" style="width:95%;padding-left:15px;display:none">
-                                <p>PassWord củ</p>
-                                <input type="text" id="PW" value="" name="PW" required />
-                                <span class="label label-warning" id="thongbaopwc"></span>
+                            <div class="row" style="padding-left:15px">
+                                <div class="col-sm-5">
+                                    <div id="pwm" style="display: none">
+                                        <p>PassWord mới</p>
+                                        <input type="text" id="PWM" name="PWM" required />
+                                        <span class="label label-warning" id="thongbaopwm"></span>
+                                    </div>
+                                </div>
+
                             </div>
-                            <div class="row" id="pwm" style="width: 95%; padding-left: 15px; display: none">
-                                <p>PassWord mới</p>
-                                <input type="text" id="PWM" name="PWM" required />
-                                <span class="label label-warning" id="thongbaopwm"></span>
+                            <div class="row" style="padding-left:15px">
+                                <div class="col-sm-5">
+                                    <div id="lpwm" style="display: none">
+                                        <p>Lặp lại PassWord mới</p>
+                                        <input type="text" id="PWMM" name="PWMM" required />
+                                        <span class="label label-warning" id="thongbaolpwm"></span>
+                                    </div>
+                                </div>
+
                             </div>
-                            <div class="row" id="lpwm" style="width: 95%; padding-left: 15px; display: none">
-                                <p>Lặp lại PassWord mới</p>
-                                <input type="text" id="PWMM" name="PWMM" required />
-                                <span class="label label-warning" id="thongbaolpwm"></span>
-                            </div>
+                            
+                            
+                            
 
                             <div class="row" style="margin-top:20px">
                                 <div class="form-group col-sm-12">
@@ -138,11 +163,14 @@
 
                                 </div>
                             </div>
-                        
+                        </div>
+
+
+
 
                         </div>
                 </form>
-            </div>
+            
         </div>
 
     }
