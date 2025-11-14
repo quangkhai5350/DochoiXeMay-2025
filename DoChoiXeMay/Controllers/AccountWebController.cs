@@ -52,6 +52,25 @@ namespace DoChoiXeMay.Controllers
             }
             return View();
         }
+        public ActionResult _ChangeInFoStaff(int Id)
+        {
+            var model = dbc.NV_NhanVienTek.Find(Id);
+            ViewBag.IdKhuVucThuongTru = new SelectList(dbc.KhuVucs.ToList(), "Id", "TenKhuvuc", model.IdKhuVucThuongTru);
+            return View(model);
+        }
+        public ActionResult _ChangeInFoStaffJson(int Id)
+        {
+            try
+            {
+                return Json("", JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                string loi = ex.ToString();
+                var model = dbc.NV_NhanVienTek.Find(Id);
+                return Json("Error", JsonRequestBehavior.AllowGet);
+            }
+        }
         public ActionResult _ChangeInFo(int Id)
         {
             var model = dbc.Ser_ChiNhanh.Find(Id);
