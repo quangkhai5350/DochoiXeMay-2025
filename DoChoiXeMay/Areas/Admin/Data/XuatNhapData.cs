@@ -17,7 +17,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
     public class XuatNhapData
     {
         Model1 _context = new Model1();
-        public double getTongTienAuto(int IdKy)
+        public double getTongTienAuto(int IdKy = 0)
         {
             var Ky = _context.KyXuatNhaps.FirstOrDefault(kh => kh.Id == IdKy);
             if(Ky != null)
@@ -103,7 +103,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
             }
 
         }
-        public List<ChitietXuatNhap> GetListByKy(int id)
+        public List<ChitietXuatNhap> GetListByKy(int id = 0)
         {
             var model = _context.ChitietXuatNhaps.Where(kh=>kh.IdKy == id)
                     .OrderByDescending(kh=>kh.NgayAuto)
@@ -122,11 +122,15 @@ namespace DoChoiXeMay.Areas.Admin.Data
             
             return kt;
         }
-        public static List<KyXuatNhap> ChiTietKyXuatNhapTEK(Model1 db, string strk, int idLHXN, int IdSan, int UserId)
+        public static List<KyXuatNhap> ChiTietKyXuatNhapTEK(Model1 db, string strk="",string ngay="", int idLHXN=0, int IdSan = 0, int UserId = 0)
         {
             List<KyXuatNhap> model = new List<KyXuatNhap>();
             List<KyXuatNhap> model1 = new List<KyXuatNhap>();
-            
+            var tungay = DateTime.Now;
+            if (ngay != "")
+            {
+                tungay = DateTime.Parse(ngay);
+            }
             var ctxnbySerial = db.ChitietXuatNhaps.FirstOrDefault(kh=>kh.IdDoiTra !=3 && (kh.SerialHop.ToLower() == strk || kh.SerialSP.ToLower() == strk));
             var ctxnbySerialCoLoi = db.ChitietXuatNhaps.FirstOrDefault(kh => kh.IdDoiTra == 3 && (kh.SerialHop.ToLower() == strk || kh.SerialSP.ToLower() == strk));
             if (ctxnbySerial == null && ctxnbySerialCoLoi==null)//Không phải Serial thì dò theo tên
@@ -147,7 +151,10 @@ namespace DoChoiXeMay.Areas.Admin.Data
                     && kh.UPush == true && kh.Id == ctxnbySerialCoLoi.IdKy)
                     .OrderBy(kh => kh.NgayAuto).ToList();
             }
-            
+            if(ngay != "")
+            {
+                model=model.Where(kh=>kh.NgayXuatNhap.Date==tungay.Date).ToList();
+            }
             if (UserId == 0 && idLHXN == 0 && IdSan==0)
             {
                 model1 = model; 
@@ -181,10 +188,10 @@ namespace DoChoiXeMay.Areas.Admin.Data
             }
             return model1;
         }
-        public List<KyXuatNhap> getXuatNhapTek(string strk,int idLHXN,int IdSan, int Sec, int pageSize,int UserId)
+        public List<KyXuatNhap> getXuatNhapTek(string ngay="",string strk="",int idLHXN = 0,int IdSan = 0, int Sec = 0, int pageSize = 0,int UserId = 0)
         {
             List<KyXuatNhap> model1 = new List<KyXuatNhap>();
-            model1 = ChiTietKyXuatNhapTEK(_context, strk, idLHXN,IdSan, UserId).ToList();
+            model1 = ChiTietKyXuatNhapTEK(_context, strk,ngay, idLHXN,IdSan, UserId).ToList();
 
 
             for (int i = 0; i < model1.Count(); i++)
@@ -199,10 +206,10 @@ namespace DoChoiXeMay.Areas.Admin.Data
                             .ToList();
             return model1;
         }
-        public int GetPageCountXuatNhapTek(string strk,int idLHXN=0,int IdSan = 0, int UserId=0)
+        public int GetPageCountXuatNhapTek(string ngay="",string strk = "",int idLHXN=0,int IdSan = 0, int UserId=0)
         {
             var model1 = 0;
-            model1 = ChiTietKyXuatNhapTEK(_context, strk, idLHXN,IdSan, UserId).Count();
+            model1 = ChiTietKyXuatNhapTEK(_context, strk,ngay, idLHXN,IdSan, UserId).Count();
             return model1;
         }
         public static bool InsertMsgAotu(Model1 dbc,int UserId, string MsgSys,bool AdminDaxem, bool Sub2Daxem,bool Sub4Daxem,bool Sub5Daxem,bool Sub6Daxem)
@@ -349,7 +356,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 return false;
             }
         }
-        public static bool XuatHangHoa(Model1 db, string Ten, int Hangsx, int Mau, int Size, int soluong)
+        public static bool XuatHangHoa(Model1 db, string Ten, int Hangsx = 0, int Mau = 0, int Size = 0, int soluong = 0)
         {
             //dùng cho kỳ nhập (thu hồi)
             try
@@ -392,7 +399,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
             }
             
         }
-        public static bool kiemtrasoluongHH(Model1 db,int id)
+        public static bool kiemtrasoluongHH(Model1 db,int id = 0)
         {
             var modelct = db.ChitietXuatNhaps.Where(kh => kh.IdKy == id).ToList();
             for (int i = 0; i < modelct.Count(); i++)

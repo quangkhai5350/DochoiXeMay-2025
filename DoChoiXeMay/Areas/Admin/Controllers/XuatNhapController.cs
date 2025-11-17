@@ -9,6 +9,7 @@ using System.Configuration;
 using System.Data.Entity;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
 using System.Security.Cryptography;
 using System.Web;
 using System.Web.Mvc;
@@ -81,15 +82,15 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ViewBag.IdLoaiHangXN = new SelectList(dbc.KyXuatNhap_LoaiHang.ToList(), "Id", "TenLoai");
             return View();
         }
-        public ActionResult GetListKyXNTeK(string strk,int idLHXN = 0,int IdSan=0, int PageNo = 0, int PageSize = 8,int UserId = 0)
+        public ActionResult GetListKyXNTeK(string ngay = "",string strk = "",int idLHXN = 0,int IdSan=0, int PageNo = 0, int PageSize = 8,int UserId = 0)
         {
             strk = strk.ToLower().Trim();
-            ViewBag.KyXNTeK = new Data.XuatNhapData().getXuatNhapTek(strk,idLHXN, IdSan, PageNo, PageSize,UserId);
+            ViewBag.KyXNTeK = new Data.XuatNhapData().getXuatNhapTek(ngay,strk,idLHXN, IdSan, PageNo, PageSize,UserId);
             return PartialView();
         }
-        public ActionResult GetPageCountXNTek(string strk, int idLHXN = 0, int IdSan = 0, int PageSize = 8,int UserId=0)
+        public ActionResult GetPageCountXNTek(string ngay = "", string strk = "", int idLHXN = 0, int IdSan = 0, int PageSize = 8,int UserId=0)
         {
-            var num = new Data.XuatNhapData().GetPageCountXuatNhapTek(strk, idLHXN, IdSan, UserId);
+            var num = new Data.XuatNhapData().GetPageCountXuatNhapTek(ngay,strk, idLHXN, IdSan, UserId);
             var pageCount = Math.Ceiling(1.0 * num / PageSize);
             return Json(pageCount, JsonRequestBehavior.AllowGet);
         }
@@ -697,7 +698,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             
         }
 
-        public ActionResult XoaChiTietXNbyID(string id)
+        public ActionResult XoaChiTietXNbyID(string id = "")
         {
             var model = dbc.ChitietXuatNhaps.Find(new Guid(id));
             var sl = model.SoLuong;
@@ -923,15 +924,26 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 return RedirectToAction("ListXuatNhapTeK");
             }
         }
-        public ActionResult CheckHHTEK(string Tenhh, int Hangsx=0, int Mau = 0, int Size = 0)
+        public ActionResult CheckHHTEK(string Tenhh = "", int Hangsx=0, int Mau = 0, int Size = 0)
         {
             var araylistHH = Data.XuatNhapData.CheckHHTEKaotu(dbc,Tenhh, Hangsx, Mau, Size);
             return Json(araylistHH, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult GetSerialSPbyBox(string str)
+        public ActionResult GetSerialSPbyBox(string str = "")
         {
-            string ser = Data.XuatNhapData.GetSerialbySerial(dbc, str);
-            return Json(ser, JsonRequestBehavior.AllowGet);
+            
+            var ktser = dbc.ChitietXuatNhaps.FirstOrDefault(kh => kh.SerialHop == str && kh.IdDoiTra <4);
+            if (ktser==null)
+            {
+                string ser = Data.XuatNhapData.GetSerialbySerial(dbc, str);
+                return Json(ser, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                var mess = "Sold";
+                return Json(mess, JsonRequestBehavior.AllowGet);
+            }
+            
         }
         public double TinhTongtienKy(int id , int VAT, double ship, double CKtienmat, int CKphantram)
         {

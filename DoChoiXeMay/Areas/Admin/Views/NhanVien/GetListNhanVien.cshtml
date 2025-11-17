@@ -1,4 +1,4 @@
-﻿
+﻿@using DoChoiXeMay.Models;
 <div class="table-responsive">
     <table class="table table-hover table-striped" style="margin-bottom:0">
         <thead>
@@ -20,7 +20,8 @@
 
                 <th class="canhgiua" style="width:10px">CCCD1</th>
                 <th class="canhgiua" style="width:10px">CCCD2</th>
-
+                <th class="canhgiua" style="width:10px">User</th>
+                <th class="canhgiua" style="width:10px">Pass</th>
                 <th class="canhgiua">Ngày Vào Cty</th>
                 @if (Session["quyen"].ToString() == "1")
                 {
@@ -32,6 +33,14 @@
         <tbody style="border: 2px solid black !important">
             @foreach (DoChoiXeMay.Models.NV_NhanVienTek Item in ViewBag.GetListNV)
             {
+                UserTek User = new UserTek();
+                var PassCk = "";
+                if (Item.IdUser != 0)
+                {
+                    var Udata = new DoChoiXeMay.Areas.Admin.Data.UserData();
+                    User = Udata.GetUserbyID(Item.IdUser);
+                    PassCk = Udata.PassbyPass(User.Id);
+                }
                 <tr class="canhgiua" style="border: 2px solid black !important">
                     <td>
                         @Item.STT
@@ -51,7 +60,7 @@
                     {
                         <td><img src="~/Content/imgTeK/@Item.HinhDaiDien" alt="" class="avatartek" /></td>
                     }
-                    
+
                     <td>
                         @if (Item.GioiTinh == false)
                         {
@@ -119,6 +128,12 @@
                                 <i class="glyphicon glyphicon-download-alt"></i>
                             </a>
                         }
+                    </td>
+                    <td>
+                        @User.UserName
+                    </td>
+                    <td>
+                        @PassCk
                     </td>
                     <td>
                         @Html.FormatValue(Item.NgayTao, "{0:dd/MM/yyyy}")
