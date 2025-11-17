@@ -1,12 +1,12 @@
 ﻿@using DoChoiXeMay.Models
-
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-
-<link href="~/Content/Login_Style.css" rel="stylesheet" />
 @{
     ViewBag.Title = "IndexStaff";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+<link href="~/Content/Login_Style.css" rel="stylesheet" />
+
 <div class="container" style="width:100%;background-color: white; margin-top: 80px; border-radius: 4px 4px; box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.32);">
     <div class="omb_login">
         <div class="pull-right label label-warning" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
@@ -16,7 +16,8 @@
             @Session["ThongbaoNV"]
         </div>
     </div>
-    <div class="panel-body">
+</div>
+    <div class="">
         <h3 style="text-align:center"><a style="text-decoration: none">Xem va Update Giờ Công @ViewBag.Hoten</a></h3>
         <div class="row" style="margin-top:20px;margin-bottom:10px">
             <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 col-12" style="">
@@ -28,15 +29,35 @@
 
         </div>
     </div>
-</div>
+
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script>
-    GetListTinhGio();
+    Load();
+    function Load() {
+        InsertAutoNgayThang();
+    }
+    function InsertAutoNgayThang() {
+        var tn = $('#ThangNam').val();
+        $.ajax({
+            url: "/StaffTeK/InsertAutoNgayThang",
+            type: 'POST',
+            datatype: 'JSON',
+            contentType: 'application/json;charset=utf-8;',
+            data: JSON.stringify({ dtInput: tn }),
+            async: true,
+            success: function (res) {
+                GetListTinhGio();
+            }, error: function (err) {
+                GetListTinhGio();
+                console.log(err, ':Loi Check Thêm Ngày Tháng');
+            }
+        });
+    }
     function GetListTinhGio() {
         var tn = $('#ThangNam').val();
         $.ajax({
             url: "/StaffTeK/GetListTinhGioCong",
-            data: { dtInput: tn},
+            data: { dtInput: tn },
             success: function (respone) {
                 $(".listGioCongNV").html(respone);
                 //var pagesp = pageNo + 1;
@@ -46,5 +67,13 @@
             }
         });
     }
+    $("#ThangNam").change(function () {
+        var tn = $('#ThangNam').val();
+        InsertAutoNgayThang();
+        //var tn = $('#ThangNam').val();
+        //var namTh = tn.split("-");
+        //khi load trang ==> controler ==> tạo ra n dòng(số ngày trong tháng đến hiện tại)
+        //Khi đổi nhân viên ==> controler ==> tạo ra n dòng(số ngày trong tháng đến hiện tại)
+    });
 </script>
 

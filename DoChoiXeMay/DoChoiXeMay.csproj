@@ -633,6 +633,7 @@
     <Content Include="Views\StaffTeK\IndexStaff.cshtml" />
     <Content Include="Views\AccountWeb\_ChangeInFoStaff.cshtml" />
     <Content Include="Views\StaffTeK\GetListTinhGioCong.cshtml" />
+    <Content Include="Views\StaffTeK\UpdateGioCong.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\imgthuchi\" />

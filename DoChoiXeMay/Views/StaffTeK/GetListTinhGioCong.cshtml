@@ -5,110 +5,84 @@
         background-color: darkkhaki;
     }
 </style>
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr style="background-color: #00bcd4">
+                <th>@ViewBag.TongSoSoGioThang h</th>
+                <th style="width:150px;text-align:center">Update</th>
+                <th>VaoS</th>
+                <th>RaS</th>
+                <th>VaoC</th>
+                <th>RaC</th>
+                <th>V-TangCa</th>
+                <th>R-TangCa</th>
 
-<table class="table table-hover table-striped">
-    <thead>
-        <tr style="background-color: #00bcd4">
-            <th>Tổng</th>
-            <th style="width:150px;text-align:center">Update</th>
-            <th>VaoSang</th>
-            <th>RaSang</th>
-            <th>VaoChieu</th>
-            <th>RaChieu</th>
-            <th>V-TangCa</th>
-            <th>R-TangCa</th>
+                <th>V-TangCaLe</th>
+                <th>R-TangCaLe</th>
+                <th>NgayUpdate</th>
 
-            <th>V-TangCaLe</th>
-            <th>R-TangCaLe</th>
-            <th>NgayUpdate</th>
-
-        </tr>
-    </thead>
-    @foreach (DoChoiXeMay.Models.NV_GioCong item in ViewBag.NgayGioCong)
-    {
-        var Id = item.Id.ToString();
-        var cl = "";
-        if (item.GhiChu == "0,00")
+            </tr>
+        </thead>
+        @foreach (DoChoiXeMay.Models.NV_GioCong item in ViewBag.NgayGioCong)
         {
-            cl = "";
-        }
-        else
-        {
-            cl = "tomau";
-        }
-        <tr class="@cl">
-            <td>
-                @Html.DisplayFor(modelItem => item.GhiChu)
-            </td>
-            <td>
-                <a class="btn btn-warning" style="" onclick="EditGioCong('@Id')"><i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;(@item.Day/@item.Month/@item.Year)</a>
-            </td>
-            <td>
-                @item.GioVaoSang.ToString("HH:mm")
-            </td>
-            <td>
-                @item.GioRaSang.ToString("HH:mm")
-            </td>
-            <td>
-                @item.GioVaoChieu.ToString("HH:mm")
-            </td>
-            <td>
-                @item.GioRaChieu.ToString("HH:mm")
-            </td>
-
-            <td>
-                @item.GioVaoTangCa.ToString("HH:mm")
-            </td>
-            <td>
-                @item.GioRaTangCa.ToString("HH:mm")
-            </td>
-            <td>
-                @item.GioVaoLe.ToString("HH:mm")
-            </td>
-            <td>
-                @item.GioRaLe.ToString("HH:mm")
-            </td>
-            <td>
-                @Html.FormatValue(item.NgayUpdate, "{0:dd/MM/yyyy}")
-            </td>
-        </tr>
-    }
-
-</table>
-<div id="myModal" class="modal fade" role="dialog" style="opacity: 1">
-    <div class="modal-dialog modal-lg" style="left:0; width: 700px; height: 600px; margin-top: 10% !important; background-position: center center; background-repeat: no-repeat; background-size: cover;box-sizing:border-box ">
-        <div class="modal-content" style="height: 450px; overflow: auto">
-            <div class="modal-header">
-                <button type="button" class="close" onclick="closemodal()">&times;</button>
-                <h4 class="modal-title text-center" style="font-weight:bold;font-size:24px">Update Giờ Công @ViewBag.Hoten</h4>
-            </div>
-            <div class="modal-body" style="box-shadow: 1px 0 3px #8ba6c5">
-                <div style="padding:0 !important" id="modal-gio">
-
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
-<script>
-    function EditGioCong(Id) {
-
-        $.ajax({
-            url: "/Admin/NhanVien/EditGioCong",
-            data: { id: Id },
-            success: function (respone) {
-                $("#modal-gio").html(respone);
-                $("#myModal").addClass("show");
-                //var pagesp = pageNo + 1;
-                //$('.TongSanPham').html(pagesp + '/' + TongSP + ' trang');
-            }, error: function (err) {
-                console.log(err, ':Loi get List');
+            var Id = item.Id.ToString();
+            var cl = "";
+            var ht = DateTime.Now;
+            if (item.GhiChu == "0,00")
+            {
+                cl = "";
             }
-        });
-    };
-    function closemodal() {
-        $("#myModal").removeClass("show");
-    }
-</script>
+            else
+            {
+                cl = "tomau";
+            }
+            <tr class="@cl">
+                <td>
+                    @Html.DisplayFor(modelItem => item.GhiChu)
+                </td>
+                <td>
+                    @if (item.Day == ht.Day && item.Month == ht.Month && item.Year == ht.Year)
+                    {
+                        <a class="btn btn-warning" style="" href="/StaffTeK/UpdateGioCong/@item.Id"><i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;(@item.Day/@item.Month)</a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-warning" style="" disabled><i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;(@item.Day/@item.Month)</a>
+                    }
+                </td>
+                <td>
+                    @item.GioVaoSang.ToString("HH:mm")
+                </td>
+                <td>
+                    @item.GioRaSang.ToString("HH:mm")
+                </td>
+                <td>
+                    @item.GioVaoChieu.ToString("HH:mm")
+                </td>
+                <td>
+                    @item.GioRaChieu.ToString("HH:mm")
+                </td>
+
+                <td>
+                    @item.GioVaoTangCa.ToString("HH:mm")
+                </td>
+                <td>
+                    @item.GioRaTangCa.ToString("HH:mm")
+                </td>
+                <td>
+                    @item.GioVaoLe.ToString("HH:mm")
+                </td>
+                <td>
+                    @item.GioRaLe.ToString("HH:mm")
+                </td>
+                <td>
+                    @Html.FormatValue(item.NgayUpdate, "{0:dd/MM/yyyy}")
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+
 
