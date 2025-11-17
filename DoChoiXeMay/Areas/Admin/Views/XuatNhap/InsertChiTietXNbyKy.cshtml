@@ -273,7 +273,12 @@
             data: JSON.stringify({ str:box }),
             async: true,
             success: function (res) {
-                $("#SerialSP").val(res);
+                if (res == "Sold") {
+                    alert("Hàng đã bán.")
+                    $("#SerialSP").val(res);
+                } else {
+                    $("#SerialSP").val(res);
+                }
             }, error: function (err) {
                 console.log(err, ':Loi Load Serial SP');
             }
