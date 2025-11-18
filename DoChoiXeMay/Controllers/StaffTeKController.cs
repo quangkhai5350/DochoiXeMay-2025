@@ -25,6 +25,16 @@ namespace DoChoiXeMay.Controllers
             var IDnv = int.Parse(Session["idNhanVien"].ToString());
             var nv = dbc.NV_NhanVienTek.Find(IDnv);
             ViewBag.Hoten = nv.HoTen;
+            // Lấy ngày hiện tại
+            DateTime date = DateTime.Now;
+            // Lấy số ngày trong năm
+            int dayOfYear = date.DayOfYear;
+            // Tính số tuần. Cộng thêm 6 để làm tròn lên
+            int week = (dayOfYear + 6) / 7;
+            ViewBag.TuanCu = week - 1;
+            ViewBag.TuanHT = week;
+            ViewBag.Tuanmoi = week + 1;
+            ViewBag.Tuanmoihon = week + 2;
             return View();
         }
         public ActionResult GetListTinhGioCong(DateTime dtInput)
@@ -131,16 +141,26 @@ namespace DoChoiXeMay.Controllers
                 return Json(null, JsonRequestBehavior.AllowGet);
             }
         }
-        public ActionResult GetListTuan()
+        public ActionResult GetListTuan(int tuanht=0)
         {
-            //Lấy số tuần hiện tại trong năm
-            // Lấy ngày hiện tại
+            //Lấy số tuần hiện tại trong năm :IndexStaff
             DateTime date = DateTime.Now;
-            // Lấy số ngày trong năm
-            int dayOfYear = date.DayOfYear;
-            // Tính số tuần. Cộng thêm 6 để làm tròn lên
-            int week = (dayOfYear + 6) / 7;
-            return View();
+            var Id = int.Parse(Session["idNhanVien"].ToString());
+            for(int i = tuanht - 1; i < tuanht + 2; i++)
+            {
+                //Tìm Số tuần i Theo year, không có thì Insert
+                var gettuan = dbc.NV_LichTuanParTime.FirstOrDefault(kh => kh.Year == date.Year && kh.SoTuanTrongNam == i && kh.IdNhanVien == Id);
+                if (gettuan == null)
+                {
+                    var kq = new Areas.Admin.Data.LichTuanNV().InsertLichTuanAuto(DBname, Id, i);
+                    if(kq==false)break;
+                }
+                
+            }
+            var model = dbc.NV_LichTuanParTime.FirstOrDefault(kh => kh.Year == date.Year
+                            && kh.SoTuanTrongNam == tuanht && kh.IdNhanVien == Id);
+            ViewBag.GetLichTuan = model;
+            return PartialView(model);
         }
     }
 }

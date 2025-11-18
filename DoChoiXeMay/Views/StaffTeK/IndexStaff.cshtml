@@ -34,10 +34,11 @@
         <div class="row" style="margin-top:20px;margin-bottom:10px">
             
             <div class="col-lg-4 col-xl-4 col-md-4 col-sm-6" style="margin-top:10px">
-                <select class="form-control" id="SelectTC" name="SelectTC" style="width: 70%; height: 40px; margin: 0 auto">
-                    <option value="0">Tuần Sau</option>
-                    <option value="1" selected>Tuần Hiện tại</option>
-                    <option value="2">Tuần Trước</option>
+                <select class="form-control" id="SelectW" name="SelectW" style="width: 70%; height: 40px; margin: 0 auto">
+                    <option value="0">Tuần mới +</option>
+                    <option value="1">Tuần mới</option>
+                    <option value="2" selected>Tuần Hiện tại</option>
+                    <option value="3">Tuần Củ</option>
                 </select>
             </div>
         </div>
@@ -85,10 +86,10 @@
         });
     }
     function GetListTuan() {
-        //var tn = $('#ThangNam').val();
+        var week = $('#SelectW').val();
         $.ajax({
             url: "/StaffTeK/GetListTuan",
-            data: { },
+            data: {tuan: week},
             success: function (respone) {
                 $(".listLịchTuanNV").html(respone);
                 //var pagesp = pageNo + 1;
