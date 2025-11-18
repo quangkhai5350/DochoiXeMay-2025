@@ -17,11 +17,12 @@ namespace DoChoiXeMay.Areas.Admin.Data
         {
             try
             {
-                
-                //string sql = "insert into [" + DBname + "TechZone].[dbo].[NV_NhanVienTek] " +
-                //              "values(N'" + hoten + "',0,'" + cccd + "',27,N'',N'',N'',N''," +
-                //              "N'',N'',N'',N'',N'',N'0987654321',2,1,GETDATE(),GETDATE(),1,''," + IDU + ")";
-                //var insert_SVL = _context.Database.ExecuteSqlCommand(sql);
+                int year = DateTime.Now.Year;
+                var Id = Guid.NewGuid();
+                string sql = "insert into [" + DBname + "TechZone].[dbo].[NV_LichTuanParTime] " +
+                              "values(N'" + Id.ToString() + "',"+tuanht+"," + IdNV + ",0,0,0,0,0," +
+                              "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"+year+",GETDATE())";
+                var insert_SVL = _context.Database.ExecuteSqlCommand(sql);
                 return true;
             }
             catch (Exception ex)

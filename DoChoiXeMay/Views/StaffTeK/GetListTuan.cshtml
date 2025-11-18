@@ -1,0 +1,73 @@
+﻿@model IEnumerable<DoChoiXeMay.Models.NV_LichTuanParTime>
+
+<script src="~/Areas/Admin/Content/jquery2.0.3.min.js"></script>
+<style>
+    .tomau {
+        background-color: darkkhaki;
+    }
+</style>
+<table class="table">
+    <tr>
+        @*<th style="width:150px;text-align:center">Update</th>*@
+        <th>Sáng</th>
+        <th>Chiều</th>
+        <th>Tối</th>
+        
+    </tr>
+    @*Lặp từ thứ 2 đến cn, vào csdl lấy giá trị true or false*@
+
+    @*@foreach (DoChoiXeMay.Models.NV_GioCong item in ViewBag.NgayGioCong)
+    {
+        var Id = item.Id.ToString();
+        var cl = "";
+        if (item.GhiChu == "0,00")
+        {
+            cl = "";
+        }
+        else
+        {
+            cl = "tomau";
+        }
+        <tr class="@cl">
+            <td>
+                <a class="btn btn-warning" style="" onclick="EditGioCong('@Id')"><i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp; Edit (@item.Day/@item.Month/@item.Year)</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NV_NhanVienTek.HoTen)
+            </td>
+            <td>
+
+                @item.GioVaoSang.ToString("HH:mm")
+            </td>
+            <td>
+                @item.GioRaSang.ToString("HH:mm")
+            </td>
+            <td>
+                @item.GioVaoChieu.ToString("HH:mm")
+            </td>
+            <td>
+                @item.GioRaChieu.ToString("HH:mm")
+            </td>
+            <td>
+                @item.GioVaoTangCa.ToString("HH:mm")
+            </td>
+            <td>
+                @item.GioRaTangCa.ToString("HH:mm")
+            </td>
+            <td>
+                @item.GioVaoLe.ToString("HH:mm")
+            </td>
+            <td>
+                @item.GioRaLe.ToString("HH:mm")
+            </td>
+            <td>
+                @Html.FormatValue(item.NgayUpdate, "{0:dd/MM/yyyy}")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GhiChu)
+            </td>
+
+        </tr>
+    }*@
+
+</table>
