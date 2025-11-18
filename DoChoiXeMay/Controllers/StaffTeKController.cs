@@ -27,14 +27,21 @@ namespace DoChoiXeMay.Controllers
             ViewBag.Hoten = nv.HoTen;
             // Lấy ngày hiện tại
             DateTime date = DateTime.Now;
-            // Lấy số ngày trong năm
-            int dayOfYear = date.DayOfYear;
-            // Tính số tuần. Cộng thêm 6 để làm tròn lên
-            int week = (dayOfYear + 6) / 7;
-            ViewBag.TuanCu = week - 1;
-            ViewBag.TuanHT = week;
-            ViewBag.Tuanmoi = week + 1;
-            ViewBag.Tuanmoihon = week + 2;
+            //// Lấy số ngày trong năm
+            //int dayOfYear = date.DayOfYear;
+            //// Tính số tuần. Cộng thêm 6 để làm tròn lên
+            //int week = (dayOfYear + 6) / 7;
+
+            CultureInfo ci = CultureInfo.CurrentCulture; // Sử dụng hiện tại của hệ thống
+            Calendar cal = ci.Calendar;
+            CalendarWeekRule rule = ci.DateTimeFormat.CalendarWeekRule;
+            DayOfWeek firstDayOfWeek = ci.DateTimeFormat.FirstDayOfWeek;
+            int weekNumber = cal.GetWeekOfYear(date, rule, firstDayOfWeek);
+
+            ViewBag.TuanCu = weekNumber - 1;
+            ViewBag.TuanHT = weekNumber;
+            ViewBag.Tuanmoi = weekNumber + 1;
+            ViewBag.Tuanmoihon = weekNumber + 2;
             return View();
         }
         public ActionResult GetListTinhGioCong(DateTime dtInput)
@@ -146,7 +153,7 @@ namespace DoChoiXeMay.Controllers
             //Lấy số tuần hiện tại trong năm :IndexStaff
             DateTime date = DateTime.Now;
             var Id = int.Parse(Session["idNhanVien"].ToString());
-            for(int i = tuanht - 1; i < tuanht + 2; i++)
+            for(int i = tuanht - 1; i <= tuanht + 2; i++)
             {
                 //Tìm Số tuần i Theo year, không có thì Insert
                 var gettuan = dbc.NV_LichTuanParTime.FirstOrDefault(kh => kh.Year == date.Year && kh.SoTuanTrongNam == i && kh.IdNhanVien == Id);
@@ -157,10 +164,15 @@ namespace DoChoiXeMay.Controllers
                 }
                 
             }
-            var model = dbc.NV_LichTuanParTime.FirstOrDefault(kh => kh.Year == date.Year
-                            && kh.SoTuanTrongNam == tuanht && kh.IdNhanVien == Id);
+            var model = dbc.NV_LichTuanParTime.Where(kh => kh.Year == date.Year
+                            && kh.SoTuanTrongNam == tuanht && kh.IdNhanVien == Id)
+                            .ToList();
             ViewBag.GetLichTuan = model;
             return PartialView(model);
+        }
+        public ActionResult UpdateLichTuan(int week = 0)
+        {
+            return View();
         }
     }
 }

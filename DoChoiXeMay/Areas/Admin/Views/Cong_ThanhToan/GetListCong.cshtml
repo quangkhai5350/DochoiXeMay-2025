@@ -1,4 +1,9 @@
-﻿<div class="table-responsive">
+﻿<style>
+    .tomau {
+        background-color: darkkhaki;
+    }
+</style>
+<div class="table-responsive">
     <table class="table table-hover table-striped" style="margin-bottom:0">
         <thead>
             <tr class="canhgiua" style="background-color: #00bcd4">
@@ -28,6 +33,23 @@
         <tbody style="border: 2px solid black !important">
             @foreach (DoChoiXeMay.Models.NV_Cong Item in ViewBag.GetListCong)
             {
+                var NgayCong= Item.SoNgayCong == 0? "" : "tomau";
+                var TangCa = Item.SoNgayTangCa == 0 ? "" : "tomau";
+                var NgayLe = Item.SoNgayLe == 0 ? "" : "tomau";
+                var SLCom = Item.SLCom == 0 ? "" : "tomau";
+                var GiaoHang = Item.SLGiaoHang == 0 ? "" : "tomau";
+                var HoTro = Item.SLHoTro == 0 ? "" : "tomau";
+                var CongThang = Item.SoGioCongThang == 0 ? "" : "tomau";
+                var GioTangCa = Item.SoGioTangCaThang == 0 ? "" : "tomau";
+                var GioLe = Item.SoGioLeThang == 0 ? "" : "tomau";
+                if (Item.SoNgayCong == 0)
+                {
+                    NgayCong = "";
+                }
+                else
+                {
+                    NgayCong = "tomau";
+                }
                 <tr class="canhgiua" style="border: 2px solid black !important">
 
                     <td>
@@ -37,31 +59,31 @@
                         @Item.NV_NhanVienTek.HoTen
                     </td>
 
-                    <td style="font-size:15px">
+                    <td style="font-size:15px" class="@NgayCong">
                         @Item.SoNgayCong
                     </td>
-                    <td>
+                    <td class="@TangCa">
                         @Item.SoNgayTangCa
                     </td>
-                    <td>
+                    <td class="@NgayLe">
                         @Item.SoNgayLe
                     </td>
-                    <td>
+                    <td class="@SLCom">
                         @Item.SLCom
                     </td>
-                    <td>
+                    <td class="@GiaoHang">
                         @Item.SLGiaoHang
                     </td>
-                    <td>
+                    <td class="@HoTro">
                         @Item.SLHoTro
                     </td>
-                    <td>
+                    <td class="@CongThang">
                         @Item.SoGioCongThang
                     </td>
-                    <td>
+                    <td class="@GioTangCa">
                         @Item.SoGioTangCaThang
                     </td>
-                    <td>
+                    <td class="@GioLe">
                         @Item.SoGioLeThang
                     </td>
                     <td>
