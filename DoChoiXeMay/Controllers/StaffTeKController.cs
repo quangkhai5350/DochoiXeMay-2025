@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -129,6 +130,17 @@ namespace DoChoiXeMay.Controllers
             {
                 return Json(null, JsonRequestBehavior.AllowGet);
             }
+        }
+        public ActionResult GetListTuan()
+        {
+            //Lấy số tuần hiện tại trong năm
+            // Lấy ngày hiện tại
+            DateTime date = DateTime.Now;
+            // Lấy số ngày trong năm
+            int dayOfYear = date.DayOfYear;
+            // Tính số tuần. Cộng thêm 6 để làm tròn lên
+            int week = (dayOfYear + 6) / 7;
+            return View();
         }
     }
 }

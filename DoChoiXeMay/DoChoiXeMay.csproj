@@ -155,6 +155,7 @@
     <Compile Include="Areas\Admin\Data\ActiveData.cs" />
     <Compile Include="Areas\Admin\Data\ChiNhanhData.cs" />
     <Compile Include="Areas\Admin\Data\Cong_ThanhToan.cs" />
+    <Compile Include="Areas\Admin\Data\LichTuanNV.cs" />
     <Compile Include="Areas\Admin\Data\NhanVien.cs" />
     <Compile Include="Areas\Admin\Data\NoteKyThuatData.cs" />
     <Compile Include="Areas\Admin\Data\ProjectTeKData.cs" />
