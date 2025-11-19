@@ -32,18 +32,24 @@
     <div class="" style="width:100%;background-color: white; margin-top: 80px; border-radius: 4px 4px; box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.32)">
         <h3 style="text-align:center"><a style="text-decoration: none">Lịch làm việc tuần của @ViewBag.Hoten</a></h3>
         <div class="row" style="margin-top:20px;margin-bottom:10px">
-            
+
             <div class="col-lg-4 col-xl-4 col-md-4 col-sm-6" style="margin-top:10px">
                 <select class="form-control" id="SelectW" name="SelectW" style="width: 70%; height: 40px; margin: 0 auto">
-                    <option value="0">Tuần mới +</option>
-                    <option value="1">Tuần mới</option>
-                    <option value="2" selected>Tuần Hiện tại</option>
-                    <option value="3">Tuần Củ</option>
+                    <option value="@ViewBag.Tuanmoihon">Tuần @ViewBag.Tuanmoihon</option>
+                    <option value="@ViewBag.Tuanmoi">Tuần @ViewBag.Tuanmoi</option>
+                    <option value="@ViewBag.TuanHT" selected>Tuần(@ViewBag.TuanHT) Hiện tại</option>
+                    <option value="@ViewBag.TuanCu">Tuần @ViewBag.TuanCu</option>
                 </select>
             </div>
+            <input id="CheckTHT" value="@ViewBag.TuanHT" hidden/>
         </div>
-        <div class="listLịchTuanNV">
+        <div class="listLichTuanNV">
 
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-6" style="margin-bottom:10px">
+            <button id="alich" class="btn btn-warning" data-action="UpdateLichTuan" style="margin-left:5px">
+                <i class="fa fa-plus-circle"></i>&nbsp;&nbsp; <span id="namelich">Update "Lịch Làm Việc"</span> 
+            </button>
         </div>
     </div>
 
@@ -54,8 +60,23 @@
         InsertAutoNgayThang();
         GetListTuan();
     }
+    $(function () {
+        $("button[data-action]").click(function () {
+            if (!confirm("Bạn Có Chắc Chắn Hành Động Của Mình?")) {
+                return false;
+            } else {
+                var week = $('#SelectW').val();
+                var action = $(this).attr("data-action");
+                //this.form.action = "/StaffTeK/UpdateLichTuan/" + action + "?week=" + week;
+                var url = "@Url.Action("UpdateLichTuan", "StaffTeK")?week=" + week;
+                window.location.href = url;
+            }
+        });
+    });
+
     function InsertAutoNgayThang() {
         var tn = $('#ThangNam').val();
+        var week = $('#SelectW').val();
         $.ajax({
             url: "/StaffTeK/InsertAutoNgayThang",
             type: 'POST',
@@ -65,6 +86,7 @@
             async: true,
             success: function (res) {
                 GetListTinhGio();
+
             }, error: function (err) {
                 GetListTinhGio();
                 console.log(err, ':Loi Check Thêm Ngày Tháng');
@@ -87,11 +109,13 @@
     }
     function GetListTuan() {
         var week = $('#SelectW').val();
+        var namel = $('#namelich').html();
         $.ajax({
             url: "/StaffTeK/GetListTuan",
-            data: {tuan: week},
+            data: {tuanht: week},
             success: function (respone) {
-                $(".listLịchTuanNV").html(respone);
+                $(".listLichTuanNV").html(respone);
+                $('#namelich').html('Update Lịch Làm Việc Tuần (' + week+')');
                 //var pagesp = pageNo + 1;
                 //$('.TongSanPham').html(pagesp + '/' + TongSP + ' trang');
             }, error: function (err) {
@@ -106,6 +130,18 @@
         //var namTh = tn.split("-");
         //khi load trang ==> controler ==> tạo ra n dòng(số ngày trong tháng đến hiện tại)
         //Khi đổi nhân viên ==> controler ==> tạo ra n dòng(số ngày trong tháng đến hiện tại)
+    });
+    $("#SelectW").change(function () {
+        var week = $('#SelectW').val();
+        var chek = $('#CheckTHT').val();
+        if (week < chek) {
+            $('#alich').addClass("disabled");
+
+        } else {
+            $('#alich').removeClass("disabled");
+        }
+        $('#namelich').html('Update Lịch Làm Việc Tuần (' + week + ')');
+        GetListTuan();
     });
 </script>
 
