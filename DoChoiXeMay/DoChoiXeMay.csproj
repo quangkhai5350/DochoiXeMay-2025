@@ -636,6 +636,7 @@
     <Content Include="Views\StaffTeK\GetListTinhGioCong.cshtml" />
     <Content Include="Views\StaffTeK\UpdateGioCong.cshtml" />
     <Content Include="Views\StaffTeK\GetListTuan.cshtml" />
+    <Content Include="Views\StaffTeK\UpdateLichTuan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\imgthuchi\" />

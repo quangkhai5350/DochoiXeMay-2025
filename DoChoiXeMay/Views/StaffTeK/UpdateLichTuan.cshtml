@@ -1,0 +1,199 @@
+﻿@model DoChoiXeMay.Models.NV_LichTuanParTime
+
+@{
+    ViewBag.Title = "UpdateLichTuan";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+@*<link href="~/Areas/Admin/Content/css/Info_Style.css" rel="stylesheet" />*@
+<link href="~/Content/Login_Style.css" rel="stylesheet" />
+<script src="~/Areas/Admin/Content/jquery2.0.3.min.js"></script>
+<div class="container" style="width:100%;background-color: white; margin-top: 100px; border-radius: 4px 4px; box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.32);">
+    <div class="omb_login">
+        <div class="row" style="text-align:center">
+            <span style="font-size:15px" class="pull-right label label-warning">@Session["ThongbaoSthanhcong"]</span>
+        </div>
+    </div>
+    @if (Model != null)
+    {
+        <div class="omb_login" style="text-align:center">
+            <h3><a style="text-decoration: none">Update Lịch Tuần thứ @Model.SoTuanTrongNam của: @Model.NV_NhanVienTek.HoTen</a></h3>
+        </div>
+    }
+    @using (Html.BeginForm("UpdateLichTuan", "StaffTeK", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        
+        <div class="row col-md-offset-2">
+            <form class="omb_loginForm" action="" autocomplete="off" method="post">
+                @Html.HiddenFor(kh => kh.Id)
+                @Html.HiddenFor(kh => kh.SoTuanTrongNam)
+                @Html.HiddenFor(kh => kh.IdNhanVien)
+                @Html.HiddenFor(kh => kh.Year)
+                @Html.HiddenFor(kh => kh.Ngay)
+                <div class="contentform">
+                    <div class="form-group">
+                        <div class="row" style="padding-left: 15px; padding-right: 15px; text-align: center ">
+                            <div class="col-md-4 col-xs-4">
+                                <p>SangT2</p>
+                                @Html.CheckBoxFor(m => m.SangT2, new { @class = "form-control", style = "height: 30px" })
+
+                            </div>
+                            <div class="col-md-4 col-xs-4" style="">
+                                <p>ChieuT2</p>
+                                @Html.CheckBoxFor(m => m.ChieuT2, new { @class = "form-control", style = "height: 30px" })
+
+                            </div>
+                            <div class="col-md-4 col-xs-4">
+                                <p>ToiT2</p>
+                                @Html.CheckBoxFor(m => m.ToiT2, new { @class = "form-control", style = "height: 30px" })
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row" style="padding-left: 15px; padding-right: 15px;text-align:center ">
+                            <div class="col-md-4 col-xs-4">
+                                <p>SangT3</p>
+                                @Html.CheckBoxFor(m => m.SangT3, new { @class = "form-control", style = "height: 30px" })
+
+                            </div>
+                            <div class="col-md-4 col-xs-4">
+                                <p>ChieuT3</p>
+                                @Html.CheckBoxFor(m => m.ChieuT3, new { @class = "form-control", style = "height: 30px" })
+
+                            </div>
+                            <div class="col-md-4 col-xs-4">
+                                <p>ToiT3</p>
+                                @Html.CheckBoxFor(m => m.ToiT3, new { @class = "form-control", style = "height: 30px" })
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row" style="padding-left: 15px; padding-right: 15px;text-align:center ">
+                            <div class="col-md-4 col-xs-4">
+                                <p>SangT4</p>
+                                @Html.CheckBoxFor(m => m.SangT4, new { @class = "form-control", style = "height: 30px" })
+
+                            </div>
+                            <div class="col-md-4 col-xs-4">
+                                <p>ChieuT4</p>
+                                @Html.CheckBoxFor(m => m.ChieuT4, new { @class = "form-control", style = "height: 30px" })
+
+                            </div>
+                            <div class="col-md-4 col-xs-4">
+                                <p>ToiT4</p>
+                                @Html.CheckBoxFor(m => m.ToiT4, new { @class = "form-control", style = "height: 30px" })
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row" style="padding-left: 15px; padding-right: 15px;text-align:center ">
+                            <div class="col-md-4 col-xs-4">
+                                <p>SangT5</p>
+                                @Html.CheckBoxFor(m => m.SangT5, new { @class = "form-control", style = "height: 30px" })
+
+                            </div>
+                            <div class="col-md-4 col-xs-4">
+                                <p>ChieuT5</p>
+                                @Html.CheckBoxFor(m => m.ChieuT5, new { @class = "form-control", style = "height: 30px" })
+
+                            </div>
+                            <div class="col-md-4 col-xs-4">
+                                <p>ToiT5</p>
+                                @Html.CheckBoxFor(m => m.ToiT5, new { @class = "form-control", style = "height: 30px" })
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row" style="padding-left: 15px; padding-right: 15px;text-align:center ">
+                            <div class="col-md-4 col-xs-4">
+                                <p>SangT6</p>
+                                @Html.CheckBoxFor(m => m.SangT6, new { @class = "form-control", style = "height: 30px" })
+
+                            </div>
+                            <div class="col-md-4 col-xs-4">
+                                <p>ChieuT6</p>
+                                @Html.CheckBoxFor(m => m.ChieuT6, new { @class = "form-control", style = "height: 30px" })
+
+                            </div>
+                            <div class="col-md-4 col-xs-4">
+                                <p>ToiT6</p>
+                                @Html.CheckBoxFor(m => m.ToiT6, new { @class = "form-control", style = "height: 30px" })
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row" style="padding-left: 15px; padding-right: 15px;text-align:center ">
+                            <div class="col-md-4 col-xs-4">
+                                <p>SangT7</p>
+                                @Html.CheckBoxFor(m => m.SangT7, new { @class = "form-control", style = "height: 30px" })
+
+                            </div>
+                            <div class="col-md-4 col-xs-4">
+                                <p>ChieuT7</p>
+                                @Html.CheckBoxFor(m => m.ChieuT7, new { @class = "form-control", style = "height: 30px" })
+
+                            </div>
+                            <div class="col-md-4 col-xs-4">
+                                <p>ToiT7</p>
+                                @Html.CheckBoxFor(m => m.ToiT7, new { @class = "form-control", style = "height: 30px" })
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row" style="padding-left: 15px; padding-right: 15px;text-align:center ">
+                            <div class="col-md-4 col-xs-4">
+                                <p>SangCN</p>
+                                @Html.CheckBoxFor(m => m.SangCN, new { @class = "form-control", style = "height: 30px" })
+
+                            </div>
+                            <div class="col-md-4 col-xs-4">
+                                <p>ChieuCN</p>
+                                @Html.CheckBoxFor(m => m.ChieuCN, new { @class = "form-control", style = "height: 30px" })
+
+                            </div>
+                            <div class="col-md-4 col-xs-4">
+                                <p>ToiCN</p>
+                                @Html.CheckBoxFor(m => m.ToiCN, new { @class = "form-control", style = "height: 30px" })
+
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="info_header">
+                        <span class="pull-left label label-warning" style="color:white;font-family:monospace">
+                            @Html.ValidationSummary()
+                        </span>
+                    </h4>
+                    <div class="row" style="margin-top: 20px; text-align:center">
+                        <div class="form-group col-sm-12">
+                            <div class="btn-crud">
+                                <button id="btnLuu" class="btn btn-warning" data-action="UpdateLichTuan"><span class="glyphicon glyphicon-refresh"></span>&nbsp;Update Lịch Tuần</button>
+                                <a class="btn btn-primary" href="/StaffTeK/IndexStaff" style="margin-left:10%"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;Quay Lại</a>
+                            </div>
+                            <script>
+                                $(function () {
+                                    $("button[data-action]").click(function () {
+                                        if (!confirm("Bạn Có Chắc Chắn Hành Động Của Mình?")) {
+                                            return false;
+                                        } else {
+                                            alert('áasasasasasasa')
+                                            var action = $(this).attr("data-action");
+                                            this.form.action = "/StaffTeK/" + action;
+                                        }
+
+                                    });
+                                });
+                            </script>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    }
+</div>

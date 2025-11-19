@@ -172,7 +172,38 @@ namespace DoChoiXeMay.Controllers
         }
         public ActionResult UpdateLichTuan(int week = 0)
         {
-            return View();
+            DateTime date = DateTime.Now;
+            var Id = int.Parse(Session["idNhanVien"].ToString());
+            var update = dbc.NV_LichTuanParTime.FirstOrDefault(kh => kh.SoTuanTrongNam == week && kh.IdNhanVien == Id
+                        && kh.Year == date.Year);
+            if(update != null)
+            {
+                var model = dbc.NV_LichTuanParTime.Find(update.Id);
+                return View(model);
+            }
+            Session["ThongbaoNV"] = "";
+            Session["ThongbaoNVLoi"] = "Có lỗi update bảng Lịch Tuần !!!";
+            return RedirectToAction("IndexStaff");
+        }
+        [HttpPost]
+        public ActionResult UpdateLichTuan(NV_LichTuanParTime model)
+        {
+            try
+            {
+                model.Ngay = DateTime.Now;
+                dbc.Entry(model).State = EntityState.Modified;
+                var kq = dbc.SaveChanges();
+                Session["ThongbaoLT"] = "Update Lịch Tuần Thứ "+model.SoTuanTrongNam+ " ,thành công.";
+                Session["ThongbaoLTLoi"] = "";
+                return RedirectToAction("IndexStaff");
+            }
+            catch (Exception ex)
+            {
+                string loi = ex.ToString();
+                ModelState.AddModelError("", "Update Thất Bại !!!!" + loi);
+                return View("", model);
+            }
+            
         }
     }
 }
