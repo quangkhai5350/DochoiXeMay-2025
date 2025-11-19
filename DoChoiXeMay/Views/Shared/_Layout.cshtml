@@ -20,18 +20,26 @@
     @*@Styles.Render("~/Content/css")
         @Scripts.Render("~/bundles/modernizr")*@
     <style>
-        .Title_TC{
-            font-size:30px
+        .Title_TC {
+            font-size: 30px
         }
+
         @@media screen and (max-width:700px) {
             .Title_TC {
                 font-size: 20px
             }
         }
+
+        .avatartek {
+            margin-bottom: 10px;
+            width: 45px;
+            height: 45px;
+            border-radius: 50% !important;
+        }
     </style>
 </head>
 <body>
-    
+
     <section id="navigation" class="dark-nav">
         <!-- Navigation Inner -->
         <div class="nav-inner">
@@ -53,10 +61,23 @@
                 }
                 else if (Session["quyen"].ToString() == "3" || Session["quyen"].ToString() == "4")
                 {
-                    <a href="/StaffTeK/IndexStaff" id="logo-text" title="Click quay về trang NV" class="scroll logo">
-                        <img src="~/Areas/Admin/Content/img/logo/Teklogoo.png" alt="" style="width:50px;margin-bottom:10px" />
-                        <span class="Title_TC">@Session["UserName"].ToString()</span>
-                    </a>
+                    if (Session["avatar"] == null)
+                    {
+                        <a href="/StaffTeK/IndexStaff" id="logo-text" title="Click quay về trang NV" class="scroll logo">
+                            <img src="~/Areas/Admin/Content/img/logo/Teklogoo.png" alt="" style="width:50px;margin-bottom:10px" />
+                            <span class="Title_TC">@Session["UserName"].ToString()</span>
+                        </a>
+                    }
+                    else
+                    {
+                        var tt = Session["avatar"].ToString();
+                        <a href="/StaffTeK/IndexStaff" id="logo-text" title="Click quay về trang NV" class="scroll logo">
+                            <img src="~/Areas/Admin/Content/img/logo/Teklogoo.png" alt="" style="width:50px;margin-bottom:10px" />
+
+                            <span class="Title_TC">@Session["UserName"].ToString()</span>
+                            <img src="~/Content/imgTeK/@tt" alt="" class="avatartek" />
+                        </a>
+                    }
                 }
 
             </div><!-- End Site Logo -->

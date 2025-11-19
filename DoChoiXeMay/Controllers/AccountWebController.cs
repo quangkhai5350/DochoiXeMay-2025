@@ -94,27 +94,35 @@ namespace DoChoiXeMay.Controllers
                 var uid = int.Parse(Session["UserId"].ToString());
                 if (kq >0)
                 {
-                    if (PW != "" && PWM != "" && PWMM != "")
+                    if ((PW != "" && PWM != "" && PWMM != "")|| file1.ContentLength > 0)
                     {
                         var modelU = dbc.UserTeks.Find(uid);
-                        string check_pass = tk.DeCryptDotNetNukePassword(modelU.Password, "A872EDF100E1BC806C0E37F1B3FF9EA279F2F8FD378103CB", modelU.PasswordSalt);//pass ma hoa
-                        if (check_pass == PW && PWM == PWMM && PW != PWM)
+                        if (PW != "" && PWM != "" && PWMM != "")
                         {
-                            string PasswordSalt = Convert.ToBase64String(tk.GenerateSalt()); //tạo chuổi salt ngẫu nhiên
-                            string cipherPass = tk.EnCryptDotNetNukePassword(PWM, "", PasswordSalt);
 
-                            modelU.Password = cipherPass;
-                            modelU.PasswordSalt = PasswordSalt;
-                            modelU.lastPasswordChangedate = DateTime.Now;
-                            dbc.Entry(modelU).State = EntityState.Modified;
-                            dbc.SaveChanges();
-                            var nhatkyPass = XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
-                                , Session["UserName"].ToString(), "Tự Update thông tin của mình và PassWord: " + model.HoTen + " Thành Công.", "");
-                            Session["ThongbaoSthanhcong"] = "Update thông tin và PassWord: " + model.HoTen + " Thành Công.";
-                            //return Json("Succeed", JsonRequestBehavior.AllowGet);
-                            ViewBag.IdKhuVucThuongTru = new SelectList(dbc.KhuVucs.ToList(), "Id", "TenKhuvuc", model.IdKhuVucThuongTru);
-                            return View("_ChangeInFoStaff", model);
+                            string check_pass = tk.DeCryptDotNetNukePassword(modelU.Password, "A872EDF100E1BC806C0E37F1B3FF9EA279F2F8FD378103CB", modelU.PasswordSalt);//pass ma hoa
+                            if (check_pass == PW && PWM == PWMM && PW != PWM)
+                            {
+                                string PasswordSalt = Convert.ToBase64String(tk.GenerateSalt()); //tạo chuổi salt ngẫu nhiên
+                                string cipherPass = tk.EnCryptDotNetNukePassword(PWM, "", PasswordSalt);
+
+                                modelU.Password = cipherPass;
+                                modelU.PasswordSalt = PasswordSalt;
+                                modelU.lastPasswordChangedate = DateTime.Now;
+                            }
                         }
+                        if (file1.ContentLength > 0)
+                        {
+                            modelU.Avatar = model.HinhDaiDien;
+                        }
+                        dbc.Entry(modelU).State = EntityState.Modified;
+                        dbc.SaveChanges();
+                        var nhatkyPass = XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
+                            , Session["UserName"].ToString(), "Tự Update thông tin của mình và PassWord: " + model.HoTen + " Thành Công.", "");
+                        Session["ThongbaoSthanhcong"] = "Update thông tin và PassWord: " + model.HoTen + " Thành Công.";
+                        //return Json("Succeed", JsonRequestBehavior.AllowGet);
+                        ViewBag.IdKhuVucThuongTru = new SelectList(dbc.KhuVucs.ToList(), "Id", "TenKhuvuc", model.IdKhuVucThuongTru);
+                        return View("_ChangeInFoStaff", model);
                     }
                 }
                 Session["ThongbaoSthanhcong"] = "Update thông tin: " + model.HoTen + " Thành Công.";

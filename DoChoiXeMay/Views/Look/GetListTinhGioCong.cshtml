@@ -10,7 +10,7 @@
         <thead>
             <tr style="background-color: #00bcd4">
                 <th style="width:40px">@ViewBag.TongSoSoGioThang h</th>
-                <th style="width:100px;text-align:center">Update</th>
+                <th style="width:60px">Ngày</th>
                 <th>VaoS</th>
                 <th>RaS</th>
                 <th>VaoC</th>
@@ -41,16 +41,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.GhiChu)
                 </td>
-                <td>
-                    @if (item.Day == ht.Day && item.Month == ht.Month && item.Year == ht.Year)
-                    {
-                        <a class="btn btn-warning" style="" href="/StaffTeK/UpdateGioCong/@item.Id"><i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;(@item.Day/@item.Month)</a>
-                    }
-                    else
-                    {
-                        <a class="btn btn-warning" style="" disabled><i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;(@item.Day/@item.Month)</a>
-                    }
-                </td>
+                <td style="background-color:burlywood">@item.Day/@item.Month</td>
                 <td>
                     @item.GioVaoSang.ToString("HH:mm")
                 </td>
@@ -84,5 +75,6 @@
 
     </table>
 </div>
+
 
 
