@@ -71,4 +71,18 @@
         var Idnv = $('#Idnhanvien').val();
         GetListTinhGio();
     });
+    function GetListTuan() {
+        var week = $('#SelectW').val();
+        $.ajax({
+            url: "/Look/GetListTuan",
+            data: { tuanht: week },
+            success: function (respone) {
+                $(".listLichTuanNV").html(respone);
+                //var pagesp = pageNo + 1;
+                //$('.TongSanPham').html(pagesp + '/' + TongSP + ' trang');
+            }, error: function (err) {
+                console.log(err, ':Loi get List');
+            }
+        });
+    }
 </script>

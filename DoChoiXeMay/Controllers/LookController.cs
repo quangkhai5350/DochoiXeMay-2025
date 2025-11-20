@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Xml.Linq;
 
 namespace DoChoiXeMay.Controllers
 {
@@ -53,6 +54,16 @@ namespace DoChoiXeMay.Controllers
             ViewBag.NgayGioCong = model;
             ViewBag.Hoten = nv.HoTen;
             ViewBag.TongSoSoGioThang = giothang;
+            return PartialView(model);
+        }
+        public ActionResult GetListTuan(int tuanht = 0)
+        {
+            //Lấy số tuần hiện tại trong năm :IndexStaff
+            DateTime date = DateTime.Now;
+            var model = dbc.NV_LichTuanParTime.Where(kh => kh.Year == date.Year
+                            && kh.SoTuanTrongNam == tuanht)
+                            .ToList();
+            ViewBag.GetLichTuan = model;
             return PartialView(model);
         }
     }
