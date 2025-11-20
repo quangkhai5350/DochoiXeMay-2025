@@ -640,6 +640,7 @@
     <Content Include="Views\StaffTeK\UpdateLichTuan.cshtml" />
     <Content Include="Views\Look\Partime.cshtml" />
     <Content Include="Views\Look\GetListTinhGioCong.cshtml" />
+    <Content Include="Views\Look\GetListTuan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\imgthuchi\" />
