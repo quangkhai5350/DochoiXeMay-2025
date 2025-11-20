@@ -1,1 +1,99 @@
-﻿
+﻿@model IEnumerable<DoChoiXeMay.Models.NV_LichTuanParTime>
+@using DoChoiXeMay.Models
+<script src="~/Areas/Admin/Content/jquery2.0.3.min.js"></script>
+<style>
+    .tomau {
+        background-color: darkkhaki;
+    }
+</style>
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr style="background-color: darkkhaki">
+                <th style="border-right: 1px solid black; text-align: center"></th>
+                <th colspan="3" style="border-right: 2px solid black; text-align: center">Thu 2</th>
+                <th colspan="3" style="border-right: 2px solid black; text-align: center">Thu 3</th>
+                <th colspan="3" style="border-right: 2px solid black; text-align: center">Thu 4</th>
+                <th colspan="3" style="border-right: 2px solid black; text-align: center">Thu 5</th>
+                <th colspan="3" style="border-right: 2px solid black; text-align: center">Thu 6</th>
+                <th colspan="3" style="border-right: 2px solid black; text-align: center">Thu 7</th>
+                <th colspan="3" style="border-right: 2px solid black; text-align: center">Chu Nhat</th>
+            </tr>
+            <tr style="background-color: #00bcd4; border-bottom: 2px solid black">
+                <th style="border-right: 1px solid black; border-bottom: 1px solid black; text-align: center">HoTen</th>
+                <th style="border-right: 1px solid #b200ff; border-bottom: 1px solid black; text-align: center ">S</th>
+                <th style="border-right: 1px solid #b200ff; border-bottom: 1px solid black; text-align: center">C</th>
+                <th style="border-right: 2px solid black; border-bottom: 1px solid black; text-align: center">T</th>
+                <th style="border-right: 1px solid #b200ff; border-bottom: 1px solid black; text-align: center">S</th>
+                <th style="border-right: 1px solid #b200ff; border-bottom: 1px solid black; text-align: center">C</th>
+                <th style="border-right: 2px solid black; border-bottom: 1px solid black; text-align: center">T</th>
+                <th style="border-right: 1px solid #b200ff; border-bottom: 1px solid black; text-align: center">S</th>
+                <th style="border-right: 1px solid #b200ff; border-bottom: 1px solid black; text-align: center">C</th>
+                <th style="border-right: 2px solid black; border-bottom: 1px solid black; text-align: center">T</th>
+                <th style="border-right: 1px solid #b200ff; border-bottom: 1px solid black; text-align: center">S</th>
+                <th style="border-right: 1px solid #b200ff; border-bottom: 1px solid black; text-align: center">C</th>
+                <th style="border-right: 2px solid black; border-bottom: 1px solid black; text-align: center">T</th>
+                <th style="border-right: 1px solid #b200ff; border-bottom: 1px solid black; text-align: center">S</th>
+                <th style="border-right: 1px solid #b200ff; border-bottom: 1px solid black; text-align: center">C</th>
+                <th style="border-right: 2px solid black; border-bottom: 1px solid black; text-align: center">T</th>
+                <th style="border-right: 1px solid #b200ff; border-bottom: 1px solid black; text-align: center">S</th>
+                <th style="border-right: 1px solid #b200ff; border-bottom: 1px solid black; text-align: center">C</th>
+                <th style="border-right: 2px solid black; border-bottom: 1px solid black; text-align: center">T</th>
+                <th style="border-right: 1px solid #b200ff; border-bottom: 1px solid black; text-align: center">S</th>
+                <th style="border-right: 1px solid #b200ff; border-bottom: 1px solid black; text-align: center">C</th>
+                <th style="border-right: 2px solid black; border-bottom: 1px solid black; text-align: center">T</th>
+            </tr>
+            @foreach (DoChoiXeMay.Models.NV_LichTuanParTime item in ViewBag.GetLichTuan)
+            {
+                var SangT2 = @item.SangT2 == true ? "X" : "";
+                var ChieuT2 = @item.ChieuT2 == true ? "X" : "";
+                var ToiT2 = @item.ToiT2 == true ? "X" : "";
+                var SangT3 = @item.SangT3 == true ? "X" : "";
+                var ChieuT3 = @item.ChieuT3 == true ? "X" : "";
+                var ToiT3 = @item.ToiT3 == true ? "X" : "";
+                var SangT4 = @item.SangT4 == true ? "X" : "";
+                var ChieuT4 = @item.ChieuT4 == true ? "X" : "";
+                var ToiT4 = @item.ToiT4 == true ? "X" : "";
+                var SangT5 = @item.SangT5 == true ? "X" : "";
+                var ChieuT5 = @item.ChieuT5 == true ? "X" : "";
+                var ToiT5 = @item.ToiT5 == true ? "X" : "";
+                var SangT6 = @item.SangT6 == true ? "X" : "";
+                var ChieuT6 = @item.ChieuT6 == true ? "X" : "";
+                var ToiT6 = @item.ToiT6 == true ? "X" : "";
+                var SangT7 = @item.SangT7 == true ? "X" : "";
+                var ChieuT7 = @item.ChieuT7 == true ? "X" : "";
+                var ToiT7 = @item.ToiT7 == true ? "X" : "";
+                var SangCN = @item.SangCN == true ? "X" : "";
+                var ChieuCN = @item.ChieuCN == true ? "X" : "";
+                var ToiCN = @item.ToiCN == true ? "X" : "";
+
+                <tr class="">
+                    <td style="border-right: 1px solid black; text-align: center">@item.NV_NhanVienTek.HoTen</td>
+                    <td style="border-right: 1px solid #b200ff; text-align: center">@SangT2</td>
+                    <td style="border-right: 1px solid #b200ff; text-align: center">@ChieuT2</td>
+                    <td style="border-right: 2px solid black; text-align: center">@ToiT2</td>
+                    <td style="border-right: 1px solid #b200ff; text-align: center">@SangT3</td>
+                    <td style="border-right: 1px solid #b200ff; text-align: center">@ChieuT3</td>
+                    <td style="border-right: 2px solid black; text-align: center">@ToiT3</td>
+                    <td style="border-right: 1px solid #b200ff; text-align: center">@SangT4</td>
+                    <td style="border-right: 1px solid #b200ff; text-align: center">@ChieuT4</td>
+                    <td style="border-right: 2px solid black; text-align: center">@ToiT4</td>
+                    <td style="border-right: 1px solid #b200ff; text-align: center">@SangT5</td>
+                    <td style="border-right: 1px solid #b200ff; text-align: center">@ChieuT5</td>
+                    <td style="border-right: 2px solid black; text-align: center">@ToiT5</td>
+                    <td style="border-right: 1px solid #b200ff; text-align: center">@SangT6</td>
+                    <td style="border-right: 1px solid #b200ff; text-align: center">@ChieuT6</td>
+                    <td style="border-right: 2px solid black; text-align: center">@ToiT6</td>
+                    <td style="border-right: 1px solid #b200ff; text-align: center">@SangT7</td>
+                    <td style="border-right: 1px solid #b200ff; text-align: center">@ChieuT7</td>
+                    <td style="border-right: 2px solid black; text-align: center">@ToiT7</td>
+                    <td style="border-right: 1px solid #b200ff; text-align: center">@SangCN</td>
+                    <td style="border-right: 1px solid #b200ff; text-align: center">@ChieuCN</td>
+                    <td style="border-right: 2px solid black; text-align: center">@ToiCN</td>
+                </tr>
+            }
+        </thead>
+
+    </table>
+</div>
+

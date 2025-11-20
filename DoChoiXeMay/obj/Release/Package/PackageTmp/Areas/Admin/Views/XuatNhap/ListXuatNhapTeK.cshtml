@@ -31,8 +31,12 @@
                 @*<div class="col-lg-6 col-xl-6 col-md-6 col-sm-12">
             <input type="text" class="form-control input-sm pull-right" style="margin-top: 5px;font-size: medium; height: 40px; width: 95%" name="KeywordsTT" id="KeywordsTT" onchange="TimKiemsp()" placeholder="Enter Tìm Theo Tên SP." />
         </div>*@
-                <div class="col-lg-3 col-xl-3 col-md-3 col-sm-12" style="text-align: center; margin-top: 10px">
+                <div class="col-lg-2 col-xl-2 col-md-2 col-sm-6" style="text-align: center; margin-top: 10px">
                     @Html.DropDownList("UserId", null, new { style = "width: 70%; height: 40px" })
+                </div>
+                <div class="col-lg-3 col-xl-3 col-md-3 col-sm-6 col-6" style="text-align: center; margin-top: 15px">
+                    <span class="icon-case"><i class="glyphicon glyphicon-calendar"></i></span>
+                    <input type="date" name="tungay" id="tungay" />
                 </div>
                 <div class="col-lg-2 col-xl-2 col-md-2 col-sm-6" style="text-align:center;margin-top:10px">
                     @Html.DropDownList("IdLoaiHangXN", null, new { style = "width: 70%; height: 40px" })
@@ -40,7 +44,7 @@
                 <div class="col-lg-2 col-xl-2 col-md-2 col-sm-6" style="text-align: center; margin-top: 10px">
                     @Html.DropDownList("IdSan", null, new { style = "width: 70%; height: 40px" })
                 </div>
-                <div class="col-lg-4 col-xl-4 col-md-4 col-sm-12" style="text-align:center">
+                <div class="col-lg-2 col-xl-4 col-md-4 col-sm-12" style="text-align:center">
                     <input type="text" class="form-control input-sm" style="font-size: medium; height: 40px; width: 95%" name="KeywordsTT" id="KeywordsTT" onchange="TimKiemKyXN()" placeholder="Enter Tìm Theo Tên Kỳ hoặc số Serial." />
                 </div>
             </div>
@@ -89,7 +93,8 @@
         var UserId = $('#UserId').val();
         var idLoaiHangXN = $('#IdLoaiHangXN').val();
         var IdSan = $('#IdSan').val();
-        getTongSanPham(pageSize, pageNo, UserId, KeywordsTT, idLoaiHangXN, IdSan)
+        var tungay = $('#tungay').val();
+        getTongSanPham(tungay, pageSize, pageNo, UserId, KeywordsTT, idLoaiHangXN, IdSan)
         $(".pager a:eq(0)").click(function () {
             if (pageNo > 0) {
                 pageNo = 0;
@@ -97,7 +102,8 @@
                 var UserId = $('#UserId').val();
                 var idLoaiHangXN = $('#IdLoaiHangXN').val();
                 var IdSan = $('#IdSan').val();
-                LoadPage(pageNo, pageSize, UserId, KeywordsTT, idLoaiHangXN, IdSan);
+                var tungay = $('#tungay').val();
+                LoadPage(tungay, pageNo, pageSize, UserId, KeywordsTT, idLoaiHangXN, IdSan);
             }
             return false;
         });
@@ -108,7 +114,8 @@
                 var UserId = $('#UserId').val();
                 var idLoaiHangXN = $('#IdLoaiHangXN').val();
                 var IdSan = $('#IdSan').val();
-                LoadPage(pageNo, pageSize, UserId, KeywordsTT, idLoaiHangXN, IdSan);
+                var tungay = $('#tungay').val();
+                LoadPage(tungay, pageNo, pageSize, UserId, KeywordsTT, idLoaiHangXN, IdSan);
             }
             return false;
         });
@@ -119,7 +126,8 @@
                 var UserId = $('#UserId').val();
                 var idLoaiHangXN = $('#IdLoaiHangXN').val();
                 var IdSan = $('#IdSan').val();
-                LoadPage(pageNo, pageSize, UserId, KeywordsTT, idLoaiHangXN, IdSan);
+                var tungay = $('#tungay').val();
+                LoadPage(tungay, pageNo, pageSize, UserId, KeywordsTT, idLoaiHangXN, IdSan);
             }
             return false;
         });
@@ -131,7 +139,8 @@
                 var UserId = $('#UserId').val();
                 var idLoaiHangXN = $('#IdLoaiHangXN').val();
                 var IdSan = $('#IdSan').val();
-                LoadPage(pageNo, pageSize, UserId, KeywordsTT, idLoaiHangXN, IdSan);
+                var tungay = $('#tungay').val();
+                LoadPage(tungay, pageNo, pageSize, UserId, KeywordsTT, idLoaiHangXN, IdSan);
             }
             return false
         });
@@ -143,7 +152,8 @@
         var UserId = $('#UserId').val();
         var idLoaiHangXN = $('#IdLoaiHangXN').val();
         var IdSan = $('#IdSan').val();
-        getTongSanPham(pageSize, pageNo, UserId, KeywordsTT, idLoaiHangXN, IdSan)
+        var tungay = $('#tungay').val();
+        getTongSanPham(tungay, pageSize, pageNo, UserId, KeywordsTT, idLoaiHangXN, IdSan)
     });
     $("#IdLoaiHangXN").change(function () {
         pageNo = 0;
@@ -152,7 +162,8 @@
         var UserId = $('#UserId').val();
         var idLoaiHangXN = $('#IdLoaiHangXN').val();
         var IdSan = $('#IdSan').val();
-        getTongSanPham(pageSize, pageNo, UserId, KeywordsTT, idLoaiHangXN, IdSan)
+        var tungay = $('#tungay').val();
+        getTongSanPham(tungay, pageSize, pageNo, UserId, KeywordsTT, idLoaiHangXN, IdSan)
     });
     $("#IdSan").change(function () {
         pageNo = 0;
@@ -161,12 +172,23 @@
         var UserId = $('#UserId').val();
         var idLoaiHangXN = $('#IdLoaiHangXN').val();
         var IdSan = $('#IdSan').val();
-        getTongSanPham(pageSize, pageNo, UserId, KeywordsTT, idLoaiHangXN, IdSan)
+        var tungay = $('#tungay').val();
+        getTongSanPham(tungay, pageSize, pageNo, UserId, KeywordsTT, idLoaiHangXN, IdSan)
     });
-    function LoadPage(pageNo, pageSize, UserId, KeywordsTT, idLoaiHangXN, IdSan) {
+    $("#tungay").change(function () {
+        pageNo = 0;
+        pageSize = 5;
+        var KeywordsTT = $('#KeywordsTT').val();
+        var UserId = $('#UserId').val();
+        var idLoaiHangXN = $('#IdLoaiHangXN').val();
+        var IdSan = $('#IdSan').val();
+        var tungay = $('#tungay').val();
+        getTongSanPham(tungay, pageSize, pageNo, UserId, KeywordsTT, idLoaiHangXN, IdSan)
+    });
+    function LoadPage(tungay,pageNo, pageSize, UserId, KeywordsTT, idLoaiHangXN, IdSan) {
         $.ajax({
             url: "/Admin/XuatNhap/GetListKyXNTeK",
-            data: { strk: KeywordsTT, idLHXN: idLoaiHangXN, IdSan: IdSan, PageNo: pageNo, PageSize: pageSize, UserId: UserId },
+            data: { ngay: tungay, strk: KeywordsTT, idLHXN: idLoaiHangXN, IdSan: IdSan, PageNo: pageNo, PageSize: pageSize, UserId: UserId },
             success: function (respone) {
                 $(".listXNT").html(respone);
                 var pagesp = pageNo + 1;
@@ -174,14 +196,14 @@
             }
         });
     };
-    function getTongSanPham(pageSize, pageNo, UserId, KeywordsTT, idLoaiHangXN, IdSan) {
+    function getTongSanPham(tungay,pageSize, pageNo, UserId, KeywordsTT, idLoaiHangXN, IdSan) {
         $.ajax({
             url: "/Admin/XuatNhap/GetPageCountXNTek",
-            data: { strk: KeywordsTT, idLHXN: idLoaiHangXN, IdSan: IdSan, PageSize: pageSize, UserId: UserId },
+            data: { ngay: tungay, strk: KeywordsTT, idLHXN: idLoaiHangXN, IdSan: IdSan, PageSize: pageSize, UserId: UserId },
             success: function (respone) {
                 pageCount = respone;
                 TongSP = respone;
-                LoadPage(pageNo, pageSize, UserId, KeywordsTT, idLoaiHangXN, IdSan);
+                LoadPage(tungay,pageNo, pageSize, UserId, KeywordsTT, idLoaiHangXN, IdSan);
             }
         });
     };
@@ -193,12 +215,13 @@
         var UserId = $('#UserId').val();
         var idLoaiHangXN = $('#IdLoaiHangXN').val();
         var IdSan = $('#IdSan').val();
+        var tungay = $('#tungay').val();
         $("#loading").show();
         $(".listXNT").css('display', 'none');
 
         setTimeout(function () {
             $(".listXNT").css('display', 'block');
-            getTongSanPham(pageSize, pageNo, UserId, KeywordsTTT, idLoaiHangXN, IdSan);
+            getTongSanPham(tungay, pageSize, pageNo, UserId, KeywordsTTT, idLoaiHangXN, IdSan);
             //1s sau hiên lên
         }, 800);
         $("#loading").hide();

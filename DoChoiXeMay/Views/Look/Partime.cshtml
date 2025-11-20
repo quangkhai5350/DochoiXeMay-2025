@@ -45,6 +45,7 @@
     Load();
     function Load() {
         GetListTinhGio()
+        GetListTuan()
     }
     function GetListTinhGio() {
         var tn = $('#ThangNam').val();
@@ -85,4 +86,8 @@
             }
         });
     }
+    $("#SelectW").change(function () {
+        var week = $('#SelectW').val();
+        GetListTuan();
+    });
 </script>

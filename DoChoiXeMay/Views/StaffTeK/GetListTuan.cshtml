@@ -11,90 +11,84 @@
         }
     }
 </style>
-<table class="table">
-    <tr style="background-color: #00bcd4">
-        @*<th style="width:150px;text-align:center">Update</th>*@
-        <th class="mbngay">Ngày</th>
-        <th>Sáng</th>
-        <th>Chiều</th>
-        <th>Tối</th>
+<div class="table-responsive">
+    <table class="table">
+        <tr style="background-color: #00bcd4">
+            @*<th style="width:150px;text-align:center">Update</th>*@
+            <th class="mbngay">Ngày</th>
+            <th>Sáng</th>
+            <th>Chiều</th>
+            <th>Tối</th>
 
-    </tr>
-    @*Lặp từ thứ 2 đến cn, vào csdl lấy giá trị true or false*@
-    @foreach (DoChoiXeMay.Models.NV_LichTuanParTime item in ViewBag.GetLichTuan)
-    {
-        var SangT2 = @item.SangT2 == true ? "X" : "";
-        var ChieuT2 = @item.ChieuT2 == true ? "X" : "";
-        var ToiT2 = @item.ToiT2 == true ? "X" : "";
-        var SangT3 = @item.SangT3 == true ? "X" : "";
-        var ChieuT3 = @item.ChieuT3 == true ? "X" : "";
-        var ToiT3 = @item.ToiT3 == true ? "X" : "";
-        var SangT4 = @item.SangT4 == true ? "X" : "";
-        var ChieuT4 = @item.ChieuT4 == true ? "X" : "";
-        var ToiT4 = @item.ToiT4 == true ? "X" : "";
-        var SangT5 = @item.SangT5 == true ? "X" : "";
-        var ChieuT5 = @item.ChieuT5 == true ? "X" : "";
-        var ToiT5 = @item.ToiT5 == true ? "X" : "";
-        var SangT6 = @item.SangT6 == true ? "X" : "";
-        var ChieuT6 = @item.ChieuT6 == true ? "X" : "";
-        var ToiT6 = @item.ToiT6 == true ? "X" : "";
-        var SangT7 = @item.SangT7 == true ? "X" : "";
-        var ChieuT7 = @item.ChieuT7 == true ? "X" : "";
-        var ToiT7 = @item.ToiT7 == true ? "X" : "";
-        var SangCN = @item.SangCN == true ? "X" : "";
-        var ChieuCN = @item.ChieuCN == true ? "X" : "";
-        var ToiCN = @item.ToiCN == true ? "X" : "";
-        <tr class="">
-            <td>Thứ 2</td>
-            <td>@SangT2</td>
-            <td>@ChieuT2</td>
-            <td>@ToiT2</td>
         </tr>
-        <tr class="">
-            <td>Thứ 3</td>
-            <td>@SangT3</td>
-            <td>@ChieuT3</td>
-            <td>@ToiT3</td>
-        </tr>
-        <tr class="">
-            <td>Thứ 4</td>
-            <td>@SangT4</td>
-            <td>@ChieuT4</td>
-            <td>@ToiT4</td>
-        </tr>
-        <tr class="">
-            <td>Thứ 5</td>
-            <td>@SangT5</td>
-            <td>@ChieuT5</td>
-            <td>@ToiT5</td>
-        </tr>
-        <tr class="">
-            <td>Thứ 6</td>
-            <td>@SangT6</td>
-            <td>@ChieuT6</td>
-            <td>@ToiT6</td>
-        </tr>
-        <tr class="">
-            <td>Thứ 7</td>
-            <td>@SangT7</td>
-            <td>@ChieuT7</td>
-            <td>@ToiT7</td>
-        </tr>
-        <tr class="">
-            <td>Chủ Nhật</td>
-            <td>@SangCN</td>
-            <td>@ChieuCN</td>
-            <td>@ToiCN</td>
-        </tr>
-        @*<tr class="">
-            <td colspan="4">
-                <button id="alich" class="btn btn-warning" data-action="UpdateLichTuan" style="margin-left:5px">
-                    <i class="fa fa-plus-circle"></i>&nbsp;&nbsp; <span id="namelich">Update "Lịch Làm Việc"</span>
-                </button>
-            </td>
-                
-        </tr>*@
-        
-    }
+        @*Lặp từ thứ 2 đến cn, vào csdl lấy giá trị true or false*@
+        @foreach (DoChoiXeMay.Models.NV_LichTuanParTime item in ViewBag.GetLichTuan)
+        {
+            var SangT2 = @item.SangT2 == true ? "X" : "";
+            var ChieuT2 = @item.ChieuT2 == true ? "X" : "";
+            var ToiT2 = @item.ToiT2 == true ? "X" : "";
+            var SangT3 = @item.SangT3 == true ? "X" : "";
+            var ChieuT3 = @item.ChieuT3 == true ? "X" : "";
+            var ToiT3 = @item.ToiT3 == true ? "X" : "";
+            var SangT4 = @item.SangT4 == true ? "X" : "";
+            var ChieuT4 = @item.ChieuT4 == true ? "X" : "";
+            var ToiT4 = @item.ToiT4 == true ? "X" : "";
+            var SangT5 = @item.SangT5 == true ? "X" : "";
+            var ChieuT5 = @item.ChieuT5 == true ? "X" : "";
+            var ToiT5 = @item.ToiT5 == true ? "X" : "";
+            var SangT6 = @item.SangT6 == true ? "X" : "";
+            var ChieuT6 = @item.ChieuT6 == true ? "X" : "";
+            var ToiT6 = @item.ToiT6 == true ? "X" : "";
+            var SangT7 = @item.SangT7 == true ? "X" : "";
+            var ChieuT7 = @item.ChieuT7 == true ? "X" : "";
+            var ToiT7 = @item.ToiT7 == true ? "X" : "";
+            var SangCN = @item.SangCN == true ? "X" : "";
+            var ChieuCN = @item.ChieuCN == true ? "X" : "";
+            var ToiCN = @item.ToiCN == true ? "X" : "";
+            <tr class="">
+                <td>Thứ 2</td>
+                <td>@SangT2</td>
+                <td>@ChieuT2</td>
+                <td>@ToiT2</td>
+            </tr>
+            <tr class="">
+                <td>Thứ 3</td>
+                <td>@SangT3</td>
+                <td>@ChieuT3</td>
+                <td>@ToiT3</td>
+            </tr>
+            <tr class="">
+                <td>Thứ 4</td>
+                <td>@SangT4</td>
+                <td>@ChieuT4</td>
+                <td>@ToiT4</td>
+            </tr>
+            <tr class="">
+                <td>Thứ 5</td>
+                <td>@SangT5</td>
+                <td>@ChieuT5</td>
+                <td>@ToiT5</td>
+            </tr>
+            <tr class="">
+                <td>Thứ 6</td>
+                <td>@SangT6</td>
+                <td>@ChieuT6</td>
+                <td>@ToiT6</td>
+            </tr>
+            <tr class="">
+                <td>Thứ 7</td>
+                <td>@SangT7</td>
+                <td>@ChieuT7</td>
+                <td>@ToiT7</td>
+            </tr>
+            <tr class="">
+                <td>Chủ Nhật</td>
+                <td>@SangCN</td>
+                <td>@ChieuCN</td>
+                <td>@ToiCN</td>
+            </tr>
+        }
 
     </table>
+</div>
+

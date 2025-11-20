@@ -62,6 +62,7 @@ namespace DoChoiXeMay.Controllers
             DateTime date = DateTime.Now;
             var model = dbc.NV_LichTuanParTime.Where(kh => kh.Year == date.Year
                             && kh.SoTuanTrongNam == tuanht)
+                            .OrderByDescending(kh=>kh.NV_NhanVienTek.HoTen)
                             .ToList();
             ViewBag.GetLichTuan = model;
             return PartialView(model);
