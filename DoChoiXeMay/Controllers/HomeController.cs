@@ -53,6 +53,12 @@ namespace DoChoiXeMay.Controllers
                                     p.IdLoai==4)).SingleOrDefault();
             if (user != null)
             {
+                var checkNV = dbc.NV_NhanVienTek.FirstOrDefault(kh => kh.IdUser == user.Id && kh.DaNghiViec==true);
+                if (checkNV != null)
+                {
+                    ModelState.AddModelError("", "Bạn không có quyền đăng nhập!!!.");
+                    return View();
+                }
                 var time_locked = user.LastLokedChangedate;
                 var check_time = DateTime.Now - time_locked;
 
