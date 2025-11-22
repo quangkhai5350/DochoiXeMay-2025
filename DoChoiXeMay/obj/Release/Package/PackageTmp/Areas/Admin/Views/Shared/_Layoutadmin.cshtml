@@ -311,17 +311,40 @@
                                     <a onclick="mobile('ul-democrou')" id="ul-democrou" class="colordark" data-toggle="collapse" data-target="#democrou" href="#"><i class="notika-icon notika-edit"></i> Note Tek</a>
                                     <ul id="democrou" class="collapse dropdown-header-top titlemobile">
                                         <li>
-                                            <a href="/Admin/NoteKyThuat/Index" class="colordarkChil">Video hướng dẫn</a>
+                                            <a id="li1-democrou" onclick="mobile('li1-democrou')" href="/Admin/NoteKyThuat/Index" class="colordarkChil">Video hướng dẫn</a>
                                         </li>
                                         <li>
-                                            <a href="/Admin/NoteKyThuat/VDTEK" class="colordarkChil">Video TeK</a>
+                                            <a id="li2-democrou" onclick="mobile('li2-democrou')" href="/Admin/NoteKyThuat/VDTEK" class="colordarkChil">Video TeK</a>
                                         </li>
                                         <li>
-                                            <a href="/Admin/NoteKyThuat/HinhTrangChu" class="colordarkChil">Hình Trang Chủ</a>
+                                            <a id="li3-democrou" onclick="mobile('li3-democrou')" href="/Admin/NoteKyThuat/HinhTrangChu" class="colordarkChil">Hình Trang Chủ</a>
                                         </li>
                                     </ul>
                                 </li>
 
+                                <li>
+                                    <a onclick="mobile('ul-nhanvien')" id="ul-nhanvien" class="colordark" data-toggle="collapse" data-target="#nhanvien" href="#"><i class="notika-icon notika-edit"></i> Nhân Viên TeK</a>
+                                    <ul id="nhanvien" class="collapse dropdown-header-top titlemobile">
+                                        <li>
+                                            <a id="li1-nhanvien" onclick="mobile('li1-nhanvien')" href="/Admin/NhanVien/TinhGioCong" class="colordarkChil">Giờ Công Partime(I)</a>
+                                        </li>
+                                        <li>
+                                            <a id="li2-nhanvien" onclick="mobile('li2-nhanvien')" href="/Admin/Cong_ThanhToan/ListCong" class="colordarkChil">Tính Công(II)</a>
+                                        </li>
+                                        <li>
+                                            <a id="li3-nhanvien" onclick="mobile('li3-nhanvien')" href="/Admin/Cong_ThanhToan/ListThanhToan" class="colordarkChil">Thanh Toán Lương(III)</a>
+                                        </li>
+                                        <li>
+                                            <a id="li4-nhanvien" onclick="mobile('li4-nhanvien')" href="/Admin/NhanVien/ListNhanVien" class="colordarkChil">Danh Sách Nhân Viên</a>
+                                        </li>
+                                        <li>
+                                            <a id="li5-nhanvien" onclick="mobile('li5-nhanvien')" href="/Admin/NhanVien/ChitietNangLuong" class="colordarkChil">Bậc Lương</a>
+                                        </li>
+                                        <li>
+                                            <a id="li6-nhanvien" onclick="mobile('li6-nhanvien')" href="/Admin/NhanVien/ViTriNhanVien" class="colordarkChil">Vị Trí NV</a>
+                                        </li>
+                                    </ul>
+                                </li>
 
                                 <li>
                                     @if (Session["UserName"] != null)

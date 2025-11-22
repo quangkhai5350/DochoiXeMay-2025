@@ -284,5 +284,14 @@ namespace DoChoiXeMay.Areas.Admin.Data
             
             return true;
         }
+        public double GetHSGbyIdNV(int IDnv)
+        {
+            double hsg = 0;
+            var ChiTietNangLuong = _context.NV_ChiTietNangLuong.FirstOrDefault(kh=>kh.IdNhanVien==IDnv);
+            if (ChiTietNangLuong != null) {
+                hsg = ChiTietNangLuong.NV_HeSoGio.HeSo;
+            }
+            return hsg;
+        } 
     }
 }

@@ -58,7 +58,11 @@ namespace DoChoiXeMay.Controllers
                     (model[i].GioRaChieu - model[i].GioVaoChieu)).TotalHours.ToString("0.00"));
                 var kqTC = double.Parse(((model[i].GioRaTangCa - model[i].GioVaoTangCa).TotalHours * float.Parse(TangCa)).ToString("0.00"));
                 var kqLe = double.Parse(((model[i].GioRaLe - model[i].GioVaoLe).TotalHours * float.Parse(Le)).ToString("0.00"));
+                
                 model[i].GhiChu = (kqT + kqTC + kqLe).ToString();
+                kqT = kqT > 0 ? kqT : 0;
+                kqTC = kqTC > 0 ? kqTC : 0;
+                kqLe = kqLe > 0 ? kqLe : 0;
                 giothang = giothang + kqT + kqTC + kqLe;
             }
             var nv = dbc.NV_NhanVienTek.Find(IDnv);
@@ -92,10 +96,16 @@ namespace DoChoiXeMay.Controllers
                                 && kh.Year == model.Year && kh.Day <= DateTime.Now.Day).ToList();
                     for (int i = 0; i < modelkt.Count(); i++)
                     {
-                        kqgc = kqgc + double.Parse((modelkt[i].GioRaSang - modelkt[i].GioVaoSang +
+                        var kqg = double.Parse((modelkt[i].GioRaSang - modelkt[i].GioVaoSang +
                             (modelkt[i].GioRaChieu - modelkt[i].GioVaoChieu)).TotalHours.ToString("0.00"));
-                        kqtc = kqtc + double.Parse((modelkt[i].GioRaTangCa - modelkt[i].GioVaoTangCa).TotalHours.ToString("0.00"));
-                        kqle = kqle + double.Parse((modelkt[i].GioRaLe - modelkt[i].GioVaoLe).TotalHours.ToString("0.00"));
+                        kqg = kqg > 0 ? kqg : 0;
+                        kqgc = kqgc + kqg;
+                        var kqt = double.Parse((modelkt[i].GioRaTangCa - modelkt[i].GioVaoTangCa).TotalHours.ToString("0.00"));
+                        kqt = kqt > 0 ? kqt : 0;
+                        kqtc = kqtc + kqt;
+                        var kql = double.Parse((modelkt[i].GioRaLe - modelkt[i].GioVaoLe).TotalHours.ToString("0.00"));
+                        kql = kql > 0 ? kql : 0;
+                        kqle = kqle + kql;
                     }
                     //kiểm tra bảng Công
                     //Chưa có thì Insert, có rồi thì update

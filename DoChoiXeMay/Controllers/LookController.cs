@@ -49,6 +49,9 @@ namespace DoChoiXeMay.Controllers
                 var kqTC = double.Parse(((model[i].GioRaTangCa - model[i].GioVaoTangCa).TotalHours * float.Parse(TangCa)).ToString("0.00"));
                 var kqLe = double.Parse(((model[i].GioRaLe - model[i].GioVaoLe).TotalHours * float.Parse(Le)).ToString("0.00"));
                 model[i].GhiChu = (kqT + kqTC + kqLe).ToString();
+                kqT = kqT > 0?kqT: 0;
+                kqTC = kqTC > 0?kqTC: 0;
+                kqLe = kqLe > 0?kqLe: 0;
                 giothang = giothang + kqT + kqTC + kqLe;
             }
             ViewBag.NgayGioCong = model;

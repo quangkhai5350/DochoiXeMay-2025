@@ -83,10 +83,16 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                                 && kh.Year == model.Year && kh.Day <= DateTime.Now.Day).ToList();
                     for (int i = 0; i < modelkt.Count(); i++)
                     {
-                        kqgc = kqgc + double.Parse((modelkt[i].GioRaSang - modelkt[i].GioVaoSang +
+                        var kqg = double.Parse((modelkt[i].GioRaSang - modelkt[i].GioVaoSang +
                             (modelkt[i].GioRaChieu - modelkt[i].GioVaoChieu)).TotalHours.ToString("0.00"));
-                        kqtc = kqtc + double.Parse((modelkt[i].GioRaTangCa - modelkt[i].GioVaoTangCa).TotalHours.ToString("0.00"));
-                        kqle = kqle + double.Parse((modelkt[i].GioRaLe - modelkt[i].GioVaoLe).TotalHours.ToString("0.00"));
+                        kqg = kqg > 0 ? kqg : 0;
+                        kqgc = kqgc + kqg;
+                        var kqt = double.Parse((modelkt[i].GioRaTangCa - modelkt[i].GioVaoTangCa).TotalHours.ToString("0.00"));
+                        kqt = kqt > 0 ? kqt : 0;
+                        kqtc = kqtc + kqt;
+                        var kql= double.Parse((modelkt[i].GioRaLe - modelkt[i].GioVaoLe).TotalHours.ToString("0.00"));
+                        kql = kql > 0 ? kql : 0;
+                        kqle = kqle + kql;
                     }
                     //kiểm tra bảng Công
                     //Chưa có thì Insert, có rồi thì update
@@ -252,7 +258,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 var dvt= dbc.NV_Vitrinhanvien.Find(model.IdVitrinhanvien).DonViTinh;
                 if (model.DaNghiViec == false)
                 {
-                    //Lan dau update Khong co thi Insert, if ktnl==false thi phai them 1 dong
+                    //Lan dau update Khong co thi Insert
                     var ktnl = dbc.NV_ChiTietNangLuong.FirstOrDefault(kh => kh.IdNhanVien == model.Id);
                     if (ktnl == null) {
                         var idhsl = 1;
