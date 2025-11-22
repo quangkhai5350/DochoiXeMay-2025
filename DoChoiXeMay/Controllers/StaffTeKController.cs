@@ -54,11 +54,11 @@ namespace DoChoiXeMay.Controllers
                         .ToList();
             for (int i = 0; i < model.Count(); i++)
             {
-                var kqT = (model[i].GioRaSang - model[i].GioVaoSang +
-                    (model[i].GioRaChieu - model[i].GioVaoChieu)).TotalHours;
-                var kqTC = (model[i].GioRaTangCa - model[i].GioVaoTangCa).TotalHours * float.Parse(TangCa);
-                var kqLe = (model[i].GioRaLe - model[i].GioVaoLe).TotalHours * float.Parse(Le);
-                model[i].GhiChu = (kqT + kqTC + kqLe).ToString("0.00");
+                var kqT = double.Parse((model[i].GioRaSang - model[i].GioVaoSang +
+                    (model[i].GioRaChieu - model[i].GioVaoChieu)).TotalHours.ToString("0.00"));
+                var kqTC = double.Parse(((model[i].GioRaTangCa - model[i].GioVaoTangCa).TotalHours * float.Parse(TangCa)).ToString("0.00"));
+                var kqLe = double.Parse(((model[i].GioRaLe - model[i].GioVaoLe).TotalHours * float.Parse(Le)).ToString("0.00"));
+                model[i].GhiChu = (kqT + kqTC + kqLe).ToString();
                 giothang = giothang + kqT + kqTC + kqLe;
             }
             var nv = dbc.NV_NhanVienTek.Find(IDnv);
@@ -92,10 +92,10 @@ namespace DoChoiXeMay.Controllers
                                 && kh.Year == model.Year && kh.Day <= DateTime.Now.Day).ToList();
                     for (int i = 0; i < modelkt.Count(); i++)
                     {
-                        kqgc = kqgc + (modelkt[i].GioRaSang - modelkt[i].GioVaoSang +
-                            (modelkt[i].GioRaChieu - modelkt[i].GioVaoChieu)).TotalHours;
-                        kqtc = kqtc + (modelkt[i].GioRaTangCa - modelkt[i].GioVaoTangCa).TotalHours;
-                        kqle = kqle + (modelkt[i].GioRaLe - modelkt[i].GioVaoLe).TotalHours;
+                        kqgc = kqgc + double.Parse((modelkt[i].GioRaSang - modelkt[i].GioVaoSang +
+                            (modelkt[i].GioRaChieu - modelkt[i].GioVaoChieu)).TotalHours.ToString("0.00"));
+                        kqtc = kqtc + double.Parse((modelkt[i].GioRaTangCa - modelkt[i].GioVaoTangCa).TotalHours.ToString("0.00"));
+                        kqle = kqle + double.Parse((modelkt[i].GioRaLe - modelkt[i].GioVaoLe).TotalHours.ToString("0.00"));
                     }
                     //kiểm tra bảng Công
                     //Chưa có thì Insert, có rồi thì update

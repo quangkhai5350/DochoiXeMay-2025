@@ -44,11 +44,11 @@ namespace DoChoiXeMay.Controllers
                         .ToList();
             for (int i = 0; i < model.Count(); i++)
             {
-                var kqT = (model[i].GioRaSang - model[i].GioVaoSang +
-                    (model[i].GioRaChieu - model[i].GioVaoChieu)).TotalHours;
-                var kqTC = (model[i].GioRaTangCa - model[i].GioVaoTangCa).TotalHours * float.Parse(TangCa);
-                var kqLe = (model[i].GioRaLe - model[i].GioVaoLe).TotalHours * float.Parse(Le);
-                model[i].GhiChu = (kqT + kqTC + kqLe).ToString("0.00");
+                var kqT = double.Parse((model[i].GioRaSang - model[i].GioVaoSang +
+                    (model[i].GioRaChieu - model[i].GioVaoChieu)).TotalHours.ToString("0.00"));
+                var kqTC = double.Parse(((model[i].GioRaTangCa - model[i].GioVaoTangCa).TotalHours * float.Parse(TangCa)).ToString("0.00"));
+                var kqLe = double.Parse(((model[i].GioRaLe - model[i].GioVaoLe).TotalHours * float.Parse(Le)).ToString("0.00"));
+                model[i].GhiChu = (kqT + kqTC + kqLe).ToString();
                 giothang = giothang + kqT + kqTC + kqLe;
             }
             ViewBag.NgayGioCong = model;

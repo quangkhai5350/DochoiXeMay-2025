@@ -83,10 +83,10 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                                 && kh.Year == model.Year && kh.Day <= DateTime.Now.Day).ToList();
                     for (int i = 0; i < modelkt.Count(); i++)
                     {
-                        kqgc = kqgc + (modelkt[i].GioRaSang - modelkt[i].GioVaoSang +
-                            (modelkt[i].GioRaChieu - modelkt[i].GioVaoChieu)).TotalHours;
-                        kqtc = kqtc + (modelkt[i].GioRaTangCa - modelkt[i].GioVaoTangCa).TotalHours;
-                        kqle = kqle + (modelkt[i].GioRaLe - modelkt[i].GioVaoLe).TotalHours;
+                        kqgc = kqgc + double.Parse((modelkt[i].GioRaSang - modelkt[i].GioVaoSang +
+                            (modelkt[i].GioRaChieu - modelkt[i].GioVaoChieu)).TotalHours.ToString("0.00"));
+                        kqtc = kqtc + double.Parse((modelkt[i].GioRaTangCa - modelkt[i].GioVaoTangCa).TotalHours.ToString("0.00"));
+                        kqle = kqle + double.Parse((modelkt[i].GioRaLe - modelkt[i].GioVaoLe).TotalHours.ToString("0.00"));
                     }
                     //kiểm tra bảng Công
                     //Chưa có thì Insert, có rồi thì update

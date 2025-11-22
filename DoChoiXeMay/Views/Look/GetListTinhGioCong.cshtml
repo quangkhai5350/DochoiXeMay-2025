@@ -9,7 +9,7 @@
     <table class="table">
         <thead>
             <tr style="background-color: #00bcd4">
-                <th style="width:40px">@ViewBag.TongSoSoGioThang h</th>
+                <th style="width:42px">@ViewBag.TongSoSoGioThang h</th>
                 <th style="width:60px">Ngày</th>
                 <th>VaoS</th>
                 <th>RaS</th>
@@ -29,7 +29,7 @@
             var Id = item.Id.ToString();
             var cl = "";
             var ht = DateTime.Now;
-            if (item.GhiChu == "0,00")
+            if (item.GhiChu == "0")
             {
                 cl = "";
             }
