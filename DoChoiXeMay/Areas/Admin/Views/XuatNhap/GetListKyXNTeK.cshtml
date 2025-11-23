@@ -214,13 +214,13 @@
                             foreach (DoChoiXeMay.Models.ChitietXuatNhap ct in Chitiet)
                             {
                                 var KT = new XuatNhapData().kiemtraNgayCTXN(ct.Id.ToString());
-                                if (KT > 20 && ct.IdDoiTra == 1)
+                                if (KT > 30 && ct.IdDoiTra == 1)
                                 {
                                     <p style="height:40px">
-                                        <span>Hết hạn(20 ngày)</span>
+                                        <span>Hết hạn(30 ngày)</span>
                                     </p>
                                 }
-                                else if (KT <= 20 && ct.IdDoiTra == 1)
+                                else if (KT <= 30 && ct.IdDoiTra == 1)
                                 {
                                     if (Session["quyen"].ToString() == "1")
                                     {
