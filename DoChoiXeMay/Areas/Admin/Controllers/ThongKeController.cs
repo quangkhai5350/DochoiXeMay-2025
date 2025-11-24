@@ -108,8 +108,8 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ViewBag.DaTraHangKhachLeLoiKhoiTikTok = DaTraHangKhachLeLoiKhoiTikTok == null ? 0 : DaTraHangKhachLeLoiKhoiTikTok.Sum(kh => kh.SoLuong);
             ViewBag.DaTraHangKhachLeLoiKhoiShopee = DaTraHangKhachLeLoiKhoiShopee == null ? 0 : DaTraHangKhachLeLoiKhoiShopee.Sum(kh => kh.SoLuong);
             ViewBag.DaTraHangKhachLeLoiKhoiNSan = DaTraHangKhachLeLoiKhoiNSan == null ? 0 : DaTraHangKhachLeLoiKhoiNSan.Sum(kh => kh.SoLuong);
-
-            ViewBag.TongXiNhanGen1TrongDaBan = TrongDaBan==null?0:TrongDaBan.Sum(kh => kh.SoLuong);
+            var modelTrongDaBan = TrongDaBan == null ? 0 : TrongDaBan.Sum(kh => kh.SoLuong);
+            ViewBag.TongXiNhanGen1TrongDaBan = modelTrongDaBan;
 
             ViewBag.TongXiNhanGen1TrongDaBanTikTok = TrongDaBanTikTok == null ? 0 : TrongDaBanTikTok.Sum(kh => kh.SoLuong);
             ViewBag.TongXiNhanGen1trongDaBanShopee = trongDaBanShopee == null ? 0 : trongDaBanShopee.Sum(kh => kh.SoLuong);
@@ -118,8 +118,8 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             
             ViewBag.TongXiNhanGen1trongDaBanSiNSan = trongDaBanLSiNSan == null ? 0 : trongDaBanLSiNSan.Sum(kh => kh.SoLuong);
 
-
-            ViewBag.TongXiNhanGen1KhoiDaBan = KhoiDaBan == null ? 0 : KhoiDaBan.Sum(kh => kh.SoLuong);
+            var modelKhoiDaBan = KhoiDaBan == null ? 0 : KhoiDaBan.Sum(kh => kh.SoLuong);
+            ViewBag.TongXiNhanGen1KhoiDaBan = modelKhoiDaBan;
             ViewBag.TongXiNhanGen1KhoiDaBanTikTok = KhoiDaBanTikTok == null ? 0 : KhoiDaBanTikTok.Sum(kh => kh.SoLuong);
             ViewBag.TongXiNhanGen1KhoiDaBanShopee = KhoiDaBanShopee == null ? 0 : KhoiDaBanShopee.Sum(kh => kh.SoLuong);
             ViewBag.TongXiNhanGen1KhoiDaBanSiNSan = KhoiDaBanLSiNSan == null ? 0 : KhoiDaBanLSiNSan.Sum(kh => kh.SoLuong);
@@ -154,6 +154,8 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             Session["DaBanShopee"] = modelDaBanShopee;
             Session["DaBanLeNSan"] = modelDaBanLeNSan;
             Session["DaBanSiNSan"] = modelDaBanLSiNSan;
+            Session["TrongDaBan"] = modelTrongDaBan;
+            Session["KhoiDaBan"] = modelKhoiDaBan;
             return View();
         }
         public ActionResult DoThiThongKe()

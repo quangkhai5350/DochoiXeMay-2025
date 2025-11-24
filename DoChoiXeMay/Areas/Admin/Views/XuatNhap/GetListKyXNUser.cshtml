@@ -68,9 +68,19 @@
                             {
                                 if (Chitiet.Count() > 0)
                                 {
-                                    <a title="Sản phẩm thông thường" class="btn btn-default" href="/Admin/XuatNhap/DayXuatNhapTek?id=@Item.Id&thuchi=0" onclick="return confirm('Bạn yêu cầu Đẩy Kỳ-@Item.TenKy- đến TEK ??')">
-                                        Đẩy Đến XN TEK và TC TEK
-                                    </a>
+                                    if (Item.TongTienAuto > 0)
+                                    {
+                                        <a title="Sản phẩm thông thường" class="btn btn-default" href="/Admin/XuatNhap/DayXuatNhapTek?id=@Item.Id&thuchi=0" onclick="return confirm('Bạn yêu cầu Đẩy Kỳ-@Item.TenKy- đến TEK ??')">
+                                            Đẩy Đến XN TEK và TC TEK
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a title="Sản phẩm thông thường" class="btn btn-default" disabled>
+                                            Đẩy Đến XN TEK và TC TEK
+                                        </a>
+                                    }
+
                                     <hr />
                                     <a style="background-color:burlywood" title="Nhập sản phẩm do TeK tạo ra, hoặc Xuất tặng, cho mượn,..." class="btn btn-default" href="/Admin/XuatNhap/DayXuatNhapTek?id=@Item.Id&thuchi=1" onclick="return confirm('Bạn yêu cầu Đẩy Kỳ-@Item.TenKy- đến TEK(Không có TC) ??')">
                                         Đẩy Đến XN TEK(Không có TC)
