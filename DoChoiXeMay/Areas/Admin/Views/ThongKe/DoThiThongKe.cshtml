@@ -10,6 +10,9 @@
 <input id="DaBanLeNSan" value="@Session["DaBanLeNSan"].ToString()" hidden />
 <input id="DaBanSiNSan" value="@Session["DaBanSiNSan"].ToString()" hidden />
 
+<input id="TrongDaBan" value="@Session["TrongDaBan"].ToString()" hidden />
+<input id="KhoiDaBan" value="@Session["KhoiDaBan"].ToString()" hidden />
+
 <div id="chartContainer" style="height: 300px; width: 100%;"></div>
 <div id="chartContainer2" style="height: 300px; width: 100%;"></div>
 <script>
@@ -53,17 +56,25 @@
         const SiNSan = $("#DaBanSiNSan").val()
         var tSiNSan = parseInt(SiNSan);
 
+        const DaBantrong = $("#TrongDaBan").val()
+        var tDaBantrong = parseInt(DaBantrong);
+        const DaBankhoi = $("#KhoiDaBan").val()
+        var tDaBankhoi = parseInt(DaBankhoi);
+
         var chart2 = new CanvasJS.Chart("chartContainer2", {
             theme: "light1", // "light2", "dark1", "dark2"
             animationEnabled: true, // change to true		
             title: {
-                text: "Đã Bán"
+                text: "Đã Bán TNT Gen 1"
             },
             data: [
                 {
                     // Change type to "bar", "area", "spline", "pie",etc.
                     type: "column",
                     dataPoints: [
+                        { label: "Khói", y: tDaBankhoi },
+                        { label: "Trong", y: tDaBantrong },
+
                         { label: "Lẽ NSan", y: tLeNSan },
                         { label: "Shopee", y: tShopee },
                         { label: "TikTok", y: tTikTok },
