@@ -121,8 +121,9 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                         XN.AdminXNPUSH = true;
                         var modelct = dbc.ChitietXuatNhaps.Where(kh=>kh.IdKy==id).ToList();
                         //add vao bang hang hoa
-                        if (XN.XuatNhap)
+                        if (XN.XuatNhap==true && XN.IdLoaiHangXN<4) 
                         {
+                            /*=4 là hàng NoBox, không trừ bảng hàng h*/
                             //Kiểm tra số lượng bảng hh >= so luong xuất
                             var kqktHH = Data.XuatNhapData.kiemtrasoluongHH(dbc, id);
                             if (kqktHH == false)
@@ -144,7 +145,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                                 }
                             }
                         }
-                        else
+                        else if(XN.XuatNhap == false)
                         {
                             //ky nhập + vào, không cần kiểm tra
                             for (int i = 0; i < modelct.Count(); i++)
@@ -157,8 +158,6 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                                 
                             }
                         }
-                        
-
                     }
                 }
                 else

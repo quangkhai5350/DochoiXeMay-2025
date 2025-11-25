@@ -5,12 +5,12 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project>
   <PropertyGroup>
     <_PublishTargetUrl>D:\PublishWebDoChoiXe</_PublishTargetUrl>
-    <History>True|2025-11-24T09:09:51.3746798Z||;True|2025-08-28T19:52:22.5360722+07:00||;True|2025-08-28T19:30:42.3367945+07:00||;</History>
+    <History>True|2025-11-25T08:27:53.5258465Z||;True|2025-11-24T16:09:51.3746798+07:00||;True|2025-08-28T19:52:22.5360722+07:00||;True|2025-08-28T19:30:42.3367945+07:00||;</History>
     <LastFailureDetails />
   </PropertyGroup>
   <ItemGroup>
     <File Include="App_Data/SoTruyCap.txt">
-      <publishTime>11/24/2025 16:04:06</publishTime>
+      <publishTime>11/25/2025 15:22:33</publishTime>
     </File>
     <File Include="Areas/Admin/Content/css/animate.css">
       <publishTime>09/11/2025 11:00:33</publishTime>
@@ -751,13 +751,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/31/2025 09:12:46</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Shared/_Layoutadmin.cshtml">
-      <publishTime>11/23/2025 11:29:23</publishTime>
+      <publishTime>11/25/2025 14:52:50</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Shared/_LayoutList.cshtml">
       <publishTime>09/11/2025 11:00:33</publishTime>
     </File>
     <File Include="Areas/Admin/Views/ThongKe/DoThiThongKe.cshtml">
-      <publishTime>11/24/2025 16:06:05</publishTime>
+      <publishTime>11/25/2025 10:49:41</publishTime>
     </File>
     <File Include="Areas/Admin/Views/ThongKe/GetListKyTonKho.cshtml">
       <publishTime>10/31/2025 09:12:46</publishTime>
@@ -826,10 +826,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>09/11/2025 11:00:34</publishTime>
     </File>
     <File Include="bin/DoChoiXeMay.dll">
-      <publishTime>11/24/2025 16:09:49</publishTime>
+      <publishTime>11/25/2025 15:26:51</publishTime>
     </File>
     <File Include="bin/DoChoiXeMay.pdb">
-      <publishTime>11/24/2025 16:09:49</publishTime>
+      <publishTime>11/25/2025 15:26:51</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>06/17/2024 03:46:24</publishTime>
@@ -1450,7 +1450,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>09/11/2025 11:00:33</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>11/20/2025 09:08:10</publishTime>
+      <publishTime>11/25/2025 14:52:31</publishTime>
     </File>
     <File Include="Views/StaffTeK/GetListTinhGioCong.cshtml">
       <publishTime>11/23/2025 11:29:23</publishTime>
@@ -1474,7 +1474,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>09/11/2025 11:00:33</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>11/24/2025 16:09:49</publishTime>
+      <publishTime>11/25/2025 15:27:51</publishTime>
     </File>
   </ItemGroup>
 </Project>
