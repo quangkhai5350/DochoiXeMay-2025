@@ -18,6 +18,17 @@
         margin-top: 50%;
     }
 </style>
+<div class="row">
+    <div class="col-lg-4 col-xl-4 col-md-4 col-sm-12" style="margin-top: 10px">
+        <span style="margin-left:20px; color:brown">Tồn Kho TNT BLOCKX G2 ZEN 1-Trong: @ViewBag.TrongTon</span>
+    </div>
+    <div class="col-lg-4 col-xl-4 col-md-4 col-sm-12" style="margin-top: 10px">
+
+    </div>
+    <div class="col-lg-4 col-xl-4 col-md-4 col-sm-12" style="margin-top: 10px">
+        <span style="margin-left: 20px; color: brown ">Tồn Kho TNT BLOCKX G2 ZEN 1-Khói: @ViewBag.KhoiTon</span>
+    </div>
+</div>
 <div class="panel panel-default" style="margin-top:10px">
     <div class="panel-heading">
         <div class="row">
@@ -28,9 +39,6 @@
                 @Session["ThongBaoXuatNhapTeKct"]
             </div>
             <div class="row">
-                @*<div class="col-lg-6 col-xl-6 col-md-6 col-sm-12">
-            <input type="text" class="form-control input-sm pull-right" style="margin-top: 5px;font-size: medium; height: 40px; width: 95%" name="KeywordsTT" id="KeywordsTT" onchange="TimKiemsp()" placeholder="Enter Tìm Theo Tên SP." />
-        </div>*@
                 <div class="col-lg-2 col-xl-2 col-md-2 col-sm-6" style="text-align: center; margin-top: 10px">
                     @Html.DropDownList("UserId", null, new { style = "width: 70%; height: 40px" })
                 </div>
@@ -48,7 +56,7 @@
                     <input type="text" class="form-control input-sm" style="font-size: medium; height: 40px; width: 95%" name="KeywordsTT" id="KeywordsTT" onchange="TimKiemKyXN()" placeholder="Enter Tìm Theo Tên Kỳ hoặc số Serial." />
                 </div>
             </div>
-
+            
         </div>
     </div>
     <div class="panel-body">

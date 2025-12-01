@@ -5,12 +5,12 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project>
   <PropertyGroup>
     <_PublishTargetUrl>D:\PublishWebDoChoiXe</_PublishTargetUrl>
-    <History>True|2025-11-25T08:27:53.5258465Z||;True|2025-11-24T16:09:51.3746798+07:00||;True|2025-08-28T19:52:22.5360722+07:00||;True|2025-08-28T19:30:42.3367945+07:00||;</History>
+    <History>True|2025-12-01T03:07:29.6858075Z||;True|2025-12-01T09:37:24.0375980+07:00||;True|2025-11-28T10:07:59.1209492+07:00||;True|2025-11-25T15:27:53.5258465+07:00||;True|2025-11-24T16:09:51.3746798+07:00||;True|2025-08-28T19:52:22.5360722+07:00||;True|2025-08-28T19:30:42.3367945+07:00||;</History>
     <LastFailureDetails />
   </PropertyGroup>
   <ItemGroup>
     <File Include="App_Data/SoTruyCap.txt">
-      <publishTime>11/25/2025 15:22:33</publishTime>
+      <publishTime>12/01/2025 10:05:39</publishTime>
     </File>
     <File Include="Areas/Admin/Content/css/animate.css">
       <publishTime>09/11/2025 11:00:33</publishTime>
@@ -679,7 +679,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>11/17/2025 15:54:17</publishTime>
     </File>
     <File Include="Areas/Admin/Views/NhanVien/GetListTinhGioCong.cshtml">
-      <publishTime>11/24/2025 15:12:24</publishTime>
+      <publishTime>12/01/2025 09:34:22</publishTime>
     </File>
     <File Include="Areas/Admin/Views/NhanVien/GetViTriNhanVien.cshtml">
       <publishTime>11/05/2025 10:17:04</publishTime>
@@ -757,7 +757,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>09/11/2025 11:00:33</publishTime>
     </File>
     <File Include="Areas/Admin/Views/ThongKe/DoThiThongKe.cshtml">
-      <publishTime>11/25/2025 10:49:41</publishTime>
+      <publishTime>11/28/2025 10:19:59</publishTime>
     </File>
     <File Include="Areas/Admin/Views/ThongKe/GetListKyTonKho.cshtml">
       <publishTime>10/31/2025 09:12:46</publishTime>
@@ -805,10 +805,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>11/17/2025 14:38:48</publishTime>
     </File>
     <File Include="Areas/Admin/Views/XuatNhap/ListXuatNhapTeK.cshtml">
-      <publishTime>11/17/2025 15:25:41</publishTime>
+      <publishTime>11/27/2025 11:12:51</publishTime>
     </File>
     <File Include="Areas/Admin/Views/XuatNhap/ListXuatNhapUser.cshtml">
-      <publishTime>11/17/2025 12:54:09</publishTime>
+      <publishTime>11/27/2025 11:07:29</publishTime>
     </File>
     <File Include="Areas/Admin/Views/XuatNhap/UpdateKyXNUser.cshtml">
       <publishTime>11/04/2025 09:48:02</publishTime>
@@ -826,10 +826,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>09/11/2025 11:00:34</publishTime>
     </File>
     <File Include="bin/DoChoiXeMay.dll">
-      <publishTime>11/25/2025 15:26:51</publishTime>
+      <publishTime>12/01/2025 10:07:17</publishTime>
     </File>
     <File Include="bin/DoChoiXeMay.pdb">
-      <publishTime>11/25/2025 15:26:51</publishTime>
+      <publishTime>12/01/2025 10:07:17</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>06/17/2024 03:46:24</publishTime>
@@ -1444,7 +1444,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>11/21/2025 10:39:37</publishTime>
     </File>
     <File Include="Views/Look/Partime.cshtml">
-      <publishTime>11/21/2025 10:39:37</publishTime>
+      <publishTime>11/28/2025 14:45:43</publishTime>
     </File>
     <File Include="Views/Shared/Error.cshtml">
       <publishTime>09/11/2025 11:00:33</publishTime>
@@ -1459,7 +1459,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>11/21/2025 10:39:37</publishTime>
     </File>
     <File Include="Views/StaffTeK/IndexStaff.cshtml">
-      <publishTime>11/19/2025 16:24:07</publishTime>
+      <publishTime>11/28/2025 14:33:52</publishTime>
     </File>
     <File Include="Views/StaffTeK/UpdateGioCong.cshtml">
       <publishTime>11/18/2025 09:42:00</publishTime>
@@ -1474,7 +1474,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>09/11/2025 11:00:33</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>11/25/2025 15:27:51</publishTime>
+      <publishTime>12/01/2025 10:07:28</publishTime>
     </File>
   </ItemGroup>
 </Project>

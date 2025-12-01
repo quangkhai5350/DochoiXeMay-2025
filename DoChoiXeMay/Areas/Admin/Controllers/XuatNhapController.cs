@@ -53,6 +53,8 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ViewBag.IdKhuVuc = new SelectList(dbc.KhuVucs.ToList(), "Id", "SatNhap", 36);
             ViewBag.IdLoaiHangXN = new SelectList(dbc.KyXuatNhap_LoaiHang.ToList(), "Id", "TenLoai", 1);
             Session["requestUri"] = "/Admin/XuatNhap/ListXuatNhapUser";
+            ViewBag.TrongTon=dbc.HangHoas.Where(kh => kh.Id == 56).Sum(kh => kh.SoLuong);
+            ViewBag.KhoiTon = dbc.HangHoas.Where(kh => kh.Id == 55).Sum(kh => kh.SoLuong);
             return View();
         }
         public ActionResult GetListKyXNUser()
@@ -80,6 +82,8 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ViewBag.UserId = new SelectList(dbc.UserTeks.Where(kh => kh.IdLoai < 3), "Id", "UserName");
             ViewBag.IdSan = new SelectList(dbc.SanThuongMais.Where(kh => kh.SuDung ==true), "Id", "TenSan");
             ViewBag.IdLoaiHangXN = new SelectList(dbc.KyXuatNhap_LoaiHang.ToList(), "Id", "TenLoai");
+            ViewBag.TrongTon = dbc.HangHoas.Where(kh => kh.Id == 56).Sum(kh => kh.SoLuong);
+            ViewBag.KhoiTon = dbc.HangHoas.Where(kh => kh.Id == 55).Sum(kh => kh.SoLuong);
             return View();
         }
         public ActionResult GetListKyXNTeK(string ngay = "",string strk = "",int idLHXN = 0,int IdSan=0, int PageNo = 0, int PageSize = 8,int UserId = 0)

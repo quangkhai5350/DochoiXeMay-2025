@@ -67,6 +67,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             //đã thanh toán lương, thì không cho update giờ
             //Update giờ thì thêm 1 dòng vào bảng Công (hoặc thay đổi)
             //Update giờ thì thêm 1 dòng vào bảng thanh toán lương (hoặc thay đổi)
+            
             var ktthanhtoan = dbc.NV_ThanhToanLuong.FirstOrDefault(kh => kh.Thang == model.Month && kh.Nam == model.Year 
                                     && kh.DaNhanLuong==true && kh.IdNhanVien == model.IdNhanVien);
             if (ktthanhtoan == null)
@@ -79,8 +80,20 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     Session["ThongBaoGioCongTEKLoi"] = "";
                     //Lay gio Cong
                     double kqgc = 0; double kqtc = 0; double kqle = 0;
-                    var modelkt = dbc.NV_GioCong.Where(kh => kh.IdNhanVien == model.IdNhanVien && kh.Month == model.Month
-                                && kh.Year == model.Year && kh.Day <= DateTime.Now.Day).ToList();
+                    DateTime date = DateTime.Now;
+                    List<NV_GioCong> modelkt = new List<NV_GioCong>();
+                    if (model.Month == date.Month && model.Year == date.Year)
+                    {
+                        modelkt = dbc.NV_GioCong.Where(kh => kh.IdNhanVien == model.IdNhanVien && kh.Month == model.Month
+                                                        && kh.Year == model.Year && kh.Day <= DateTime.Now.Day).ToList();
+                    }
+                    else
+                    {
+                        modelkt = dbc.NV_GioCong.Where(kh => kh.IdNhanVien == model.IdNhanVien && kh.Month == model.Month
+                                && kh.Year == model.Year).ToList();
+                    }
+                        
+
                     for (int i = 0; i < modelkt.Count(); i++)
                     {
                         var kqg = double.Parse((modelkt[i].GioRaSang - modelkt[i].GioVaoSang +
@@ -138,21 +151,41 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         
         public ActionResult GetListTinhGioCong(DateTime dtInput, int Id = 0)
         {
+            double giothang = 0;
             var nv = dbc.NV_NhanVienTek.Find(Id);
-            var model=dbc.NV_GioCong.Where(kh => kh.Month == dtInput.Month && kh.Year == dtInput.Year
+            DateTime date = DateTime.Now;
+            List<NV_GioCong> model = new List<NV_GioCong>();
+            if (dtInput.Month == date.Month && dtInput.Year == date.Year)
+            {
+                model = dbc.NV_GioCong.Where(kh => kh.Month == dtInput.Month && kh.Year == dtInput.Year
                                 && kh.IdNhanVien == Id && kh.Day <= DateTime.Now.Day)
-                        .OrderByDescending(kh=>kh.Day)
+                        .OrderByDescending(kh => kh.Day)
                         .ToList();
+            }
+            else
+            {
+                model = dbc.NV_GioCong.Where(kh => kh.Month == dtInput.Month && kh.Year == dtInput.Year
+                                && kh.IdNhanVien == Id)
+                        .OrderByDescending(kh => kh.Day)
+                        .ToList();
+            }
             for(int i=0; i<model.Count(); i++)
             {
-                var kqT = (model[i].GioRaSang - model[i].GioVaoSang+
-                    (model[i].GioRaChieu - model[i].GioVaoChieu)).TotalHours;
-                var kqTC = (model[i].GioRaTangCa - model[i].GioVaoTangCa).TotalHours * float.Parse(TangCa);
-                var kqLe = (model[i].GioRaLe - model[i].GioVaoLe).TotalHours * float.Parse(Le);
-                model[i].GhiChu = (kqT+kqTC + kqLe).ToString("0.00");
+                var kqT = double.Parse((model[i].GioRaSang - model[i].GioVaoSang +
+                    (model[i].GioRaChieu - model[i].GioVaoChieu)).TotalHours.ToString("0.00"));
+
+                var kqTC = double.Parse(((model[i].GioRaTangCa - model[i].GioVaoTangCa).TotalHours * float.Parse(TangCa)).ToString("0.00"));
+                var kqLe = double.Parse(((model[i].GioRaLe - model[i].GioVaoLe).TotalHours * float.Parse(Le)).ToString("0.00"));
+
+                model[i].GhiChu = (kqT + kqTC + kqLe).ToString();
+                kqT = kqT > 0 ? kqT : 0;
+                kqTC = kqTC > 0 ? kqTC : 0;
+                kqLe = kqLe > 0 ? kqLe : 0;
+                giothang = giothang + kqT + kqTC + kqLe;
             }
             ViewBag.NgayGioCong = model;
             ViewBag.Hoten = nv.HoTen;
+            ViewBag.TongSoSoGioThang = giothang;
             return PartialView(model);
         }
         public ActionResult InsertAutoNgayThang(DateTime dtInput, int Id=0)
