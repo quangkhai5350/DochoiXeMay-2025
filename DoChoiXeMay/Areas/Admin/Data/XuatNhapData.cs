@@ -131,9 +131,9 @@ namespace DoChoiXeMay.Areas.Admin.Data
             {
                 tungay = DateTime.Parse(ngay);
             }
-            var ctxnbySerial = db.ChitietXuatNhaps.FirstOrDefault(kh=>kh.IdDoiTra !=3 && (kh.SerialHop.ToLower() == strk || kh.SerialSP.ToLower() == strk));
-            var ctxnbySerialCoLoi = db.ChitietXuatNhaps.FirstOrDefault(kh => kh.IdDoiTra == 3 && (kh.SerialHop.ToLower() == strk || kh.SerialSP.ToLower() == strk));
-            if (ctxnbySerial == null && ctxnbySerialCoLoi==null)//Không phải Serial thì dò theo tên
+            var ctxnbySerial = db.ChitietXuatNhaps.FirstOrDefault(kh=>kh.SerialHop.ToLower() == strk || kh.SerialSP.ToLower() == strk);
+            
+            if (ctxnbySerial == null)//Không phải Serial thì dò theo tên
             {
                 model = db.KyXuatNhaps.Where(kh => kh.Id > 1 && kh.AdminXNPUSH == true
                     && kh.UPush == true && kh.TenKy.ToLower().Contains(strk))
@@ -141,15 +141,16 @@ namespace DoChoiXeMay.Areas.Admin.Data
             }
             else if(ctxnbySerial !=null)
             {
-                model = db.KyXuatNhaps.Where(kh => kh.Id > 1 && kh.AdminXNPUSH == true
-                    && kh.UPush == true && kh.Id==ctxnbySerial.IdKy)
-                    .OrderBy(kh => kh.NgayAuto).ToList();
-            }
-            else
-            {
-                model = db.KyXuatNhaps.Where(kh => kh.Id > 1 && kh.AdminXNPUSH == true
-                    && kh.UPush == true && kh.Id == ctxnbySerialCoLoi.IdKy)
-                    .OrderBy(kh => kh.NgayAuto).ToList();
+                //lấy tất cả các dòng
+                var ctxnbySerialList = db.ChitietXuatNhaps.Where(kh => kh.SerialHop.ToLower() == strk || kh.SerialSP.ToLower() == strk).ToList();
+                for (int i = 0; i < ctxnbySerialList.Count; i++)
+                {
+                    var id = ctxnbySerialList[i].IdKy;
+                    KyXuatNhap getky = db.KyXuatNhaps.FirstOrDefault(kh => kh.Id > 1 && kh.AdminXNPUSH == true
+                    && kh.UPush == true && kh.Id == id);
+                    model.Add(getky);
+                }
+                
             }
             if(ngay != "")
             {

@@ -37,8 +37,10 @@ namespace DoChoiXeMay.Controllers
             CalendarWeekRule rule = ci.DateTimeFormat.CalendarWeekRule;
             DayOfWeek firstDayOfWeek = ci.DateTimeFormat.FirstDayOfWeek;
             int weekNumber = cal.GetWeekOfYear(date, rule, firstDayOfWeek);
-
-            ViewBag.TuanCu = weekNumber - 1;
+            ViewBag.TuanCu4 = weekNumber - 4;
+            ViewBag.TuanCu3 = weekNumber - 3;
+            ViewBag.TuanCu2 = weekNumber - 2;
+            ViewBag.TuanCu1 = weekNumber - 1;
             ViewBag.TuanHT = weekNumber;
             ViewBag.Tuanmoi = weekNumber + 1;
             ViewBag.Tuanmoihon = weekNumber + 2;
@@ -46,12 +48,25 @@ namespace DoChoiXeMay.Controllers
         }
         public ActionResult GetListTinhGioCong(DateTime dtInput)
         {
+            DateTime date = DateTime.Now;
             double giothang = 0;
             var IDnv = int.Parse(Session["idNhanVien"].ToString());
-            var model = dbc.NV_GioCong.Where(kh => kh.Month == dtInput.Month && kh.Year == dtInput.Year
+            List<NV_GioCong> model = new List<NV_GioCong>();
+            if (dtInput.Month == date.Month && dtInput.Year == date.Year)
+            {
+                model = dbc.NV_GioCong.Where(kh => kh.Month == dtInput.Month && kh.Year == dtInput.Year
                                 && kh.IdNhanVien == IDnv && kh.Day <= DateTime.Now.Day)
                         .OrderByDescending(kh => kh.Day)
                         .ToList();
+            }
+            else
+            {
+                model = dbc.NV_GioCong.Where(kh => kh.Month == dtInput.Month && kh.Year == dtInput.Year
+                                && kh.IdNhanVien == IDnv)
+                        .OrderByDescending(kh => kh.Day)
+                        .ToList();
+            }
+            
             for (int i = 0; i < model.Count(); i++)
             {
                 var kqT = double.Parse((model[i].GioRaSang - model[i].GioVaoSang +

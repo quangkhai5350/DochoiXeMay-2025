@@ -84,6 +84,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             var modelDaBanLSiNSan = DaBanLSiNSan == null ? 0 : DaBanLSiNSan.Sum(kh => kh.SoLuong);
             ViewBag.DaBanLSiNSan = modelDaBanLSiNSan;
 
+            
 
             ViewBag.DaTraHangKhachLe = DaTraHangKhachLe == null ? 0 : DaTraHangKhachLe.Sum(kh => kh.SoLuong);
             ViewBag.DaTraHangKhachLeTrong = DaTraHangKhachLeTrong == null ? 0 : DaTraHangKhachLeTrong.Sum(kh => kh.SoLuong);
@@ -111,26 +112,34 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             var modelTrongDaBan = TrongDaBan == null ? 0 : TrongDaBan.Sum(kh => kh.SoLuong);
             ViewBag.TongXiNhanGen1TrongDaBan = modelTrongDaBan;
 
-            ViewBag.TongXiNhanGen1TrongDaBanTikTok = TrongDaBanTikTok == null ? 0 : TrongDaBanTikTok.Sum(kh => kh.SoLuong);
-            ViewBag.TongXiNhanGen1trongDaBanShopee = trongDaBanShopee == null ? 0 : trongDaBanShopee.Sum(kh => kh.SoLuong);
-            
-            ViewBag.TongXiNhanGen1trongDaBanLeNSan = trongDaBanLeNSan == null ? 0 : trongDaBanLeNSan.Sum(kh => kh.SoLuong);
-            
-            ViewBag.TongXiNhanGen1trongDaBanSiNSan = trongDaBanLSiNSan == null ? 0 : trongDaBanLSiNSan.Sum(kh => kh.SoLuong);
+            //27thang11 trong
+            var modelTrongDaBanTikTok= TrongDaBanTikTok == null ? 0 : TrongDaBanTikTok.Sum(kh => kh.SoLuong);
+            ViewBag.TongXiNhanGen1TrongDaBanTikTok = modelTrongDaBanTikTok;
+            var modeltrongDaBanShopee = trongDaBanShopee == null ? 0 : trongDaBanShopee.Sum(kh => kh.SoLuong);
+            ViewBag.TongXiNhanGen1trongDaBanShopee = modeltrongDaBanShopee;
+            var modeltrongDaBanLeNSan= trongDaBanLeNSan == null ? 0 : trongDaBanLeNSan.Sum(kh => kh.SoLuong);
+            ViewBag.TongXiNhanGen1trongDaBanLeNSan = modeltrongDaBanLeNSan;
+            var modeltrongDaBanLSiNSan= trongDaBanLSiNSan == null ? 0 : trongDaBanLSiNSan.Sum(kh => kh.SoLuong);
+            ViewBag.TongXiNhanGen1trongDaBanSiNSan = modeltrongDaBanLSiNSan;
 
+            //27thang11 Khói
             var modelKhoiDaBan = KhoiDaBan == null ? 0 : KhoiDaBan.Sum(kh => kh.SoLuong);
             ViewBag.TongXiNhanGen1KhoiDaBan = modelKhoiDaBan;
-            ViewBag.TongXiNhanGen1KhoiDaBanTikTok = KhoiDaBanTikTok == null ? 0 : KhoiDaBanTikTok.Sum(kh => kh.SoLuong);
-            ViewBag.TongXiNhanGen1KhoiDaBanShopee = KhoiDaBanShopee == null ? 0 : KhoiDaBanShopee.Sum(kh => kh.SoLuong);
-            ViewBag.TongXiNhanGen1KhoiDaBanSiNSan = KhoiDaBanLSiNSan == null ? 0 : KhoiDaBanLSiNSan.Sum(kh => kh.SoLuong);
-
-            ViewBag.TongXiNhanGen1KhoiDaBanLeNSan = KhoiDaBanLeNSan == null ? 0 : KhoiDaBanLeNSan.Sum(kh => kh.SoLuong);
+            var modelKhoiDaBanTikTok= KhoiDaBanTikTok == null ? 0 : KhoiDaBanTikTok.Sum(kh => kh.SoLuong);
+            ViewBag.TongXiNhanGen1KhoiDaBanTikTok = modelKhoiDaBanTikTok;
+            var modelKhoiDaBanShopee = KhoiDaBanShopee == null ? 0 : KhoiDaBanShopee.Sum(kh => kh.SoLuong);
+            ViewBag.TongXiNhanGen1KhoiDaBanShopee = modelKhoiDaBanShopee;
+            var modelKhoiDaBanLSiNSan= KhoiDaBanLSiNSan == null ? 0 : KhoiDaBanLSiNSan.Sum(kh => kh.SoLuong);
+            ViewBag.TongXiNhanGen1KhoiDaBanSiNSan = modelKhoiDaBanLSiNSan;
+            var modelKhoiDaBanLeNSan= KhoiDaBanLeNSan == null ? 0 : KhoiDaBanLeNSan.Sum(kh => kh.SoLuong);
+            ViewBag.TongXiNhanGen1KhoiDaBanLeNSan = modelKhoiDaBanLeNSan;
+            //27 tháng 11 ************
             var modelMauDaXuat = MauDaXuat == null ? 0 : MauDaXuat.Sum(kh => kh.SoLuong);
             ViewBag.TongXiNhanGen1MauDaXuat = modelMauDaXuat;
             ViewBag.TongXiNhanGen1KhoiMauDaXuat = KhoiMauDaXuat == null ? 0 : KhoiMauDaXuat.Sum(kh => kh.SoLuong);
             ViewBag.TongXiNhanGen1TrongMauDaXuat = TrongMauDaXuat == null ? 0 : TrongMauDaXuat.Sum(kh => kh.SoLuong);
             
-            var kytrabaohanhct = beg.Where(kh=>kh.KyXuatNhap.IdLoaiHangXN == 3).ToList();
+            var kytrabaohanhct = beg.Where(kh=>kh.KyXuatNhap.IdLoaiHangXN == 3 || kh.KyXuatNhap.IdLoaiHangXN == 4).ToList();
             if (kytrabaohanhct.Count() == 0)
             {
                 ViewBag.TongtraBH = 0;
@@ -150,6 +159,15 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             Session["MauDaXuat"] = modelMauDaXuat;
             Session["daSX"] = dsx;
             //Đồ thị dạng cột
+            Session["TrongDaBanTikTok"] = modelTrongDaBanTikTok;
+            Session["trongDaBanShopee"] = modeltrongDaBanShopee;
+            Session["trongDaBanLeNSan"] = modeltrongDaBanLeNSan;
+            Session["trongDaBanLSiNSan"] = modeltrongDaBanLSiNSan;
+            Session["KhoiDaBanTikTok"] = modelKhoiDaBanTikTok;
+            Session["KhoiDaBanShopee"] = modelKhoiDaBanShopee;
+            Session["KhoiDaBanLSiNSan"] = modelKhoiDaBanLSiNSan;
+            Session["KhoiDaBanLeNSan"] = modelKhoiDaBanLeNSan;
+
             Session["DaBanTikTok"] = modelDaBanTikTok;
             Session["DaBanShopee"] = modelDaBanShopee;
             Session["DaBanLeNSan"] = modelDaBanLeNSan;

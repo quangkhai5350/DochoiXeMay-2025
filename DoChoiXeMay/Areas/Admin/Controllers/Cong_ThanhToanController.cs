@@ -28,6 +28,8 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         {
             ViewBag.GetThanhToan = dbc.NV_ThanhToanLuong
                 .OrderByDescending(kh => kh.NV_NhanVienTek.DaNghiViec)
+                .ThenBy(kh => kh.DaNhanLuong)
+                .ThenByDescending(kh => kh.Thang)
                 .ThenByDescending(kh => kh.NV_NhanVienTek.NV_Vitrinhanvien.DonViTinh)
                 .ThenByDescending(kh => kh.ThucLinh)
                 .ThenByDescending(kh => kh.NV_NhanVienTek.NgayTao)
@@ -48,7 +50,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         public ActionResult GetListCong() { 
             ViewBag.GetListCong = dbc.NV_Cong
                 .OrderByDescending(kh => kh.NV_NhanVienTek.DaNghiViec)
-                .ThenByDescending(kh=>kh.NV_NhanVienTek.NV_Vitrinhanvien.DonViTinh)
+                .ThenByDescending(kh=>kh.Thang)
                 .ThenByDescending(kh=>kh.NV_NhanVienTek.Id)
                 .ThenByDescending(kh=>kh.NV_NhanVienTek.NgayTao)
                 .ToList();
