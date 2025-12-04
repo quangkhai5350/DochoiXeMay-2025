@@ -5,12 +5,12 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project>
   <PropertyGroup>
     <_PublishTargetUrl>D:\PublishWebDoChoiXe</_PublishTargetUrl>
-    <History>True|2025-12-01T03:07:29.6858075Z||;True|2025-12-01T09:37:24.0375980+07:00||;True|2025-11-28T10:07:59.1209492+07:00||;True|2025-11-25T15:27:53.5258465+07:00||;True|2025-11-24T16:09:51.3746798+07:00||;True|2025-08-28T19:52:22.5360722+07:00||;True|2025-08-28T19:30:42.3367945+07:00||;</History>
+    <History>True|2025-12-03T08:57:25.9224919Z||;True|2025-12-03T15:49:59.1015733+07:00||;True|2025-12-01T10:07:29.6858075+07:00||;True|2025-12-01T09:37:24.0375980+07:00||;True|2025-11-28T10:07:59.1209492+07:00||;True|2025-11-25T15:27:53.5258465+07:00||;True|2025-11-24T16:09:51.3746798+07:00||;True|2025-08-28T19:52:22.5360722+07:00||;True|2025-08-28T19:30:42.3367945+07:00||;</History>
     <LastFailureDetails />
   </PropertyGroup>
   <ItemGroup>
     <File Include="App_Data/SoTruyCap.txt">
-      <publishTime>12/01/2025 10:05:39</publishTime>
+      <publishTime>12/03/2025 15:54:58</publishTime>
     </File>
     <File Include="Areas/Admin/Content/css/animate.css">
       <publishTime>09/11/2025 11:00:33</publishTime>
@@ -679,7 +679,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>11/17/2025 15:54:17</publishTime>
     </File>
     <File Include="Areas/Admin/Views/NhanVien/GetListTinhGioCong.cshtml">
-      <publishTime>12/01/2025 09:34:22</publishTime>
+      <publishTime>12/03/2025 09:36:54</publishTime>
     </File>
     <File Include="Areas/Admin/Views/NhanVien/GetViTriNhanVien.cshtml">
       <publishTime>11/05/2025 10:17:04</publishTime>
@@ -826,10 +826,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>09/11/2025 11:00:34</publishTime>
     </File>
     <File Include="bin/DoChoiXeMay.dll">
-      <publishTime>12/01/2025 10:07:17</publishTime>
+      <publishTime>12/03/2025 15:57:11</publishTime>
     </File>
     <File Include="bin/DoChoiXeMay.pdb">
-      <publishTime>12/01/2025 10:07:17</publishTime>
+      <publishTime>12/03/2025 15:57:11</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>06/17/2024 03:46:24</publishTime>
@@ -1474,7 +1474,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>09/11/2025 11:00:33</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>12/01/2025 10:07:28</publishTime>
+      <publishTime>12/03/2025 15:57:24</publishTime>
     </File>
   </ItemGroup>
 </Project>
