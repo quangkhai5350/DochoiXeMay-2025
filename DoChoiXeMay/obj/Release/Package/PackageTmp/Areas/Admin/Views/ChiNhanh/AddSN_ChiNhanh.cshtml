@@ -8,21 +8,12 @@
 <link href="~/Areas/Admin/Content/css/Info_Style.css" rel="stylesheet" />
 <script src="~/Areas/Admin/Content/jquery2.0.3.min.js"></script>
 <div class="container">
-    <div class="panel-heading">
-        <div class="row">
-            <div class="pull-right label label-success" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
-                @Session["ThongBaotaolohang"]
-            </div>
-        </div>
-        <div class="row">
-            <div class="pull-right label label-warning" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
-                @Session["ThongBaoLoitaolohang"]
-            </div>
-        </div>
-    </div>
+
     @using (Html.BeginForm("ChiNhanh", "AddSN_ChiNhanh", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
-        <fieldset class="info_form" style="margin-top:0">
+        
+        <fieldset class="info_form">
+            
             <div class="container">
                 <span class="pull-right label label-success" style="color:white;font-family:monospace">
                     @Html.ValidationSummary()
@@ -76,6 +67,18 @@
                                         });
                                     });
                                 </script>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="pull-right label label-success" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
+                                @Session["ThongBaotaolohang"]
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="pull-right label label-warning" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
+                                @Session["ThongBaoLoitaolohang"]
                             </div>
                         </div>
                     </div>

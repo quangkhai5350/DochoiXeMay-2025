@@ -68,7 +68,14 @@
                     @item.GioRaLe.ToString("HH:mm")
                 </td>
                 <td>
-                    @Html.FormatValue(item.NgayUpdate, "{0:dd/MM/yyyy}")
+                    @if (item.GhiChu == "0")
+                    {
+                        <span>@Html.FormatValue(item.NgayUpdate, "{0:dd/MM/yyyy}")</span>
+                    }
+                    else
+                    {
+                        <span>@item.NgayUpdate</span>
+                    }
                 </td>
             </tr>
         }

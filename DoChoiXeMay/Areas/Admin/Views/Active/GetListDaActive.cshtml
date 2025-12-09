@@ -103,7 +103,8 @@
                             @if (Session["quyen"].ToString() != "Guest")
                             {
                                 <a class="btn btn-danger" href="/Admin/Active/UpdateSNActive/@Item.Id"><span class="glyphicon glyphicon-edit"></span></a>
-                            }
+                                <a style="display:none" class="btn btn-warning" href="/Admin/Active/DeleteSNActive/@Item.Id"><span class="glyphicon glyphicon-trash"></span></a>
+                                }
                         </td>
                     </tr>
 
