@@ -84,5 +84,19 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             }
             
         }
+        public ActionResult DeleteSNActive(string Id)
+        {
+            var model = dbc.Ser_kichhoat.Find(new Guid(Id));
+            var kq = new Data.ActiveData().DeleteSerialAc(Id);
+            if (kq)
+            {
+                Session["ThongBaoListDaActive"] = "Delete thành công serial Active: "+model.Ser_box.Serial;
+            }
+            else
+            {
+                Session["ThongBaoListDaActive"] = "Delete không thành công, serial Active : " + model.Ser_box.Serial +" !!!";
+            }
+            return RedirectToAction("Index");
+        }
     }
 }

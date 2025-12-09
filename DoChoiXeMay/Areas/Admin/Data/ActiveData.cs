@@ -1,6 +1,7 @@
 ﻿using DoChoiXeMay.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -178,6 +179,38 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 return Ac.ToString();
             }
             return Ac.ToString();
+        }
+        public bool DeleteSerialAc(string Id)
+        {
+            try
+            {
+                var model = _context.Ser_kichhoat.Find(new Guid(Id));
+                var model1 = _context.Ser_kichhoat.Find(new Guid(Id));
+                if (model != null)
+                {
+                    _context.Ser_kichhoat.Remove(model);
+                    var modelSp = _context.Ser_sp.Find(model1.IDSer_sp);
+                    if (modelSp != null)
+                    {
+                        modelSp.Sudung = false;
+                        _context.Entry(modelSp).State = EntityState.Modified;
+                    }
+                    var modelBox = _context.Ser_box.Find(model1.IDSer_box);
+                    if (modelBox != null)
+                    {
+                        modelBox.Sudung = false;
+                        _context.Entry(modelBox).State = EntityState.Modified;
+                    }
+                    _context.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex) {
+                string loi = ex.ToString();
+                return false;
+            }
+            
         }
     }
 }
