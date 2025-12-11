@@ -31,13 +31,14 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
 
             return Json(UserId, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult LoadLoaiHangBan()
+        public ActionResult LoadLoaiKyXN()
         {
             var IdLoaiHangXN = dbc.KyXuatNhap_LoaiHang.
                             Select(kh => new { id = kh.Id, ten = kh.TenLoai });
 
             return Json(IdLoaiHangXN, JsonRequestBehavior.AllowGet);
         }
+        
         public ActionResult LoadSanTM()
         {
             var IdSan = dbc.SanThuongMais.Where(kh => kh.SuDung == true).
@@ -52,6 +53,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ViewBag.IdSan = new SelectList(dbc.SanThuongMais.Where(kh => kh.SuDung == true).ToList(), "Id", "TenSan");
             ViewBag.IdKhuVuc = new SelectList(dbc.KhuVucs.ToList(), "Id", "SatNhap", 36);
             ViewBag.IdLoaiHangXN = new SelectList(dbc.KyXuatNhap_LoaiHang.ToList(), "Id", "TenLoai", 1);
+            
             Session["requestUri"] = "/Admin/XuatNhap/ListXuatNhapUser";
             ViewBag.TrongTon=dbc.HangHoas.Where(kh => kh.Id == 56).Sum(kh => kh.SoLuong);
             ViewBag.KhoiTon = dbc.HangHoas.Where(kh => kh.Id == 55).Sum(kh => kh.SoLuong);
@@ -86,15 +88,15 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ViewBag.KhoiTon = dbc.HangHoas.Where(kh => kh.Id == 55).Sum(kh => kh.SoLuong);
             return View();
         }
-        public ActionResult GetListKyXNTeK(string ngay = "",string strk = "",int idLHXN = 0,int IdSan=0, int PageNo = 0, int PageSize = 8,int UserId = 0)
+        public ActionResult GetListKyXNTeK(string ngay = "",string strk = "",int idLHXN = 0,int IdSan=0, int Iddoitra = 0, int PageNo = 0, int PageSize = 8,int UserId = 0)
         {
             strk = strk.ToLower().Trim();
-            ViewBag.KyXNTeK = new Data.XuatNhapData().getXuatNhapTek(ngay,strk,idLHXN, IdSan, PageNo, PageSize,UserId);
+            ViewBag.KyXNTeK = new Data.XuatNhapData().getXuatNhapTek(ngay,strk,idLHXN, IdSan,Iddoitra, PageNo, PageSize,UserId);
             return PartialView();
         }
-        public ActionResult GetPageCountXNTek(string ngay = "", string strk = "", int idLHXN = 0, int IdSan = 0, int PageSize = 8,int UserId=0)
+        public ActionResult GetPageCountXNTek(string ngay = "", string strk = "", int idLHXN = 0, int IdSan = 0, int Iddoitra = 0, int PageSize = 8,int UserId=0)
         {
-            var num = new Data.XuatNhapData().GetPageCountXuatNhapTek(ngay,strk, idLHXN, IdSan, UserId);
+            var num = new Data.XuatNhapData().GetPageCountXuatNhapTek(ngay,strk, idLHXN, IdSan,Iddoitra, UserId);
             var pageCount = Math.Ceiling(1.0 * num / PageSize);
             return Json(pageCount, JsonRequestBehavior.AllowGet);
         }
@@ -548,6 +550,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 Session["ThongBaoXuatNhapTeK"] = "Update thanh cong Serial !!! Không tăng sl HH.";
                 if (kq > 0 && ctxn.IdDoiTra == 4)//Không Lỗi, tồn kho
                 {
+                    Session["ThongBaoXuatNhapTeKct"] = "";
                     var HH = dbc.HangHoas.FirstOrDefault(kh => kh.Ten == model.Ten && kh.IDMF == model.IDMF
                                     && kh.IDColor == model.IDColor && kh.IDSize == model.IDSize);
                     if (HH != null)
@@ -556,6 +559,10 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                         dbc.Entry(HH).State = EntityState.Modified;
                         dbc.SaveChanges();
                         Session["ThongBaoXuatNhapTeK"] = "Trả Hàng Thành Công, Số lượng HH tăng 1.";
+                        if(ctxn.DaActive !=null || ctxn.DaActive != "")
+                        {
+                            Session["ThongBaoXuatNhapTeKct"] = "Serial: "+ctxn.SerialHop+" đã Active, cần xóa Active để sử dụng lại.!!!";
+                        }
                         return RedirectToAction("ListXuatNhapTeK");
                     }
                 }

@@ -122,7 +122,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
             
             return kt;
         }
-        public static List<KyXuatNhap> ChiTietKyXuatNhapTEK(Model1 db, string strk="",string ngay="", int idLHXN=0, int IdSan = 0, int UserId = 0)
+        public static List<KyXuatNhap> ChiTietKyXuatNhapTEK(Model1 db, string strk="",string ngay="", int idLHXN=0, int IdSan = 0, int Iddoitra=0, int UserId = 0)
         {
             List<KyXuatNhap> model = new List<KyXuatNhap>();
             List<KyXuatNhap> model1 = new List<KyXuatNhap>();
@@ -131,6 +131,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
             {
                 tungay = DateTime.Parse(ngay);
             }
+            
             var ctxnbySerial = db.ChitietXuatNhaps.FirstOrDefault(kh=>kh.SerialHop.ToLower() == strk || kh.SerialSP.ToLower() == strk);
             
             if (ctxnbySerial == null)//Không phải Serial thì dò theo tên
@@ -152,7 +153,23 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 }
                 
             }
-            if(ngay != "")
+            if (Iddoitra > 0)
+            {
+                model = new List<KyXuatNhap>();
+                var ctxndoitra = db.ChitietXuatNhaps.Where(kh => kh.IdDoiTra == Iddoitra).ToList();
+                for (int i = 0; i < ctxndoitra.Count; i++)
+                {
+                    var id = ctxndoitra[i].IdKy;
+                    var check = model.FirstOrDefault(kh => kh.Id == id);
+                    if (check == null)
+                    {
+                        KyXuatNhap getky = db.KyXuatNhaps.FirstOrDefault(kh => kh.Id > 1 && kh.AdminXNPUSH == true
+                        && kh.UPush == true && kh.Id == id);
+                        model.Add(getky);
+                    }
+                }
+            }
+            if (ngay != "")
             {
                 model=model.Where(kh=>kh.NgayXuatNhap.Date==tungay.Date).ToList();
             }
@@ -189,10 +206,12 @@ namespace DoChoiXeMay.Areas.Admin.Data
             }
             return model1;
         }
-        public List<KyXuatNhap> getXuatNhapTek(string ngay="",string strk="",int idLHXN = 0,int IdSan = 0, int Sec = 0, int pageSize = 0,int UserId = 0)
+        public List<KyXuatNhap> getXuatNhapTek(string ngay="",string strk="",int idLHXN = 0,int IdSan = 0, int Iddoitra = 0, int Sec = 0, int pageSize = 0,int UserId = 0)
         {
             List<KyXuatNhap> model1 = new List<KyXuatNhap>();
-            model1 = ChiTietKyXuatNhapTEK(_context, strk,ngay, idLHXN,IdSan, UserId).ToList();
+            model1 = ChiTietKyXuatNhapTEK(_context, strk,ngay, idLHXN,IdSan,Iddoitra, UserId)
+                .OrderByDescending(kh => kh.NgayAuto)
+                .ToList();
 
 
             for (int i = 0; i < model1.Count(); i++)
@@ -201,16 +220,15 @@ namespace DoChoiXeMay.Areas.Admin.Data
             }
 
             model1 = model1
-                .OrderByDescending(kh => kh.NgayAuto)
                 .Skip(Sec * pageSize)
                             .Take(pageSize)
                             .ToList();
             return model1;
         }
-        public int GetPageCountXuatNhapTek(string ngay="",string strk = "",int idLHXN=0,int IdSan = 0, int UserId=0)
+        public int GetPageCountXuatNhapTek(string ngay="",string strk = "",int idLHXN=0,int IdSan = 0, int Iddoitra = 0, int UserId=0)
         {
             var model1 = 0;
-            model1 = ChiTietKyXuatNhapTEK(_context, strk,ngay, idLHXN,IdSan, UserId).Count();
+            model1 = ChiTietKyXuatNhapTEK(_context, strk,ngay, idLHXN,IdSan,Iddoitra, UserId).Count();
             return model1;
         }
         public static bool InsertMsgAotu(Model1 dbc,int UserId, string MsgSys,bool AdminDaxem, bool Sub2Daxem,bool Sub4Daxem,bool Sub5Daxem,bool Sub6Daxem)
