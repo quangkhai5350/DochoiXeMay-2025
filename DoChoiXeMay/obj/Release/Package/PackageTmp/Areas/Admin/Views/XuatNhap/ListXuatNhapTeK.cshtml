@@ -32,7 +32,7 @@
 <div class="panel panel-default" style="margin-top:10px">
     <div class="panel-heading">
         <div class="row">
-            <div class="pull-right label label-warning" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
+            <div class="pull-right label label-success" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
                 @Session["ThongBaoXuatNhapTeK"]
             </div>
             <div class="pull-right label label-warning" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
@@ -42,7 +42,7 @@
                 <div class="col-lg-2 col-xl-2 col-md-2 col-sm-6" style="text-align: center; margin-top: 10px">
                     @Html.DropDownList("UserId", null, new { style = "width: 70%; height: 40px" })
                 </div>
-                <div class="col-lg-3 col-xl-3 col-md-3 col-sm-6 col-6" style="text-align: center; margin-top: 15px">
+                <div class="col-lg-2 col-xl-2 col-md-2 col-sm-6 col-6" style="text-align: center; margin-top: 15px">
                     <span class="icon-case"><i class="glyphicon glyphicon-calendar"></i></span>
                     <input type="date" name="tungay" id="tungay" />
                 </div>
@@ -52,8 +52,16 @@
                 <div class="col-lg-2 col-xl-2 col-md-2 col-sm-6" style="text-align: center; margin-top: 10px">
                     @Html.DropDownList("IdSan", null, new { style = "width: 70%; height: 40px" })
                 </div>
-                <div class="col-lg-2 col-xl-4 col-md-4 col-sm-12" style="text-align:center">
-                    <input type="text" class="form-control input-sm" style="font-size: medium; height: 40px; width: 95%" name="KeywordsTT" id="KeywordsTT" onchange="TimKiemKyXN()" placeholder="Enter Tìm Theo Tên Kỳ hoặc số Serial." />
+                <div class="col-lg-2 col-xl-2 col-md-2 col-sm-6" style="text-align: center; margin-top: 10px">
+                    <select class="form-control" id="IdDoiTra" name="IdDoiTra" style="width: 70%; height: 40px; margin: 0 auto">
+                        <option value="0">Loại sản phẩm</option>
+                        <option value="2">Trả (Mới Nhận)</option>
+                        <option value="3">Trả Có Lỗi</option>
+                        <option value="4">Trả Không Lỗi</option>
+                    </select>
+                </div>
+                <div class="col-lg-2 col-xl-4 col-md-2 col-sm-6" style="text-align:center">
+                    <input type="text" class="form-control input-sm" style="font-size: medium; height: 40px; width: 95%" name="KeywordsTT" id="KeywordsTT" onchange="TimKiemKyXN()" placeholder="Tên Kỳ hoặc số Serial." />
                 </div>
             </div>
             
@@ -96,13 +104,14 @@
         TongSP = 0;
         var KeywordsTT = $('#KeywordsTT').val();
         LoadUserName()
-        LoadLoaiHangBan()
+        LoadLoaiKyXN()
         LoadSanTMDT()
         var UserId = $('#UserId').val();
         var idLoaiHangXN = $('#IdLoaiHangXN').val();
         var IdSan = $('#IdSan').val();
+        var IdDoiTra = $('#IdDoiTra').val();
         var tungay = $('#tungay').val();
-        getTongSanPham(tungay, pageSize, pageNo, UserId, KeywordsTT, idLoaiHangXN, IdSan)
+        getTongSanPham(tungay, pageSize, pageNo, UserId, KeywordsTT, idLoaiHangXN, IdSan, IdDoiTra)
         $(".pager a:eq(0)").click(function () {
             if (pageNo > 0) {
                 pageNo = 0;
@@ -110,8 +119,9 @@
                 var UserId = $('#UserId').val();
                 var idLoaiHangXN = $('#IdLoaiHangXN').val();
                 var IdSan = $('#IdSan').val();
+                var IdDoiTra = $('#IdDoiTra').val();
                 var tungay = $('#tungay').val();
-                LoadPage(tungay, pageNo, pageSize, UserId, KeywordsTT, idLoaiHangXN, IdSan);
+                LoadPage(tungay, pageNo, pageSize, UserId, KeywordsTT, idLoaiHangXN, IdSan, IdDoiTra);
             }
             return false;
         });
@@ -122,8 +132,9 @@
                 var UserId = $('#UserId').val();
                 var idLoaiHangXN = $('#IdLoaiHangXN').val();
                 var IdSan = $('#IdSan').val();
+                var IdDoiTra = $('#IdDoiTra').val();
                 var tungay = $('#tungay').val();
-                LoadPage(tungay, pageNo, pageSize, UserId, KeywordsTT, idLoaiHangXN, IdSan);
+                LoadPage(tungay, pageNo, pageSize, UserId, KeywordsTT, idLoaiHangXN, IdSan, IdDoiTra);
             }
             return false;
         });
@@ -134,8 +145,9 @@
                 var UserId = $('#UserId').val();
                 var idLoaiHangXN = $('#IdLoaiHangXN').val();
                 var IdSan = $('#IdSan').val();
+                var IdDoiTra = $('#IdDoiTra').val();
                 var tungay = $('#tungay').val();
-                LoadPage(tungay, pageNo, pageSize, UserId, KeywordsTT, idLoaiHangXN, IdSan);
+                LoadPage(tungay, pageNo, pageSize, UserId, KeywordsTT, idLoaiHangXN, IdSan, IdDoiTra);
             }
             return false;
         });
@@ -147,8 +159,9 @@
                 var UserId = $('#UserId').val();
                 var idLoaiHangXN = $('#IdLoaiHangXN').val();
                 var IdSan = $('#IdSan').val();
+                var IdDoiTra = $('#IdDoiTra').val();
                 var tungay = $('#tungay').val();
-                LoadPage(tungay, pageNo, pageSize, UserId, KeywordsTT, idLoaiHangXN, IdSan);
+                LoadPage(tungay, pageNo, pageSize, UserId, KeywordsTT, idLoaiHangXN, IdSan, IdDoiTra);
             }
             return false
         });
@@ -160,8 +173,9 @@
         var UserId = $('#UserId').val();
         var idLoaiHangXN = $('#IdLoaiHangXN').val();
         var IdSan = $('#IdSan').val();
+        var IdDoiTra = $('#IdDoiTra').val();
         var tungay = $('#tungay').val();
-        getTongSanPham(tungay, pageSize, pageNo, UserId, KeywordsTT, idLoaiHangXN, IdSan)
+        getTongSanPham(tungay, pageSize, pageNo, UserId, KeywordsTT, idLoaiHangXN, IdSan, IdDoiTra)
     });
     $("#IdLoaiHangXN").change(function () {
         pageNo = 0;
@@ -170,8 +184,9 @@
         var UserId = $('#UserId').val();
         var idLoaiHangXN = $('#IdLoaiHangXN').val();
         var IdSan = $('#IdSan').val();
+        var IdDoiTra = $('#IdDoiTra').val();
         var tungay = $('#tungay').val();
-        getTongSanPham(tungay, pageSize, pageNo, UserId, KeywordsTT, idLoaiHangXN, IdSan)
+        getTongSanPham(tungay, pageSize, pageNo, UserId, KeywordsTT, idLoaiHangXN, IdSan, IdDoiTra)
     });
     $("#IdSan").change(function () {
         pageNo = 0;
@@ -180,8 +195,27 @@
         var UserId = $('#UserId').val();
         var idLoaiHangXN = $('#IdLoaiHangXN').val();
         var IdSan = $('#IdSan').val();
+        var IdDoiTra = $('#IdDoiTra').val();
         var tungay = $('#tungay').val();
-        getTongSanPham(tungay, pageSize, pageNo, UserId, KeywordsTT, idLoaiHangXN, IdSan)
+        getTongSanPham(tungay, pageSize, pageNo, UserId, KeywordsTT, idLoaiHangXN, IdSan, IdDoiTra)
+    });
+    $("#IdDoiTra").change(function () {
+        pageNo = 0;
+        pageSize = 5;
+        var KeywordsTT = $('#KeywordsTT').val();
+        var UserId = $('#UserId').val();
+        var idLoaiHangXN = $('#IdLoaiHangXN').val();
+        var IdSan = $('#IdSan').val();
+        var IdDoiTra = $('#IdDoiTra').val();
+        var tungay = $('#tungay').val();
+        $("#loading").show();
+        $(".listXNT").css('display', 'none');
+        setTimeout(function () {
+            $(".listXNT").css('display', 'block');
+            getTongSanPham(tungay, pageSize, pageNo, UserId, KeywordsTT, idLoaiHangXN, IdSan, IdDoiTra);
+            //1s sau hiên lên
+        }, 800);
+        $("#loading").hide();
     });
     $("#tungay").change(function () {
         pageNo = 0;
@@ -190,13 +224,14 @@
         var UserId = $('#UserId').val();
         var idLoaiHangXN = $('#IdLoaiHangXN').val();
         var IdSan = $('#IdSan').val();
+        var IdDoiTra = $('#IdDoiTra').val();
         var tungay = $('#tungay').val();
-        getTongSanPham(tungay, pageSize, pageNo, UserId, KeywordsTT, idLoaiHangXN, IdSan)
+        getTongSanPham(tungay, pageSize, pageNo, UserId, KeywordsTT, idLoaiHangXN, IdSan, IdDoiTra)
     });
-    function LoadPage(tungay,pageNo, pageSize, UserId, KeywordsTT, idLoaiHangXN, IdSan) {
+    function LoadPage(tungay, pageNo, pageSize, UserId, KeywordsTT, idLoaiHangXN, IdSan, IdDoiTra) {
         $.ajax({
             url: "/Admin/XuatNhap/GetListKyXNTeK",
-            data: { ngay: tungay, strk: KeywordsTT, idLHXN: idLoaiHangXN, IdSan: IdSan, PageNo: pageNo, PageSize: pageSize, UserId: UserId },
+            data: { ngay: tungay, strk: KeywordsTT, idLHXN: idLoaiHangXN, IdSan: IdSan, Iddoitra: IdDoiTra, PageNo: pageNo, PageSize: pageSize, UserId: UserId },
             success: function (respone) {
                 $(".listXNT").html(respone);
                 var pagesp = pageNo + 1;
@@ -204,14 +239,14 @@
             }
         });
     };
-    function getTongSanPham(tungay,pageSize, pageNo, UserId, KeywordsTT, idLoaiHangXN, IdSan) {
+    function getTongSanPham(tungay, pageSize, pageNo, UserId, KeywordsTT, idLoaiHangXN, IdSan, IdDoiTra) {
         $.ajax({
             url: "/Admin/XuatNhap/GetPageCountXNTek",
-            data: { ngay: tungay, strk: KeywordsTT, idLHXN: idLoaiHangXN, IdSan: IdSan, PageSize: pageSize, UserId: UserId },
+            data: { ngay: tungay, strk: KeywordsTT, idLHXN: idLoaiHangXN, IdSan: IdSan, Iddoitra: IdDoiTra, PageSize: pageSize, UserId: UserId },
             success: function (respone) {
                 pageCount = respone;
                 TongSP = respone;
-                LoadPage(tungay,pageNo, pageSize, UserId, KeywordsTT, idLoaiHangXN, IdSan);
+                LoadPage(tungay, pageNo, pageSize, UserId, KeywordsTT, idLoaiHangXN, IdSan, IdDoiTra);
             }
         });
     };
@@ -223,13 +258,14 @@
         var UserId = $('#UserId').val();
         var idLoaiHangXN = $('#IdLoaiHangXN').val();
         var IdSan = $('#IdSan').val();
+        var IdDoiTra = $('#IdDoiTra').val();
         var tungay = $('#tungay').val();
         $("#loading").show();
         $(".listXNT").css('display', 'none');
 
         setTimeout(function () {
             $(".listXNT").css('display', 'block');
-            getTongSanPham(tungay, pageSize, pageNo, UserId, KeywordsTTT, idLoaiHangXN, IdSan);
+            getTongSanPham(tungay, pageSize, pageNo, UserId, KeywordsTTT, idLoaiHangXN, IdSan, IdDoiTra);
             //1s sau hiên lên
         }, 800);
         $("#loading").hide();
@@ -260,16 +296,16 @@
         });
         
     };
-    function LoadLoaiHangBan() {
+    function LoadLoaiKyXN() {
         $('#IdLoaiHangXN').empty();
         $.ajax({
-            url: "/Admin/XuatNhap/LoadLoaiHangBan", // we are calling json method
+            url: "/Admin/XuatNhap/LoadLoaiKyXN", // we are calling json method
             data: {},
             success: function (response) {
                 $("#IdLoaiHangXN").append(
                     $('<option/>')
                         .attr('value', 0)
-                        .text("Chọn Loại")
+                        .text("Loại Kỳ XN")
                 );
                 $(response).each(function (i, e) {
                     $("#IdLoaiHangXN").append(
@@ -286,6 +322,7 @@
         });
 
     };
+
     function LoadSanTMDT() {
         $('#IdSan').empty();
         $.ajax({

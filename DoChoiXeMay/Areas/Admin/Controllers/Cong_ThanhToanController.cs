@@ -24,9 +24,9 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             Session["requestUri"] = "/Admin/Cong_ThanhToan/ListThanhToan";
             return View();
         }
-        public ActionResult GetListThanhToan()
+        public ActionResult GetListThanhToan(DateTime dtInput)
         {
-            ViewBag.GetThanhToan = dbc.NV_ThanhToanLuong
+            ViewBag.GetThanhToan = dbc.NV_ThanhToanLuong.Where(kh => kh.Thang == dtInput.Month && kh.Nam == dtInput.Year)
                 .OrderByDescending(kh => kh.NV_NhanVienTek.DaNghiViec)
                 .ThenBy(kh => kh.DaNhanLuong)
                 .ThenByDescending(kh => kh.Thang)
@@ -47,8 +47,9 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             }
             return View();
         }
-        public ActionResult GetListCong() { 
-            ViewBag.GetListCong = dbc.NV_Cong
+        public ActionResult GetListCong(DateTime dtInput) { 
+
+            ViewBag.GetListCong = dbc.NV_Cong.Where(kh => kh.Thang == dtInput.Month && kh.Nam == dtInput.Year)
                 .OrderByDescending(kh => kh.NV_NhanVienTek.DaNghiViec)
                 .ThenByDescending(kh=>kh.Thang)
                 .ThenByDescending(kh=>kh.NV_NhanVienTek.Id)

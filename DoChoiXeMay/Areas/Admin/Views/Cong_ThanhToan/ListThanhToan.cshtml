@@ -24,12 +24,11 @@
             <div class="pull-right label label-success" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
                 @Session["ThongBaoThanhToanTEK"]
             </div>
-            <div class="row">
+            <div class="row" style="margin-top:20px">
+                <div class="col-lg-6 col-xl-6 col-md-4 col-sm-12 col-12">
+                    <input style="margin-left: 10px; margin-bottom: 10px" type="month" name="ThangNam" value="@DateTime.Now.ToString("yyyy-MM")" id="ThangNam" />
+                </div>
 
-
-                @*<div class="col-lg-4 col-xl-4 col-md-4 col-sm-12" style="text-align:center">
-                        <input type="text" class="form-control input-sm" style="margin-top: 5px;font-size: medium; height: 40px; width: 95%" name="KeywordsTT" id="KeywordsTT" onchange="TimKiemsp()" placeholder="Enter Tìm Theo UserName - Nội Dung - Mã TC - Hình Thức TC - Kỳ Xuất Nhập." />
-                    </div>*@
             </div>
         </div>
     </div>
@@ -63,12 +62,12 @@
     </div>
 </div>
 <script>
-
-    LoadPage();
-    function LoadPage() {
+    var tn = $('#ThangNam').val();
+    LoadPage(tn);
+    function LoadPage(tn) {
         $.ajax({
             url: "/Admin/Cong_ThanhToan/GetListThanhToan",
-            data: {},
+            data: { dtInput: tn},
             success: function (respone) {
                 $(".listThanhToan").html(respone);
                 //var pagesp = pageNo + 1;
@@ -76,5 +75,9 @@
             }
         });
     };
+    $("#ThangNam").change(function () {
+        var tn = $('#ThangNam').val();
+        LoadPage(tn)
+    });
 </script>
 
