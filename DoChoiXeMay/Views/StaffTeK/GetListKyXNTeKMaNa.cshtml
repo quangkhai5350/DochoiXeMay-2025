@@ -1,0 +1,100 @@
+﻿@using DoChoiXeMay.Areas.Admin.Data;
+<script src="~/Areas/Admin/Content/jquery2.0.3.min.js"></script>
+<style>
+    .canhgiua{
+        text-align:center
+    }
+</style>
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr style="background-color: #00bcd4">
+                <th class="canhgiua" style="max-width: 30px">STT</th>
+                <th class="canhgiua" style="width:200px">Tên Kỳ</th>
+                <th class="canhgiua" style="width:200px">Xuất Nhập/Ngày </th>
+                <th class="canhgiua" style="padding-left: 0;padding-right:0">File3</th>
+                <th class="canhgiua" style="padding-left: 0;padding-right:0">File2</th>
+                <th class="canhgiua" style="padding-left: 0;padding-right:0">File1</th>
+                <th class="canhgiua" style="width:30px">Update</th>
+            </tr>
+        </thead>
+        <tbody style="border: 2px solid black !important">
+            @foreach (DoChoiXeMay.Models.KyXuatNhap Item in ViewBag.KyXNTeKMaNa)
+            {
+                var tenky = XstringAdmin.Truncate(Item.TenKy, 50);
+                <tr class="canhgiua" style="border-bottom: 2px solid black !important">
+                    <td>@Item.STT</td>
+                    <td>
+                        <p style="font-size: 15px; color: red">
+                            @tenky
+                        </p>
+                        <p style="font-size: 15px; color: red">
+                            -@Item.KhuVuc.TenKhuvuc
+                        </p>
+                        <p style="font-size: 15px; color: red">
+                          <span>-@Item.SanThuongMai.TenSan</span>
+                        </p>
+                        @if (Item.XuatNhap != false && Item.KhachLe != false)
+                        {
+
+                        }
+                        else
+                        {
+                            <p>(Ngày: @Html.FormatValue(Item.NgayXuatNhap, "{0:dd/MM/yyyy}"))</p>
+                        }
+                    </td>
+                    <td>
+                        <p style="font-size: 17px">
+                            @if (Item.XuatNhap == true && Item.KhachLe == true)
+                            {
+                                <span style="background-color:burlywood">Xuất Hàng/KhachLe</span>
+                            }
+                        </p>
+                        <p style="font-size: 17px">
+                            <span>(Ngày: @Html.FormatValue(Item.NgayXuatNhap, "{0:dd/MM/yyyy}"))</span>
+                        </p>
+                        <hr />
+                        @if (Item.XuatNhap != false && Item.KhachLe != false)
+                        {
+
+                        }
+                        else
+                        {
+                            <p style="font-size:20px">Tổng: @Html.FormatValue(Item.TongTienAuto, "{0:#,###,###}")</p>
+                        }
+                    </td>
+                    <td>
+                        @if (File.Exists(Request.MapPath("~/Content/imgxuatnhap/" + Item.HoaDon)))
+                        {
+                            <a target="_blank" href="~/Content/imgxuatnhap/@Item.HoaDon">
+                                <i class="glyphicon glyphicon-download-alt"></i>
+                            </a>
+                        }
+                    </td>
+                    <td>
+                        @if (File.Exists(Request.MapPath("~/Content/imgxuatnhap/" + Item.Filesave2)))
+                        {
+                            <a target="_blank" href="~/Content/imgxuatnhap/@Item.Filesave2">
+                                <i class="glyphicon glyphicon-download-alt"></i>
+                            </a>
+                        }
+                    </td>
+                    <td style="border-right: 2px solid black !important">
+                        @if (File.Exists(Request.MapPath("~/Content/imgxuatnhap/" + Item.Filesave3)))
+                        {
+                            <a target="_blank" href="~/Content/imgxuatnhap/@Item.Filesave3">
+                                <i class="glyphicon glyphicon-download-alt"></i>
+                            </a>
+                        }
+                    </td>
+                    <td>
+                        <a title="Update Kỳ hiện tại" class="btn btn-primary" href="/StaffTeK/UpdateKyXNTeKMaNa/@Item.Id">
+                            <span class="glyphicon glyphicon-edit" style="font-size:20px"></span>
+                        </a>
+                    </td>
+                    
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

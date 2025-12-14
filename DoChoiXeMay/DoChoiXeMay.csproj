@@ -641,6 +641,8 @@
     <Content Include="Views\Look\Partime.cshtml" />
     <Content Include="Views\Look\GetListTinhGioCong.cshtml" />
     <Content Include="Views\Look\GetListTuan.cshtml" />
+    <Content Include="Views\StaffTeK\GetListKyXNTeKMaNa.cshtml" />
+    <Content Include="Views\StaffTeK\UpdateKyXNTeKMaNa.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\imgthuchi\" />

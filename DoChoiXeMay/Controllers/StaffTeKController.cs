@@ -1,4 +1,5 @@
-﻿using DoChoiXeMay.Filters;
+﻿using DoChoiXeMay.Areas.Admin.Data;
+using DoChoiXeMay.Filters;
 using DoChoiXeMay.Models;
 using System;
 using System.Collections.Generic;
@@ -27,11 +28,6 @@ namespace DoChoiXeMay.Controllers
             ViewBag.Hoten = nv.HoTen;
             // Lấy ngày hiện tại
             DateTime date = DateTime.Now;
-            //// Lấy số ngày trong năm
-            //int dayOfYear = date.DayOfYear;
-            //// Tính số tuần. Cộng thêm 6 để làm tròn lên
-            //int week = (dayOfYear + 6) / 7;
-
             CultureInfo ci = CultureInfo.CurrentCulture; // Sử dụng hiện tại của hệ thống
             Calendar cal = ci.Calendar;
             CalendarWeekRule rule = ci.DateTimeFormat.CalendarWeekRule;
@@ -45,6 +41,73 @@ namespace DoChoiXeMay.Controllers
             ViewBag.Tuanmoi = weekNumber + 1;
             ViewBag.Tuanmoihon = weekNumber + 2;
             return View();
+        }
+        public ActionResult GetListKyXNTeKMaNa()
+        {
+            //lấy sp đã bán trong ngày
+            DateTime HienTai = DateTime.Now;
+            var model=dbc.KyXuatNhaps.Where(kh => kh.Id > 1 && kh.AdminXNPUSH == true
+                    && kh.UPush == true && kh.XuatNhap==true && kh.KhachLe==true 
+                    && kh.NgayXuatNhap.Day==HienTai.Day && kh.NgayXuatNhap.Month == HienTai.Month && kh.NgayXuatNhap.Year == HienTai.Year)
+                    .OrderByDescending(kh => kh.NgayAuto).ToList();
+            for (int i = 0; i < model.Count(); i++)
+            {
+                model[i].STT = (i + 1).ToString();
+            }
+            ViewBag.KyXNTeKMaNa = model;
+            return PartialView();
+        }
+        public ActionResult UpdateKyXNTeKMaNa(int id)
+        {
+            var model = dbc.KyXuatNhaps.Find(id);
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult UpdateKyXNTeKMaNa(KyXuatNhap XN)
+        {
+            try
+            {
+                var file1 = Request.Files["Dinhkem1"];
+                var file2 = Request.Files["Dinhkem2"];
+                var file3 = Request.Files["Dinhkem3"];
+                if (file1.ContentLength > 0)
+                {
+                    //Xoa hinh cu
+                    bool xoahinhcu = XstringAdmin.Xoahinhcu("imgxuatnhap/", XN.HoaDon);
+                    XN.HoaDon = XstringAdmin.saveFile(file1, "imgxuatnhap/");
+                }
+                if (file2.ContentLength > 0)
+                {
+                    //Xoa hinh cu
+                    bool xoahinhcu = XstringAdmin.Xoahinhcu("imgxuatnhap/", XN.Filesave2);
+                    XN.Filesave2 = XstringAdmin.saveFile(file2, "imgxuatnhap/");
+                }
+                if (file3.ContentLength > 0)
+                {
+                    //Xoa hinh cu
+                    bool xoahinhcu = XstringAdmin.Xoahinhcu("imgxuatnhap/", XN.Filesave3);
+                    XN.Filesave3 = XstringAdmin.saveFile(file3, "imgxuatnhap/");
+                }
+                XN.NgayAuto = DateTime.Now;
+                var kq = new Areas.Admin.Data.XuatNhapData().UPdateKyXN(XN);
+                if (kq == true)
+                {
+                    Session["ThongbaoUphinhLoi"] = "";
+                    Session["ThongbaoUphinh"] = "Update thành công hình cho đơn hàng: "+XN.TenKy;
+                }
+                else
+                {
+                    Session["ThongbaoUphinhLoi"] = "Có lỗi update hình đơn hàng: "+ XN.TenKy+" !!!";
+                    Session["ThongbaoUphinh"] = "";
+                }
+                    return RedirectToAction("IndexStaff");
+            }
+            catch (Exception ex)
+            {
+                string loi = ex.ToString();
+                ModelState.AddModelError("", "Update Xuất Nhập Thất Bại !!!! Có Lỗi hệ thống.");
+                return View(XN);
+            }
         }
         public ActionResult GetListTinhGioCong(DateTime dtInput)
         {

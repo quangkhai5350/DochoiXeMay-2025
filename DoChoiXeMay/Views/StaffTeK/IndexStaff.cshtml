@@ -9,60 +9,77 @@
 
 <div class="container" style="width:100%;background-color: white; margin-top: 80px; border-radius: 4px 4px; box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.32)">
     <div class="omb_login">
-        <div class="pull-right label label-warning" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
+        <div class="pull-right label-warning" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
             @Session["ThongbaoNVLoi"]
         </div>
-        <div class="pull-right label label-success" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
+        <div class="pull-right label-success" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
             @Session["ThongbaoNV"]
         </div>
     </div>
 </div>
+<div class="" style="width:100%;background-color: white; margin-top: 80px; border-radius: 4px 4px; box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.32)">
+    <h3 style="text-align:center"><a style="text-decoration: none">Xem va Update Giờ Công @ViewBag.Hoten</a></h3>
+    <div class="row" style="margin-top:20px;margin-bottom:10px">
+        <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 col-12" style="margin-left: 10px">
+            <span class="icon-case"><i class="glyphicon glyphicon-calendar"></i>Chọn Tháng Năm</span>
+            <input type="month" name="ThangNam" value="@DateTime.Now.ToString("yyyy-MM")" id="ThangNam" />
+        </div>
+    </div>
+    <div class="listGioCongNV">
+
+    </div>
+</div>
+<div class="omb_login">
+    <div class="pull-right label-warning" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
+        @Session["ThongbaoLTLoi"]
+    </div>
+    <div class="pull-right label-success" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
+        @Session["ThongbaoLT"]
+    </div>
+</div>
+<div class="" style="width:100%;background-color: white; margin-top: 80px; border-radius: 4px 4px; box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.32)">
+    <h3 style="text-align:center"><a style="text-decoration: none">Lịch làm việc tuần của @ViewBag.Hoten</a></h3>
+    <div class="row" style="margin-top:20px;margin-bottom:10px">
+
+        <div class="col-lg-4 col-xl-4 col-md-4 col-sm-6" style="margin-top:10px">
+            <select class="form-control" id="SelectW" name="SelectW" style="width: 70%; height: 40px; margin: 0 auto">
+                <option value="@ViewBag.Tuanmoihon">Tuần @ViewBag.Tuanmoihon</option>
+                <option value="@ViewBag.Tuanmoi">Tuần @ViewBag.Tuanmoi</option>
+                <option value="@ViewBag.TuanHT" selected>Tuần(@ViewBag.TuanHT) Hiện tại</option>
+                <option value="@ViewBag.TuanCu1">Tuần @ViewBag.TuanCu1</option>
+                <option value="@ViewBag.TuanCu2">Tuần @ViewBag.TuanCu2</option>
+                <option value="@ViewBag.TuanCu3">Tuần @ViewBag.TuanCu3</option>
+                <option value="@ViewBag.TuanCu4">Tuần @ViewBag.TuanCu4</option>
+            </select>
+        </div>
+        <input id="CheckTHT" value="@ViewBag.TuanHT" hidden />
+    </div>
+    <div class="listLichTuanNV">
+
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-6" style="margin-bottom:10px">
+        <button id="alich" class="btn btn-warning" data-action="UpdateLichTuan" style="margin-left:5px">
+            <i class="fa fa-plus-circle"></i>&nbsp;&nbsp; <span id="namelich">Update "Lịch Làm Việc"</span>
+        </button>
+    </div>
+</div>
+@if (Session["quyen"].ToString() == "4")
+{
     <div class="" style="width:100%;background-color: white; margin-top: 80px; border-radius: 4px 4px; box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.32)">
-        <h3 style="text-align:center"><a style="text-decoration: none">Xem va Update Giờ Công @ViewBag.Hoten</a></h3>
-        <div class="row" style="margin-top:20px;margin-bottom:10px">
-            <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 col-12" style="margin-left: 10px">
-                <span class="icon-case"><i class="glyphicon glyphicon-calendar"></i>Chọn Tháng Năm</span>
-                <input type="month" name="ThangNam" value="@DateTime.Now.ToString("yyyy-MM")" id="ThangNam" />
+        <div class="omb_login">
+            <div class="pull-right label-warning" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
+                @Session["ThongbaoUphinhLoi"]
+            </div>
+            <div class="pull-right label-success" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
+                @Session["ThongbaoUphinh"]
             </div>
         </div>
-        <div class="listGioCongNV">
+        <h3 style="text-align:center"><a style="text-decoration: none">Danh Sách sp đã xuất ngày: @DateTime.Now.ToString("dd/MM/yyyy")</a></h3>
+        <div class="SPDaBan">
 
         </div>
     </div>
-    <div class="omb_login">
-        <div class="pull-right label label-warning" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
-            @Session["ThongbaoLTLoi"]
-        </div>
-        <div class="pull-right label label-success" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
-            @Session["ThongbaoLT"]
-        </div>
-    </div>
-    <div class="" style="width:100%;background-color: white; margin-top: 80px; border-radius: 4px 4px; box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.32)">
-        <h3 style="text-align:center"><a style="text-decoration: none">Lịch làm việc tuần của @ViewBag.Hoten</a></h3>
-        <div class="row" style="margin-top:20px;margin-bottom:10px">
-
-            <div class="col-lg-4 col-xl-4 col-md-4 col-sm-6" style="margin-top:10px">
-                <select class="form-control" id="SelectW" name="SelectW" style="width: 70%; height: 40px; margin: 0 auto">
-                    <option value="@ViewBag.Tuanmoihon">Tuần @ViewBag.Tuanmoihon</option>
-                    <option value="@ViewBag.Tuanmoi">Tuần @ViewBag.Tuanmoi</option>
-                    <option value="@ViewBag.TuanHT" selected>Tuần(@ViewBag.TuanHT) Hiện tại</option>
-                    <option value="@ViewBag.TuanCu1">Tuần @ViewBag.TuanCu1</option>
-                    <option value="@ViewBag.TuanCu2">Tuần @ViewBag.TuanCu2</option>
-                    <option value="@ViewBag.TuanCu3">Tuần @ViewBag.TuanCu3</option>
-                    <option value="@ViewBag.TuanCu4">Tuần @ViewBag.TuanCu4</option>
-                </select>
-            </div>
-            <input id="CheckTHT" value="@ViewBag.TuanHT" hidden/>
-        </div>
-        <div class="listLichTuanNV">
-
-        </div>
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-6" style="margin-bottom:10px">
-            <button id="alich" class="btn btn-warning" data-action="UpdateLichTuan" style="margin-left:5px">
-                <i class="fa fa-plus-circle"></i>&nbsp;&nbsp; <span id="namelich">Update "Lịch Làm Việc"</span> 
-            </button>
-        </div>
-    </div>
+}
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script>
@@ -70,6 +87,7 @@
     function Load() {
         InsertAutoNgayThang();
         GetListTuan();
+        GetListKyXNTeKMaNa()
     }
     $(function () {
         $("button[data-action]").click(function () {
@@ -154,5 +172,14 @@
         $('#namelich').html('Update Lịch Làm Việc Tuần (' + week + ')');
         GetListTuan();
     });
+    function GetListKyXNTeKMaNa() {
+        $.ajax({
+            url: "/StaffTeK/GetListKyXNTeKMaNa",
+            data: {},
+            success: function (respone) {
+                $(".SPDaBan").html(respone);
+            }
+        });
+    };
 </script>
 

@@ -559,7 +559,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                         dbc.Entry(HH).State = EntityState.Modified;
                         dbc.SaveChanges();
                         Session["ThongBaoXuatNhapTeK"] = "Trả Hàng Thành Công, Số lượng HH tăng 1.";
-                        if(ctxn.DaActive !=null || ctxn.DaActive != "")
+                        if(ctxn.DaActive !=null && ctxn.DaActive != "")
                         {
                             Session["ThongBaoXuatNhapTeKct"] = "Serial: "+ctxn.SerialHop+" đã Active, cần xóa Active để sử dụng lại.!!!";
                         }
