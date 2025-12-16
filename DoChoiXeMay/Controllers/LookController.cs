@@ -34,7 +34,39 @@ namespace DoChoiXeMay.Controllers
             ViewBag.Tuanmoihon = weekNumber + 2;
             ViewBag.Idnhanvien = new SelectList(dbc.NV_NhanVienTek.Where(kh => kh.NV_Vitrinhanvien.DonViTinh == "Gio"
                             && kh.DaNghiViec == false), "Id", "HoTen");
+            //16thang12
+            ViewBag.IdSan = new SelectList(dbc.SanThuongMais.Where(kh => kh.SuDung == true), "Id", "TenSan");
+            ViewBag.IdLoaiHangXN = new SelectList(dbc.KyXuatNhap_LoaiHang.ToList(), "Id", "TenLoai");
+            ViewBag.TrongTon = dbc.HangHoas.Where(kh => kh.Id == 56).Sum(kh => kh.SoLuong);
+            ViewBag.KhoiTon = dbc.HangHoas.Where(kh => kh.Id == 55).Sum(kh => kh.SoLuong);
             return View();
+        }
+        public ActionResult GetListKyXNTeK(string ngay = "", string strk = "", int idLHXN = 0, int IdSan = 0, int Iddoitra = 0, int PageNo = 0, int PageSize = 8, int UserId = 0)
+        {
+            strk = strk.ToLower().Trim();
+            ViewBag.KyXNTeK = new Areas.Admin.Data.XuatNhapData().getXuatNhapTek(ngay, strk, idLHXN, IdSan, Iddoitra, PageNo, PageSize, UserId);
+            return PartialView();
+        }
+        public ActionResult GetPageCountXNTek(string ngay = "", string strk = "", int idLHXN = 0, int IdSan = 0, int Iddoitra = 0, int PageSize = 8, int UserId = 0)
+        {
+            var num = new Areas.Admin.Data.XuatNhapData().GetPageCountXuatNhapTek(ngay, strk, idLHXN, IdSan, Iddoitra, UserId);
+            var pageCount = Math.Ceiling(1.0 * num / PageSize);
+            return Json(pageCount, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult LoadLoaiKyXN()
+        {
+            var IdLoaiHangXN = dbc.KyXuatNhap_LoaiHang.
+                            Select(kh => new { id = kh.Id, ten = kh.TenLoai });
+
+            return Json(IdLoaiHangXN, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult LoadSanTM()
+        {
+            var IdSan = dbc.SanThuongMais.Where(kh => kh.SuDung == true).
+                            Select(kh => new { id = kh.Id, ten = kh.TenSan });
+
+            return Json(IdSan, JsonRequestBehavior.AllowGet);
         }
         public ActionResult GetListTinhGioCong(DateTime dtInput, int Id = 0)
         {
