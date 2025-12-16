@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 
 <link href="~/Content/Login_Style.css" rel="stylesheet" />
+
 <div class="" style="width:100%;background-color: white; margin-top: 80px; border-radius: 4px 4px; box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.32)">
     <h3 style="text-align:center;margin-bottom:20px"><a style="text-decoration: none">Xem Giờ Công NV Partime TeK</a></h3>
     <h5 style="text-align:center;margin-bottom:20px"><a style="text-decoration: none">(NV chỉ có thể thay đổi giờ trong ngày.)</a></h5>
@@ -42,11 +43,294 @@
 
     </div>
 </div>
+@*16thang12*@
+<div class="" style="width:100%;background-color: white; margin-top: 80px; border-radius: 4px 4px; box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.32)">
+    <h3 style="text-align:center;margin-bottom:20px"><a style="text-decoration: none">Danh Sách sản phẩm xuất/nhập TeK</a></h3>
+    <h5 style="text-align:center;margin-bottom:20px"><a style="text-decoration: none">(Chỉ Xem - Muốn update thì vào admin)</a></h5>
+    <div class="row">
+        <div class="col-lg-4 col-xl-4 col-md-4 col-sm-6" style="margin-top: 10px">
+            <span style="margin-left:10px; color:brown">Tồn Kho TNT BLOCKX G2 ZEN 1-Trong: @ViewBag.TrongTon</span>
+        </div>
+        <div class="col-lg-4 col-xl-4 col-md-4 col-sm-0" style="">
 
+        </div>
+        <div class="col-lg-4 col-xl-4 col-md-4 col-sm-6" style="margin-top: 10px">
+            <span style="margin-left: 10px; color: brown ">Tồn Kho TNT BLOCKX G2 ZEN 1-Khói: @ViewBag.KhoiTon</span>
+        </div>
+    </div>
+    <div class="panel panel-default" style="margin-top:10px">
+        <div class="panel-heading">
+                <div class="row">
+                    <div class="col-lg-2 col-xl-2 col-md-2 col-sm-4" style="text-align: center; margin-top: 15px">
+                        <span class="icon-case"><i class="glyphicon glyphicon-calendar"></i></span>
+                        <input type="date" name="tungay" id="tungay" />
+                    </div>
+                    <div class="col-lg-2 col-xl-2 col-md-2 col-sm-4" style="text-align:center;margin-top:10px">
+                        @Html.DropDownList("IdLoaiHangXN", null, new { style = "width: 70%; height: 40px" })
+                    </div>
+                    <div class="col-lg-2 col-xl-2 col-md-2 col-sm-4" style="text-align: center; margin-top: 10px">
+                        @Html.DropDownList("IdSan", null, new { style = "width: 70%; height: 40px" })
+                    </div>
+                    <div class="col-lg-2 col-xl-2 col-md-2 col-sm-4" style="text-align: center; margin-top: 10px">
+                        <select class="form-control" id="IdDoiTra" name="IdDoiTra" style="width: 70%; height: 40px; margin: 0 auto">
+                            <option value="0">Loại sản phẩm</option>
+                            <option value="2">Trả (Mới Nhận)</option>
+                            <option value="3">Trả Có Lỗi</option>
+                            <option value="4">Trả Không Lỗi</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-4 col-xl-4 col-md-4 col-sm-4 col-3" style="text-align: center; margin-top: 10px">
+                        <input type="text" class="form-control input-sm" style="font-size: medium; height: 40px; width: 95%" name="KeywordsTT" id="KeywordsTT" onchange="TimKiemKyXN()" placeholder="Tên Kỳ hoặc số Serial." />
+                    </div>
+                </div>
+        </div>
+        <div class="panel-body">
+            <img id="loading" hidden src="~/Areas/Admin/Content/img/loading.gif" />
+            <div class="listSPXNTEK">
+
+
+            </div>
+        </div>
+        <div class="panel-footer">
+
+            <div class="row">
+                <div class="col-md-8">
+                    <span class="TongSanPham"></span>
+                </div>
+                <div class="col-md-4" style="text-align: right">
+                    <span class="TongSanPham"></span>
+                </div>
+            </div>
+
+
+            <ul class="pager">
+                <li><a href="#"><span class="glyphicon glyphicon-step-backward"></span></a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-step-forward"></span></a></li>
+            </ul>
+
+        </div>
+    </div>
+</div>
+@*16thang12*@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script>
-    Load();
-    function Load() {
+    LoadPartime();
+    $(function () {
+        pageNo = 0;
+        pageSize = 5;
+        TongSP = 0;
+        var KeywordsTT = $('#KeywordsTT').val();
+        LoadLoaiKyXN()
+        LoadSanTMDT()
+        var UserId = 0;
+        var idLoaiHangXN = $('#IdLoaiHangXN').val();
+        var IdSan = $('#IdSan').val();
+        var IdDoiTra = $('#IdDoiTra').val();
+        var tungay = $('#tungay').val();
+        getTongSanPham(tungay, pageSize, pageNo, UserId, KeywordsTT, idLoaiHangXN, IdSan, IdDoiTra)
+        $(".pager a:eq(0)").click(function () {
+            if (pageNo > 0) {
+                pageNo = 0;
+                var KeywordsTT = $('#KeywordsTT').val();
+                var UserId = 0;
+                var idLoaiHangXN = $('#IdLoaiHangXN').val();
+                var IdSan = $('#IdSan').val();
+                var IdDoiTra = $('#IdDoiTra').val();
+                var tungay = $('#tungay').val();
+                LoadPage(tungay, pageNo, pageSize, UserId, KeywordsTT, idLoaiHangXN, IdSan, IdDoiTra);
+            }
+            return false;
+        });
+        $(".pager a:eq(1)").click(function () {
+            if (pageNo > 0) {
+                pageNo--;
+                var KeywordsTT = $('#KeywordsTT').val();
+                var UserId = 0;
+                var idLoaiHangXN = $('#IdLoaiHangXN').val();
+                var IdSan = $('#IdSan').val();
+                var IdDoiTra = $('#IdDoiTra').val();
+                var tungay = $('#tungay').val();
+                LoadPage(tungay, pageNo, pageSize, UserId, KeywordsTT, idLoaiHangXN, IdSan, IdDoiTra);
+            }
+            return false;
+        });
+        $(".pager a:eq(2)").click(function () {
+            if (pageNo < pageCount - 1) {
+                pageNo++;
+                var KeywordsTT = $('#KeywordsTT').val();
+                var UserId = 0;
+                var idLoaiHangXN = $('#IdLoaiHangXN').val();
+                var IdSan = $('#IdSan').val();
+                var IdDoiTra = $('#IdDoiTra').val();
+                var tungay = $('#tungay').val();
+                LoadPage(tungay, pageNo, pageSize, UserId, KeywordsTT, idLoaiHangXN, IdSan, IdDoiTra);
+            }
+            return false;
+        });
+
+        $(".pager a:eq(3)").click(function () {
+            if (pageNo < pageCount - 1) {
+                pageNo = pageCount - 1;
+                var KeywordsTT = $('#KeywordsTT').val();
+                var UserId = 0;
+                var idLoaiHangXN = $('#IdLoaiHangXN').val();
+                var IdSan = $('#IdSan').val();
+                var IdDoiTra = $('#IdDoiTra').val();
+                var tungay = $('#tungay').val();
+                LoadPage(tungay, pageNo, pageSize, UserId, KeywordsTT, idLoaiHangXN, IdSan, IdDoiTra);
+            }
+            return false
+        });
+    });
+    function LoadPage(tungay, pageNo, pageSize, UserId, KeywordsTT, idLoaiHangXN, IdSan, IdDoiTra) {
+        $.ajax({
+            url: "/Look/GetListKyXNTeK",
+            data: { ngay: tungay, strk: KeywordsTT, idLHXN: idLoaiHangXN, IdSan: IdSan, Iddoitra: IdDoiTra, PageNo: pageNo, PageSize: pageSize, UserId: UserId },
+            success: function (respone) {
+                $(".listSPXNTEK").html(respone);
+                var pagesp = pageNo + 1;
+                $('.TongSanPham').html(pagesp + '/' + TongSP + ' trang');
+            }
+        });
+    };
+    function getTongSanPham(tungay, pageSize, pageNo, UserId, KeywordsTT, idLoaiHangXN, IdSan, IdDoiTra) {
+        $.ajax({
+            url: "/Look/GetPageCountXNTek",
+            data: { ngay: tungay, strk: KeywordsTT, idLHXN: idLoaiHangXN, IdSan: IdSan, Iddoitra: IdDoiTra, PageSize: pageSize, UserId: UserId },
+            success: function (respone) {
+                pageCount = respone;
+                TongSP = respone;
+                LoadPage(tungay, pageNo, pageSize, UserId, KeywordsTT, idLoaiHangXN, IdSan, IdDoiTra);
+            }
+        });
+    };
+    $("#IdLoaiHangXN").change(function () {
+        pageNo = 0;
+        pageSize = 5;
+        var KeywordsTT = $('#KeywordsTT').val();
+        var UserId = 0;
+        var idLoaiHangXN = $('#IdLoaiHangXN').val();
+        var IdSan = $('#IdSan').val();
+        var IdDoiTra = $('#IdDoiTra').val();
+        var tungay = $('#tungay').val();
+        getTongSanPham(tungay, pageSize, pageNo, UserId, KeywordsTT, idLoaiHangXN, IdSan, IdDoiTra)
+    });
+    $("#IdSan").change(function () {
+        pageNo = 0;
+        pageSize = 5;
+        var KeywordsTT = $('#KeywordsTT').val();
+        var UserId = 0;
+        var idLoaiHangXN = $('#IdLoaiHangXN').val();
+        var IdSan = $('#IdSan').val();
+        var IdDoiTra = $('#IdDoiTra').val();
+        var tungay = $('#tungay').val();
+        getTongSanPham(tungay, pageSize, pageNo, UserId, KeywordsTT, idLoaiHangXN, IdSan, IdDoiTra)
+    });
+    $("#IdDoiTra").change(function () {
+        pageNo = 0;
+        pageSize = 5;
+        var KeywordsTT = $('#KeywordsTT').val();
+        var UserId = 0;
+        var idLoaiHangXN = $('#IdLoaiHangXN').val();
+        var IdSan = $('#IdSan').val();
+        var IdDoiTra = $('#IdDoiTra').val();
+        var tungay = $('#tungay').val();
+        $("#loading").show();
+        $(".listSPXNTEK").css('display', 'none');
+        setTimeout(function () {
+            $(".listSPXNTEK").css('display', 'block');
+            getTongSanPham(tungay, pageSize, pageNo, UserId, KeywordsTT, idLoaiHangXN, IdSan, IdDoiTra);
+            //1s sau hiên lên
+        }, 800);
+        $("#loading").hide();
+    });
+    $("#tungay").change(function () {
+        pageNo = 0;
+        pageSize = 5;
+        var KeywordsTT = $('#KeywordsTT').val();
+        var UserId = 0;
+        var idLoaiHangXN = $('#IdLoaiHangXN').val();
+        var IdSan = $('#IdSan').val();
+        var IdDoiTra = $('#IdDoiTra').val();
+        var tungay = $('#tungay').val();
+        getTongSanPham(tungay, pageSize, pageNo, UserId, KeywordsTT, idLoaiHangXN, IdSan, IdDoiTra)
+    });
+    function TimKiemKyXN() {
+        pageNo = 0;
+        pageSize = 5;
+        TongSP = 0;
+        var KeywordsTTT = $('#KeywordsTT').val();
+        var UserId = 0;
+        var idLoaiHangXN = $('#IdLoaiHangXN').val();
+        var IdSan = $('#IdSan').val();
+        var IdDoiTra = $('#IdDoiTra').val();
+        var tungay = $('#tungay').val();
+        $("#loading").show();
+        $(".listSPXNTEK").css('display', 'none');
+
+        setTimeout(function () {
+            $(".listSPXNTEK").css('display', 'block');
+            getTongSanPham(tungay, pageSize, pageNo, UserId, KeywordsTTT, idLoaiHangXN, IdSan, IdDoiTra);
+            //1s sau hiên lên
+        }, 800);
+        $("#loading").hide();
+    };
+    function LoadLoaiKyXN() {
+        $('#IdLoaiHangXN').empty();
+        $.ajax({
+            url: "/Look/LoadLoaiKyXN", // we are calling json method
+            data: {},
+            success: function (response) {
+                $("#IdLoaiHangXN").append(
+                    $('<option/>')
+                        .attr('value', 0)
+                        .text("Loại Kỳ XN")
+                );
+                $(response).each(function (i, e) {
+                    $("#IdLoaiHangXN").append(
+                        $('<option/>')
+                            .attr('value', e.id)
+                            .text(e.ten)
+                    );
+                    // here we are adding option for Hãng
+                });
+            },
+            error: function (ex) {
+                alert('Lỗi load User: ' + ex);
+            }
+        });
+
+    };
+
+    function LoadSanTMDT() {
+        $('#IdSan').empty();
+        $.ajax({
+            url: "/Look/LoadSanTM", // we are calling json method
+            data: {},
+            success: function (response) {
+                $("#IdSan").append(
+                    $('<option/>')
+                        .attr('value', 0)
+                        .text("Chọn Sàn TM")
+                );
+                $(response).each(function (i, e) {
+                    $("#IdSan").append(
+                        $('<option/>')
+                            .attr('value', e.id)
+                            .text(e.ten)
+                    );
+                    // here we are adding option for Hãng
+                });
+            },
+            error: function (ex) {
+                alert('Lỗi load User: ' + ex);
+            }
+        });
+
+    };
+    function LoadPartime() {
         GetListTinhGio()
         GetListTuan()
     }

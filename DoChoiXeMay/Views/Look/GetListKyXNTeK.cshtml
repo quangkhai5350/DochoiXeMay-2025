@@ -1,0 +1,209 @@
+﻿
+@using DoChoiXeMay.Areas.Admin.Data;
+<style>
+    .canhgiua{
+        text-align:center
+    }
+</style>
+<div class="table-responsive">
+    <table class="table table-hover table-striped" style="margin-bottom:0">
+        <thead>
+            <tr class="canhgiua" style="background-color: #00bcd4">
+                <th class="canhgiua" style="max-width: 15px">STT</th>
+                <th class="canhgiua" style="width:200px">Tên Kỳ</th>
+                <th class="canhgiua" style="width:200px">Xuất Nhập/Số tiền </th>
+                <th class="canhgiua" style="padding-left: 0;padding-right:0">File 1</th>
+                <th class="canhgiua" style="padding-left: 0;padding-right:0">File 2</th>
+                <th class="canhgiua" style="padding-left: 0;padding-right:0">File 3</th>
+
+                <th class="canhgiua">Đổi Trả</th>
+                <th class="canhgiua" style="width: 300px; padding-left: 0; padding-right: 0">Soluong/Tên/ThôngSố/Hãng</th>
+                <th class="canhgiua" style="width: 15px">STT</th>
+
+            </tr>
+        </thead>
+        <tbody style="border: 2px solid black !important">
+            @foreach (DoChoiXeMay.Models.KyXuatNhap Item in ViewBag.KyXNTeK)
+            {
+                var Chitiet = new XuatNhapData().GetListByKy(Item.Id);
+                var tenky = XstringAdmin.Truncate(Item.TenKy, 50);
+                <tr class="canhgiua" style="border-bottom: 2px solid black !important">
+                    <td>@Item.STT</td>
+                    
+                    <td>
+                        <p style="font-size: 15px; color: red">
+                            @tenky
+                        </p>
+                        <p style="font-size: 15px; color: red">
+                            @Item.KhuVuc.TenKhuvuc<span>-@Item.SanThuongMai.TenSan</span>
+                        </p>
+                        @if (Item.LuuKho != null)
+                        {
+                            if (Item.LuuKho.Trim() != "")
+                            {
+                                <hr />
+                                <p>Lưu: @Item.LuuKho</p>
+                            }
+                        }
+                        <hr />
+                        @if (Item.XuatNhap != false && Item.KhachLe != false)
+                        {
+
+                        }
+                        else
+                        {
+                            <p>(Ngày: @Html.FormatValue(Item.NgayXuatNhap, "{0:dd/MM/yyyy}"))</p>
+                        }
+
+                    </td>
+
+                    <td>
+
+                        @if (Item.XuatNhap == true)
+                        {
+                            if (Item.KhachLe == true)
+                            {
+                                <p style="font-size: 15px"><span style="background-color:burlywood">Xuất Hàng/KhachLe</span></p>
+                                <p style="font-size: 15px"><span>(Ngày: @Html.FormatValue(Item.NgayXuatNhap, "{0:dd/MM/yyyy}"))</span></p>
+
+                            }
+                            else
+                            {
+                                <p style="font-size: 15px"><span style="background-color:burlywood">Xuất Hàng/ĐaiLy</span></p>
+
+                            }
+                            if (Item.IdLoaiHangXN == 3 || Item.IdLoaiHangXN == 4)
+                            {
+                                <p style="font-size: 15px"><span style="background-color:burlywood">@Item.KyXuatNhap_LoaiHang.TenLoai</span></p>
+                                    
+                                }
+                            }
+                            else
+                            {
+                                <p style="font-size: 15px"><span>Nhập Hàng</span></p>
+                            }
+                        <hr />
+                        @if (Item.XuatNhap != false && Item.KhachLe != false)
+                        {
+
+                        }
+                        else
+                        {
+                            <p style="font-size:20px">Tổng: @Html.FormatValue(Item.TongTienAuto, "{0:#,###,###}")</p>
+                        }
+
+                    </td>
+                    <td>
+                        @if (File.Exists(Request.MapPath("~/Content/imgxuatnhap/" + Item.HoaDon)))
+                        {
+                            <a target="_blank" href="~/Content/imgxuatnhap/@Item.HoaDon">
+                                <i class="glyphicon glyphicon-download-alt"></i>
+                            </a>
+                        }
+                    </td>
+                    <td>
+                        @if (File.Exists(Request.MapPath("~/Content/imgxuatnhap/" + Item.Filesave2)))
+                        {
+                            <a target="_blank" href="~/Content/imgxuatnhap/@Item.Filesave2">
+                                <i class="glyphicon glyphicon-download-alt"></i>
+                            </a>
+                        }
+                    </td>
+                    <td style="border-right: 2px solid black !important">
+                        @if (File.Exists(Request.MapPath("~/Content/imgxuatnhap/" + Item.Filesave3)))
+                        {
+                            <a target="_blank" href="~/Content/imgxuatnhap/@Item.Filesave3">
+                                <i class="glyphicon glyphicon-download-alt"></i>
+                            </a>
+                        }
+                    </td>
+                    <td>
+                        @if (Item.KhachLe)
+                        {
+                            foreach (DoChoiXeMay.Models.ChitietXuatNhap ct in Chitiet)
+                            {
+                                var KT = new XuatNhapData().kiemtraNgayCTXN(ct.Id.ToString());
+                                if (KT > 30 && ct.IdDoiTra == 1)
+                                {
+                                    <p style="height:40px">
+                                        <span>Hết hạn(30 ngày)</span>
+                                    </p>
+                                }
+                                else if (ct.IdDoiTra > 1)
+                                {
+                                    <span style="background-color:bisque">@ct.HangDoiTra.Ten</span>
+                                }
+
+                            }
+                        }
+                    </td>
+                    <td>
+                        @foreach (DoChoiXeMay.Models.ChitietXuatNhap ct in Chitiet)
+                        {
+                            var tenHH = XstringAdmin.Truncate(ct.Ten, 20);
+                            <p title="@ct.Ten">
+                                <span>@ct.SoLuong&nbsp;</span>
+                                <span>@tenHH</span>
+                            </p>
+                            <p title="@ct.Ten">
+                                @if (ct.IDColor > 1)
+                                {
+                                    <span> <span>-</span>@ct.Color.TenColor</span>
+                                }
+                                @if (ct.IDMF != 3)
+                                {
+                                    <span> <span>-</span>@ct.Manufacturer.Name</span>
+                                }
+                                @if (ct.IDSize != 1)
+                                {
+                                    <span> <span>-</span>size @ct.Size.TenSize</span>
+                                }
+                            </p>
+                            <p title="@ct.Ten">
+                                @if (ct.SerialHop != null)
+                                {
+                                    <span> <span>-</span> @ct.SerialHop</span>
+                                }
+                                @if (ct.SerialSP != null)
+                                {
+                                    <span> <span>-</span> @ct.SerialSP</span>
+                                }
+                            </p>
+                            <p title="@ct.Ten">
+                                @if (ct.DaActive != null)
+                                {
+                                    <span style="background-color:bisque"> <span>-</span> @ct.DaActive</span>
+                                }
+                            </p>
+                            <hr />
+                        }
+
+                        </td>
+                    <td>
+                        @foreach (DoChoiXeMay.Models.ChitietXuatNhap ct in Chitiet)
+                        {
+                            if (ct.SerialHop == null)
+                            {
+                                <p style="height:50px">
+                                    @ct.GhiChu
+                                </p>
+                            }
+                            else
+                            {
+                                <p style="height:80px">
+                                    @ct.GhiChu
+                                </p>
+                            }
+                            <hr />
+                        }
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+
+    </table>
+
+</div>
+<script src="~/Areas/Admin/Content/jquery2.0.3.min.js"></script>
+
