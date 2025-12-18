@@ -94,6 +94,10 @@ namespace DoChoiXeMay.Controllers
                 {
                     Session["ThongbaoUphinhLoi"] = "";
                     Session["ThongbaoUphinh"] = "Update thành công hình cho đơn hàng: "+XN.TenKy;
+                    //SMS hệ thống
+                    string sms = "Update thành công hình đơn hàng: " + XN.TenKy + ".";
+                    new Areas.Admin.Data.UserData().SMSvaNhatKy(dbc, Session["UserId"].ToString(), Session["UserName"].ToString()
+                        , Session["quyen"].ToString(), sms);
                 }
                 else
                 {
