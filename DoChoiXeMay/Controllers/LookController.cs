@@ -74,6 +74,7 @@ namespace DoChoiXeMay.Controllers
             DateTime date = DateTime.Now;
             List<NV_GioCong> model = new List<NV_GioCong>();
             var nv = dbc.NV_NhanVienTek.Find(Id);
+            var nvcong = dbc.NV_Cong.FirstOrDefault(kh => kh.IdNhanVien == Id && kh.Thang == dtInput.Month && kh.Nam == dtInput.Year);
             if (dtInput.Month == date.Month && dtInput.Year == date.Year)
             {
                 model = dbc.NV_GioCong.Where(kh => kh.Month == dtInput.Month && kh.Year == dtInput.Year
@@ -103,6 +104,14 @@ namespace DoChoiXeMay.Controllers
             ViewBag.NgayGioCong = model;
             ViewBag.Hoten = nv.HoTen;
             ViewBag.TongSoSoGioThang = giothang;
+            if (nvcong != null)
+            {
+                ViewBag.SLcom = nvcong.SLCom;
+            }
+            else
+            {
+                ViewBag.SLcom = 0;
+            }
             return PartialView(model);
         }
         public ActionResult GetListTuan(int tuanht = 0)

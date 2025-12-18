@@ -69,7 +69,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             try
             {
                 model.ThucLinh= model.TienCong + model.TienCom + model.PCGiaoHang + model.PCXangXe + model.PCChucVu 
-                    + model.PCKhac + model.Thuong - model.KhauTruBH - model.DaUngLuong + model.PCKhac;
+                    + model.PCKhac + model.Thuong - model.KhauTruBH - model.DaUngLuong;
                 model.NgayUpdate = DateTime.Now;
                 dbc.Entry(model).State = EntityState.Modified;
                 dbc.SaveChanges();

@@ -147,10 +147,19 @@ namespace DoChoiXeMay.Controllers
                 kqLe = kqLe > 0 ? kqLe : 0;
                 giothang = giothang + kqT + kqTC + kqLe;
             }
+            var nvcong = dbc.NV_Cong.FirstOrDefault(kh => kh.IdNhanVien == IDnv && kh.Thang == dtInput.Month && kh.Nam == dtInput.Year);
             var nv = dbc.NV_NhanVienTek.Find(IDnv);
             ViewBag.Hoten = nv.HoTen;
             ViewBag.NgayGioCong = model;
             ViewBag.TongSoSoGioThang = giothang;
+            if(nvcong != null)
+            {
+                ViewBag.SLcom = nvcong.SLCom;
+            }
+            else
+            {
+                ViewBag.SLcom = 0;
+            }
             return PartialView(model);
         }
         public ActionResult UpdateGioCong(string Id)
