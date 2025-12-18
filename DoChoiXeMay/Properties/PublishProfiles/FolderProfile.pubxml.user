@@ -5,12 +5,12 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project>
   <PropertyGroup>
     <_PublishTargetUrl>D:\PublishWebDoChoiXe</_PublishTargetUrl>
-    <History>True|2025-12-16T07:56:45.3978139Z||;True|2025-12-14T19:16:11.6892995+07:00||;True|2025-12-12T16:03:50.1500047+07:00||;True|2025-12-12T10:47:55.6522938+07:00||;True|2025-12-09T14:18:47.2649900+07:00||;True|2025-12-03T15:57:25.9224919+07:00||;True|2025-12-03T15:49:59.1015733+07:00||;True|2025-12-01T10:07:29.6858075+07:00||;True|2025-12-01T09:37:24.0375980+07:00||;True|2025-11-28T10:07:59.1209492+07:00||;True|2025-11-25T15:27:53.5258465+07:00||;True|2025-11-24T16:09:51.3746798+07:00||;True|2025-08-28T19:52:22.5360722+07:00||;True|2025-08-28T19:30:42.3367945+07:00||;</History>
+    <History>True|2025-12-18T09:39:41.9981690Z||;True|2025-12-16T14:56:45.3978139+07:00||;True|2025-12-14T19:16:11.6892995+07:00||;True|2025-12-12T16:03:50.1500047+07:00||;True|2025-12-12T10:47:55.6522938+07:00||;True|2025-12-09T14:18:47.2649900+07:00||;True|2025-12-03T15:57:25.9224919+07:00||;True|2025-12-03T15:49:59.1015733+07:00||;True|2025-12-01T10:07:29.6858075+07:00||;True|2025-12-01T09:37:24.0375980+07:00||;True|2025-11-28T10:07:59.1209492+07:00||;True|2025-11-25T15:27:53.5258465+07:00||;True|2025-11-24T16:09:51.3746798+07:00||;True|2025-08-28T19:52:22.5360722+07:00||;True|2025-08-28T19:30:42.3367945+07:00||;</History>
     <LastFailureDetails />
   </PropertyGroup>
   <ItemGroup>
     <File Include="App_Data/SoTruyCap.txt">
-      <publishTime>12/16/2025 14:22:15</publishTime>
+      <publishTime>12/18/2025 16:34:36</publishTime>
     </File>
     <File Include="Areas/Admin/Content/css/animate.css">
       <publishTime>09/11/2025 11:00:33</publishTime>
@@ -826,10 +826,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>09/11/2025 11:00:34</publishTime>
     </File>
     <File Include="bin/DoChoiXeMay.dll">
-      <publishTime>12/16/2025 14:56:43</publishTime>
+      <publishTime>12/18/2025 16:39:40</publishTime>
     </File>
     <File Include="bin/DoChoiXeMay.pdb">
-      <publishTime>12/16/2025 14:56:43</publishTime>
+      <publishTime>12/18/2025 16:39:40</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>06/17/2024 03:46:24</publishTime>
@@ -1438,16 +1438,16 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>11/14/2025 10:05:16</publishTime>
     </File>
     <File Include="Views/Look/GetListKyXNTeK.cshtml">
-      <publishTime>12/16/2025 14:49:24</publishTime>
+      <publishTime>12/16/2025 15:09:57</publishTime>
     </File>
     <File Include="Views/Look/GetListTinhGioCong.cshtml">
-      <publishTime>12/08/2025 09:29:02</publishTime>
+      <publishTime>12/18/2025 15:38:51</publishTime>
     </File>
     <File Include="Views/Look/GetListTuan.cshtml">
       <publishTime>11/21/2025 10:39:37</publishTime>
     </File>
     <File Include="Views/Look/Partime.cshtml">
-      <publishTime>12/16/2025 14:28:55</publishTime>
+      <publishTime>12/16/2025 15:07:43</publishTime>
     </File>
     <File Include="Views/Shared/Error.cshtml">
       <publishTime>09/11/2025 11:00:33</publishTime>
@@ -1459,13 +1459,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>12/16/2025 09:29:29</publishTime>
     </File>
     <File Include="Views/StaffTeK/GetListTinhGioCong.cshtml">
-      <publishTime>11/23/2025 11:29:23</publishTime>
+      <publishTime>12/18/2025 15:27:35</publishTime>
     </File>
     <File Include="Views/StaffTeK/GetListTuan.cshtml">
       <publishTime>11/21/2025 10:39:37</publishTime>
     </File>
     <File Include="Views/StaffTeK/IndexStaff.cshtml">
-      <publishTime>12/16/2025 09:29:29</publishTime>
+      <publishTime>12/18/2025 15:48:09</publishTime>
     </File>
     <File Include="Views/StaffTeK/UpdateGioCong.cshtml">
       <publishTime>11/18/2025 09:42:00</publishTime>
@@ -1483,7 +1483,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>09/11/2025 11:00:33</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>12/16/2025 14:56:43</publishTime>
+      <publishTime>12/18/2025 16:39:40</publishTime>
     </File>
   </ItemGroup>
 </Project>
