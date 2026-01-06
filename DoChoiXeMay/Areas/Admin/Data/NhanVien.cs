@@ -1,8 +1,10 @@
 ﻿using DoChoiXeMay.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Web;
 
 namespace DoChoiXeMay.Areas.Admin.Data
@@ -94,6 +96,148 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 return false;
             }
         }
+        public int DiemDanh(string Id)
+        {
+            try
+            {
+                var timeday = DateTime.Now;
+                int h = timeday.Hour;
+                int m = timeday.Minute;
+                int s = timeday.Second;
+                var giocong = _context.NV_GioCong.Find(new Guid(Id));
+                var kqCS = double.Parse((giocong.GioRaSang - giocong.GioVaoSang).TotalHours.ToString("0.00"));
+                var kqCC = double.Parse((giocong.GioRaChieu - giocong.GioVaoChieu).TotalHours.ToString("0.00"));
+                var kqTC = double.Parse(((giocong.GioRaTangCa - giocong.GioVaoTangCa).TotalHours).ToString("0.00"));
+                var kqLe = double.Parse(((giocong.GioRaLe - giocong.GioVaoLe).TotalHours).ToString("0.00"));
+
+                var checkdiemdanh = kqCS + kqCC + kqTC + kqLe;
+                if (checkdiemdanh == 0)
+                {
+                    //chưa điểm danh
+                    var kqq = UpdateGioCongDiemDanh(giocong, 1);
+                    if (kqq) return 1; 
+                }else if(kqLe != 0)
+                {
+                    return 0;//đã update lễ (không dd)
+                }
+                else if(kqTC > 0)
+                {
+                    return 0;//đã hoàn thành tăng ca (không dd)
+                }
+                else if (kqLe == 0 && kqTC < 0)
+                {
+                    //Chưa up lễ, Chưa hoàn thành tăng ca ==>kết thúc tăng ca 6
+                    var kqq = UpdateGioCongDiemDanh(giocong, 6);
+                    if (kqq) return 6;
+                }
+                else if(kqLe == 0 && kqTC == 0 && kqCC > 0)
+                {
+                    //Chưa diem danh tang ca, nhưng đã hoàn thành buổi chiều==>bắt đầu tăng ca 5
+                    ////chưa đến 6 h chiều, không cho check
+                    if (h < 18)
+                    {
+                        //////var kqq = UpdateGioCongDiemDanh(giocong, 4);
+                        //////if (kqq) return 4;
+                        return 0;
+                    }
+                    else
+                    {
+                        var kqq = UpdateGioCongDiemDanh(giocong, 5);
+                        if (kqq) return 5;
+                    }
+                }
+                else if(kqLe == 0 && kqTC ==0 && kqCC < 0)
+                {
+                    //Chưa diem danh tang ca, Chưa hoàn thành buổi chiều ==>kết thúc chiều 4
+                    var kqq = UpdateGioCongDiemDanh(giocong, 4);
+                    if (kqq) return 4;
+                }
+                else if (kqLe == 0 && kqTC == 0 && kqCC == 0 && kqCS >0)
+                {
+                    //Chưa diem danh tang ca, đã hoàn thành buổi sáng ==> bắt đầu chiều 3
+                    ////chưa đến 1 h chiều, không cho check
+                    if (h < 13)
+                    {
+                        //////var kqq = UpdateGioCongDiemDanh(giocong, 2);
+                        //////if (kqq) return 2;
+                        return 0;
+                    }
+                    else
+                    {
+                        var kqq = UpdateGioCongDiemDanh(giocong, 3);
+                        if (kqq) return 3;
+                    }
+                }
+                else if (kqLe == 0 && kqTC == 0 && kqCC == 0 && kqCS < 0)
+                {
+                    //Chưa diem danh tang ca, chưa hoàn thành buổi sáng ==> kết thúc sang 2
+                    var kqq = UpdateGioCongDiemDanh(giocong, 2);
+                    if (kqq) return 2;
+                }
+                return 0;
+            }
+            catch (Exception ex)
+            {
+                string loi = ex.ToString();
+                return 0;
+            }
+        }
+        public bool UpdateGioCongDiemDanh(NV_GioCong model, int stt)
+        {
+            try
+            {
+                var timeday = DateTime.Now;
+                int h = timeday.Hour;
+                int m = timeday.Minute;
+                int s = timeday.Second;
+                if (stt == 6)
+                {
+                    model.GioRaTangCa = new DateTime(model.Year, model.Month, model.Day, h, m, s);
+                }
+                else if (stt == 5)
+                {
+                    model.GioVaoTangCa = new DateTime(model.Year, model.Month, model.Day, h, m, s);
+                }
+                else if (stt == 4)
+                {
+                    model.GioRaChieu = new DateTime(model.Year, model.Month, model.Day, h, m, s);
+                }
+                else if (stt == 3)
+                {
+                    model.GioVaoChieu = new DateTime(model.Year, model.Month, model.Day, h, m, s);
+                }
+                else if (stt == 2)
+                {
+                    model.GioRaSang = new DateTime(model.Year, model.Month, model.Day, h, m, s);
+                }
+                else if (stt == 1)
+                {
+                    if (h < 12)
+                    {
+                        model.GioVaoSang = new DateTime(model.Year, model.Month, model.Day, h, m, s);
+                    }else if (h >= 12 && h < 18)
+                    {
+                        model.GioVaoChieu = new DateTime(model.Year, model.Month, model.Day, h, m, s);
+                    }
+                    else //Tăng Ca chiều bắt đầu lúc 18h
+                    {
+                        model.GioVaoTangCa = new DateTime(model.Year, model.Month, model.Day, h, m, s);
+                    }
+
+                }
+                
+                model.NgayUpdate = DateTime.Now;
+                model.GhiChu = "Check in/out";
+                _context.Entry(model).State = EntityState.Modified;
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                string loi = ex.ToString();
+                return false;
+            }
+        }
         public bool UpdateGioCong(NV_GioCong model, TimeSpan VaoSang, TimeSpan RaSang, TimeSpan VaoChieu
             , TimeSpan RaChieu, TimeSpan VaoTangCa, TimeSpan RaTangCa, TimeSpan VaoLe, TimeSpan RaLe)
         {
@@ -125,7 +269,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 model.GioVaoLe = VL;
                 model.GioRaLe = RL;
                 model.NgayUpdate = DateTime.Now;
-
+                model.GhiChu = "Update";
                 _context.Entry(model).State = EntityState.Modified;
                 _context.SaveChanges();
                 return true;

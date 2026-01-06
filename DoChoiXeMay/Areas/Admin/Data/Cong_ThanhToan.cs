@@ -172,6 +172,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 var ktbangthanhtoan = _context.NV_ThanhToanLuong.FirstOrDefault(kh => kh.Thang == thang && kh.Nam == nam
                                 && kh.IdNhanVien == Idnv);
                 var hsg = _context.NV_ChiTietNangLuong.FirstOrDefault(kh => kh.IdNhanVien == Idnv).NV_HeSoGio.HeSo;
+                var nhanvien = _context.NV_NhanVienTek.Find(Idnv);
                 if (ktbangthanhtoan == null)
                 {
                     //insert 1 dòng
@@ -179,7 +180,6 @@ namespace DoChoiXeMay.Areas.Admin.Data
                     var ktCong1 = _context.NV_Cong.FirstOrDefault(kh => kh.Thang == thang && kh.Nam == nam
                                 && kh.IdNhanVien == Idnv);
                     var id = Guid.NewGuid();
-                    var nhanvien = _context.NV_NhanVienTek.Find(Idnv);
                     if (dvt == "Gio")//pratime
                     {
                         tiencong = (giocong + tangca * float.Parse(TangCa) + gioLe * float.Parse(Le)) * hsg;
@@ -220,10 +220,16 @@ namespace DoChoiXeMay.Areas.Admin.Data
                                 + ktCong2.SoNgayTangCa * float.Parse(NgayCong) * float.Parse(TangCa)
                                 + ktCong2.SoNgayLe * float.Parse(NgayCong) * float.Parse(Le);
                     }
+                    var pck = nhanvien.NV_Vitrinhanvien.PhuCapChucKhac;
+                    var pccv = nhanvien.NV_Vitrinhanvien.PhuCapChucVu;
                     ktbangthanhtoan.TienCong = tiencong;
                     ktbangthanhtoan.TienCom = ktCong2.SLCom * float.Parse(TCom);
                     ktbangthanhtoan.PCGiaoHang = ktCong2.SLGiaoHang * float.Parse(GiaoHang);
-                    ktbangthanhtoan.PCKhac = ktCong2.SLHoTro * float.Parse(HoTro);
+                    ktbangthanhtoan.PCKhac = ktCong2.SLHoTro * float.Parse(HoTro) + pck;
+                    if (ktbangthanhtoan.PCChucVu == 0)
+                    {
+                        ktbangthanhtoan.PCChucVu = pccv;
+                    }
                     ktbangthanhtoan.ThucLinh = tiencong + ktbangthanhtoan.TienCom + ktbangthanhtoan.PCGiaoHang
                         + ktbangthanhtoan.PCXangXe + ktbangthanhtoan.PCChucVu + ktbangthanhtoan.PCKhac
                         + ktbangthanhtoan.Thuong - ktbangthanhtoan.KhauTruBH - ktbangthanhtoan.DaUngLuong

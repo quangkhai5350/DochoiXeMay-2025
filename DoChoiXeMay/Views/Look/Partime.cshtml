@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 
 <link href="~/Content/Login_Style.css" rel="stylesheet" />
-
+@*<script src="~/Areas/Admin/Content/jquery2.0.3.min.js"></script>*@
 <div class="" style="width:100%;background-color: white; margin-top: 80px; border-radius: 4px 4px; box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.32)">
     <h3 style="text-align:center;margin-bottom:20px"><a style="text-decoration: none">Xem Giờ Công NV Partime TeK</a></h3>
     <h5 style="text-align:center;margin-bottom:20px"><a style="text-decoration: none">(NV chỉ có thể thay đổi giờ trong ngày.)</a></h5>
@@ -43,6 +43,19 @@
 
     </div>
 </div>
+@*26thang12*@
+<div class="" style="width: 100%; margin-top: 80px; background-color: white; border-radius: 4px 4px">
+    <div class="row" style="margin-left:0;margin-right:0; box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.32)">
+        <div class="col-lg-2 col-xl-2 col-md-2 col-sm-12 col-sx-12 col-12" style=""></div>
+        <div class="col-lg-8 col-xl-8 col-md-8 col-sm-12 col-sx-12 col-12" style="padding-top: 20px">
+            <h3 style="text-align:center;margin-bottom:20px"><a style="text-decoration: none">Bảng Thống Kê Tổng HợpTeK</a></h3>
+            @*Đồ thị*@
+            @Html.Action("DoThiThongKe", "Look")
+        </div>
+        <div class="col-lg-2 col-xl-2 col-md-2 col-sm-12 col-sx-12 col-12" style=""></div>
+    </div>
+</div>
+
 @*16thang12*@
 <div class="" style="width:100%;background-color: white; margin-top: 80px; border-radius: 4px 4px; box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.32)">
     <h3 style="text-align:center;margin-bottom:20px"><a style="text-decoration: none">Danh Sách sản phẩm xuất/nhập TeK</a></h3>
@@ -60,29 +73,29 @@
     </div>
     <div class="panel panel-default" style="margin-top:10px">
         <div class="panel-heading">
-                <div class="row">
-                    <div class="col-lg-2 col-xl-2 col-md-2 col-sm-4" style="text-align: center; margin-top: 15px">
-                        <span class="icon-case"><i class="glyphicon glyphicon-calendar"></i></span>
-                        <input type="date" name="tungay" id="tungay" />
-                    </div>
-                    <div class="col-lg-2 col-xl-2 col-md-2 col-sm-4" style="text-align:center;margin-top:10px">
-                        @Html.DropDownList("IdLoaiHangXN", null, new { style = "width: 70%; height: 40px" })
-                    </div>
-                    <div class="col-lg-2 col-xl-2 col-md-2 col-sm-4" style="text-align: center; margin-top: 10px">
-                        @Html.DropDownList("IdSan", null, new { style = "width: 70%; height: 40px" })
-                    </div>
-                    <div class="col-lg-2 col-xl-2 col-md-2 col-sm-4" style="text-align: center; margin-top: 10px">
-                        <select class="form-control" id="IdDoiTra" name="IdDoiTra" style="width: 70%; height: 40px; margin: 0 auto">
-                            <option value="0">Loại sản phẩm</option>
-                            <option value="2">Trả (Mới Nhận)</option>
-                            <option value="3">Trả Có Lỗi</option>
-                            <option value="4">Trả Không Lỗi</option>
-                        </select>
-                    </div>
-                    <div class="col-lg-4 col-xl-4 col-md-4 col-sm-4 col-3" style="text-align: center; margin-top: 10px">
-                        <input type="text" class="form-control input-sm" style="font-size: medium; height: 40px; width: 95%" name="KeywordsTT" id="KeywordsTT" onchange="TimKiemKyXN()" placeholder="Tên Kỳ hoặc số Serial." />
-                    </div>
+            <div class="row">
+                <div class="col-lg-2 col-xl-2 col-md-2 col-sm-4" style="text-align: center; margin-top: 15px">
+                    <span class="icon-case"><i class="glyphicon glyphicon-calendar"></i></span>
+                    <input type="date" name="tungay" id="tungay" />
                 </div>
+                <div class="col-lg-2 col-xl-2 col-md-2 col-sm-4" style="text-align:center;margin-top:10px">
+                    @Html.DropDownList("IdLoaiHangXN", null, new { style = "width: 70%; height: 40px" })
+                </div>
+                <div class="col-lg-2 col-xl-2 col-md-2 col-sm-4" style="text-align: center; margin-top: 10px">
+                    @Html.DropDownList("IdSan", null, new { style = "width: 70%; height: 40px" })
+                </div>
+                <div class="col-lg-2 col-xl-2 col-md-2 col-sm-4" style="text-align: center; margin-top: 10px">
+                    <select class="form-control" id="IdDoiTra" name="IdDoiTra" style="width: 70%; height: 40px; margin: 0 auto">
+                        <option value="0">Loại sản phẩm</option>
+                        <option value="2">Trả (Mới Nhận)</option>
+                        <option value="3">Trả Có Lỗi</option>
+                        <option value="4">Trả Không Lỗi</option>
+                    </select>
+                </div>
+                <div class="col-lg-4 col-xl-4 col-md-4 col-sm-4 col-3" style="text-align: center; margin-top: 10px">
+                    <input type="text" class="form-control input-sm" style="font-size: medium; height: 40px; width: 95%" name="KeywordsTT" id="KeywordsTT" onchange="TimKiemKyXN()" placeholder="Tên Kỳ hoặc số Serial." />
+                </div>
+            </div>
         </div>
         <div class="panel-body">
             <img id="loading" hidden src="~/Areas/Admin/Content/img/loading.gif" />
@@ -113,10 +126,12 @@
         </div>
     </div>
 </div>
-@*16thang12*@
+
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script>
     LoadPartime();
+
     $(function () {
         pageNo = 0;
         pageSize = 5;
@@ -124,6 +139,7 @@
         var KeywordsTT = $('#KeywordsTT').val();
         LoadLoaiKyXN()
         LoadSanTMDT()
+
         var UserId = 0;
         var idLoaiHangXN = $('#IdLoaiHangXN').val();
         var IdSan = $('#IdSan').val();
@@ -333,7 +349,9 @@
     function LoadPartime() {
         GetListTinhGio()
         GetListTuan()
+        $(".canvasjs-chart-credit").css("display", "none");
     }
+
     function GetListTinhGio() {
         var tn = $('#ThangNam').val();
         var Idnv = $('#Idnhanvien').val();
