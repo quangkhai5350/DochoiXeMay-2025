@@ -3,6 +3,7 @@
         display: none;
     }
 </style>
+
 <input id="phantramdaban" value="@ViewBag.phantramdaban" hidden />
 <input id="phantramTraHangLeLoi" value="@ViewBag.phantramTraHangLeLoi" hidden />
 <input id="phantramTongtraBH" value="@ViewBag.phantramTongtraBH" hidden />
@@ -11,8 +12,11 @@
 <input id="phantramTonkhoK" value="@ViewBag.phantramTonkhoK" hidden />
 <input id="phantramMauDaXuat" value="@ViewBag.phantramMauDaXuat" hidden />
 
-<input id="daban" value="@Session["daban"].ToString()" hidden />
+<input id="DaSanXuat" value="@ViewBag.DaSanXuat" hidden />
+<input id="daban" value="@ViewBag.daban"hidden />
 <input id="TongtraBH" value="@Session["TongtraBH"].ToString()" hidden />
+
+<input id="DaTraHangKhachLe" value="@ViewBag.DaTraHangKhachLe" hidden />
 <input id="DaTraHangKhachLeLoi" value="@Session["DaTraHangKhachLeLoi"].ToString()" hidden />
 @*<input id="TonKhoXiNhanGen1Tek" value="@Session["TonKhoXiNhanGen1Tek"].ToString()" hidden />*@
 <input id="TonKhoXiNhanGen1TekT" value="@Session["TonKhoXiNhanGen1TekT"].ToString()" hidden />
@@ -31,9 +35,14 @@
 <input id="KhoiDaBanLeNSan" value="@Session["KhoiDaBanLeNSan"].ToString()" hidden />
 
 <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+<div style="text-align:center">
+    <span style="background-color:black;color:white">Khách lẻ trả hàng không lỗi: @ViewBag.DaTraHangKhachLe</span>
+    <h4>Hàng Không Lỗi ==> đưa vào tồn kho, sử dụng lại.</h4>
+</div>
 <div id="chartContainer3" style="height: 300px; width: 100%;margin-top:20px"></div>
 <script>
     window.onload = function () {
+        const CDaSanXuat = $("#DaSanXuat").val()
         const Cdaban = $("#daban").val()
         const CTongtraBH = $("#TongtraBH").val()
         const CDaTraHangKhachLeLoi = $("#DaTraHangKhachLeLoi").val()
@@ -60,7 +69,7 @@
         var chart = new CanvasJS.Chart("chartContainer", {
             animationEnabled: true,
             title: {
-                text: "Xi Nhan Wave TNT BLOCKX G2 ZEN 1"
+                text: "Wave TNT BLOCKX G2 ZEN 1 đã xuất: " + CDaSanXuat
             },
             data: [{
                 type: "pie",
@@ -102,7 +111,7 @@
             exportEnabled: true,
             animationEnabled: true,
             title: {
-                text: "TNT BLOCKX G2 ZEN 1 Da Ban"
+                text: "TNT BLOCKX G2 ZEN 1 Da Ban: @ViewBag.daban"
             },
             subtitles: [{
                 text: "Trong: Blue  -  Khoi: Red"
@@ -175,3 +184,4 @@
         }
     }
 </script>
+

@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Web;
 using System.Web.Mvc;
 using System.Xml.Linq;
+using static QRCoder.PayloadGenerator.SwissQrCode;
 
 namespace DoChoiXeMay.Controllers
 {
@@ -41,6 +43,83 @@ namespace DoChoiXeMay.Controllers
             ViewBag.KhoiTon = dbc.HangHoas.Where(kh => kh.Id == 55).Sum(kh => kh.SoLuong);
             return View();
         }
+        public ActionResult DoThiThongKe()
+        {
+            var be = dbc.ChitietXuatNhaps.Where(kh => kh.Ten == "Xi Nhan Wave TNT BLOCKX G2 ZEN 1").ToList();
+            var beg = be.Where(kh => kh.KyXuatNhap.XuatNhap == true).ToList();
+            var begin = beg.Where(kh => kh.IdDoiTra == 1).ToList();
+            var daban = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1).ToList();
+            var DaTraHangKhachLe = beg.Where(kh => kh.IdDoiTra == 4).ToList();   //4:Không Lỗi
+            var DaTraHangKhachLeLoi = be.Where(kh => kh.IdDoiTra == 3).ToList(); //4:Không Lỗi//3:có lỗi//2:Mới Nhận
+            var modeldaban = daban == null ? 0 : daban.Sum(kh => kh.SoLuong);
+            ViewBag.daban = modeldaban;
+            var Tonkho = dbc.HangHoas.Where(kh => kh.Id == 55 || kh.Id == 56).Sum(kh => kh.SoLuong);
+            ViewBag.TongXiNhanGen1Tek = Tonkho;
+            var MauDaXuat = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 2).ToList();
+            var modelMauDaXuat = MauDaXuat == null ? 0 : MauDaXuat.Sum(kh => kh.SoLuong);
+            ViewBag.TongXiNhanGen1MauDaXuat = modelMauDaXuat;
+            ViewBag.DaTraHangKhachLe = DaTraHangKhachLe == null ? 0 : DaTraHangKhachLe.Sum(kh => kh.SoLuong);
+            var TraHangLeLoi = DaTraHangKhachLeLoi == null ? 0 : DaTraHangKhachLeLoi.Sum(kh => kh.SoLuong);
+            ViewBag.DaTraHangKhachLeLoi = TraHangLeLoi;
+            var kytrabaohanhct = beg.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 3 || kh.KyXuatNhap.IdLoaiHangXN == 4).ToList();
+            if (kytrabaohanhct.Count() == 0)
+            {
+                ViewBag.TongtraBH = 0;
+            }
+            else
+            {
+                ViewBag.TongtraBH = kytrabaohanhct.Sum(kh => kh.SoLuong);
+            }
+            var dsx = ViewBag.daban + ViewBag.TongXiNhanGen1Tek + ViewBag.TongXiNhanGen1MauDaXuat
+                                + ViewBag.DaTraHangKhachLeLoi + ViewBag.TongtraBH;
+            
+            var TonkhoT = dbc.HangHoas.Where(kh => kh.Id == 56).Sum(kh => kh.SoLuong);
+            var TonkhoK = dbc.HangHoas.Where(kh => kh.Id == 55).Sum(kh => kh.SoLuong);
+
+            ViewBag.DaSanXuat = dsx;
+            Session["DaTraHangKhachLeLoi"] = TraHangLeLoi;
+            Session["TongtraBH"] = kytrabaohanhct.Count() == 0 ? 0 : kytrabaohanhct.Sum(kh => kh.SoLuong);
+            //Session["TonKhoXiNhanGen1Tek"] = Tonkho;
+            Session["TonKhoXiNhanGen1TekT"] = TonkhoT;
+            Session["TonKhoXiNhanGen1TekK"] = TonkhoK;
+            Session["MauDaXuat"] = modelMauDaXuat;
+            //Session["daSX"] = dsx;
+            //Đồ thị dạng cột
+            var TrongDaBanTikTok = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1 && kh.IDColor == 5 && kh.KyXuatNhap.IdSan == 2).ToList();
+            var modelTrongDaBanTikTok = TrongDaBanTikTok == null ? 0 : TrongDaBanTikTok.Sum(kh => kh.SoLuong);
+            Session["TrongDaBanTikTok"] = modelTrongDaBanTikTok;
+            var trongDaBanShopee = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1 && kh.IDColor == 5 && kh.KyXuatNhap.IdSan == 3).ToList();
+            var modeltrongDaBanShopee = trongDaBanShopee == null ? 0 : trongDaBanShopee.Sum(kh => kh.SoLuong);
+            Session["trongDaBanShopee"] = modeltrongDaBanShopee;
+            var trongDaBanLeNSan = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1 && kh.IDColor == 5 && kh.KyXuatNhap.IdSan == 1 && kh.KyXuatNhap.KhachLe == true).ToList();
+            var modeltrongDaBanLeNSan = trongDaBanLeNSan == null ? 0 : trongDaBanLeNSan.Sum(kh => kh.SoLuong);
+            Session["trongDaBanLeNSan"] = modeltrongDaBanLeNSan;
+            var trongDaBanLSiNSan = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1 && kh.IDColor == 5 && kh.KyXuatNhap.IdSan == 1 && kh.KyXuatNhap.KhachLe == false).ToList();
+            var modeltrongDaBanLSiNSan = trongDaBanLSiNSan == null ? 0 : trongDaBanLSiNSan.Sum(kh => kh.SoLuong);
+            Session["trongDaBanLSiNSan"] = modeltrongDaBanLSiNSan;
+            var KhoiDaBanTikTok = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1 && kh.IDColor == 7 && kh.KyXuatNhap.IdSan == 2).ToList();
+            var modelKhoiDaBanTikTok = KhoiDaBanTikTok == null ? 0 : KhoiDaBanTikTok.Sum(kh => kh.SoLuong);
+            Session["KhoiDaBanTikTok"] = modelKhoiDaBanTikTok;
+            var KhoiDaBanShopee = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1 && kh.IDColor == 7 && kh.KyXuatNhap.IdSan == 3).ToList();
+            var modelKhoiDaBanShopee = KhoiDaBanShopee == null ? 0 : KhoiDaBanShopee.Sum(kh => kh.SoLuong);
+            Session["KhoiDaBanShopee"] = modelKhoiDaBanShopee;
+            var KhoiDaBanLSiNSan = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1 && kh.IDColor == 7 && kh.KyXuatNhap.IdSan == 1 && kh.KyXuatNhap.KhachLe == false).ToList();
+            var modelKhoiDaBanLSiNSan = KhoiDaBanLSiNSan == null ? 0 : KhoiDaBanLSiNSan.Sum(kh => kh.SoLuong);
+            Session["KhoiDaBanLSiNSan"] = modelKhoiDaBanLSiNSan;
+            var KhoiDaBanLeNSan = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1 && kh.IDColor == 7 && kh.KyXuatNhap.IdSan == 1 && kh.KyXuatNhap.KhachLe == true).ToList();
+            var modelKhoiDaBanLeNSan = KhoiDaBanLeNSan == null ? 0 : KhoiDaBanLeNSan.Sum(kh => kh.SoLuong);
+            Session["KhoiDaBanLeNSan"] = modelKhoiDaBanLeNSan;
+
+            ViewBag.phantramdaban = (100 * float.Parse(modeldaban.ToString()) / float.Parse(dsx.ToString())).ToString("#0.00");
+            ViewBag.phantramTraHangLeLoi = (100 * float.Parse(Session["DaTraHangKhachLeLoi"].ToString()) / float.Parse(dsx.ToString())).ToString("#0.00");
+            ViewBag.phantramTongtraBH = (100 * float.Parse(Session["TongtraBH"].ToString()) / float.Parse(dsx.ToString())).ToString("#0.00");
+            //ViewBag.phantramTonkho = (100 * float.Parse(Session["TonKhoXiNhanGen1Tek"].ToString()) / float.Parse(Session["daSX"].ToString())).ToString("#0.00");
+            ViewBag.phantramTonkhoT = (100 * float.Parse(Session["TonKhoXiNhanGen1TekT"].ToString()) / float.Parse(dsx.ToString())).ToString("#0.00");
+            ViewBag.phantramTonkhoK = (100 * float.Parse(Session["TonKhoXiNhanGen1TekK"].ToString()) / float.Parse(dsx.ToString())).ToString("#0.00");
+            ViewBag.phantramMauDaXuat = (100 * float.Parse(Session["MauDaXuat"].ToString()) / float.Parse(dsx.ToString())).ToString("#0.00");
+
+            return PartialView();
+        }
         public ActionResult GetListKyXNTeK(string ngay = "", string strk = "", int idLHXN = 0, int IdSan = 0, int Iddoitra = 0, int PageNo = 0, int PageSize = 8, int UserId = 0)
         {
             strk = strk.ToLower().Trim();
@@ -71,6 +150,7 @@ namespace DoChoiXeMay.Controllers
         public ActionResult GetListTinhGioCong(DateTime dtInput, int Id = 0)
         {
             double giothang = 0;
+            double honbon = 0;
             DateTime date = DateTime.Now;
             List<NV_GioCong> model = new List<NV_GioCong>();
             var nv = dbc.NV_NhanVienTek.Find(Id);
@@ -100,18 +180,17 @@ namespace DoChoiXeMay.Controllers
                 kqTC = kqTC > 0?kqTC: 0;
                 kqLe = kqLe > 0?kqLe: 0;
                 giothang = giothang + kqT + kqTC + kqLe;
+                var ktbon = kqT + kqTC;
+                if (ktbon >= 4)
+                {
+                    honbon = honbon + 1;
+                }
             }
             ViewBag.NgayGioCong = model;
             ViewBag.Hoten = nv.HoTen;
             ViewBag.TongSoSoGioThang = giothang;
-            if (nvcong != null)
-            {
-                ViewBag.SLcom = nvcong.SLCom;
-            }
-            else
-            {
-                ViewBag.SLcom = 0;
-            }
+            ViewBag.SLcom = honbon;
+            
             return PartialView(model);
         }
         public ActionResult GetListTuan(int tuanht = 0)

@@ -644,6 +644,7 @@
     <Content Include="Views\StaffTeK\GetListKyXNTeKMaNa.cshtml" />
     <Content Include="Views\StaffTeK\UpdateKyXNTeKMaNa.cshtml" />
     <Content Include="Views\Look\GetListKyXNTeK.cshtml" />
+    <Content Include="Views\Look\DoThiThongKe.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\imgthuchi\" />

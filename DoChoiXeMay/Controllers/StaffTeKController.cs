@@ -7,6 +7,7 @@ using System.Configuration;
 using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Web;
 using System.Web.Mvc;
 using System.Xml.Linq;
@@ -117,6 +118,7 @@ namespace DoChoiXeMay.Controllers
         {
             DateTime date = DateTime.Now;
             double giothang = 0;
+            double honbon = 0;
             var IDnv = int.Parse(Session["idNhanVien"].ToString());
             List<NV_GioCong> model = new List<NV_GioCong>();
             if (dtInput.Month == date.Month && dtInput.Year == date.Year)
@@ -146,20 +148,18 @@ namespace DoChoiXeMay.Controllers
                 kqTC = kqTC > 0 ? kqTC : 0;
                 kqLe = kqLe > 0 ? kqLe : 0;
                 giothang = giothang + kqT + kqTC + kqLe;
+                var ktbon = kqT + kqTC;
+                if(ktbon >= 4)
+                {
+                    honbon = honbon + 1;
+                }
             }
-            var nvcong = dbc.NV_Cong.FirstOrDefault(kh => kh.IdNhanVien == IDnv && kh.Thang == dtInput.Month && kh.Nam == dtInput.Year);
+            //var nvcong = dbc.NV_Cong.FirstOrDefault(kh => kh.IdNhanVien == IDnv && kh.Thang == dtInput.Month && kh.Nam == dtInput.Year);
             var nv = dbc.NV_NhanVienTek.Find(IDnv);
             ViewBag.Hoten = nv.HoTen;
             ViewBag.NgayGioCong = model;
             ViewBag.TongSoSoGioThang = giothang;
-            if(nvcong != null)
-            {
-                ViewBag.SLcom = nvcong.SLCom;
-            }
-            else
-            {
-                ViewBag.SLcom = 0;
-            }
+            ViewBag.SLcom = honbon;
             return PartialView(model);
         }
         public ActionResult UpdateGioCong(string Id)
@@ -175,10 +175,12 @@ namespace DoChoiXeMay.Controllers
                                     && kh.DaNhanLuong == true && kh.IdNhanVien == model.IdNhanVien);
             if (ktthanhtoan == null)
             {
+                var nv = dbc.NV_NhanVienTek.Find(model.IdNhanVien);
                 var kq = new Areas.Admin.Data.NhanVien().UpdateGioCong(model, VaoSang, RaSang, VaoChieu
                         , RaChieu, VaoTangCa, RaTangCa, VaoLe, RaLe);
                 if (kq)
                 {
+                    var uid = int.Parse(Session["UserId"].ToString());
                     Session["ThongbaoNV"] = "Update giờ ngày " + model.Day + " thành công.";
                     Session["ThongbaoNVLoi"] = "";
                     //Lay gio Cong
@@ -200,12 +202,13 @@ namespace DoChoiXeMay.Controllers
                     }
                     //kiểm tra bảng Công
                     //Chưa có thì Insert, có rồi thì update
+                    var sms = nv.HoTen + ", " + Session["ThongbaoNV"].ToString();
                     var TinhCongPartimeAu = new Areas.Admin.Data.Cong_ThanhToan().TinhCongAutoPartime(model, kqgc, kqtc, kqle);
                     if (TinhCongPartimeAu == false)
                     {
                         Session["ThongbaoNV"] = "";
                         Session["ThongbaoNVLoi"] = "Có lỗi Update bảng Công !!!";
-                        return RedirectToAction("IndexStaff");
+                        sms = nv.HoTen + ", " + Session["ThongbaoNVLoi"].ToString();
                     }
                     //kiểm tra bảng thanh toan luong
                     //Chưa có thì Insert, có rồi thì update
@@ -216,8 +219,11 @@ namespace DoChoiXeMay.Controllers
                     {
                         Session["ThongbaoNV"] = "";
                         Session["ThongbaoNVLoi"] = "Có lỗi update bảng thanh toán lương !!!";
-                        return RedirectToAction("IndexStaff");
+                        sms = nv.HoTen + ", " + Session["ThongbaoNVLoi"].ToString();
                     }
+                    //SMS hệ thống
+                    var nhatkyPass = XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
+                            , Session["UserName"].ToString(), sms, "");
                 }
             }
             else
@@ -228,6 +234,56 @@ namespace DoChoiXeMay.Controllers
 
             return RedirectToAction("IndexStaff");
         }
+        public ActionResult DiemDanh(string Id)
+        {
+            var kq = new Areas.Admin.Data.NhanVien().DiemDanh(Id);
+            if (kq == 1)
+            {
+                Session["ThongbaoNV"] = "Check IN thành công.";
+                Session["ThongbaoNVLoi"] = "";
+            }
+            else if(kq==2)
+            {
+                Session["ThongbaoNV"] = "Check OUT giờ ra Sáng - Thành công.";
+                Session["ThongbaoNVLoi"] = "";
+            }
+            else if (kq == 3)
+            {
+                Session["ThongbaoNV"] = "Check IN giờ vào Chiều - Thành Công.";
+                Session["ThongbaoNVLoi"] = "";
+            }
+            else if (kq == 4)
+            {
+                Session["ThongbaoNV"] = "Check OUT giờ ra Chiều - Thành Công.";
+                Session["ThongbaoNVLoi"] = "";
+            }
+            else if (kq == 5)
+            {
+                Session["ThongbaoNV"] = "Check IN giờ vào TăngCa - Thành Công.";
+                Session["ThongbaoNVLoi"] = "";
+            }
+            else if (kq == 6)
+            {
+                Session["ThongbaoNV"] = "Check OUT giờ ra TăngCa - Thành Công.";
+                Session["ThongbaoNVLoi"] = "";
+            }
+            else
+            {
+                Session["ThongbaoNV"] = "";
+                Session["ThongbaoNVLoi"] = "Không thể check in/out. Nếu muốn, Bạn phải update !!!";
+            }
+            if(kq>0 && kq < 7)
+            {
+                //SMS hệ thống
+                var uid = int.Parse(Session["UserId"].ToString());
+                var giocong = dbc.NV_GioCong.Find(new Guid(Id));
+                var nv = dbc.NV_NhanVienTek.Find(giocong.IdNhanVien);
+                var sms = nv.HoTen + ", " + Session["ThongbaoNV"].ToString();
+                var nhatkyPass = XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
+                            , Session["UserName"].ToString(), sms, "");
+            }
+            return RedirectToAction("IndexStaff");
+        }
         string DBname = ConfigurationManager.AppSettings["DBname"];
         public ActionResult InsertAutoNgayThang(DateTime dtInput)
         {
@@ -236,7 +292,7 @@ namespace DoChoiXeMay.Controllers
             if (dtInput.Month <= DateTime.Now.Month && dtInput.Year <= DateTime.Now.Year)
             {
                 var ktnv = dbc.NV_NhanVienTek.FirstOrDefault(kh => kh.DaNghiViec == false
-                && kh.NgayTao.Month <= dtInput.Month && kh.Id == Id);
+                && kh.NgayTao <= dtInput && kh.Id == Id);
                 if (ktnv != null)
                 {
                     var ser = new Areas.Admin.Data.NhanVien().InsertNgayGioCongAuto(DBname, dtInput, Id);

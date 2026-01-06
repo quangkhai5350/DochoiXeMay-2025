@@ -70,8 +70,10 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
 
             var Tonkho = dbc.HangHoas.Where(kh => kh.Id == 55 || kh.Id == 56).Sum(kh => kh.SoLuong);
             ViewBag.TongXiNhanGen1Tek = Tonkho;
-            ViewBag.TongXiNhanGen1TrongTK = dbc.HangHoas.Where(kh => kh.Id == 56).Sum(kh => kh.SoLuong);
-            ViewBag.TongXiNhanGen1KhoiTK = dbc.HangHoas.Where(kh => kh.Id == 55).Sum(kh => kh.SoLuong);
+            var TonkhoT= dbc.HangHoas.Where(kh => kh.Id == 56).Sum(kh => kh.SoLuong);
+            ViewBag.TongXiNhanGen1TrongTK = TonkhoT;
+            var TonkhoK = dbc.HangHoas.Where(kh => kh.Id == 55).Sum(kh => kh.SoLuong);
+            ViewBag.TongXiNhanGen1KhoiTK = TonkhoK;
 
             var modeldaban = daban == null ? 0 : daban.Sum(kh => kh.SoLuong);
             ViewBag.daban = modeldaban;
@@ -155,7 +157,9 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             Session["daban"] = modeldaban;
             Session["DaTraHangKhachLeLoi"] = TraHangLeLoi;
             Session["TongtraBH"] = kytrabaohanhct.Count() == 0 ? 0 : kytrabaohanhct.Sum(kh => kh.SoLuong);
-            Session["TonKhoXiNhanGen1Tek"] = Tonkho;
+            //Session["TonKhoXiNhanGen1Tek"] = Tonkho;
+            Session["TonKhoXiNhanGen1TekT"] = TonkhoT;
+            Session["TonKhoXiNhanGen1TekK"] = TonkhoK;
             Session["MauDaXuat"] = modelMauDaXuat;
             Session["daSX"] = dsx;
             //Đồ thị dạng cột
@@ -181,7 +185,9 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ViewBag.phantramdaban = (100* float.Parse(Session["daban"].ToString())/ float.Parse(Session["daSX"].ToString())).ToString("#0.00");
             ViewBag.phantramTraHangLeLoi = (100 * float.Parse(Session["DaTraHangKhachLeLoi"].ToString()) / float.Parse(Session["daSX"].ToString())).ToString("#0.00");
             ViewBag.phantramTongtraBH = (100 * float.Parse(Session["TongtraBH"].ToString()) / float.Parse(Session["daSX"].ToString())).ToString("#0.00");
-            ViewBag.phantramTonkho = (100 * float.Parse(Session["TonKhoXiNhanGen1Tek"].ToString()) / float.Parse(Session["daSX"].ToString())).ToString("#0.00");
+            //ViewBag.phantramTonkho = (100 * float.Parse(Session["TonKhoXiNhanGen1Tek"].ToString()) / float.Parse(Session["daSX"].ToString())).ToString("#0.00");
+            ViewBag.phantramTonkhoT = (100 * float.Parse(Session["TonKhoXiNhanGen1TekT"].ToString()) / float.Parse(Session["daSX"].ToString())).ToString("#0.00");
+            ViewBag.phantramTonkhoK = (100 * float.Parse(Session["TonKhoXiNhanGen1TekK"].ToString()) / float.Parse(Session["daSX"].ToString())).ToString("#0.00");
             ViewBag.phantramMauDaXuat = (100 * float.Parse(Session["MauDaXuat"].ToString()) / float.Parse(Session["daSX"].ToString())).ToString("#0.00");
 
 
