@@ -122,6 +122,33 @@ namespace DoChoiXeMay.Areas.Admin.Data
             
             return kt;
         }
+        public bool kiemtrahethanBH(string id)
+        {
+            var ht = DateTime.Now;
+            var model = _context.ChitietXuatNhaps.Find(new Guid(id));
+            if(model.IdDoiTra==1 && model.DaActive != null)
+            {
+                var idserBox = _context.Ser_box.FirstOrDefault(kh => kh.Serial == model.SerialHop);
+                var idserSP = _context.Ser_sp.FirstOrDefault(kh => kh.SerialSP == model.SerialSP);
+                if (idserBox != null && idserSP != null) {
+                    var modelkt = _context.Ser_kichhoat.FirstOrDefault(kh => kh.IDSer_box == idserBox.Id
+                    && kh.IDSer_sp == idserSP.Id && kh.TenKhachHang == model.KyXuatNhap.TenKy);
+                    if(modelkt != null)
+                    {
+                        int tgbh = _context.Ser_sp.Find(modelkt.IDSer_sp).BaoHanh;
+                        var hethan = modelkt.NgayKichHoat.AddMonths(tgbh);
+                        if (ht > hethan)
+                        {
+                            return true;
+                        }
+                        return false;
+                    }
+                    return false;
+                }
+                return false;
+            }
+            return false;
+        }
         public static List<KyXuatNhap> ChiTietKyXuatNhapTEK(Model1 db, string strk="",string ngay="", int idLHXN=0, int IdSan = 0, int Iddoitra=0, int UserId = 0)
         {
             List<KyXuatNhap> model = new List<KyXuatNhap>();

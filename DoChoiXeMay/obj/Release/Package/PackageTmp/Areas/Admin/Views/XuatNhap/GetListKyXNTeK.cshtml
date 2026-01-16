@@ -147,7 +147,7 @@
                         {
                             <p>(Ngày: @Html.FormatValue(Item.NgayXuatNhap, "{0:dd/MM/yyyy}"))</p>
                         }
-                        
+
                     </td>
 
                     <td>
@@ -163,7 +163,7 @@
                                 {
                                     <span style="background-color:burlywood">Xuất Hàng/ĐaiLy</span>
                                 }
-                                if (Item.IdLoaiHangXN == 3|| Item.IdLoaiHangXN == 4)
+                                if (Item.IdLoaiHangXN == 3 || Item.IdLoaiHangXN == 4)
                                 {
                                     <span style="background-color:burlywood">@Item.KyXuatNhap_LoaiHang.TenLoai</span>
                                 }
@@ -172,18 +172,18 @@
                             {
                                 <span>Nhập Hàng</span>
                             }
-                            </p>
-                            <hr />
-                            @if (Item.XuatNhap != false && Item.KhachLe != false)
-                            {
+                        </p>
+                        <hr />
+                        @if (Item.XuatNhap != false && Item.KhachLe != false)
+                        {
 
-                            }
-                            else
-                            {
-                                <p style="font-size:20px">Tổng: @Html.FormatValue(Item.TongTienAuto, "{0:#,###,###}")</p>
-                            }
+                        }
+                        else
+                        {
+                            <p style="font-size:20px">Tổng: @Html.FormatValue(Item.TongTienAuto, "{0:#,###,###}")</p>
+                        }
 
-                        </td>
+                    </td>
                     <td>
                         @if (File.Exists(Request.MapPath("~/Content/imgxuatnhap/" + Item.HoaDon)))
                         {
@@ -216,15 +216,29 @@
                                 var KT = new XuatNhapData().kiemtraNgayCTXN(ct.Id.ToString());
                                 if (KT > 30 && ct.IdDoiTra == 1)
                                 {
-                                    <p style="height:40px">
-                                        <span>Hết hạn(30 ngày)</span>
-                                    </p>
+                                    var KThetbh = new XuatNhapData().kiemtrahethanBH(ct.Id.ToString());
+                                    if (KThetbh)
+                                    {
+                                        <p style="height:40px">
+                                            <span style="background-color:bisque">Hết hạn bảo hành</span>
+                                            /<a hidden title="@ct.Id" class="btn btn-danger" onclick="return confirm('Update Serial ??')"
+                                                href="/Admin/XuatNhap/UpdateSerialXN/@ct.Id"><span class="glyphicon glyphicon-backward" style="font-size:10px"></span></a>
+                                        </p>
+                                    }
+                                    else
+                                    {
+                                        <p style="height:40px">
+                                            <span>Hết hạn(30 ngày)</span>
+                                            /<a hidden title="@ct.Id" class="btn btn-danger" onclick="return confirm('Update Serial ??')"
+                                                href="/Admin/XuatNhap/UpdateSerialXN/@ct.Id"><span class="glyphicon glyphicon-backward" style="font-size:10px"></span></a>
+                                        </p>
+                                    }
                                 }
                                 else if (KT <= 30 && ct.IdDoiTra == 1)
                                 {
                                     if (Session["quyen"].ToString() == "1")
                                     {
-                                        <p style="height:50px">
+                                        <p style="height:70px">
                                             <a title="@ct.Id" class="btn btn-danger" onclick="return confirm('Khách Lẻ Muốn trả Hàng ??')"
                                                href="/Admin/XuatNhap/TraHangChiTietXNbyID/@ct.Id"><span class="glyphicon glyphicon-backward" style="font-size:10px"></span></a>
                                             /<a hidden title="@ct.Id" class="btn btn-danger" onclick="return confirm('Update Serial ??')"
@@ -239,21 +253,23 @@
                                 }
                                 else if (ct.IdDoiTra > 1)
                                 {
-                                    <span style="background-color:bisque">@ct.HangDoiTra.Ten</span>
-                                    <span>
-                                        /<a hidden title = "@ct.Id" class="btn btn-danger" onclick="return confirm('Update Serial ??')"
-                                        href="/Admin/XuatNhap/UpdateSerialXN/@ct.Id"><span class="glyphicon glyphicon-backward" style="font-size:10px"></span></a>
-                                    </span>
+                                    <p style="height:70px">
+                                        <span style="background-color:bisque">@ct.HangDoiTra.Ten</span>
+                                        <span>
+                                            /<a hidden title="@ct.Id" class="btn btn-danger" onclick="return confirm('Update Serial ??')"
+                                                href="/Admin/XuatNhap/UpdateSerialXN/@ct.Id"><span class="glyphicon glyphicon-backward" style="font-size:10px"></span></a>
+                                        </span>
+                                    </p>
                                 }
 
-                        }
+                            }
                         }
                                 </td>
                     <td>
                         @foreach (DoChoiXeMay.Models.ChitietXuatNhap ct in Chitiet)
                         {
                             var tenHH = XstringAdmin.Truncate(ct.Ten, 40);
-                            <p style="height:40px" title="@ct.Ten">
+                            <p style="height:70px" title="@ct.Ten">
 
                                 <span>@ct.SoLuong&nbsp;</span>
                                 <span>@tenHH</span>
@@ -289,7 +305,7 @@
                     <td>
                         @foreach (DoChoiXeMay.Models.ChitietXuatNhap ct in Chitiet)
                         {
-                            <p style="height:40px">
+                            <p style="height:70px">
                                 @Html.FormatValue(ct.Gianhap, "{0:#,###,###}")
                             </p>
                             <hr />
@@ -300,7 +316,7 @@
                         {
                             if (File.Exists(Request.MapPath("~/Content/imgxuatnhap/" + ct.Hinh1)))
                             {
-                                <p style="height:40px">
+                                <p style="height:70px">
                                     <a target="_blank" href="~/Content/imgxuatnhap/@ct.Hinh1">
                                         <i class="glyphicon glyphicon-download-alt"></i>
                                     </a>
@@ -315,7 +331,7 @@
                         {
                             if (File.Exists(Request.MapPath("~/Content/imgxuatnhap/" + ct.Hinh2)))
                             {
-                                <p style="height:40px">
+                                <p style="height:70px">
                                     <a target="_blank" href="~/Content/imgxuatnhap/@ct.Hinh2">
                                         <i class="glyphicon glyphicon-download-alt"></i>
                                     </a>
@@ -330,7 +346,7 @@
                         {
                             if (File.Exists(Request.MapPath("~/Content/imgxuatnhap/" + ct.Hinh3)))
                             {
-                                <p style="height:40px">
+                                <p style="height:70px">
                                     <a target="_blank" href="~/Content/imgxuatnhap/@ct.Hinh3">
                                         <i class="glyphicon glyphicon-download-alt"></i>
                                     </a>
@@ -343,7 +359,7 @@
                     <td>
                         @foreach (DoChoiXeMay.Models.ChitietXuatNhap ct in Chitiet)
                         {
-                            <p style="height:40px">
+                            <p style="height:70px">
                                 @ct.GhiChu
                             </p>
                             <hr />

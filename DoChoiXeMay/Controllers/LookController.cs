@@ -49,6 +49,12 @@ namespace DoChoiXeMay.Controllers
             var beg = be.Where(kh => kh.KyXuatNhap.XuatNhap == true).ToList();
             var begin = beg.Where(kh => kh.IdDoiTra == 1).ToList();
             var daban = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1).ToList();
+            var DaBanTikTok = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1 && kh.KyXuatNhap.IdSan == 2 && kh.KyXuatNhap.KhachLe == true).ToList();
+            var DaBanShopee = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1 && kh.KyXuatNhap.IdSan == 3 && kh.KyXuatNhap.KhachLe == true).ToList();
+            var DaBanLeNSan = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1 && kh.KyXuatNhap.IdSan == 1 && kh.KyXuatNhap.KhachLe == true).ToList();
+            var DaBanLSiNSan = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1 && kh.KyXuatNhap.IdSan == 1 && kh.KyXuatNhap.KhachLe == false).ToList();
+
+
             var DaTraHangKhachLe = beg.Where(kh => kh.IdDoiTra == 4).ToList();   //4:Không Lỗi
             var DaTraHangKhachLeLoi = be.Where(kh => kh.IdDoiTra == 3).ToList(); //4:Không Lỗi//3:có lỗi//2:Mới Nhận
             var modeldaban = daban == null ? 0 : daban.Sum(kh => kh.SoLuong);
@@ -109,6 +115,15 @@ namespace DoChoiXeMay.Controllers
             var KhoiDaBanLeNSan = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1 && kh.IDColor == 7 && kh.KyXuatNhap.IdSan == 1 && kh.KyXuatNhap.KhachLe == true).ToList();
             var modelKhoiDaBanLeNSan = KhoiDaBanLeNSan == null ? 0 : KhoiDaBanLeNSan.Sum(kh => kh.SoLuong);
             Session["KhoiDaBanLeNSan"] = modelKhoiDaBanLeNSan;
+            //Đã bán Trong + Khói
+            var modelDaBanTikTok = DaBanTikTok == null ? 0 : DaBanTikTok.Sum(kh => kh.SoLuong);
+            ViewBag.DaBanTikTok = modelDaBanTikTok;
+            var modelDaBanShopee = DaBanShopee == null ? 0 : DaBanShopee.Sum(kh => kh.SoLuong);
+            ViewBag.DaBanShopee = modelDaBanShopee;
+            var modelDaBanLeNSan = DaBanLeNSan == null ? 0 : DaBanLeNSan.Sum(kh => kh.SoLuong);
+            ViewBag.DaBanLeNSan = modelDaBanLeNSan;
+            var modelDaBanLSiNSan = DaBanLSiNSan == null ? 0 : DaBanLSiNSan.Sum(kh => kh.SoLuong);
+            ViewBag.DaBanLSiNSan = modelDaBanLSiNSan;
 
             ViewBag.phantramdaban = (100 * float.Parse(modeldaban.ToString()) / float.Parse(dsx.ToString())).ToString("#0.00");
             ViewBag.phantramTraHangLeLoi = (100 * float.Parse(Session["DaTraHangKhachLeLoi"].ToString()) / float.Parse(dsx.ToString())).ToString("#0.00");

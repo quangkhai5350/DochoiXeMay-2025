@@ -113,6 +113,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 var checkdiemdanh = kqCS + kqCC + kqTC + kqLe;
                 if (checkdiemdanh == 0)
                 {
+                    //numberCancelbyLichTuan thời điểm không cho điểm danh
                     //chưa điểm danh
                     var kqq = UpdateGioCongDiemDanh(giocong, 1);
                     if (kqq) return 1; 

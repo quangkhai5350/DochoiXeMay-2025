@@ -125,18 +125,30 @@
                                 var KT = new XuatNhapData().kiemtraNgayCTXN(ct.Id.ToString());
                                 if (KT > 30 && ct.IdDoiTra == 1)
                                 {
-                                    <p style="height:40px">
-                                        <span>Hết hạn(30 ngày)</span>
-                                    </p>
+                                    var KThetbh = new XuatNhapData().kiemtrahethanBH(ct.Id.ToString());
+                                    if (KThetbh)
+                                    {
+                                        <p style="height:40px">
+                                            <span style="background-color:bisque">Hết hạn bảo hành</span>
+                                        </p>
+                                    }
+                                    else
+                                    {
+                                        <p style="height:40px">
+                                            <span>Hết hạn(30 ngày)</span>
+                                        </p>
+                                    }
                                 }
                                 else if (ct.IdDoiTra > 1)
                                 {
-                                    <span style="background-color:bisque">@ct.HangDoiTra.Ten</span>
+                                    <p style="height:100px">
+                                        <span style="background-color:bisque">@ct.HangDoiTra.Ten</span>
+                                    </p>
                                 }
 
                             }
                         }
-                    </td>
+                                </td>
                     <td>
                         @foreach (DoChoiXeMay.Models.ChitietXuatNhap ct in Chitiet)
                         {
