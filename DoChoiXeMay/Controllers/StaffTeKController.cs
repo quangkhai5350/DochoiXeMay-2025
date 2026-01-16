@@ -28,12 +28,9 @@ namespace DoChoiXeMay.Controllers
             var nv = dbc.NV_NhanVienTek.Find(IDnv);
             ViewBag.Hoten = nv.HoTen;
             // Lấy ngày hiện tại
-            DateTime date = DateTime.Now;
-            CultureInfo ci = CultureInfo.CurrentCulture; // Sử dụng hiện tại của hệ thống
-            Calendar cal = ci.Calendar;
-            CalendarWeekRule rule = ci.DateTimeFormat.CalendarWeekRule;
-            DayOfWeek firstDayOfWeek = ci.DateTimeFormat.FirstDayOfWeek;
-            int weekNumber = cal.GetWeekOfYear(date, rule, firstDayOfWeek);
+
+            var weekNumber = Areas.Admin.Data.LichTuanNV.GetTuanHT();
+            ////
             ViewBag.TuanCu4 = weekNumber - 4;
             ViewBag.TuanCu3 = weekNumber - 3;
             ViewBag.TuanCu2 = weekNumber - 2;

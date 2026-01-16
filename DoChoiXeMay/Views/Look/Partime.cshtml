@@ -48,12 +48,30 @@
     <div class="row" style="margin-left:0;margin-right:0; box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.32)">
         <div class="col-lg-2 col-xl-2 col-md-2 col-sm-12 col-sx-12 col-12" style=""></div>
         <div class="col-lg-8 col-xl-8 col-md-8 col-sm-12 col-sx-12 col-12" style="padding-top: 20px">
-            <h3 style="text-align:center;margin-bottom:20px"><a style="text-decoration: none">Bảng Thống Kê Tổng HợpTeK</a></h3>
-            @*Đồ thị*@
+            <div class="row">
+                <div class="col-lg-8 col-xl-8 col-md-8 col-sm-10 col-sx-10 col-10" style="padding-top: 20px">
+                    <h3 style="text-align:right;margin-bottom:20px">
+                        <a style="text-decoration: none">
+                            Bảng Thống Kê Tổng HợpTeK
+                        </a>
+                        @*Đồ thị*@
+                    </h3>
+                </div>
+                <div class="col-lg-2 col-xl-2 col-md-2 col-sm-2 col-sx-2 col-2" style="padding-top: 50px;padding-left:0">
+                    <select class="form-control" id="YearXiNhan" name="YearXiNhan">
+                        <option value="0"></option>
+                        <option value="1">2025</option>
+                        <option value="2">2026</option>
+                        <option value="3">2027</option>
+                    </select>
+                </div>
+            </div>
+            @*Chưa test*@
+            @*@Html.Action("DoThiThongKe", "Look", new { id = 1 })*@
             @Html.Action("DoThiThongKe", "Look")
         </div>
-        <div class="col-lg-2 col-xl-2 col-md-2 col-sm-12 col-sx-12 col-12" style=""></div>
-    </div>
+            <div class="col-lg-2 col-xl-2 col-md-2 col-sm-12 col-sx-12 col-12" style=""></div>
+        </div>
 </div>
 
 @*16thang12*@
