@@ -147,9 +147,9 @@
         </div>
     </div>
 </div>
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+@*<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>*@
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script src="~/Areas/Admin/Content/jquery2.0.3.min.js"></script>
 <script>
     LoadPartime();
     
@@ -167,7 +167,7 @@
         var IdDoiTra = $('#IdDoiTra').val();
         var tungay = $('#tungay').val();
         getTongSanPham(tungay, pageSize, pageNo, UserId, KeywordsTT, idLoaiHangXN, IdSan, IdDoiTra)
-        //LoadPagedothi(YearXiNhan)
+        LoadPagedothi(YearXiNhan)
         $(".pager a:eq(0)").click(function () {
             if (pageNo > 0) {
                 pageNo = 0;
@@ -190,6 +190,7 @@
                 var IdSan = $('#IdSan').val();
                 var IdDoiTra = $('#IdDoiTra').val();
                 var tungay = $('#tungay').val();
+                
                 LoadPage(tungay, pageNo, pageSize, UserId, KeywordsTT, idLoaiHangXN, IdSan, IdDoiTra);
             }
             return false;
@@ -256,8 +257,7 @@
                 pageCount = respone;
                 TongSP = respone;
                 LoadPage(tungay, pageNo, pageSize, UserId, KeywordsTT, idLoaiHangXN, IdSan, IdDoiTra);
-                var YearXiNhan = $('#YearXiNhan').val();
-                LoadPagedothi(YearXiNhan)
+                
             }
         });
     };

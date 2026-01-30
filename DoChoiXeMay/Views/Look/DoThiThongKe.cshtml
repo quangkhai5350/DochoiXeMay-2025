@@ -3,6 +3,7 @@
         display: none;
     }
 </style>
+<script src="~/Areas/Admin/Content/jquery2.0.3.min.js"></script>
 @if (@Session["Year"] != null)
 {
     <input id="Yeardt" value="@Session["Year"].ToString()" hidden />
@@ -11,6 +12,7 @@ else
 {
     <input id="Yeardt" value="" hidden />
 }
+
 <input id="phantramdaban" value="@ViewBag.phantramdaban" hidden />
 <input id="phantramTraHangLeLoi" value="@ViewBag.phantramTraHangLeLoi" hidden />
 <input id="phantramTongtraBH" value="@ViewBag.phantramTongtraBH" hidden />
@@ -54,8 +56,8 @@ else
 <div id="chartContainer3" style="height: 300px; width: 100%;margin-top:20px"></div>
 
 <script>
-    LoadPage();
-    function LoadPage() {
+    DothiXN();
+    function DothiXN() {
         const CDaSanXuat = $("#DaSanXuat").val()
         const Cdaban = $("#daban").val()
         const CTongtraBH = $("#TongtraBH").val()
@@ -169,7 +171,7 @@ else
 
                     { label: "Shopee " + CYeardt + " (" + DaBanShopee + ")", y: ttrongShopee },
                     { label: "TikTok " + CYeardt + " (" + DaBanTikTok + ")", y: ttrongTikTok },
-                    { label: "SiNSan " + CYeardt + " (" + DaBanLSiNSan+")", y: ttrongSiNSan },
+                    { label: "SiNSan " + CYeardt + " (" + DaBanLSiNSan + ")", y: ttrongSiNSan },
                     //{ label: "Massachusetts", y: 28234 }
                 ]
             },
@@ -183,7 +185,7 @@ else
                     { label: "LeNSan " + CYeardt + " (" + DaBanLeNSan + ")", y: tkhoiLeNSan },
 
                     { label: "Shopee " + CYeardt + " (" + DaBanShopee + ")", y: tkhoiShopee },
-                    { label: "TikTok " + CYeardt + " (" + DaBanTikTok +")", y: tkhoiTikTok },
+                    { label: "TikTok " + CYeardt + " (" + DaBanTikTok + ")", y: tkhoiTikTok },
                     { label: "SiNSan " + CYeardt + " (" + DaBanLSiNSan + ")", y: tkhoiSiNSan },
                     //{ label: "Massachusetts", y: 528 }
                 ]
