@@ -24,6 +24,43 @@ namespace DoChoiXeMay.Areas.Admin.Data
         {
             _context = new Model1();
         }
+        public bool UpdateCongvaThanhToan_Auto(NV_GioCong model, int uid)
+        {
+            //Lay gio Cong
+            double kqgc = 0; double kqtc = 0; double kqle = 0;
+            var modelkt = _context.NV_GioCong.Where(kh => kh.IdNhanVien == model.IdNhanVien && kh.Month == model.Month
+                                && kh.Year == model.Year && kh.Day <= DateTime.Now.Day).ToList();
+            for (int i = 0; i < modelkt.Count(); i++)
+            {
+                var kqg = double.Parse((modelkt[i].GioRaSang - modelkt[i].GioVaoSang +
+                    (modelkt[i].GioRaChieu - modelkt[i].GioVaoChieu)).TotalHours.ToString("0.00"));
+                kqg = kqg > 0 ? kqg : 0;
+                kqgc = kqgc + kqg;
+                var kqt = double.Parse((modelkt[i].GioRaTangCa - modelkt[i].GioVaoTangCa).TotalHours.ToString("0.00"));
+                kqt = kqt > 0 ? kqt : 0;
+                kqtc = kqtc + kqt;
+                var kql = double.Parse((modelkt[i].GioRaLe - modelkt[i].GioVaoLe).TotalHours.ToString("0.00"));
+                kql = kql > 0 ? kql : 0;
+                kqle = kqle + kql;
+            }
+            //kiểm tra bảng Công
+            //Chưa có thì Insert, có rồi thì update
+            var TinhCongPartimeAu = new Areas.Admin.Data.Cong_ThanhToan().TinhCongAutoPartime(model, kqgc, kqtc, kqle);
+            if (TinhCongPartimeAu)
+            {
+                //kiểm tra bảng thanh toan luong
+                //Chưa có thì Insert, có rồi thì update
+                var dvt = _context.NV_NhanVienTek.Find(model.IdNhanVien).NV_Vitrinhanvien.DonViTinh;
+                var updateThanhToan = new Areas.Admin.Data.Cong_ThanhToan().ThanhToanLuongAuto(model.IdNhanVien
+                                                , model.Month, model.Year, dvt, kqgc, kqtc, kqle);
+                if (updateThanhToan)
+                {
+                    return true;
+                }
+                return false;
+            }
+            return false;
+        }
         public bool InsertCong(string DBname,int idnv,double snc, double sntc, double snle,int slcom,int slgiaohang,
             int slhotro, double sgcongthang, double sgtcathang, double sglethang, int thang, int nam)
         {
@@ -232,8 +269,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
                     }
                     ktbangthanhtoan.ThucLinh = tiencong + ktbangthanhtoan.TienCom + ktbangthanhtoan.PCGiaoHang
                         + ktbangthanhtoan.PCXangXe + ktbangthanhtoan.PCChucVu + ktbangthanhtoan.PCKhac
-                        + ktbangthanhtoan.Thuong - ktbangthanhtoan.KhauTruBH - ktbangthanhtoan.DaUngLuong
-                        + ktbangthanhtoan.PCKhac;
+                        + ktbangthanhtoan.Thuong - ktbangthanhtoan.KhauTruBH - ktbangthanhtoan.DaUngLuong;
                     var updateThanhToan = UPdateThanhToanLuong(ktbangthanhtoan, DBname);
                     if (updateThanhToan == false) return false;
                 }

@@ -3,7 +3,14 @@
         display: none;
     }
 </style>
-
+@if (@Session["Year"] != null)
+{
+    <input id="Yeardt" value="@Session["Year"].ToString()" hidden />
+}
+else
+{
+    <input id="Yeardt" value="" hidden />
+}
 <input id="phantramdaban" value="@ViewBag.phantramdaban" hidden />
 <input id="phantramTraHangLeLoi" value="@ViewBag.phantramTraHangLeLoi" hidden />
 <input id="phantramTongtraBH" value="@ViewBag.phantramTongtraBH" hidden />
@@ -13,7 +20,7 @@
 <input id="phantramMauDaXuat" value="@ViewBag.phantramMauDaXuat" hidden />
 
 <input id="DaSanXuat" value="@ViewBag.DaSanXuat" hidden />
-<input id="daban" value="@ViewBag.daban"hidden />
+<input id="daban" value="@ViewBag.daban" hidden />
 <input id="TongtraBH" value="@Session["TongtraBH"].ToString()" hidden />
 
 <input id="DaTraHangKhachLe" value="@ViewBag.DaTraHangKhachLe" hidden />
@@ -34,19 +41,21 @@
 <input id="KhoiDaBanLSiNSan" value="@Session["KhoiDaBanLSiNSan"].ToString()" hidden />
 <input id="KhoiDaBanLeNSan" value="@Session["KhoiDaBanLeNSan"].ToString()" hidden />
 
-<input id="DaBanLSiNSan" value="@ViewBag.DaBanLSiNSan" hidden/>
-<input id="DaBanTikTok" value="@ViewBag.DaBanTikTok" hidden/>
-<input id="DaBanShopee" value="@ViewBag.DaBanShopee" hidden/>
-<input id="DaBanLeNSan" value="@ViewBag.DaBanLeNSan" hidden/>
+<input id="DaBanLSiNSan" value="@ViewBag.DaBanLSiNSan" hidden />
+<input id="DaBanTikTok" value="@ViewBag.DaBanTikTok" hidden />
+<input id="DaBanShopee" value="@ViewBag.DaBanShopee" hidden />
+<input id="DaBanLeNSan" value="@ViewBag.DaBanLeNSan" hidden />
 
 <div id="chartContainer" style="height: 300px; width: 100%;"></div>
 <div style="text-align:center">
-    <span style="background-color:black;color:white">Khách lẻ trả hàng không lỗi: @ViewBag.DaTraHangKhachLe</span>
+    <span style="background-color:black;color:white">Khách lẻ trả hàng không lỗi @Session["Year"]: @ViewBag.DaTraHangKhachLe</span>
     <h4>Hàng Không Lỗi ==> đưa vào tồn kho, sử dụng lại.</h4>
 </div>
 <div id="chartContainer3" style="height: 300px; width: 100%;margin-top:20px"></div>
+
 <script>
-    window.onload = function () {
+    LoadPage();
+    function LoadPage() {
         const CDaSanXuat = $("#DaSanXuat").val()
         const Cdaban = $("#daban").val()
         const CTongtraBH = $("#TongtraBH").val()
@@ -55,6 +64,7 @@
         const CTonKhoXiNhanGen1TekT = $("#TonKhoXiNhanGen1TekT").val()
         const CTonKhoXiNhanGen1TekK = $("#TonKhoXiNhanGen1TekK").val()
         const CMauDaXuat = $("#MauDaXuat").val()
+        const CYeardt = $("#Yeardt").val()
 
         const daban = $("#phantramdaban").val().replace(',', '.')
         const tdaban = parseFloat(daban).toFixed(2);
@@ -72,7 +82,7 @@
         var chart = new CanvasJS.Chart("chartContainer", {
             animationEnabled: true,
             title: {
-                text: "Wave TNT BLOCKX G2 ZEN 1 đã xuất: " + CDaSanXuat
+                text: "Wave TNT BLOCKX G2 ZEN 1 đã sản xuất " + CYeardt + ": " + CDaSanXuat
             },
             data: [{
                 type: "pie",
@@ -80,12 +90,12 @@
                 yValueFormatString: "##0.00\"%\"",
                 indexLabel: "{label} {y}",
                 dataPoints: [
-                    { y: tdaban, label: "Da Ban (" + Cdaban + ")" },
-                    { y: tTraHangLeLoi, label: "KhachLeTraHangLoi (" + CDaTraHangKhachLeLoi + ")" },
-                    { y: ttraBH, label: "Tra BH (" + CTongtraBH + ")" },
+                    { y: tdaban, label: "Da Ban " + CYeardt + " (" + Cdaban + ")" },
+                    { y: tTraHangLeLoi, label: "KhachLeTraHangLoi " + CYeardt + " (" + CDaTraHangKhachLeLoi + ")" },
+                    { y: ttraBH, label: "Tra BH " + CYeardt + " (" + CTongtraBH + ")" },
                     { y: tTonkhoT, label: "Tonkho Trong (" + CTonKhoXiNhanGen1TekT + ")" },
                     { y: tTonkhoK, label: "Tonkho Khói (" + CTonKhoXiNhanGen1TekK + ")" },
-                    { y: tMauDaXuat, label: "Hang Mau (" + CMauDaXuat + ")" }
+                    { y: tMauDaXuat, label: "Hang Mau " + CYeardt + " (" + CMauDaXuat + ")" }
                 ]
             }]
         });
@@ -118,7 +128,7 @@
             exportEnabled: true,
             animationEnabled: true,
             title: {
-                text: "TNT BLOCKX G2 ZEN 1 Da Ban: @ViewBag.daban"
+                text: "TNT BLOCKX G2 ZEN 1 Da Ban " + CYeardt + ": " + Cdaban
             },
             subtitles: [{
                 text: "Trong: Blue  -  Khoi: Red"
@@ -155,11 +165,11 @@
                 showInLegend: true,
                 yValueFormatString: "#,##0.#",
                 dataPoints: [
-                    { label: "LeNSan(" + DaBanLeNSan + ")", y: ttrongLeNSan },
+                    { label: "LeNSan " + CYeardt + " (" + DaBanLeNSan + ")", y: ttrongLeNSan },
 
-                    { label: "Shopee(" + DaBanShopee + ")", y: ttrongShopee },
-                    { label: "TikTok(" + DaBanTikTok + ")", y: ttrongTikTok },
-                    { label: "SiNSan(" + DaBanLSiNSan+")", y: ttrongSiNSan },
+                    { label: "Shopee " + CYeardt + " (" + DaBanShopee + ")", y: ttrongShopee },
+                    { label: "TikTok " + CYeardt + " (" + DaBanTikTok + ")", y: ttrongTikTok },
+                    { label: "SiNSan " + CYeardt + " (" + DaBanLSiNSan+")", y: ttrongSiNSan },
                     //{ label: "Massachusetts", y: 28234 }
                 ]
             },
@@ -170,11 +180,11 @@
                 showInLegend: true,
                 yValueFormatString: "#,##0.#",
                 dataPoints: [
-                    { label: "LeNSan(" + DaBanLeNSan + ")", y: tkhoiLeNSan },
+                    { label: "LeNSan " + CYeardt + " (" + DaBanLeNSan + ")", y: tkhoiLeNSan },
 
-                    { label: "Shopee(" + DaBanShopee + ")", y: tkhoiShopee },
-                    { label: "TikTok(" + DaBanTikTok +")", y: tkhoiTikTok },
-                    { label: "SiNSan(" + DaBanLSiNSan + ")", y: tkhoiSiNSan },
+                    { label: "Shopee " + CYeardt + " (" + DaBanShopee + ")", y: tkhoiShopee },
+                    { label: "TikTok " + CYeardt + " (" + DaBanTikTok +")", y: tkhoiTikTok },
+                    { label: "SiNSan " + CYeardt + " (" + DaBanLSiNSan + ")", y: tkhoiSiNSan },
                     //{ label: "Massachusetts", y: 528 }
                 ]
             }]

@@ -24,73 +24,93 @@
                 <th style="width:100px !important;text-align:center"> hơn 4h: @ViewBag.SLcom</th>
             </tr>
         </thead>
-        @foreach (DoChoiXeMay.Models.NV_GioCong item in ViewBag.NgayGioCong)
+        @if (Model != null)
         {
-            var Id = item.Id.ToString();
-            var cl = "";
             var ht = DateTime.Now;
-            if (item.GhiChu == "0")
+            var idnv= int.Parse(Session["idNhanVien"].ToString());
+            var checkoutnum = new DoChoiXeMay.Areas.Admin.Data.LichTuanNV().numberAcbyLichTuan(idnv, ht.Year);
+            var kq = 0;
+            if (checkoutnum == 0)
             {
-                cl = "";
-            }
-            else
+                kq = 25;
+            }else if (checkoutnum == 1)
             {
-                cl = "tomau";
+                kq = 9;
+            }else if(checkoutnum == 2)
+            {
+                kq = 13;
+            }else if(checkoutnum == 3)
+            {
+                kq = 18;
             }
-            <tr class="@cl">
-                <td>
-                    @Html.DisplayFor(modelItem => item.GhiChu)
-                </td>
-                <td>
-                    @if (item.Day == ht.Day && item.Month == ht.Month && item.Year == ht.Year)
-                    {
-                        <a class="btn btn-primary" style=""  onclick="return confirm('Bạn muốn Check in/out?')" href="/StaffTeK/DiemDanh/@item.Id"><i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;(@item.Day/@item.Month)</a>
-                    }
-                    else
-                    {
-                        <a class="btn btn-primary" style="" disabled><i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;(@item.Day/@item.Month)</a>
-                    }
-                </td>
-                <td>
-                    @item.GioVaoSang.ToString("HH:mm")
-                </td>
-                <td>
-                    @item.GioRaSang.ToString("HH:mm")
-                </td>
-                <td>
-                    @item.GioVaoChieu.ToString("HH:mm")
-                </td>
-                <td>
-                    @item.GioRaChieu.ToString("HH:mm")
-                </td>
+            foreach (DoChoiXeMay.Models.NV_GioCong item in ViewBag.NgayGioCong)
+            {
+                var Id = item.Id.ToString();
+                var cl = "";
+                if (item.GhiChu == "0")
+                {
+                    cl = "";
+                }
+                else
+                {
+                    cl = "tomau";
+                }
+                <tr class="@cl">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GhiChu)
+                    </td>
+                    <td>
+                        @if (item.Day == ht.Day && item.Month == ht.Month && item.Year == ht.Year && ht.Hour>kq-1)
+                        {
+                            <a class="btn btn-primary" style="" onclick="return confirm('Bạn muốn Check in/out?')" href="/StaffTeK/DiemDanh/@item.Id"><i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;(@item.Day/@item.Month)</a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-primary" style="" disabled><i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;(@item.Day/@item.Month)</a>
+                        }
+                    </td>
+                    <td>
+                        @item.GioVaoSang.ToString("HH:mm")
+                    </td>
+                    <td>
+                        @item.GioRaSang.ToString("HH:mm")
+                    </td>
+                    <td>
+                        @item.GioVaoChieu.ToString("HH:mm")
+                    </td>
+                    <td>
+                        @item.GioRaChieu.ToString("HH:mm")
+                    </td>
 
-                <td>
-                    @item.GioVaoTangCa.ToString("HH:mm")
-                </td>
-                <td>
-                    @item.GioRaTangCa.ToString("HH:mm")
-                </td>
-                <td>
-                    @item.GioVaoLe.ToString("HH:mm")
-                </td>
-                <td>
-                    @item.GioRaLe.ToString("HH:mm")
-                </td>
-                <td>
-                    @Html.FormatValue(item.NgayUpdate, "{0:dd/MM/yyyy}")
-                </td>
-                <td>
-                    @if (item.Day == ht.Day && item.Month == ht.Month && item.Year == ht.Year)
-                    {
-                        <a class="btn btn-warning" style="" href="/StaffTeK/UpdateGioCong/@item.Id"><i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;update h</a>
-                    }
-                    else
-                    {
-                <a class="btn btn-warning" style="" disabled><i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;update h</a>
-                    }
-                </td>
-            </tr>
+                    <td>
+                        @item.GioVaoTangCa.ToString("HH:mm")
+                    </td>
+                    <td>
+                        @item.GioRaTangCa.ToString("HH:mm")
+                    </td>
+                    <td>
+                        @item.GioVaoLe.ToString("HH:mm")
+                    </td>
+                    <td>
+                        @item.GioRaLe.ToString("HH:mm")
+                    </td>
+                    <td>
+                        @Html.FormatValue(item.NgayUpdate, "{0:dd/MM/yyyy}")
+                    </td>
+                    <td>
+                        @if (item.Day == ht.Day && item.Month == ht.Month && item.Year == ht.Year)
+                        {
+                            <a class="btn btn-warning" style="" href="/StaffTeK/UpdateGioCong/@item.Id"><i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;update h</a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-warning" style="" disabled><i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;update h</a>
+                        }
+                    </td>
+                </tr>
+            }
         }
+
 
     </table>
 </div>
