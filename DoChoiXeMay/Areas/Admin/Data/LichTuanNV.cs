@@ -62,24 +62,106 @@ namespace DoChoiXeMay.Areas.Admin.Data
             DayOfWeek firstDayOfWeek = ci.DateTimeFormat.FirstDayOfWeek;
             return cal.GetWeekOfYear(date, rule, firstDayOfWeek);
         }
-        //public int numberCancelbyLichTuan(int idnhanvien, int yearht)
-        //{
-        //    var tuanht = GetTuanHT();
-        //    var getLichtuan = _context.NV_LichTuanParTime.FirstOrDefault(kh => kh.Year == yearht
-        //        && kh.IdNhanVien == idnhanvien && kh.SoTuanTrongNam == tuanht);
-        //    if (getLichtuan != null)
-        //    {
-        //        if (getLichtuan.SangCN == false && getLichtuan.ChieuCN == false && getLichtuan.ToiCN == false &&
-        //            getLichtuan.SangT2 == false && getLichtuan.ChieuT2 == false && getLichtuan.ToiT2 == false &&
-        //            getLichtuan.SangT3 == false && getLichtuan.ChieuT3 == false && getLichtuan.ToiT3 == false &&
-        //            getLichtuan.SangT4 == false && getLichtuan.ChieuT4 == false && getLichtuan.ToiT4 == false &&
-        //            getLichtuan.SangT5 == false && getLichtuan.ChieuT5 == false && getLichtuan.ToiT5 == false &&
-        //            getLichtuan.SangT6 == false && getLichtuan.ChieuT6 == false && getLichtuan.ToiT6 == false &&
-        //            getLichtuan.SangT7 == false && getLichtuan.ChieuT7 == false && getLichtuan.ToiT7 == false)
-        //        {
-        //            return -1;
-        //        }
-        //    }
-        //}
+
+        public int numberAcbyLichTuan(int idnhanvien, int yearht)
+        {
+            var tuanht = GetTuanHT();
+            int dayht = DateTime.Now.Day;
+            var getLichtuan = _context.NV_LichTuanParTime.FirstOrDefault(kh => kh.Year == yearht
+                && kh.IdNhanVien == idnhanvien && kh.SoTuanTrongNam == tuanht);
+            if (getLichtuan != null)
+            {
+                //(Sunday is 0, Monday is 1)
+                var kk = (int)DateTime.Now.DayOfWeek;
+                if(kk==0 && getLichtuan.SangCN==true)
+                {
+                    return 1;//9h sáng
+                }else if(kk == 0 && getLichtuan.ChieuCN == true)
+                {
+                    return 2;//1h chiều
+                }
+                else if (kk == 0 && getLichtuan.ChieuCN == true)
+                {
+                    return 3;//6h tối
+                }
+                else if (kk == 1 && getLichtuan.SangT2 == true)
+                {
+                    return 1;
+                }
+                else if (kk == 1 && getLichtuan.ChieuT2 == true)
+                {
+                    return 2;
+                }
+                else if (kk == 1 && getLichtuan.ToiT2 == true)
+                {
+                    return 3;
+                }
+                else if (kk == 2 && getLichtuan.SangT3 == true)
+                {
+                    return 1;
+                }
+                else if (kk == 2 && getLichtuan.ChieuT3 == true)
+                {
+                    return 2;
+                }
+                else if (kk == 2 && getLichtuan.ToiT3 == true)
+                {
+                    return 3;
+                }
+                else if (kk == 3 && getLichtuan.SangT4 == true)
+                {
+                    return 1;
+                }
+                else if (kk == 3 && getLichtuan.ChieuT4 == true)
+                {
+                    return 2;
+                }
+                else if (kk == 3 && getLichtuan.ToiT4 == true)
+                {
+                    return 3;
+                }
+                else if (kk == 4 && getLichtuan.SangT5 == true)
+                {
+                    return 1;
+                }
+                else if (kk == 4 && getLichtuan.ChieuT5 == true)
+                {
+                    return 2;
+                }
+                else if (kk == 4 && getLichtuan.ToiT5 == true)
+                {
+                    return 3;
+                }
+                else if (kk == 5 && getLichtuan.SangT6 == true)
+                {
+                    return 1;
+                }
+                else if (kk == 5 && getLichtuan.ChieuT6 == true)
+                {
+                    return 2;
+                }
+                else if (kk == 5 && getLichtuan.ToiT6 == true)
+                {
+                    return 3;
+                }
+                else if (kk == 6 && getLichtuan.SangT7 == true)
+                {
+                    return 1;
+                }
+                else if (kk == 6 && getLichtuan.ChieuT7 == true)
+                {
+                    return 2;
+                }
+                else if (kk == 6 && getLichtuan.ToiT7 == true)
+                {
+                    return 3;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+            return 0;
+        }
     }
 }

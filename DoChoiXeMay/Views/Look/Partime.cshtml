@@ -60,15 +60,18 @@
                 <div class="col-lg-2 col-xl-2 col-md-2 col-sm-2 col-sx-2 col-2" style="padding-top: 50px;padding-left:0">
                     <select class="form-control" id="YearXiNhan" name="YearXiNhan">
                         <option value="0"></option>
-                        <option value="1">2025</option>
-                        <option value="2">2026</option>
-                        <option value="3">2027</option>
+                        <option value="2025">2025</option>
+                        <option value="2026">2026</option>
+                        <option value="2027">2027</option>
                     </select>
                 </div>
             </div>
             @*Chưa test*@
             @*@Html.Action("DoThiThongKe", "Look", new { id = 1 })*@
-            @Html.Action("DoThiThongKe", "Look")
+            @*@Html.Action("DoThiThongKe", "Look")*@
+            <div class="DoThiTK">
+
+            </div>
         </div>
             <div class="col-lg-2 col-xl-2 col-md-2 col-sm-12 col-sx-12 col-12" style=""></div>
         </div>
@@ -149,21 +152,22 @@
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script>
     LoadPartime();
-
+    
     $(function () {
         pageNo = 0;
         pageSize = 5;
         TongSP = 0;
         var KeywordsTT = $('#KeywordsTT').val();
+        var YearXiNhan = $('#YearXiNhan').val();
         LoadLoaiKyXN()
         LoadSanTMDT()
-
         var UserId = 0;
         var idLoaiHangXN = $('#IdLoaiHangXN').val();
         var IdSan = $('#IdSan').val();
         var IdDoiTra = $('#IdDoiTra').val();
         var tungay = $('#tungay').val();
         getTongSanPham(tungay, pageSize, pageNo, UserId, KeywordsTT, idLoaiHangXN, IdSan, IdDoiTra)
+        //LoadPagedothi(YearXiNhan)
         $(".pager a:eq(0)").click(function () {
             if (pageNo > 0) {
                 pageNo = 0;
@@ -217,7 +221,10 @@
             }
             return false
         });
+        
+        ///////////////////////
     });
+    
     function LoadPage(tungay, pageNo, pageSize, UserId, KeywordsTT, idLoaiHangXN, IdSan, IdDoiTra) {
         $.ajax({
             url: "/Look/GetListKyXNTeK",
@@ -226,9 +233,21 @@
                 $(".listSPXNTEK").html(respone);
                 var pagesp = pageNo + 1;
                 $('.TongSanPham').html(pagesp + '/' + TongSP + ' trang');
+            },
+            error: function (ex) {
+                alert('Lỗi load KyXN: ' + ex);
             }
         });
     };
+    function LoadPagedothi(YearXiNhan) {
+        $.ajax({
+            url: "/Look/DoThiThongKe",
+            data: { nam: YearXiNhan },
+            success: function (res) {
+                $(".DoThiTK").html(res);
+            }
+        });
+    }
     function getTongSanPham(tungay, pageSize, pageNo, UserId, KeywordsTT, idLoaiHangXN, IdSan, IdDoiTra) {
         $.ajax({
             url: "/Look/GetPageCountXNTek",
@@ -237,6 +256,8 @@
                 pageCount = respone;
                 TongSP = respone;
                 LoadPage(tungay, pageNo, pageSize, UserId, KeywordsTT, idLoaiHangXN, IdSan, IdDoiTra);
+                var YearXiNhan = $('#YearXiNhan').val();
+                LoadPagedothi(YearXiNhan)
             }
         });
     };
@@ -291,6 +312,12 @@
         var tungay = $('#tungay').val();
         getTongSanPham(tungay, pageSize, pageNo, UserId, KeywordsTT, idLoaiHangXN, IdSan, IdDoiTra)
     });
+    ////
+    $("#YearXiNhan").change(function () {
+        var YearXiNhan = $('#YearXiNhan').val();
+        LoadPagedothi(YearXiNhan);
+    });
+    ////
     function TimKiemKyXN() {
         pageNo = 0;
         pageSize = 5;

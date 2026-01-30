@@ -11,6 +11,7 @@ using System.Security.Cryptography;
 using System.Web;
 using System.Web.Mvc;
 using System.Xml.Linq;
+using static QRCoder.PayloadGenerator;
 
 namespace DoChoiXeMay.Controllers
 {
@@ -172,52 +173,39 @@ namespace DoChoiXeMay.Controllers
                                     && kh.DaNhanLuong == true && kh.IdNhanVien == model.IdNhanVien);
             if (ktthanhtoan == null)
             {
+                var sms = "";
                 var nv = dbc.NV_NhanVienTek.Find(model.IdNhanVien);
                 var kq = new Areas.Admin.Data.NhanVien().UpdateGioCong(model, VaoSang, RaSang, VaoChieu
                         , RaChieu, VaoTangCa, RaTangCa, VaoLe, RaLe);
+                var uid = int.Parse(Session["UserId"].ToString());
                 if (kq)
                 {
-                    var uid = int.Parse(Session["UserId"].ToString());
-                    Session["ThongbaoNV"] = "Update giờ ngày " + model.Day + " thành công.";
-                    Session["ThongbaoNVLoi"] = "";
-                    //Lay gio Cong
-                    double kqgc = 0; double kqtc = 0; double kqle = 0;
-                    var modelkt = dbc.NV_GioCong.Where(kh => kh.IdNhanVien == model.IdNhanVien && kh.Month == model.Month
-                                && kh.Year == model.Year && kh.Day <= DateTime.Now.Day).ToList();
-                    for (int i = 0; i < modelkt.Count(); i++)
+                    //UpdateCongvaThanhToan_Auto
+                    var kqUpdatethanhtoan_auto = new Areas.Admin.Data.Cong_ThanhToan().UpdateCongvaThanhToan_Auto(
+                        model, uid);
+                    
+                    if (kqUpdatethanhtoan_auto)
                     {
-                        var kqg = double.Parse((modelkt[i].GioRaSang - modelkt[i].GioVaoSang +
-                            (modelkt[i].GioRaChieu - modelkt[i].GioVaoChieu)).TotalHours.ToString("0.00"));
-                        kqg = kqg > 0 ? kqg : 0;
-                        kqgc = kqgc + kqg;
-                        var kqt = double.Parse((modelkt[i].GioRaTangCa - modelkt[i].GioVaoTangCa).TotalHours.ToString("0.00"));
-                        kqt = kqt > 0 ? kqt : 0;
-                        kqtc = kqtc + kqt;
-                        var kql = double.Parse((modelkt[i].GioRaLe - modelkt[i].GioVaoLe).TotalHours.ToString("0.00"));
-                        kql = kql > 0 ? kql : 0;
-                        kqle = kqle + kql;
+                        Session["ThongbaoNV"] = "Update giờ ngày " + model.Day + " thành công.";
+                        Session["ThongbaoNVLoi"] = "";
+                        sms = nv.HoTen + ", " + Session["ThongbaoNV"].ToString();
                     }
-                    //kiểm tra bảng Công
-                    //Chưa có thì Insert, có rồi thì update
-                    var sms = nv.HoTen + ", " + Session["ThongbaoNV"].ToString();
-                    var TinhCongPartimeAu = new Areas.Admin.Data.Cong_ThanhToan().TinhCongAutoPartime(model, kqgc, kqtc, kqle);
-                    if (TinhCongPartimeAu == false)
+                    else
                     {
                         Session["ThongbaoNV"] = "";
-                        Session["ThongbaoNVLoi"] = "Có lỗi Update bảng Công !!!";
+                        Session["ThongbaoNVLoi"] = "Có lỗi Update bảng Công_Thanhtoanluong !!!";
                         sms = nv.HoTen + ", " + Session["ThongbaoNVLoi"].ToString();
                     }
-                    //kiểm tra bảng thanh toan luong
-                    //Chưa có thì Insert, có rồi thì update
-                    var dvt = dbc.NV_NhanVienTek.Find(model.IdNhanVien).NV_Vitrinhanvien.DonViTinh;
-                    var updateThanhToan = new Areas.Admin.Data.Cong_ThanhToan().ThanhToanLuongAuto(model.IdNhanVien
-                                                    , model.Month, model.Year, dvt, kqgc, kqtc, kqle);
-                    if (updateThanhToan == false)
-                    {
-                        Session["ThongbaoNV"] = "";
-                        Session["ThongbaoNVLoi"] = "Có lỗi update bảng thanh toán lương !!!";
-                        sms = nv.HoTen + ", " + Session["ThongbaoNVLoi"].ToString();
-                    }
+                    //SMS hệ thống
+                    var nhatkyPass = XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
+                            , Session["UserName"].ToString(), sms, "");
+
+                }
+                else
+                {
+                    Session["ThongbaoNV"] = "";
+                    Session["ThongbaoNVLoi"] = "Có lỗi Update Giờ Công !!!";
+                    sms = nv.HoTen + ", " + Session["ThongbaoNVLoi"].ToString();
                     //SMS hệ thống
                     var nhatkyPass = XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
                             , Session["UserName"].ToString(), sms, "");
@@ -271,13 +259,26 @@ namespace DoChoiXeMay.Controllers
             }
             if(kq>0 && kq < 7)
             {
-                //SMS hệ thống
                 var uid = int.Parse(Session["UserId"].ToString());
                 var giocong = dbc.NV_GioCong.Find(new Guid(Id));
                 var nv = dbc.NV_NhanVienTek.Find(giocong.IdNhanVien);
-                var sms = nv.HoTen + ", " + Session["ThongbaoNV"].ToString();
+                //UpdateCongvaThanhToan_Auto
+                var kqUpdatethanhtoan_auto = new Areas.Admin.Data.Cong_ThanhToan().UpdateCongvaThanhToan_Auto(
+                    giocong, uid);
+                var sms = "";
+                if (kqUpdatethanhtoan_auto)
+                {
+                    sms = nv.HoTen + ", " + Session["ThongbaoNV"].ToString();
+                }
+                else
+                {
+                    Session["ThongbaoNV"] = "";
+                    Session["ThongbaoNVLoi"] = "Có lỗi Update bảng Công_Thanhtoanluong !!!";
+                    sms = nv.HoTen + ", " + Session["ThongbaoNVLoi"].ToString();
+                }
+                //SMS hệ thống
                 var nhatkyPass = XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
-                            , Session["UserName"].ToString(), sms, "");
+                        , Session["UserName"].ToString(), sms, "");
             }
             return RedirectToAction("IndexStaff");
         }

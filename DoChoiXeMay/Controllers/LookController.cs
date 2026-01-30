@@ -43,10 +43,26 @@ namespace DoChoiXeMay.Controllers
             ViewBag.KhoiTon = dbc.HangHoas.Where(kh => kh.Id == 55).Sum(kh => kh.SoLuong);
             return View();
         }
-        public ActionResult DoThiThongKe()
+        public ActionResult DoThiThongKe(int nam=0)
         {
+            if(nam > 0)
+            {
+                Session["Year"] = nam;
+            }
+            else
+            {
+                Session.Remove("Year");
+            }
+
             var be = dbc.ChitietXuatNhaps.Where(kh => kh.Ten == "Xi Nhan Wave TNT BLOCKX G2 ZEN 1").ToList();
+            if (nam > 0)
+            {
+                be = dbc.ChitietXuatNhaps.Where(kh => kh.Ten == "Xi Nhan Wave TNT BLOCKX G2 ZEN 1" &&
+                                kh.NgayAuto.Year == nam).ToList();
+            }
+            
             var beg = be.Where(kh => kh.KyXuatNhap.XuatNhap == true).ToList();
+            var begsanxuat = be.Where(kh => kh.KyXuatNhap.XuatNhap == false && kh.IdDoiTra == 1).ToList();
             var begin = beg.Where(kh => kh.IdDoiTra == 1).ToList();
             var daban = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1).ToList();
             var DaBanTikTok = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1 && kh.KyXuatNhap.IdSan == 2 && kh.KyXuatNhap.KhachLe == true).ToList();
@@ -76,9 +92,9 @@ namespace DoChoiXeMay.Controllers
             {
                 ViewBag.TongtraBH = kytrabaohanhct.Sum(kh => kh.SoLuong);
             }
-            var dsx = ViewBag.daban + ViewBag.TongXiNhanGen1Tek + ViewBag.TongXiNhanGen1MauDaXuat
-                                + ViewBag.DaTraHangKhachLeLoi + ViewBag.TongtraBH;
-            
+            //var dsx = ViewBag.daban + ViewBag.TongXiNhanGen1Tek + ViewBag.TongXiNhanGen1MauDaXuat
+            //                    + ViewBag.DaTraHangKhachLeLoi + ViewBag.TongtraBH;
+            var dsx = begsanxuat.Sum(kh => kh.SoLuong);
             var TonkhoT = dbc.HangHoas.Where(kh => kh.Id == 56).Sum(kh => kh.SoLuong);
             var TonkhoK = dbc.HangHoas.Where(kh => kh.Id == 55).Sum(kh => kh.SoLuong);
 
