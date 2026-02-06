@@ -17,7 +17,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
         {
             _context = new Model1();
         }
-        public static List<ChiTietTC> ChiTietTCDBTEK(Model1 db, string strTK, string TC,string TNO, string tu, string den)
+        public static List<ChiTietTC> ChiTietTCDBTEK(Model1 db, string strTK, int httc, string TC,string TNO, string tu, string den)
         {
             var tungay = DateTime.Now;
             var denngay = DateTime.Now;
@@ -125,12 +125,19 @@ namespace DoChoiXeMay.Areas.Admin.Data
                             || kh.UserTek.UserName.ToLower().Contains(strTK)))
                         .ToList();
             }
-            
-            return model;
+            //mới 05/02/2026
+            if (httc == 0)
+            {
+                return model;
+            }
+            else
+            {
+                return model.Where(kh => kh.IdHT == httc).ToList();
+            }
         }
-        public List<ChiTietTC> getThuChiTek(int Sec, int pageSize, string strTK, string TC,string TNO, string tu, string den)
+        public List<ChiTietTC> getThuChiTek(int Sec, int pageSize, string strTK, int httc, string TC,string TNO, string tu, string den)
         {
-            var model1 = ChiTietTCDBTEK(_context, strTK, TC,TNO, tu, den)
+            var model1 = ChiTietTCDBTEK(_context, strTK,httc, TC,TNO, tu, den)
                             .OrderBy(kh => kh.NgayAuto).ToList();
 
 
@@ -147,9 +154,9 @@ namespace DoChoiXeMay.Areas.Admin.Data
 
             return model1;
         }
-        public int GetPageCountThuChiTek(string strTK, string TC,string TNO, string tu, string den)
+        public int GetPageCountThuChiTek(string strTK, int httc, string TC,string TNO, string tu, string den)
         {
-            var model1 = ChiTietTCDBTEK(_context, strTK, TC,TNO, tu, den).Count();
+            var model1 = ChiTietTCDBTEK(_context, strTK,httc, TC,TNO, tu, den).Count();
 
             return model1;
         }

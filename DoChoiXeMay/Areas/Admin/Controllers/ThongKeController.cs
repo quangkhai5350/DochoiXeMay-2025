@@ -23,6 +23,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             Session["requestUri"] = "/Admin/ThongKe/Index";
             var be = dbc.ChitietXuatNhaps.Where(kh => kh.Ten == "Xi Nhan Wave TNT BLOCKX G2 ZEN 1").ToList();
             var beg = be.Where(kh=>kh.KyXuatNhap.XuatNhap == true).ToList();
+            var begsanxuat = be.Where(kh => kh.KyXuatNhap.XuatNhap == false && kh.IdDoiTra == 1).ToList();
             var begin = beg.Where(kh=> kh.IdDoiTra == 1).ToList();
             var daban = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1).ToList();
             var DaBanTikTok = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1 && kh.KyXuatNhap.IdSan == 2 && kh.KyXuatNhap.KhachLe == true).ToList();
@@ -150,8 +151,9 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             {
                 ViewBag.TongtraBH = kytrabaohanhct.Sum(kh=>kh.SoLuong);
             }
-            var dsx= ViewBag.daban + ViewBag.TongXiNhanGen1Tek + ViewBag.TongXiNhanGen1MauDaXuat
-                                + ViewBag.DaTraHangKhachLeLoi + ViewBag.TongtraBH;
+            //var dsx= ViewBag.daban + ViewBag.TongXiNhanGen1Tek + ViewBag.TongXiNhanGen1MauDaXuat
+            //                    + ViewBag.DaTraHangKhachLeLoi + ViewBag.TongtraBH;
+            var dsx = begsanxuat.Sum(kh => kh.SoLuong);
             ViewBag.DaSanXuat=dsx;
             //Vẽ đồ thị pie
             Session["daban"] = modeldaban;

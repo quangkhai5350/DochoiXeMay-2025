@@ -29,14 +29,15 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         public ActionResult ListThuChiTeK()
         {
             Session["requestUri"] = "/Admin/ThuChi/ListThuChiTeK";
+            ViewBag.IdHT = new SelectList(dbc.HinhThucTCs.Where(kh=>kh.SuDung==true).ToList(), "Id", "TenHT");
             return View();
         }
-        public ActionResult GetListThuChiTek(string tu, string den,string TC,string TNO,string strk, int PageNo = 0, int PageSize = 8)
+        public ActionResult GetListThuChiTek(string tu, string den,string TC,string TNO,string strk, int httc=0, int PageNo = 0, int PageSize = 8)
         {
             strk = strk.ToLower().Trim();
             List<ChiTietTC> modelTong = new List<ChiTietTC>();
-            modelTong = Data.ThuChiData.ChiTietTCDBTEK(dbc, strk, TC,TNO, tu, den);
-            var model = new Data.ThuChiData().getThuChiTek(PageNo, PageSize, strk, TC,TNO, tu, den);
+            modelTong = Data.ThuChiData.ChiTietTCDBTEK(dbc, strk,httc, TC,TNO, tu, den);
+            var model = new Data.ThuChiData().getThuChiTek(PageNo, PageSize, strk,httc, TC,TNO, tu, den);
 
             //var uid = int.Parse(Session["UserId"].ToString());
             ViewBag.ChitietTCTEK = model;
@@ -79,11 +80,18 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
 
             return PartialView();
         }
-        public ActionResult GetPageCountThuChiTek(string tu,string den,string TC,string TNO,string Keyword, int PageSize = 8)
+        public ActionResult GetPageCountThuChiTek(string tu,string den,string TC,string TNO,string Keyword,int httc=0, int PageSize = 8)
         {
-            var num = new Data.ThuChiData().GetPageCountThuChiTek(Keyword,TC,TNO,tu,den);
+            var num = new Data.ThuChiData().GetPageCountThuChiTek(Keyword,httc,TC,TNO,tu,den);
             var pageCount = Math.Ceiling(1.0 * num / PageSize);
             return Json(pageCount, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult HinhThucThuChi()
+        {
+            var IdHT = dbc.HinhThucTCs.
+                            Select(kh => new { id = kh.Id, ten = kh.TenHT });
+
+            return Json(IdHT, JsonRequestBehavior.AllowGet);
         }
         [HttpGet]
         public ActionResult InsertThuChi()

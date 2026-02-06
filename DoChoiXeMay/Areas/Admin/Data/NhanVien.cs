@@ -1,6 +1,7 @@
 ﻿using DoChoiXeMay.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -12,6 +13,9 @@ namespace DoChoiXeMay.Areas.Admin.Data
     public class NhanVien
     {
         Model1 _context;
+        static String ToiGC = ConfigurationManager.AppSettings["ToiGC"];
+        static String ChieuGC = ConfigurationManager.AppSettings["ChieuGC"];
+            static String SangGC = ConfigurationManager.AppSettings["SangGC"];
         public NhanVien()
         {
             _context = new Model1();
@@ -135,7 +139,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 {
                     //Chưa diem danh tang ca, nhưng đã hoàn thành buổi chiều==>bắt đầu tăng ca 5
                     ////chưa đến 6 h chiều, không cho check
-                    if (h < 18)
+                    if (h < float.Parse(ToiGC))
                     {
                         //////var kqq = UpdateGioCongDiemDanh(giocong, 4);
                         //////if (kqq) return 4;
@@ -157,7 +161,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 {
                     //Chưa diem danh tang ca, đã hoàn thành buổi sáng ==> bắt đầu chiều 3
                     ////chưa đến 1 h chiều, không cho check
-                    if (h < 13)
+                    if (h < float.Parse(ChieuGC))
                     {
                         //////var kqq = UpdateGioCongDiemDanh(giocong, 2);
                         //////if (kqq) return 2;
@@ -216,11 +220,11 @@ namespace DoChoiXeMay.Areas.Admin.Data
                     if (h < 12)
                     {
                         model.GioVaoSang = new DateTime(model.Year, model.Month, model.Day, h, m, s);
-                    }else if (h >= 12 && h < 18)
+                    }else if (h >= float.Parse(ChieuGC) && h < float.Parse(ToiGC))
                     {
                         model.GioVaoChieu = new DateTime(model.Year, model.Month, model.Day, h, m, s);
                     }
-                    else //Tăng Ca chiều bắt đầu lúc 18h
+                    else //Tăng Ca chiều bắt đầu lúc 18h ==>ToiGC
                     {
                         model.GioVaoTangCa = new DateTime(model.Year, model.Month, model.Day, h, m, s);
                     }

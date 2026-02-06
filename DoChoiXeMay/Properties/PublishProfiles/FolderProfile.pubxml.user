@@ -4,13 +4,22 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 -->
 <Project>
   <PropertyGroup>
+<<<<<<< HEAD
+    <_PublishTargetUrl>D:\PublishWebDoChoiXe</_PublishTargetUrl>
+    <History>True|2026-02-06T03:58:27.0541910Z||;True|2026-01-30T11:24:16.5693168+07:00||;True|2026-01-29T16:07:11.3902915+07:00||;True|2026-01-19T14:45:39.6720345+07:00||;True|2026-01-19T14:45:10.7568461+07:00||;True|2026-01-14T10:46:23.5898544+07:00||;True|2026-01-06T11:18:04.8331058+07:00||;True|2026-01-02T16:23:14.3444892+07:00||;True|2026-01-02T16:05:11.9638601+07:00||;True|2025-12-23T10:23:49.8237074+07:00||;True|2025-12-22T16:27:20.2142810+07:00||;True|2025-12-22T16:26:28.2524001+07:00||;True|2025-12-22T15:39:45.8981377+07:00||;True|2025-12-18T16:39:41.9981690+07:00||;True|2025-12-16T14:56:45.3978139+07:00||;True|2025-12-14T19:16:11.6892995+07:00||;True|2025-12-12T16:03:50.1500047+07:00||;True|2025-12-12T10:47:55.6522938+07:00||;True|2025-12-09T14:18:47.2649900+07:00||;True|2025-12-03T15:57:25.9224919+07:00||;True|2025-12-03T15:49:59.1015733+07:00||;True|2025-12-01T10:07:29.6858075+07:00||;True|2025-12-01T09:37:24.0375980+07:00||;True|2025-11-28T10:07:59.1209492+07:00||;True|2025-11-25T15:27:53.5258465+07:00||;True|2025-11-24T16:09:51.3746798+07:00||;True|2025-08-28T19:52:22.5360722+07:00||;True|2025-08-28T19:30:42.3367945+07:00||;</History>
+=======
     <_PublishTargetUrl>E:\pulishwebTechZone</_PublishTargetUrl>
     <History>True|2026-01-30T06:22:09.2714414Z||;True|2026-01-30T11:24:16.5693168+07:00||;True|2026-01-29T16:07:11.3902915+07:00||;True|2026-01-19T14:45:39.6720345+07:00||;True|2026-01-19T14:45:10.7568461+07:00||;True|2026-01-14T10:46:23.5898544+07:00||;True|2026-01-06T11:18:04.8331058+07:00||;True|2026-01-02T16:23:14.3444892+07:00||;True|2026-01-02T16:05:11.9638601+07:00||;True|2025-12-23T10:23:49.8237074+07:00||;True|2025-12-22T16:27:20.2142810+07:00||;True|2025-12-22T16:26:28.2524001+07:00||;True|2025-12-22T15:39:45.8981377+07:00||;True|2025-12-18T16:39:41.9981690+07:00||;True|2025-12-16T14:56:45.3978139+07:00||;True|2025-12-14T19:16:11.6892995+07:00||;True|2025-12-12T16:03:50.1500047+07:00||;True|2025-12-12T10:47:55.6522938+07:00||;True|2025-12-09T14:18:47.2649900+07:00||;True|2025-12-03T15:57:25.9224919+07:00||;True|2025-12-03T15:49:59.1015733+07:00||;True|2025-12-01T10:07:29.6858075+07:00||;True|2025-12-01T09:37:24.0375980+07:00||;True|2025-11-28T10:07:59.1209492+07:00||;True|2025-11-25T15:27:53.5258465+07:00||;True|2025-11-24T16:09:51.3746798+07:00||;True|2025-08-28T19:52:22.5360722+07:00||;True|2025-08-28T19:30:42.3367945+07:00||;</History>
+>>>>>>> upstream/master
     <LastFailureDetails />
   </PropertyGroup>
   <ItemGroup>
     <File Include="App_Data/SoTruyCap.txt">
+<<<<<<< HEAD
+      <publishTime>02/06/2026 10:51:49</publishTime>
+=======
       <publishTime>01/30/2026 13:11:54</publishTime>
+>>>>>>> upstream/master
     </File>
     <File Include="Areas/Admin/Content/css/animate.css">
       <publishTime>08/26/2025 16:18:31</publishTime>
@@ -763,7 +772,11 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/31/2025 00:35:50</publishTime>
     </File>
     <File Include="Areas/Admin/Views/ThongKe/Index.cshtml">
+<<<<<<< HEAD
+      <publishTime>02/05/2026 15:16:53</publishTime>
+=======
       <publishTime>11/11/2025 21:00:26</publishTime>
+>>>>>>> upstream/master
     </File>
     <File Include="Areas/Admin/Views/ThongKe/NVLTonKho.cshtml">
       <publishTime>10/25/2025 00:20:46</publishTime>
@@ -784,7 +797,11 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>08/26/2025 16:38:22</publishTime>
     </File>
     <File Include="Areas/Admin/Views/ThuChi/ListThuChiTeK.cshtml">
+<<<<<<< HEAD
+      <publishTime>02/06/2026 10:30:49</publishTime>
+=======
       <publishTime>10/16/2025 23:20:59</publishTime>
+>>>>>>> upstream/master
     </File>
     <File Include="Areas/Admin/Views/ThuChi/LoadOneXuatNhap.cshtml">
       <publishTime>10/21/2025 23:31:03</publishTime>
@@ -811,7 +828,11 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>12/14/2025 15:01:24</publishTime>
     </File>
     <File Include="Areas/Admin/Views/XuatNhap/UpdateKyXNUser.cshtml">
+<<<<<<< HEAD
+      <publishTime>02/06/2026 10:53:56</publishTime>
+=======
       <publishTime>12/14/2025 15:01:24</publishTime>
+>>>>>>> upstream/master
     </File>
     <File Include="Areas/Admin/Views/XuatNhap/UpdateSerialXN.cshtml">
       <publishTime>10/23/2025 21:20:32</publishTime>
@@ -826,10 +847,17 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>08/26/2025 16:18:31</publishTime>
     </File>
     <File Include="bin/DoChoiXeMay.dll">
+<<<<<<< HEAD
+      <publishTime>02/06/2026 10:54:49</publishTime>
+    </File>
+    <File Include="bin/DoChoiXeMay.pdb">
+      <publishTime>02/06/2026 10:54:49</publishTime>
+=======
       <publishTime>01/30/2026 13:22:07</publishTime>
     </File>
     <File Include="bin/DoChoiXeMay.pdb">
       <publishTime>01/30/2026 13:22:07</publishTime>
+>>>>>>> upstream/master
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>06/17/2024 03:46:24</publishTime>
@@ -1486,7 +1514,11 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>08/26/2025 16:18:31</publishTime>
     </File>
     <File Include="Web.config">
+<<<<<<< HEAD
+      <publishTime>02/06/2026 10:58:25</publishTime>
+=======
       <publishTime>01/30/2026 13:22:07</publishTime>
+>>>>>>> upstream/master
     </File>
   </ItemGroup>
 </Project>
