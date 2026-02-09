@@ -148,7 +148,32 @@ namespace DoChoiXeMay.Controllers
             ViewBag.phantramTonkhoT = (100 * float.Parse(Session["TonKhoXiNhanGen1TekT"].ToString()) / float.Parse(dsx.ToString())).ToString("#0.00");
             ViewBag.phantramTonkhoK = (100 * float.Parse(Session["TonKhoXiNhanGen1TekK"].ToString()) / float.Parse(dsx.ToString())).ToString("#0.00");
             ViewBag.phantramMauDaXuat = (100 * float.Parse(Session["MauDaXuat"].ToString()) / float.Parse(dsx.ToString())).ToString("#0.00");
-
+            //mới ss theo dabannamht = 12 tháng và năm trước
+            //if (nam > 2025)
+            //{
+            //    int thanght = DateTime.Now.Month;
+            //    int namc = nam - 1;
+            //    for (int j = 1; j < 12; j++)
+            //    {
+            //        if (Session["DaBantht" + j.ToString()] != null)
+            //        {
+            //            Session.Remove("DaBantht" + j.ToString());
+            //        }
+            //        if (Session["DaBantc" + j.ToString()] != null)
+            //        {
+            //            Session.Remove("DaBantc" + j.ToString());
+            //        }
+            //    }
+            //    for (int i = 1; i < 12; i++)
+            //    {
+            //        var dabanthangtht = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1
+            //            && kh.KyXuatNhap.NgayAuto.Year == nam && kh.KyXuatNhap.NgayAuto.Month == i).ToList();
+            //        Session["DaBantht" + i.ToString()] = dabanthangtht == null ? 0 : dabanthangtht.Sum(kh => kh.SoLuong);
+            //        var dabanthangtc = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1
+            //            && kh.KyXuatNhap.NgayAuto.Year == namc && kh.KyXuatNhap.NgayAuto.Month == i).ToList();
+            //        Session["DaBantc" + i.ToString()] = dabanthangtc == null ? 0 : dabanthangtc.Sum(kh => kh.SoLuong);
+            //    }
+            //}
             return PartialView();
         }
         public ActionResult GetListKyXNTeK(string ngay = "", string strk = "", int idLHXN = 0, int IdSan = 0, int Iddoitra = 0, int PageNo = 0, int PageSize = 8, int UserId = 0)
