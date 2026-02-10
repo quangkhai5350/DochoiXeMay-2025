@@ -47,6 +47,11 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             double ChiTKThuLien = new Data.ThuChiData().TongbyHTvaThuChi(modelTong, 5, false);
             ViewBag.ChiTKThuLien = String.Format(new CultureInfo("vi-VN"), "{0:#,##0}", ChiTKThuLien);
             //new 21 thang 9
+            double ThuTKBaoNhung = new Data.ThuChiData().TongbyHTvaThuChi(modelTong, 6, true);
+            ViewBag.ThuTKBaoNhung = String.Format(new CultureInfo("vi-VN"), "{0:#,##0}", ThuTKBaoNhung);
+            double ChiTKBaoNhung = new Data.ThuChiData().TongbyHTvaThuChi(modelTong, 6, false);
+            ViewBag.ChiTKBaoNhung = String.Format(new CultureInfo("vi-VN"), "{0:#,##0}", ChiTKBaoNhung);
+            //new 10/02/2026
             double ThuTK = new Data.ThuChiData().TongbyHTvaThuChi(modelTong, 1, true);
             ViewBag.ThuTK = String.Format(new CultureInfo("vi-VN"), "{0:#,##0}", ThuTK);
             double ChiTK = new Data.ThuChiData().TongbyHTvaThuChi(modelTong, 1, false);
@@ -68,14 +73,17 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ViewBag.NoPhaiTra = String.Format(new CultureInfo("vi-VN"), "{0:#,##0}", NoPhaiTra);
             
             double conlaiTKThuLien = ThuTKThuLien - ChiTKThuLien;
+            double conlaiTKBaoNhung = ThuTKBaoNhung - ChiTKBaoNhung;
             double conlaiTK = ThuTK - ChiTK;
             ViewBag.conlaiTKThuLien = String.Format(new CultureInfo("vi-VN"), "{0:#,##0}", conlaiTKThuLien);
+            ViewBag.conlaiTKBaoNhung = String.Format(new CultureInfo("vi-VN"), "{0:#,##0}", conlaiTKBaoNhung);
             ViewBag.conlaiTK = String.Format(new CultureInfo("vi-VN"), "{0:#,##0}", conlaiTK);
             double conlaiTienmat = ThuTienMat - ChiTienMat;
             ViewBag.conlaiTienmat = String.Format(new CultureInfo("vi-VN"), "{0:#,##0}", conlaiTienmat);
             double conlaiTKVCB = ThuTKVCB - ChiTKVCB;
             ViewBag.conlaiTKVCB = String.Format(new CultureInfo("vi-VN"), "{0:#,##0}", conlaiTKVCB);
-            double TTconlai = conlaiTK + conlaiTienmat + conlaiTKVCB + conlaiTKThuLien;
+
+            double TTconlai = conlaiTK + conlaiTienmat + conlaiTKVCB + conlaiTKThuLien +conlaiTKBaoNhung;
             ViewBag.TTconlai = String.Format(new CultureInfo("vi-VN"), "{0:#,##0}", TTconlai);
 
             return PartialView();
