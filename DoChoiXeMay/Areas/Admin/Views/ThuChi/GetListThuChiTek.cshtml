@@ -156,61 +156,75 @@
 
         </tbody>
         <tfoot>
+            
             <tr class="canhgiua">
-                <td colspan="2" style="color:chocolate">
+                <td colspan="5" style="color:chocolate">
                     TongThu Tiền Mặt: @ViewBag.ThuTienMat
                 </td>
-
-                <td colspan="2" style="color:chocolate">
+                <td colspan="4" style="color:chocolate">
                     TongChi Tiền Mặt: @ViewBag.ChiTienMat
                 </td>
-
-                <td style="color:chocolate">
-                    TongThu TKQK: @ViewBag.ThuTK
-                </td>
-                <td style="color:chocolate">
-                    TongChi TKQK: @ViewBag.ChiTK
-                </td>
-                <td colspan="3" style="color:chocolate">
-                    TongThu TK-Tek(VCB): @ViewBag.ThuTKVCB
-                </td>
-                <td colspan="2" style="color:chocolate">
-                    TongChi TK-Tek(VCB): @ViewBag.ChiTKVCB
-                </td>
-                <td colspan="4" style="color:crimson">
-                    Nợ Phải Trả: @ViewBag.NoPhaiTra
+                <td colspan="6" style="color:mediumblue">
+                    Tiền Mặt Còn Lại:@ViewBag.conlaiTienmat
                 </td>
             </tr>
             <tr class="canhgiua">
-                <td colspan="3" style="color:chocolate">
-                    TongChi TKThuLien: @ViewBag.ChiTKThuLien
+                <td colspan="5" style="color:chocolate">
+                    TongThu TKQK: @ViewBag.ThuTK
                 </td>
-                <td colspan="3" style="color:chocolate">
+                <td colspan="4" style="color:chocolate">
+                    TongChi TKQK: @ViewBag.ChiTK
+                </td>
+                <td colspan="6" style="color:mediumblue">
+                    TKQK Còn Lại:@ViewBag.conlaiTK
+                </td>
+            </tr>
+            <tr class="canhgiua">
+                <td colspan="5" style="color:chocolate">
+                    TongThu TK-Tek(VCB): @ViewBag.ThuTKVCB
+                </td>
+                <td colspan="4" style="color:chocolate">
+                    TongChi TK-Tek(VCB): @ViewBag.ChiTKVCB
+                </td>
+                <td colspan="6" style="color:mediumblue">
+                    TK-Tek(VCB) Còn Lại:@ViewBag.conlaiTKVCB
+                </td>
+            </tr>
+
+
+            <tr class="canhgiua">
+                <td colspan="5" style="color:chocolate">
                     TongThu TKThuLien: @ViewBag.ThuTKThuLien
                 </td>
-                <td colspan="4" style="color:mediumblue">
+                <td colspan="4" style="color:chocolate">
+                    TongChi TKThuLien: @ViewBag.ChiTKThuLien
+                </td>
+                <td colspan="6" style="color:mediumblue">
                     TKThuLien Còn Lại:@ViewBag.conlaiTKThuLien
                 </td>
             </tr>
             <tr class="canhgiua">
-                <td colspan="4" style="color:mediumblue">
-                    Tiền Mặt Còn Lại:@ViewBag.conlaiTienmat
+                <td colspan="5" style="color:chocolate">
+                    TongThu TKBaoNhung: @ViewBag.ThuTKBaoNhung
                 </td>
-
-                <td style="color:mediumblue">
-                    TKQK Còn Lại:@ViewBag.conlaiTK
+                <td colspan="4" style="color:chocolate">
+                    TongChi TKBaoNhung: @ViewBag.ChiTKBaoNhung
                 </td>
-                <td style="font-size: 20px; color: magenta">
-                    Tổng Tiền Còn Lại: @ViewBag.TTconlai
+                <td colspan="6" style="color:mediumblue">
+                    TKBaoNhung Còn Lại:@ViewBag.conlaiTKBaoNhung
                 </td>
-                <td colspan="4" style="color:mediumblue">
-                    TK-Tek(VCB) Còn Lại:@ViewBag.conlaiTKVCB
+            </tr>
+            <tr class="canhgiua">
+                <td colspan="4" style="color: crimson">
+                    Nợ Phải Trả: @ViewBag.NoPhaiTra
                 </td>
                 <td colspan="5" style="color: crimson">
                     Nợ Phải Thu:@ViewBag.NoPhaiThu
                 </td>
+                <td colspan="7" style="font-size: 20px; color: magenta">
+                    Tổng Tiền Còn Lại: @ViewBag.TTconlai
+                </td>
             </tr>
-
         </tfoot>
 
     </table>
