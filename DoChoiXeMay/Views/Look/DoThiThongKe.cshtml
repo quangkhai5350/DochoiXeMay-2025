@@ -47,6 +47,8 @@ else
 <input id="DaBanTikTok" value="@ViewBag.DaBanTikTok" hidden />
 <input id="DaBanShopee" value="@ViewBag.DaBanShopee" hidden />
 <input id="DaBanLeNSan" value="@ViewBag.DaBanLeNSan" hidden />
+@*11 tháng 2 năm 2026*@
+
 
 <div id="chartContainer" style="height: 300px; width: 100%;"></div>
 <div style="text-align:center">
@@ -54,7 +56,7 @@ else
     <h4>Hàng Không Lỗi ==> đưa vào tồn kho, sử dụng lại.</h4>
 </div>
 <div id="chartContainer3" style="height: 300px; width: 100%;margin-top:20px"></div>
-
+<div id="chartContainer4" style="height: 300px; width: 100%;margin-top:20px"></div>
 <script>
     DothiXN();
     function DothiXN() {
@@ -62,7 +64,6 @@ else
         const Cdaban = $("#daban").val()
         const CTongtraBH = $("#TongtraBH").val()
         const CDaTraHangKhachLeLoi = $("#DaTraHangKhachLeLoi").val()
-        //const CTonKhoXiNhanGen1Tek = $("#TonKhoXiNhanGen1Tek").val()
         const CTonKhoXiNhanGen1TekT = $("#TonKhoXiNhanGen1TekT").val()
         const CTonKhoXiNhanGen1TekK = $("#TonKhoXiNhanGen1TekK").val()
         const CMauDaXuat = $("#MauDaXuat").val()
@@ -200,6 +201,97 @@ else
                 e.dataSeries.visible = true;
             }
             e.chart3.render();
+        }
+        ///11thang2 năm 2026
+        const YearHT = @Session["YearHT"].ToString();
+        const YearC = @Session["YearC"].ToString();
+        var chart4 = new CanvasJS.Chart("chartContainer4", {
+            exportEnabled: true,
+            animationEnabled: true,
+            title: {
+                text: "Thống Kê TNT BLOCKX G2 ZEN 1 Theo Tháng " + YearC + " - " + YearHT
+            },
+            subtitles: [{
+                text: YearC + ": Blue  -  " + YearHT +": Red"
+            }],
+            axisX: {
+                title: ""
+            },
+            axisY: {
+                title: "ZEN 1 - " + YearC,
+                titleFontColor: "#4F81BC",
+                lineColor: "#61bc4f",
+                labelFontColor: "#61bc4f",
+                tickColor: "#4F81BC",
+                includeZero: true
+            },
+            axisY2: {
+                title: "ZEN 1 - " + YearHT,
+                titleFontColor: "#C0504E",
+                lineColor: "#C0504E",
+                labelFontColor: "#C0504E",
+                tickColor: "#C0504E",
+                includeZero: true
+            },
+            toolTip: {
+                shared: true
+            },
+            legend: {
+                cursor: "pointer",
+                itemclick: toggleDataSeries
+            },
+            data: [{
+                type: "column",
+                name: YearC+"",
+                showInLegend: true,
+                yValueFormatString: "#,##0.#",
+                dataPoints: [
+                    { label: YearC + "-Th1-" + YearHT, y: @Session["DaBantc1"] },
+
+                    { label: "-Th2-", y: @Session["DaBantc2"] },
+                    { label: "-Th3-", y: @Session["DaBantc3"] },
+                    { label: "-Th4-", y: @Session["DaBantc4"] },
+                    { label: "-Th5-", y: @Session["DaBantc5"] },
+                    { label: "-Th6-", y: @Session["DaBantc6"] },
+                    { label: "-Th7-", y: @Session["DaBantc7"] },
+                    { label: "-Th8-", y: @Session["DaBantc8"] },
+                    { label: "-Th9-", y: @Session["DaBantc9"] },
+                    { label: "-Th10-", y: @Session["DaBantc10"] },
+                    { label: "-Th11-", y: @Session["DaBantc11"] },
+                    { label: "-Th12-", y: @Session["DaBantc12"] },
+                ]
+            },
+            {
+                type: "column",
+                name: YearHT+"",
+                //axisYType: "secondary",
+                showInLegend: true,
+                yValueFormatString: "#,##0.#",
+                dataPoints: [
+                    { label: YearC + "-Th1-" + YearHT, y: @Session["DaBantht1"] },
+                    { label: "-Th2-", y: @Session["DaBantht2"] },
+                    { label: "-Th3-", y: @Session["DaBantht3"] },
+                    { label: "-Th4-", y: @Session["DaBantht4"] },
+                    { label: "-Th5-", y: @Session["DaBantht5"] },
+                    { label: "-Th6-", y: @Session["DaBantht6"] },
+                    { label: "-Th7-", y: @Session["DaBantht7"] },
+                    { label: "-Th8-", y: @Session["DaBantht8"] },
+                    { label: "-Th9-", y: @Session["DaBantht9"] },
+                    { label: "-Th10-", y: @Session["DaBantht10"] },
+                    { label: "-Th11-", y: @Session["DaBantht11"] },
+                    { label: "-Th12-", y: @Session["DaBantht12"] },
+                ]
+            }]
+        });
+        chart4.render();
+
+        function toggleDataSeriess(e) {
+            if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                e.dataSeries.visible = false;
+            } else {
+                e.dataSeries.visible = true;
+            }
+            e.chart4.render();
         }
     }
 </script>
