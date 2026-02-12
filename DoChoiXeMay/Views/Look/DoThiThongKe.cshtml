@@ -55,8 +55,8 @@ else
     <span style="background-color:black;color:white">Khách lẻ trả hàng không lỗi @Session["Year"]: @ViewBag.DaTraHangKhachLe</span>
     <h4>Hàng Không Lỗi ==> đưa vào tồn kho, sử dụng lại.</h4>
 </div>
-<div id="chartContainer3" style="height: 300px; width: 100%;margin-top:20px"></div>
-<div id="chartContainer4" style="height: 300px; width: 100%;margin-top:20px"></div>
+<div id="chartContainer3" style="height: 300px; width: 100%;margin-top:30px"></div>
+<div id="chartContainer4" style="height: 300px; width: 100%;margin-top:30px"></div>
 <script>
     DothiXN();
     function DothiXN() {
@@ -258,7 +258,7 @@ else
                     { label: "-Th9-", y: @Session["DaBantc9"] },
                     { label: "-Th10-", y: @Session["DaBantc10"] },
                     { label: "-Th11-", y: @Session["DaBantc11"] },
-                    { label: "-Th12-", y: @Session["DaBantc12"] },
+                    { label: YearC + "-Th12-" + YearHT, y: @Session["DaBantc12"] },
                 ]
             },
             {
@@ -279,7 +279,7 @@ else
                     { label: "-Th9-", y: @Session["DaBantht9"] },
                     { label: "-Th10-", y: @Session["DaBantht10"] },
                     { label: "-Th11-", y: @Session["DaBantht11"] },
-                    { label: "-Th12-", y: @Session["DaBantht12"] },
+                    { label: YearC + "-Th12-" + YearHT, y: @Session["DaBantht12"] },
                 ]
             }]
         });
