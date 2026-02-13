@@ -1,18 +1,20 @@
 ﻿using DoChoiXeMay.Areas.Admin.Data;
 using DoChoiXeMay.Filters;
 using DoChoiXeMay.Models;
+using DoChoiXeMay.Utils;
+using MaHoa_GiaiMa_TaiKhoan;
+using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.Entity;
 using System.Linq;
+using System.Reflection;
+using System.Security.Cryptography;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
-using DoChoiXeMay.Utils;
-using System.Data.Entity;
-using MaHoa_GiaiMa_TaiKhoan;
-using Microsoft.Ajax.Utilities;
-using System.Security.Cryptography;
-using System.Reflection;
+using System.Xml.Linq;
 
 namespace DoChoiXeMay.Areas.Admin.Controllers
 {
@@ -221,7 +223,14 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 }
                 model.NgayAuto = DateTime.Now;
                 dbc.Entry(model).State = EntityState.Modified;
-                dbc.SaveChanges();
+                var ktkq= dbc.SaveChanges();
+                //new ChiTietSLHangHoas 13thang2
+                //Chua co thi Insert, co roi thi update
+                string DBname = ConfigurationManager.AppSettings["DBname"];
+                if (ktkq > 0)
+                {
+                    new TonKhoData().AutoChiTietSLHangHoa(model.Id, model.SoLuong, DBname);
+                }
                 //SMS hệ thống
                 string sms = " đã Update hình sp: " + model.Ten + " bảng HH, Thành Công.";
                 new Data.UserData().SMSvaNhatKy(dbc, Session["UserId"].ToString(), Session["UserName"].ToString()

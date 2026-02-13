@@ -1,6 +1,7 @@
 ﻿using DoChoiXeMay.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
@@ -356,7 +357,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
             }   
             return null;    
         }
-        public static bool GhibangHangHoa(Model1 db,string Ten, int Hangsx, int Mau, int Size, int soluong, double gianhap, string hinh1,string hinh2, string hinh3)
+        public static bool GhibangHangHoa(Model1 db,string DBname, string Ten, int Hangsx, int Mau, int Size, int soluong, double gianhap, string hinh1,string hinh2, string hinh3)
         {
             //dùng cho kỳ xuất (thu hồi)
             try
@@ -372,8 +373,15 @@ namespace DoChoiXeMay.Areas.Admin.Data
                     model.Hinh2 = hinh2 !=""?hinh2:model.Hinh2;
                     model.Hinh3 = hinh3 !=""?hinh3:model.Hinh3;
                     db.Entry(model).State = EntityState.Modified;
-                    db.SaveChanges();
-                    return true;
+                    var kq= db.SaveChanges();
+                    //ChiTietSLHangHoas 13 thang 2
+                    //Chua co thi Insert, co roi thi update
+                    if (kq > 0)
+                    {
+                        new TonKhoData().AutoChiTietSLHangHoa(model.Id, model.SoLuong, DBname);
+                        return true;
+                    }
+                    return false;
                 }
                 else
                 {
@@ -392,8 +400,18 @@ namespace DoChoiXeMay.Areas.Admin.Data
                     model.IDSize = Size;
                     model.GhiChu = "";
                     db.HangHoas.Add(model);
-                    db.SaveChanges();
-                    return true;
+                    var kq= db.SaveChanges();
+                    //ChiTietSLHangHoas 13 thang 2
+                    if (kq > 0)
+                    {
+                        var modelktSPTeK = db.HangHoas.FirstOrDefault(kh => kh.IDMF == 5 && kh.IDKy == 0 && kh.Id == model.Id);
+                        if (modelktSPTeK !=null)
+                        {
+                            new TonKhoData().InsertChiTietSLHangHoa(model.Id, model.SoLuong, "Auto", DBname);
+                        }
+                        return true;
+                    }
+                    return false;
                 }
             }
             catch (Exception e)
@@ -402,7 +420,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 return false;
             }
         }
-        public static bool XuatHangHoa(Model1 db, string Ten, int Hangsx = 0, int Mau = 0, int Size = 0, int soluong = 0)
+        public static bool XuatHangHoa(Model1 db,string DBname, string Ten, int Hangsx = 0, int Mau = 0, int Size = 0, int soluong = 0)
         {
             //dùng cho kỳ nhập (thu hồi)
             try
@@ -411,25 +429,22 @@ namespace DoChoiXeMay.Areas.Admin.Data
                                                 && kh.IDColor == Mau && kh.IDSize == Size);
                 if (modelhh != null)
                 {
-                    if(modelhh.SoLuong == soluong)//delete
-                    {
-                        var model = db.HangHoas.Find(modelhh.Id);
-                        //Xoa hinh cu
-                        bool xoahinhcu1 = XstringAdmin.Xoahinhcu("imgxuatnhap/", model.Hinh1);
-                        bool xoahinhcu2 = XstringAdmin.Xoahinhcu("imgxuatnhap/", model.Hinh2);
-                        bool xoahinhcu3 = XstringAdmin.Xoahinhcu("imgxuatnhap/", model.Hinh3);
-                        db.HangHoas.Remove(modelhh);
-                        db.SaveChanges();
-                        return true;
-                    }
-                    if(modelhh.SoLuong > soluong)//UPDATE SOLUONG
+                    //Cancel code delete hang hoa
+                    if(modelhh.SoLuong >= soluong)//UPDATE SOLUONG
                     {
                         var model = db.HangHoas.Find(modelhh.Id);
                         model.SoLuong = model.SoLuong - soluong;
                         model.NgayAuto = DateTime.Now;
                         db.Entry(model).State = EntityState.Modified;
-                        db.SaveChanges();
-                        return true;
+                        var kq = db.SaveChanges();
+                        //ChiTietSLHangHoas 13 thang 2
+                        //Chua co thi Insert, co roi thi update
+                        if (kq > 0)
+                        {
+                            new TonKhoData().AutoChiTietSLHangHoa(model.Id, model.SoLuong, DBname);
+                            return true;
+                        }
+                        return false;
                     }
                     if(modelhh.SoLuong < soluong)
                     {

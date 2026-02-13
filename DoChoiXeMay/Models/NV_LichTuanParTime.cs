@@ -55,7 +55,9 @@ namespace DoChoiXeMay.Models
         public bool ChieuCN { get; set; }
 
         public bool ToiCN { get; set; }
+
         public int Year { get; set; }
+
         public DateTime Ngay { get; set; }
 
         public virtual NV_NhanVienTek NV_NhanVienTek { get; set; }

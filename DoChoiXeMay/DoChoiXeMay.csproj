@@ -177,6 +177,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\aspnet_getVisitors.cs" />
+    <Compile Include="Models\ChiTietSLHangHoa.cs" />
     <Compile Include="Models\ChiTietTC.cs" />
     <Compile Include="Models\ChiTietTonKho.cs" />
     <Compile Include="Models\ChitietXuatNhap.cs" />

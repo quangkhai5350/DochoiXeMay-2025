@@ -13,6 +13,7 @@ namespace DoChoiXeMay.Models
         }
 
         public virtual DbSet<aspnet_getVisitors> aspnet_getVisitors { get; set; }
+        public virtual DbSet<ChiTietSLHangHoa> ChiTietSLHangHoas { get; set; }
         public virtual DbSet<ChiTietTC> ChiTietTCs { get; set; }
         public virtual DbSet<ChiTietTonKho> ChiTietTonKhoes { get; set; }
         public virtual DbSet<ChitietXuatNhap> ChitietXuatNhaps { get; set; }
@@ -103,6 +104,12 @@ namespace DoChoiXeMay.Models
                 .HasMany(e => e.ChitietXuatNhaps)
                 .WithRequired(e => e.HangDoiTra)
                 .HasForeignKey(e => e.IdDoiTra)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<HangHoa>()
+                .HasMany(e => e.ChiTietSLHangHoas)
+                .WithRequired(e => e.HangHoa)
+                .HasForeignKey(e => e.IdHangHoa)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<HanhDong>()

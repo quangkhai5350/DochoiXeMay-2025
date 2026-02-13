@@ -104,7 +104,10 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         public ActionResult UpdateKyXNUser(int id)
         {
             var model = dbc.KyXuatNhaps.Find(id);
-            model.LuuKho = model.LuuKho.Trim();
+            if (model.LuuKho !=null)
+            {
+                model.LuuKho = model.LuuKho.Trim();
+            }
             ViewBag.IdMaTC = new SelectList(dbc.MaTCs.Where(kh => kh.SuDung == true && kh.XuatNhap == true), "Id", "GhiChu",model.IdMaTC);
             ViewBag.IdKyTonKho = new SelectList(dbc.KyTonKhoes.Where(kh => kh.SuDung == true && kh.HoanThanh==false).ToList(), "Id", "TenKy", model.IdKyTonKho);
             ViewBag.IdSan = new SelectList(dbc.SanThuongMais.Where(kh => kh.SuDung == true).ToList(), "Id", "TenSan",model.IdSan);
@@ -143,7 +146,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                             {
                                 for (int i = 0; i < modelct.Count(); i++)
                                 {
-                                    var kq = Data.XuatNhapData.XuatHangHoa(dbc, modelct[i].Ten, modelct[i].IDMF,
+                                    var kq = Data.XuatNhapData.XuatHangHoa(dbc,DBname, modelct[i].Ten, modelct[i].IDMF,
                                         modelct[i].IDColor, modelct[i].IDSize, modelct[i].SoLuong);
                                     if (kq == false)
                                     {
@@ -157,7 +160,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                             //ky nhập + vào, không cần kiểm tra
                             for (int i = 0; i < modelct.Count(); i++)
                             {
-                                var kq = Data.XuatNhapData.GhibangHangHoa(dbc, modelct[i].Ten, modelct[i].IDMF,
+                                var kq = Data.XuatNhapData.GhibangHangHoa(dbc,DBname, modelct[i].Ten, modelct[i].IDMF,
                                     modelct[i].IDColor, modelct[i].IDSize, modelct[i].SoLuong, modelct[i].Gianhap,
                                     modelct[i].Hinh1, modelct[i].Hinh2, modelct[i].Hinh3);
                                 var kqtonkho = Data.TonKhoData.UpdateCTKytonKho(dbc, modelct[i].KyXuatNhap.IdKyTonKho,
@@ -300,7 +303,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                                 var modelct = dbc.ChitietXuatNhaps.Where(kh => kh.IdKy == id).ToList();
                                 for (int i = 0; i < modelct.Count(); i++)
                                 {
-                                    var kq = Data.XuatNhapData.XuatHangHoa(dbc, modelct[i].Ten, modelct[i].IDMF,
+                                    var kq = Data.XuatNhapData.XuatHangHoa(dbc,DBname, modelct[i].Ten, modelct[i].IDMF,
                                         modelct[i].IDColor, modelct[i].IDSize, modelct[i].SoLuong);
                                     if (kq == false)
                                     {
@@ -330,7 +333,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                             var modelct = dbc.ChitietXuatNhaps.Where(kh => kh.IdKy == id).ToList();
                             for (int i = 0; i < modelct.Count(); i++)
                             {
-                                var kq = Data.XuatNhapData.GhibangHangHoa(dbc, modelct[i].Ten, modelct[i].IDMF,
+                                var kq = Data.XuatNhapData.GhibangHangHoa(dbc,DBname, modelct[i].Ten, modelct[i].IDMF,
                                     modelct[i].IDColor, modelct[i].IDSize, modelct[i].SoLuong, modelct[i].Gianhap,
                                     modelct[i].Hinh1, modelct[i].Hinh2, modelct[i].Hinh3);
                             }
@@ -895,7 +898,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                             {
                                 for (int i = 0; i < modelct.Count(); i++)
                                 {
-                                    var kqthuhoi = Data.XuatNhapData.XuatHangHoa(dbc, modelct[i].Ten, modelct[i].IDMF,
+                                    var kqthuhoi = Data.XuatNhapData.XuatHangHoa(dbc,DBname, modelct[i].Ten, modelct[i].IDMF,
                                         modelct[i].IDColor, modelct[i].IDSize, modelct[i].SoLuong);
                                 }
                             }
@@ -903,7 +906,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                             {
                                 for (int i = 0; i < modelct.Count(); i++)
                                 {
-                                    var kqthuhoi = Data.XuatNhapData.GhibangHangHoa(dbc, modelct[i].Ten, modelct[i].IDMF,
+                                    var kqthuhoi = Data.XuatNhapData.GhibangHangHoa(dbc,DBname, modelct[i].Ten, modelct[i].IDMF,
                                         modelct[i].IDColor, modelct[i].IDSize, modelct[i].SoLuong, modelct[i].Gianhap,
                                     modelct[i].Hinh1, modelct[i].Hinh2, modelct[i].Hinh3);
                                 }
