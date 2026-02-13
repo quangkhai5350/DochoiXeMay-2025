@@ -92,8 +92,6 @@ namespace DoChoiXeMay.Controllers
             {
                 ViewBag.TongtraBH = kytrabaohanhct.Sum(kh => kh.SoLuong);
             }
-            //var dsx = ViewBag.daban + ViewBag.TongXiNhanGen1Tek + ViewBag.TongXiNhanGen1MauDaXuat
-            //                    + ViewBag.DaTraHangKhachLeLoi + ViewBag.TongtraBH;
             var dsx = begsanxuat.Sum(kh => kh.SoLuong);
             var TonkhoT = dbc.HangHoas.Where(kh => kh.Id == 56).Sum(kh => kh.SoLuong);
             var TonkhoK = dbc.HangHoas.Where(kh => kh.Id == 55).Sum(kh => kh.SoLuong);
@@ -144,36 +142,50 @@ namespace DoChoiXeMay.Controllers
             ViewBag.phantramdaban = (100 * float.Parse(modeldaban.ToString()) / float.Parse(dsx.ToString())).ToString("#0.00");
             ViewBag.phantramTraHangLeLoi = (100 * float.Parse(Session["DaTraHangKhachLeLoi"].ToString()) / float.Parse(dsx.ToString())).ToString("#0.00");
             ViewBag.phantramTongtraBH = (100 * float.Parse(Session["TongtraBH"].ToString()) / float.Parse(dsx.ToString())).ToString("#0.00");
-            //ViewBag.phantramTonkho = (100 * float.Parse(Session["TonKhoXiNhanGen1Tek"].ToString()) / float.Parse(Session["daSX"].ToString())).ToString("#0.00");
             ViewBag.phantramTonkhoT = (100 * float.Parse(Session["TonKhoXiNhanGen1TekT"].ToString()) / float.Parse(dsx.ToString())).ToString("#0.00");
             ViewBag.phantramTonkhoK = (100 * float.Parse(Session["TonKhoXiNhanGen1TekK"].ToString()) / float.Parse(dsx.ToString())).ToString("#0.00");
             ViewBag.phantramMauDaXuat = (100 * float.Parse(Session["MauDaXuat"].ToString()) / float.Parse(dsx.ToString())).ToString("#0.00");
             //mới ss theo dabannamht = 12 tháng và năm trước
-            //if (nam > 2025)
-            //{
-            //    int thanght = DateTime.Now.Month;
-            //    int namc = nam - 1;
-            //    for (int j = 1; j < 12; j++)
-            //    {
-            //        if (Session["DaBantht" + j.ToString()] != null)
-            //        {
-            //            Session.Remove("DaBantht" + j.ToString());
-            //        }
-            //        if (Session["DaBantc" + j.ToString()] != null)
-            //        {
-            //            Session.Remove("DaBantc" + j.ToString());
-            //        }
-            //    }
-            //    for (int i = 1; i < 12; i++)
-            //    {
-            //        var dabanthangtht = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1
-            //            && kh.KyXuatNhap.NgayAuto.Year == nam && kh.KyXuatNhap.NgayAuto.Month == i).ToList();
-            //        Session["DaBantht" + i.ToString()] = dabanthangtht == null ? 0 : dabanthangtht.Sum(kh => kh.SoLuong);
-            //        var dabanthangtc = begin.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1
-            //            && kh.KyXuatNhap.NgayAuto.Year == namc && kh.KyXuatNhap.NgayAuto.Month == i).ToList();
-            //        Session["DaBantc" + i.ToString()] = dabanthangtc == null ? 0 : dabanthangtc.Sum(kh => kh.SoLuong);
-            //    }
-            //}
+            int namht = 0;
+            int namc = 0;
+            int thanght = DateTime.Now.Month;
+            if (nam > 2025)
+            {
+                namht = nam;
+            }else if (nam == 2025)
+            {
+                namht = 2026;
+            }
+            else
+            {
+                namht=DateTime.Now.Year;
+            }
+            namc = namht - 1;
+            Session["YearHT"]=namht;
+            Session["YearC"] = namc;
+            var daban2 = dbc.ChitietXuatNhaps.Where(kh => kh.Ten == "Xi Nhan Wave TNT BLOCKX G2 ZEN 1"
+                && kh.KyXuatNhap.XuatNhap == true && kh.IdDoiTra == 1).ToList();
+            for (int j = 1; j < 12; j++)
+                {
+                    if (Session["DaBantht" + j.ToString()] != null)
+                    {
+                        Session.Remove("DaBantht" + j.ToString());
+                    }
+                    if (Session["DaBantc" + j.ToString()] != null)
+                    {
+                        Session.Remove("DaBantc" + j.ToString());
+                    }
+                }
+                for (int i = 1; i <= 12; i++)
+                {
+                    var dabanthangtht = daban2.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1
+                        && kh.KyXuatNhap.NgayAuto.Year == namht && kh.KyXuatNhap.NgayAuto.Month == i).ToList();
+                    Session["DaBantht" + i.ToString()] = dabanthangtht == null ? 0 : dabanthangtht.Sum(kh => kh.SoLuong);
+                    var dabanthangtc = daban2.Where(kh => kh.KyXuatNhap.IdLoaiHangXN == 1
+                        && kh.KyXuatNhap.NgayAuto.Year == namc && kh.KyXuatNhap.NgayAuto.Month == i).ToList();
+                    Session["DaBantc" + i.ToString()] = dabanthangtc == null ? 0 : dabanthangtc.Sum(kh => kh.SoLuong);
+                }
+            
             return PartialView();
         }
         public ActionResult GetListKyXNTeK(string ngay = "", string strk = "", int idLHXN = 0, int IdSan = 0, int Iddoitra = 0, int PageNo = 0, int PageSize = 8, int UserId = 0)
