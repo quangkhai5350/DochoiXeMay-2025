@@ -59,6 +59,8 @@ namespace DoChoiXeMay.Controllers
         public ActionResult UpdateKyXNTeKMaNa(int id)
         {
             var model = dbc.KyXuatNhaps.Find(id);
+            model.LuuKho=model.LuuKho.Trim();
+            model.TenKy=model.TenKy.Trim();
             return View(model);
         }
         [HttpPost]

@@ -104,6 +104,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         public ActionResult UpdateKyXNUser(int id)
         {
             var model = dbc.KyXuatNhaps.Find(id);
+            model.LuuKho = model.LuuKho.Trim();
             ViewBag.IdMaTC = new SelectList(dbc.MaTCs.Where(kh => kh.SuDung == true && kh.XuatNhap == true), "Id", "GhiChu",model.IdMaTC);
             ViewBag.IdKyTonKho = new SelectList(dbc.KyTonKhoes.Where(kh => kh.SuDung == true && kh.HoanThanh==false).ToList(), "Id", "TenKy", model.IdKyTonKho);
             ViewBag.IdSan = new SelectList(dbc.SanThuongMais.Where(kh => kh.SuDung == true).ToList(), "Id", "TenSan",model.IdSan);
