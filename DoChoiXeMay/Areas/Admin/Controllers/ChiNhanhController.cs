@@ -87,7 +87,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         {
             var model = dbc.Ser_XuatSN_CN.Find(Id);
             ViewBag.IdKyxuat = new SelectList(dbc.KyXuatNhaps.Where(kh => kh.AdminXNPUSH == true && kh.UPush==true && kh.KhachLe==false && kh.XuatNhap==true), "Id", "TenKy", model.IdKyxuat);
-            ViewBag.IdChiNhanh = new SelectList(dbc.Ser_ChiNhanh.Where(kh => kh.Sudung == true), "Id", "TenChiNhanh", model.IdChiNhanh);
+            ViewBag.IdChiNhanh = new SelectList(dbc.Ser_ChiNhanh.Where(kh => kh.Sudung == true), "Id", "DaiDien", model.IdChiNhanh);
             return View(model);
         }
         [HttpPost]
@@ -123,7 +123,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             catch (Exception ex) {
                 string message = ex.Message;
                 ViewBag.IdKyxuat = new SelectList(dbc.KyXuatNhaps.Where(kh => kh.AdminXNPUSH == true && kh.UYeuCauThuHoi == false), "Id", "TenKy", model.IdKyxuat);
-                ViewBag.IdChiNhanh = new SelectList(dbc.Ser_ChiNhanh.Where(kh => kh.Sudung == true), "Id", "TenChiNhanh", model.IdChiNhanh);
+                ViewBag.IdChiNhanh = new SelectList(dbc.Ser_ChiNhanh.Where(kh => kh.Sudung == true), "Id", "DaiDien", model.IdChiNhanh);
                 ModelState.AddModelError("", "Update Thất Bại !!!!" + message);
                 return View(model);
             }
