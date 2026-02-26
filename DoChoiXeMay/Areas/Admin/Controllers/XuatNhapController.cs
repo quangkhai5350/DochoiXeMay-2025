@@ -231,6 +231,21 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                         }
                         Session["ThongBaoXuatNhapUser"] = "Thay đổi yêu cầu DayXNTek(Không có TC) thành công.";
                     }
+                    //Xuất Serial Chi Nhánh 25/02/2026
+                    if(XN.IdSan==1 & XN.XuatNhap==true && XN.KhachLe == false)
+                    {
+                        //đêìn tro lai trang truoc do 
+                        Ser_XuatSN_CN model = new Ser_XuatSN_CN();
+                        model.UserId = uid;
+                        model.SoLuong = 0;
+                        model.DaAdd = 0;
+                        model.NgayXuat = DateTime.Now;
+                        model.IdKyxuat = XN.Id;
+                        model.IdChiNhanh = 1;
+                        model.Ghichu = "Tạo auto,Cần update ChiNhanh";
+                        dbc.Ser_XuatSN_CN.Add(model);
+                        dbc.SaveChanges();
+                    }
                     //tro lai trang truoc do 
                     var requestUri = Session["requestUri"] as string;
                     if (requestUri != null)
