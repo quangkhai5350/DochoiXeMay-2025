@@ -165,7 +165,7 @@
     $("#SelectW").change(function () {
         var week = $('#SelectW').val();
         var chek = $('#CheckTHT').val();
-        if (week < chek) {
+        if (parseInt(week) < parseInt(chek)) {
             $('#alich').addClass("disabled");
 
         } else {
