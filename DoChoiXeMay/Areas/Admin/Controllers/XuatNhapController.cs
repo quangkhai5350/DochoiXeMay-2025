@@ -550,6 +550,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             Session["idctxn"] = id;
             var model = dbc.ChitietXuatNhaps.Find(new Guid(id));
             ViewBag.IdDoiTra = new SelectList(dbc.HangDoiTras.ToList(), "Id", "Ten", model.IdDoiTra);
+            ViewBag.IDColor = new SelectList(dbc.Colors.ToList(), "Id", "TenColor", model.IDColor);
             return View(model);
         }
         [HttpPost]
@@ -560,9 +561,10 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             {
                 var ctxn = dbc.ChitietXuatNhaps.Find(new Guid(Session["idctxn"].ToString()));
                 ctxn.SoLuong = model.SoLuong;
-                ctxn.SerialSP = model.SerialSP;
-                ctxn.SerialHop = model.SerialHop;
+                ctxn.SerialSP = model.SerialSP.Trim();
+                ctxn.SerialHop = model.SerialHop.Trim();
                 ctxn.IdDoiTra = model.IdDoiTra;
+                ctxn.IDColor = model.IDColor;
                 dbc.Entry(ctxn).State = EntityState.Modified;
                 var kq=dbc.SaveChanges();
                 
@@ -592,6 +594,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 string loi = ex.ToString();
                 ModelState.AddModelError("", "Update Thất Bại !!!! Co Loi Xay Ra.");
                 ViewBag.IdDoiTra = new SelectList(dbc.HangDoiTras.ToList(), "Id", "Ten", model.IdDoiTra);
+                ViewBag.IDColor = new SelectList(dbc.Colors.ToList(), "Id", "TenColor", model.IDColor);
             }
             return View(model);
         }

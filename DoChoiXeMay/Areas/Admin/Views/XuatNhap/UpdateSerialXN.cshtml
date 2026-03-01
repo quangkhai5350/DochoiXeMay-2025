@@ -21,7 +21,6 @@
                 @Html.HiddenFor(kh => kh.Hinh2)
                 @Html.HiddenFor(kh => kh.Hinh3)
                 @Html.HiddenFor(kh => kh.IDMF)
-                @Html.HiddenFor(kh => kh.IDColor)
                 @Html.HiddenFor(kh => kh.IDSize)
                 @Html.HiddenFor(kh => kh.GhiChu)
                 @Html.HiddenFor(kh => kh.DaActive)
@@ -42,19 +41,25 @@
                         <div class="row" style="width:95%;padding-left:15px">
                             <p>SerialHop </p>
                             <span class="icon-case"><i class="glyphicon glyphicon-expand"></i></span>
-                            @Html.TextBoxFor(kh => kh.SerialHop, new { @class = "form-control", style = "height: 40px", @required = true })
+                            @Html.TextBoxFor(kh => kh.SerialHop, new { @class = "form-control", style = "height: 40px"})
 
                         </div>
                         <div class="row" style="width:95%;padding-left:15px">
                             <p>SerialSP </p>
                             <span class="icon-case"><i class="glyphicon glyphicon-expand"></i></span>
-                            @Html.TextBoxFor(kh => kh.SerialSP, new { @class = "form-control", style = "height: 40px", @required = true })
+                            @Html.TextBoxFor(kh => kh.SerialSP, new { @class = "form-control", style = "height: 40px"})
 
                         </div>
+
                         <div class="row" style="width:95%;padding-left:15px">
                             <p>Trả Hàng (Không lỗi => thêm 1 vào bảng HH)</p>
                             <span class="icon-case"><i class="glyphicon glyphicon-expand"></i></span>
                             @Html.DropDownList("IdDoiTra", null, new { style = "width: 100%; height: 40px" })
+                        </div>
+                        <div class="row" style="width:95%;padding-left:15px">
+                            <p>Color</p>
+                            <span class="icon-case"><i class="glyphicon glyphicon-expand"></i></span>
+                            @Html.DropDownList("IDColor", null, new { style = "width: 100%; height: 40px" })
 
                         </div>
                         <div class="row" style="margin-top:10px">

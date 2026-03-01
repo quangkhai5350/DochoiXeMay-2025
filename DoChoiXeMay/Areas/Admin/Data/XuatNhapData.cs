@@ -160,7 +160,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 tungay = DateTime.Parse(ngay);
             }
             
-            var ctxnbySerial = db.ChitietXuatNhaps.FirstOrDefault(kh=>kh.SerialHop.ToLower() == strk || kh.SerialSP.ToLower() == strk);
+            var ctxnbySerial = db.ChitietXuatNhaps.FirstOrDefault(kh=>kh.SoLuong == 1 && (kh.SerialHop.ToLower() == strk || kh.SerialSP.ToLower() == strk));
             
             if (ctxnbySerial == null)//Không phải Serial thì dò theo tên
             {

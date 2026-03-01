@@ -209,62 +209,68 @@
                         }
                     </td>
                     <td>
-                        @if (Item.KhachLe)
+                        @foreach (DoChoiXeMay.Models.ChitietXuatNhap ct in Chitiet)
                         {
-                            foreach (DoChoiXeMay.Models.ChitietXuatNhap ct in Chitiet)
+                            var KT = new XuatNhapData().kiemtraNgayCTXN(ct.Id.ToString());
+                            if (KT > 30 && ct.IdDoiTra == 1 && Item.KhachLe == true)
                             {
-                                var KT = new XuatNhapData().kiemtraNgayCTXN(ct.Id.ToString());
-                                if (KT > 30 && ct.IdDoiTra == 1)
+                                var KThetbh = new XuatNhapData().kiemtrahethanBH(ct.Id.ToString());
+                                if (KThetbh)
                                 {
-                                    var KThetbh = new XuatNhapData().kiemtrahethanBH(ct.Id.ToString());
-                                    if (KThetbh)
-                                    {
-                                        <p style="height:40px">
-                                            <span style="background-color:bisque">Hết hạn bảo hành</span>
-                                            /<a hidden title="@ct.Id" class="btn btn-danger" onclick="return confirm('Update Serial ??')"
-                                                href="/Admin/XuatNhap/UpdateSerialXN/@ct.Id"><span class="glyphicon glyphicon-backward" style="font-size:10px"></span></a>
-                                        </p>
-                                    }
-                                    else
-                                    {
-                                        <p style="height:40px">
-                                            <span>Hết hạn(30 ngày)</span>
-                                            /<a hidden title="@ct.Id" class="btn btn-danger" onclick="return confirm('Update Serial ??')"
-                                                href="/Admin/XuatNhap/UpdateSerialXN/@ct.Id"><span class="glyphicon glyphicon-backward" style="font-size:10px"></span></a>
-                                        </p>
-                                    }
+                                    <p style="height:40px">
+                                        <span style="background-color:bisque">Hết hạn bảo hành</span>
+                                        /<a hidden title="@ct.Id" class="btn btn-danger" onclick="return confirm('Update Serial ??')"
+                                            href="/Admin/XuatNhap/UpdateSerialXN/@ct.Id"><span class="glyphicon glyphicon-backward" style="font-size:10px"></span></a>
+                                    </p>
                                 }
-                                else if (KT <= 30 && ct.IdDoiTra == 1)
+                                else
                                 {
-                                    if (Session["quyen"].ToString() == "1")
-                                    {
-                                        <p style="height:70px">
-                                            <a title="@ct.Id" class="btn btn-danger" onclick="return confirm('Khách Lẻ Muốn trả Hàng ??')"
-                                               href="/Admin/XuatNhap/TraHangChiTietXNbyID/@ct.Id"><span class="glyphicon glyphicon-backward" style="font-size:10px"></span></a>
-                                            /<a hidden title="@ct.Id" class="btn btn-danger" onclick="return confirm('Update Serial ??')"
-                                                href="/Admin/XuatNhap/UpdateSerialXN/@ct.Id"><span class="glyphicon glyphicon-backward" style="font-size:10px"></span></a>
-                                        </p>
-                                    }
-                                    else
-                                    {
-                                        <span></span>
-                                    }
-
+                                    <p style="height:40px">
+                                        <span>Hết hạn(30 ngày)</span>
+                                        /<a hidden title="@ct.Id" class="btn btn-danger" onclick="return confirm('Update Serial ??')"
+                                            href="/Admin/XuatNhap/UpdateSerialXN/@ct.Id"><span class="glyphicon glyphicon-backward" style="font-size:10px"></span></a>
+                                    </p>
                                 }
-                                else if (ct.IdDoiTra > 1)
+                            }
+                            else if (KT <= 30 && ct.IdDoiTra == 1 && Item.KhachLe == true)
+                            {
+                                if (Session["quyen"].ToString() == "1")
                                 {
                                     <p style="height:70px">
-                                        <span style="background-color:bisque">@ct.HangDoiTra.Ten</span>
-                                        <span>
-                                            /<a hidden title="@ct.Id" class="btn btn-danger" onclick="return confirm('Update Serial ??')"
-                                                href="/Admin/XuatNhap/UpdateSerialXN/@ct.Id"><span class="glyphicon glyphicon-backward" style="font-size:10px"></span></a>
-                                        </span>
+                                        <a title="@ct.Id" class="btn btn-danger" onclick="return confirm('Khách Lẻ Muốn trả Hàng ??')"
+                                           href="/Admin/XuatNhap/TraHangChiTietXNbyID/@ct.Id"><span class="glyphicon glyphicon-backward" style="font-size:10px"></span></a>
+                                        /<a hidden title="@ct.Id" class="btn btn-danger" onclick="return confirm('Update Serial ??')"
+                                            href="/Admin/XuatNhap/UpdateSerialXN/@ct.Id"><span class="glyphicon glyphicon-backward" style="font-size:10px"></span></a>
                                     </p>
+                                }
+                                else
+                                {
+                                    <span></span>
                                 }
 
                             }
+                            else if (ct.IdDoiTra > 1 && Item.KhachLe == true)
+                            {
+                                <p style="height:70px">
+                                    <span style="background-color:bisque">@ct.HangDoiTra.Ten</span>
+                                    <span>
+                                        /<a hidden title="@ct.Id" class="btn btn-danger" onclick="return confirm('Update Serial ??')"
+                                            href="/Admin/XuatNhap/UpdateSerialXN/@ct.Id"><span class="glyphicon glyphicon-backward" style="font-size:10px"></span></a>
+                                    </span>
+                                </p>
+                            }
+                            else if (ct.IdDoiTra == 1 && Item.KhachLe == false)
+                            {
+                                <p style="height:70px">
+                                    <span>
+                                        /<a hidden title="@ct.Id" class="btn btn-danger" onclick="return confirm('Update Serial ??')"
+                                            href="/Admin/XuatNhap/UpdateSerialXN/@ct.Id"><span class="glyphicon glyphicon-backward" style="font-size:10px"></span></a>
+                                    </span>
+                                </p>
+                            }
+
                         }
-                                </td>
+                    </td>
                     <td>
                         @foreach (DoChoiXeMay.Models.ChitietXuatNhap ct in Chitiet)
                         {
