@@ -463,6 +463,7 @@
     <Content Include="Content\js\plugins.js" />
     <Content Include="Content\js\SmoothScroll.js" />
     <Content Include="Content\Login_Style.css" />
+    <Content Include="Content\Sound\aler2026.mp3" />
     <Content Include="favicon.jpg" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
