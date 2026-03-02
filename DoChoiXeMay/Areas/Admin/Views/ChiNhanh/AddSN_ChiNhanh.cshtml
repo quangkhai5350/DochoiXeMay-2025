@@ -8,12 +8,12 @@
 <link href="~/Areas/Admin/Content/css/Info_Style.css" rel="stylesheet" />
 <script src="~/Areas/Admin/Content/jquery2.0.3.min.js"></script>
 <div class="container">
-
+    <audio id="notificationSound" src="~/Content/Sound/aler2026.mp3" preload="auto"></audio>
     @using (Html.BeginForm("ChiNhanh", "AddSN_ChiNhanh", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
-        
+
         <fieldset class="info_form">
-            
+
             <div class="container">
                 <span class="pull-right label label-success" style="color:white;font-family:monospace">
                     @Html.ValidationSummary()
@@ -165,6 +165,11 @@
     function myfff() {
         document.getElementById("GridHtml").value = $("#Grid").html();
         //val($("#Grid").html());
+    }
+    playAlertSound()
+    function playAlertSound() {
+        var audio = document.getElementById("notificationSound");
+        audio.play();
     }
 </script>
 
