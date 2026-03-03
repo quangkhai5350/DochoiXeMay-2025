@@ -9,6 +9,8 @@
 <script src="~/Areas/Admin/Content/jquery2.0.3.min.js"></script>
 <div class="container">
     <audio id="notificationSound" src="~/Content/Sound/aler2026.mp3" preload="auto"></audio>
+    <input type="text" id="texxt" value="" style="height:40px">
+    <button onclick="textsl()">click</button>
     @using (Html.BeginForm("ChiNhanh", "AddSN_ChiNhanh", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
 
@@ -170,6 +172,10 @@
     function playAlertSound() {
         var audio = document.getElementById("notificationSound");
         audio.play();
+    }
+    function textsl() {
+        var tt = $('#texxt').val();
+        alert(tt.length)
     }
 </script>
 
