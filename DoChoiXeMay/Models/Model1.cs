@@ -23,6 +23,7 @@ namespace DoChoiXeMay.Models
         public virtual DbSet<HangHoa> HangHoas { get; set; }
         public virtual DbSet<HanhDong> HanhDongs { get; set; }
         public virtual DbSet<HinhThucTC> HinhThucTCs { get; set; }
+        public virtual DbSet<Kho> Khoes { get; set; }
         public virtual DbSet<KhuVuc> KhuVucs { get; set; }
         public virtual DbSet<KyTonKho> KyTonKhoes { get; set; }
         public virtual DbSet<KyXuatNhap> KyXuatNhaps { get; set; }
@@ -106,12 +107,6 @@ namespace DoChoiXeMay.Models
                 .HasForeignKey(e => e.IdDoiTra)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<HangHoa>()
-                .HasMany(e => e.ChiTietSLHangHoas)
-                .WithRequired(e => e.HangHoa)
-                .HasForeignKey(e => e.IdHangHoa)
-                .WillCascadeOnDelete(false);
-
             modelBuilder.Entity<HanhDong>()
                 .HasMany(e => e.NoteKythuats)
                 .WithRequired(e => e.HanhDong)
@@ -122,6 +117,18 @@ namespace DoChoiXeMay.Models
                 .HasMany(e => e.ChiTietTCs)
                 .WithRequired(e => e.HinhThucTC)
                 .HasForeignKey(e => e.IdHT)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Kho>()
+                .HasMany(e => e.HangHoas)
+                .WithRequired(e => e.Kho)
+                .HasForeignKey(e => e.IdKho)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Kho>()
+                .HasMany(e => e.KyXuatNhaps)
+                .WithRequired(e => e.Kho)
+                .HasForeignKey(e => e.IdKho)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<KhuVuc>()

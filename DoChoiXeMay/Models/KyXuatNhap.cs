@@ -66,6 +66,8 @@ namespace DoChoiXeMay.Models
 
         public bool KhachLe { get; set; }
 
+        public int IdKho { get; set; }
+
         public int IdKyTonKho { get; set; }
 
         public int IdSan { get; set; }
@@ -79,6 +81,8 @@ namespace DoChoiXeMay.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChitietXuatNhap> ChitietXuatNhaps { get; set; }
+
+        public virtual Kho Kho { get; set; }
 
         public virtual KhuVuc KhuVuc { get; set; }
 

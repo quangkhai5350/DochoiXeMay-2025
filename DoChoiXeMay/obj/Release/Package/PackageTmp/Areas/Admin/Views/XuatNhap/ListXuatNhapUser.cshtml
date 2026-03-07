@@ -78,8 +78,13 @@
                                                     <p style="font-size:small">Chiết khấu thì (-), Ship và VAT thì (+)</p>
                                                 </div>
                                             </div>
-                                            <div class="row" style="text-align:center;margin-top:15px">
-                                                <input id="TenKy" placeholder="Tên Kỳ xuất nhập ..." name="TenKy" style="margin-right:10px;width:100%" required />
+                                            <div class="row" style="margin-top:15px">
+                                                <div class="col-md-8">
+                                                    <input id="TenKy" placeholder="Tên Kỳ xuất nhập ..." name="TenKy" style="margin-right: 10px; width: 100%; height: 30px" required />
+                                                </div>
+                                                <div class="col-md-4">
+                                                    @Html.DropDownList("IdKho", null, new { style = "width: 100%; height: 30px" })
+                                                </div>
                                             </div>
                                             <div class="row" style="margin-top:10px">
                                                 <span>Khu Vực</span>
@@ -147,9 +152,9 @@
                                             </div>
 
                                         </div>
-                                    }
+                                        }
                                 </div>
-                            </div>
+                                </div>
 
                         </div>
                     </div>

@@ -23,6 +23,16 @@
 
                 </h1>
                 <div class="contentform">
+                    <div class="row">
+                        <div class="pull-right label label-success" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: 						bold; font-size: large">
+                            @Session["ThongBaotaolohang"]
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="pull-right label label-warning" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: 						bold; font-size: large">
+                            @Session["ThongBaoLoitaolohang"]
+                        </div>
+                    </div>
                     <div class="form-group">
                         <div class="row" style="width:95%;padding-left:15px">
                             <p>Tổng số Serial cần add là: @Session["SoLuong"]</p>

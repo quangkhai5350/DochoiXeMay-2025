@@ -53,7 +53,8 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ViewBag.IdSan = new SelectList(dbc.SanThuongMais.Where(kh => kh.SuDung == true).ToList(), "Id", "TenSan");
             ViewBag.IdKhuVuc = new SelectList(dbc.KhuVucs.ToList(), "Id", "SatNhap", 36);
             ViewBag.IdLoaiHangXN = new SelectList(dbc.KyXuatNhap_LoaiHang.ToList(), "Id", "TenLoai", 1);
-            
+            ViewBag.IdKho = new SelectList(dbc.Khoes.ToList(), "Id", "TenKho", 1);
+
             Session["requestUri"] = "/Admin/XuatNhap/ListXuatNhapUser";
             ViewBag.TrongTon=dbc.HangHoas.Where(kh => kh.Id == 56).Sum(kh => kh.SoLuong);
             ViewBag.KhoiTon = dbc.HangHoas.Where(kh => kh.Id == 55).Sum(kh => kh.SoLuong);
@@ -110,6 +111,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             }
             ViewBag.IdMaTC = new SelectList(dbc.MaTCs.Where(kh => kh.SuDung == true && kh.XuatNhap == true), "Id", "GhiChu",model.IdMaTC);
             ViewBag.IdKyTonKho = new SelectList(dbc.KyTonKhoes.Where(kh => kh.SuDung == true && kh.HoanThanh==false).ToList(), "Id", "TenKy", model.IdKyTonKho);
+            ViewBag.IdKho = new SelectList(dbc.Khoes.ToList(), "Id", "TenKho", model.IdKho);
             ViewBag.IdSan = new SelectList(dbc.SanThuongMais.Where(kh => kh.SuDung == true).ToList(), "Id", "TenSan",model.IdSan);
             ViewBag.IdKhuVuc = new SelectList(dbc.KhuVucs.ToList(), "Id", "SatNhap",model.IdKhuVuc);
             ViewBag.IdLoaiHangXN = new SelectList(dbc.KyXuatNhap_LoaiHang.ToList(), "Id", "TenLoai", model.IdLoaiHangXN);
@@ -138,7 +140,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                             var kqktHH = Data.XuatNhapData.kiemtrasoluongHH(dbc, id);
                             if (kqktHH == false)
                             {
-                                Session["ThongBaoXuatNhapUser"] = "Có Lỗi xuất hàng !!! HH trong bảng HH không tồn tại hoặc không đủ số lượng.";
+                                Session["ThongBaoXuatNhapUser"] = "Có Lỗi xuất hàng !!! HH trong bảng HH không tồn tại hoặc Kho không đủ số lượng.";
                                 //tro lai trang truoc do
                                 return RedirectToAction("ListXuatNhapUser");
                             }
@@ -147,7 +149,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                                 for (int i = 0; i < modelct.Count(); i++)
                                 {
                                     var kq = Data.XuatNhapData.XuatHangHoa(dbc,DBname, modelct[i].Ten, modelct[i].IDMF,
-                                        modelct[i].IDColor, modelct[i].IDSize, modelct[i].SoLuong);
+                                        modelct[i].IDColor, modelct[i].IDSize, modelct[i].SoLuong, XN.IdKho);
                                     if (kq == false)
                                     {
                                         Session["ThongBaoXuatNhapUserct"] = "Có Lỗi xuất hàng: " + modelct[i].Ten + " không đủ đk để xuất!!!.";
@@ -162,7 +164,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                             {
                                 var kq = Data.XuatNhapData.GhibangHangHoa(dbc,DBname, modelct[i].Ten, modelct[i].IDMF,
                                     modelct[i].IDColor, modelct[i].IDSize, modelct[i].SoLuong, modelct[i].Gianhap,
-                                    modelct[i].Hinh1, modelct[i].Hinh2, modelct[i].Hinh3);
+                                    modelct[i].Hinh1, modelct[i].Hinh2, modelct[i].Hinh3, XN.IdKho);
                                 var kqtonkho = Data.TonKhoData.UpdateCTKytonKho(dbc, modelct[i].KyXuatNhap.IdKyTonKho,
                                     modelct[i].Ten, modelct[i].IDMF, modelct[i].IDColor, modelct[i].IDSize, modelct[i].SoLuong);
                                 
@@ -319,7 +321,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                                 for (int i = 0; i < modelct.Count(); i++)
                                 {
                                     var kq = Data.XuatNhapData.XuatHangHoa(dbc,DBname, modelct[i].Ten, modelct[i].IDMF,
-                                        modelct[i].IDColor, modelct[i].IDSize, modelct[i].SoLuong);
+                                        modelct[i].IDColor, modelct[i].IDSize, modelct[i].SoLuong,XN.IdKho);
                                     if (kq == false)
                                     {
                                         Session["ThongBaoXuatNhapTeKct"] = "Có Lỗi xuất hàng: " + modelct[i].Ten + " không đủ đk để xuất!!!.";
@@ -350,7 +352,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                             {
                                 var kq = Data.XuatNhapData.GhibangHangHoa(dbc,DBname, modelct[i].Ten, modelct[i].IDMF,
                                     modelct[i].IDColor, modelct[i].IDSize, modelct[i].SoLuong, modelct[i].Gianhap,
-                                    modelct[i].Hinh1, modelct[i].Hinh2, modelct[i].Hinh3);
+                                    modelct[i].Hinh1, modelct[i].Hinh2, modelct[i].Hinh3, XN.IdKho);
                             }
                             //Insert Nhật Ký
                             var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
@@ -439,6 +441,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     var model = dbc.ChiTietTCs.Find(XN.Id);
                     ViewBag.IdMaTC = new SelectList(dbc.MaTCs.Where(kh => kh.SuDung == true && kh.XuatNhap == true), "Id", "GhiChu", XN.IdMaTC);
                     ViewBag.IdKyTonKho = new SelectList(dbc.KyTonKhoes.Where(kh => kh.SuDung == true && kh.HoanThanh == false).ToList(), "Id", "TenKy", XN.IdKyTonKho);
+                    ViewBag.IdKho = new SelectList(dbc.Khoes.ToList(), "Id", "TenKho", XN.IdKho);
                     ViewBag.IdSan = new SelectList(dbc.SanThuongMais.Where(kh => kh.SuDung == true).ToList(), "Id", "TenSan", XN.IdSan);
                     ViewBag.IdKhuVuc = new SelectList(dbc.KhuVucs.ToList(), "Id", "SatNhap", XN.IdKhuVuc);
                     ViewBag.IdLoaiHangXN = new SelectList(dbc.KyXuatNhap_LoaiHang.ToList(), "Id", "TenLoai", XN.IdLoaiHangXN);
@@ -603,6 +606,8 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             var ky = dbc.KyXuatNhaps.Find(id);
             Session["TenKy"]=ky.TenKy;
             Session["IDKy"] = id;
+            Session["IdKho"] = ky.IdKho;
+            Session["TenKho"] = ky.Kho.TenKho;
             Session["xuatnhap"] = ky.XuatNhap==true?"Xuat":"Nhap";
             Session["KhachLe"] = ky.KhachLe == true ? "KhachLe" : "ĐaiLy";
             Session["CKphantram"] = ky.CKphantram;
@@ -614,29 +619,28 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ViewBag.IDSize = new SelectList(dbc.Sizes.OrderBy(kh => kh.Id), "Id", "TenSize",1);
             if(ky.XuatNhap==true && ky.KhachLe == true)
             {
-                ViewBag.NameSP = dbc.HangHoas.Where(kh=>kh.IDKy==0).DistinctBy(kh => kh.Ten);
+                ViewBag.NameSP = dbc.HangHoas.Where(kh=>kh.IDKy==0 && kh.IdKho==ky.IdKho).DistinctBy(kh => kh.Ten);
             }
             else
             {
-                ViewBag.NameSP = dbc.HangHoas.DistinctBy(kh => kh.Ten);
+                ViewBag.NameSP = dbc.HangHoas.Where(kh => kh.IdKho == ky.IdKho).DistinctBy(kh => kh.Ten);
             }
             return View();
         }
         [HttpPost]
         public ActionResult InsertChiTietXNbyKy(ChitietXuatNhap ctxn)
         {
+            var idkho = int.Parse(Session["IdKho"].ToString());
             ViewBag.IDMF = new SelectList(dbc.Manufacturers.Where(kh => kh.Sudung == true), "Id", "Name",5);
             ViewBag.IDColor = new SelectList(dbc.Colors.OrderByDescending(kh => kh.Id), "Id", "TenColor",7);
             ViewBag.IDSize = new SelectList(dbc.Sizes.OrderBy(kh => kh.Id), "Id", "TenSize",1);
-            ViewBag.NameSP = dbc.HangHoas.DistinctBy(kh => kh.Ten);
+            ViewBag.NameSP = dbc.HangHoas.Where(kh=>kh.IdKho==idkho)
+                                        .DistinctBy(kh => kh.Ten);
             if (Session["xuatnhap"] !=null && Session["KhachLe"] !=null && Session["xuatnhap"].ToString() == "Xuat" 
                 && Session["KhachLe"].ToString() == "KhachLe")
             {
-                ViewBag.NameSP = dbc.HangHoas.Where(kh => kh.IDKy == 0).DistinctBy(kh => kh.Ten);
-            }
-            else
-            {
-                ViewBag.NameSP = dbc.HangHoas.DistinctBy(kh => kh.Ten);
+                ViewBag.NameSP = dbc.HangHoas.Where(kh => kh.IDKy == 0 && kh.IdKho == idkho)
+                                                .DistinctBy(kh => kh.Ten);
             }
             //check trùng hàng cùng kỳ
             var Checkctxn = dbc.ChitietXuatNhaps.FirstOrDefault(kh => kh.IdKy == ctxn.IdKy && kh.Ten.ToLower().Trim() == ctxn.Ten.ToLower().Trim() && kh.IDMF == ctxn.IDMF
@@ -663,7 +667,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 else  /////Kỳ Xuất
                 {
                     var checkhh = dbc.HangHoas.FirstOrDefault(kh => kh.Ten.ToLower().Trim() == ctxn.Ten.ToLower().Trim() && kh.IDMF == ctxn.IDMF
-                                                    && kh.IDColor == ctxn.IDColor && kh.IDSize == ctxn.IDSize);
+                                     && kh.IDColor == ctxn.IDColor && kh.IDSize == ctxn.IDSize && kh.IdKho ==idkho);
                     if (checkhh != null)
                     {
                         if (checkhh.SoLuong >= ctxn.SoLuong)
@@ -917,7 +921,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                                 for (int i = 0; i < modelct.Count(); i++)
                                 {
                                     var kqthuhoi = Data.XuatNhapData.XuatHangHoa(dbc,DBname, modelct[i].Ten, modelct[i].IDMF,
-                                        modelct[i].IDColor, modelct[i].IDSize, modelct[i].SoLuong);
+                                        modelct[i].IDColor, modelct[i].IDSize, modelct[i].SoLuong,model.IdKho);
                                 }
                             }
                             else //kỳ xuất
@@ -926,7 +930,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                                 {
                                     var kqthuhoi = Data.XuatNhapData.GhibangHangHoa(dbc,DBname, modelct[i].Ten, modelct[i].IDMF,
                                         modelct[i].IDColor, modelct[i].IDSize, modelct[i].SoLuong, modelct[i].Gianhap,
-                                    modelct[i].Hinh1, modelct[i].Hinh2, modelct[i].Hinh3);
+                                    modelct[i].Hinh1, modelct[i].Hinh2, modelct[i].Hinh3,model.IdKho);
                                 }
                             }
                             
@@ -958,16 +962,18 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         }
         public ActionResult CheckHHTEK(string Tenhh = "", int Hangsx=0, int Mau = 0, int Size = 0)
         {
-            var araylistHH = Data.XuatNhapData.CheckHHTEKaotu(dbc,Tenhh, Hangsx, Mau, Size);
+            var idkho = int.Parse(Session["IdKho"].ToString());
+            var araylistHH = Data.XuatNhapData.CheckHHTEKaotu(dbc,Tenhh, Hangsx, Mau, Size,idkho);
             return Json(araylistHH, JsonRequestBehavior.AllowGet);
         }
         public ActionResult GetSerialSPbyBox(string str = "")
         {
-            
+            var idkho = int.Parse(Session["IdKho"].ToString());
             var ktser = dbc.ChitietXuatNhaps.FirstOrDefault(kh => kh.SerialHop == str && kh.IdDoiTra <4);
+            
             if (ktser==null)
             {
-                string ser = Data.XuatNhapData.GetSerialbySerial(dbc, str);
+                string ser = Data.XuatNhapData.GetSerialbySerial(dbc, str,idkho);
                 return Json(ser, JsonRequestBehavior.AllowGet);
             }
             else

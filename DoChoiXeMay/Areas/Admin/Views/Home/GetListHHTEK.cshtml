@@ -5,6 +5,7 @@
                 <th class="canhgiua" style="max-width: 15px">STT</th>
                 <th class="canhgiua">Tên Sản Phẩm</th>
                 <th class="canhgiua">Loại</th>
+                <th class="canhgiua">Kho</th>
                 <th class="canhgiua">Số Lượng</th>
                 <th class="canhgiua" style="width:230px">Giá Nhập Cuối</th>
 
@@ -43,6 +44,9 @@
                         {
                             <span>SP</span>
                         }
+                    </td>
+                    <td>
+                        <span>@Item.IdKho</span>
                     </td>
                     <td>@Item.SoLuong</td>
                     <td>@Html.FormatValue(Item.GiaNhap, "{0:#,###,###}")</td>

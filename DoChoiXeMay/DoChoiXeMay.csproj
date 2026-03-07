@@ -187,6 +187,7 @@
     <Compile Include="Models\HangHoa.cs" />
     <Compile Include="Models\HanhDong.cs" />
     <Compile Include="Models\HinhThucTC.cs" />
+    <Compile Include="Models\Kho.cs" />
     <Compile Include="Models\KhuVuc.cs" />
     <Compile Include="Models\KyTonKho.cs" />
     <Compile Include="Models\KyXuatNhap.cs" />

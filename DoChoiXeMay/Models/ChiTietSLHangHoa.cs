@@ -12,6 +12,7 @@ namespace DoChoiXeMay.Models
         public Guid Id { get; set; }
 
         public int IdHangHoa { get; set; }
+        public int IdKho { get; set; }
 
         public int SoLuong { get; set; }
 
@@ -19,7 +20,5 @@ namespace DoChoiXeMay.Models
 
         [StringLength(100)]
         public string GhiChu { get; set; }
-
-        public virtual HangHoa HangHoa { get; set; }
     }
 }

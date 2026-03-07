@@ -36,6 +36,8 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 p.NgayTao = DateTime.Now;
                 p.NgayUpdate = sp.NgayUpdate;
                 p.DaIn = false;
+                //Mặc định seri new tạo ra ở 311
+                p.IdKho = 1;
                 _context.Ser_sp.Add(p);
                 int kt = _context.SaveChanges();
                 if (kt > 0)

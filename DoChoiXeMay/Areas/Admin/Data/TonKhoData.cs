@@ -114,14 +114,14 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 return false;
             }
         }
-        //13thang2
-        public bool InsertChiTietSLHangHoa(int Idhh,int sl,string ghichu, string DBname)
+        //07/03/2026 thêm idkho
+        public bool InsertChiTietSLHangHoa(int Idhh,int sl,int idkho,string ghichu, string DBname)
         {
             try
             {
                 var Id = Guid.NewGuid();
                 string sql = "insert into [" + DBname + "TechZone].[dbo].[ChiTietSLHangHoa] " +
-                                            "values(N'" + Id.ToString() + "',"+Idhh+ ","+sl+ ",GETDATE(),N'" + ghichu + "')";
+                                            "values(N'" + Id.ToString() + "',"+Idhh+ "," + idkho + "," +sl+ ",GETDATE(),N'" + ghichu + "')";
                 var insert_SVL = _context.Database.ExecuteSqlCommand(sql);
                 return true;
             }
@@ -137,9 +137,10 @@ namespace DoChoiXeMay.Areas.Admin.Data
             try
             {
                 var update = _context.Database.ExecuteSqlCommand("update [" + DBname + "TechZone].[dbo].[ChiTietSLHangHoa] set " +
-                "IdHangHoa=@IdHangHoa,SoLuong=@SoLuong,NgayAuto=@NgayAuto,GhiChu=@GhiChu " +
+                "IdHangHoa=@IdHangHoa,IdKho=@IdKho,SoLuong=@SoLuong,NgayAuto=@NgayAuto,GhiChu=@GhiChu " +
                 "where Id=@Id",
                 new SqlParameter("@IdHangHoa", model.IdHangHoa),
+                new SqlParameter("@IdKho", model.IdKho),
                 new SqlParameter("@SoLuong", model.SoLuong),
                 new SqlParameter("@NgayAuto", model.NgayAuto),
                 new SqlParameter("@GhiChu", model.GhiChu),
@@ -161,20 +162,20 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 var modelktSPTeK = _context.HangHoas.FirstOrDefault(kh => kh.IDMF == 5 && kh.IDKy == 0 && kh.Id == idhh);
                 if (modelktSPTeK != null)
                 {
-                    var listct = _context.ChiTietSLHangHoas.FirstOrDefault(kh => kh.IdHangHoa == idhh);
+                    var listct = _context.ChiTietSLHangHoas.FirstOrDefault(kh => kh.IdHangHoa == idhh && kh.IdKho == modelktSPTeK.IdKho);
                     if (listct == null)
                     {
-                        var kqcthh = new TonKhoData().InsertChiTietSLHangHoa(idhh, soluong, "Auto", DBname);
+                        var kqcthh = new TonKhoData().InsertChiTietSLHangHoa(idhh, soluong, modelktSPTeK.IdKho, "Auto", DBname);
                     }
                     else if (listct != null && listct.SoLuong != soluong)
                     {
-                        var Max = _context.ChiTietSLHangHoas.Where(kh => kh.IdHangHoa == idhh)
+                        var Max = _context.ChiTietSLHangHoas.Where(kh => kh.IdHangHoa == idhh && kh.IdKho == modelktSPTeK.IdKho)
                                     .OrderByDescending(kh => kh.NgayAuto).Take(1).Single();
                         var dayyy = Max.NgayAuto.ToShortDateString();
                         if (dayyy != DateTime.Now.ToShortDateString())
                         {
                             //Qua ngay new thi them dong new
-                            var kqcthh = new TonKhoData().InsertChiTietSLHangHoa(idhh, soluong, "Auto", DBname);
+                            var kqcthh = new TonKhoData().InsertChiTietSLHangHoa(idhh, soluong, modelktSPTeK.IdKho, "Auto", DBname);
                         }
                         else
                         {

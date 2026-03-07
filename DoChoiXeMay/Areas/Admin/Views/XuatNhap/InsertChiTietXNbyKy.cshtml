@@ -16,7 +16,7 @@
 
                 <h1 class="info_header">
                     <span style="color:black">@Session["UserName"]</span>  Thêm mới hàng hóa cho kỳ <span style="color:black;text-decoration:underline double black ">
-                        @Session["xuatnhap"].ToString()/@Session["KhachLe"]
+                        @Session["xuatnhap"].ToString()/@Session["KhachLe"]/@Session["TenKho"]
                     </span>: @Session["TenKy"] 
                     <span class="pull-right label label-warning" style="color:white;font-family:monospace">
                         @Html.ValidationSummary()
@@ -274,7 +274,7 @@
             async: true,
             success: function (res) {
                 if (res == "Sold") {
-                    alert("Hàng đã bán.")
+                    alert("Hàng đã bán hoặc không có trong kho này!!!.")
                     $("#SerialSP").val(res);
                 } else {
                     $("#SerialSP").val(res);
