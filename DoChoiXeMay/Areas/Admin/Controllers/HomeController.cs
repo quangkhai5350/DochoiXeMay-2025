@@ -14,7 +14,9 @@ using System.Security.Cryptography;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
+using System.Web.Services.Description;
 using System.Xml.Linq;
+using static System.Net.WebRequestMethods;
 
 namespace DoChoiXeMay.Areas.Admin.Controllers
 {
@@ -303,6 +305,88 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 return Redirect(requestUri);
             }
             return RedirectToAction("ListUserTeK", "ThuChi");
+        }
+        public ActionResult ListKhoTek()
+        {
+            Session["requestUri"] = "/Admin/Home/ListKhoTek";
+            return View();
+        }
+        public ActionResult GetListKhoTek()
+        {
+            var model = dbc.Khoes.ToList();
+            ViewBag.GetListKhoTek = model;
+            return PartialView();
+        }
+        public ActionResult InsertKhoAuto()
+        {
+            try
+            {
+                Kho model = new Kho();
+                model.TenKho = "AutoKho";
+                model.GhiChu = "Make Auto";
+                model.SuDung = false;
+                model.Ngay = DateTime.Now;
+                dbc.Khoes.Add(model);
+                dbc.SaveChanges();
+                Session["ThongBaoListKhoTek"] = "Tạo mới kho Auto, cần update để sử dụng.";
+                return View("ListKhoTek");
+            }
+            catch (Exception ex)
+            {
+                string loi = ex.ToString();
+                Session["ThongBaoListKhoTek"] = loi;
+                return View("ListKhoTek");
+            }
+        }
+        public ActionResult DeleteKho(int id)
+        {
+            try
+            {
+                var kho = dbc.Khoes.Find(id);
+                dbc.Khoes.Remove(kho);
+                dbc.SaveChanges();
+                Session["ThongBaoListKhoTek"] = "Xóa Kho " + kho.TenKho + " thành công.";
+                return View("ListKhoTek");
+            }
+            catch (Exception ex)
+            {
+                string loi = ex.ToString();
+                Session["ThongBaoListKhoTek"] = loi;
+                return View("ListKhoTek");
+            }
+            
+        }
+        public ActionResult UpdateKho(int id)
+        {
+            var model = dbc.Khoes.Find(id);
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult UpdateKho(Kho model)
+        {
+            try
+            {
+                dbc.Entry(model).State = EntityState.Modified;
+                dbc.SaveChanges();
+                Session["ThongBaoListKhoTek"] = "Update Kho Id=" + model.Id + ", thành công.";
+                //SMS hệ thống
+                var sms = "Update kho Id=" + model.Id + ", thành công.";
+                new Data.UserData().SMSvaNhatKy(dbc, Session["UserId"].ToString(), Session["UserName"].ToString()
+                    , Session["quyen"].ToString(), sms);
+                //tro lai trang truoc do 
+                var requestUri = Session["requestUri"] as string;
+                if (requestUri != null)
+                {
+                    return Redirect(requestUri);
+                }
+                return View("ListKhoTek");
+            }
+            catch (Exception ex)
+            {
+                string loi = ex.ToString();
+                ModelState.AddModelError("", "Update Thất Bại !!!!" + loi);
+                return View(model);
+            }
         }
     }
 }
