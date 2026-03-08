@@ -1,4 +1,9 @@
-﻿<div class="table-responsive">
+﻿<style>
+    .tomau {
+        background-color: darkkhaki;
+    }
+</style>
+<div class="table-responsive">
     <table class="table table-hover table-striped" style="margin-bottom:0">
         <thead>
             <tr class="canhgiua" style="background-color: #00bcd4">
@@ -18,6 +23,16 @@
         <tbody style="border: 2px solid black !important">
             @foreach (DoChoiXeMay.Models.HangHoa Item in ViewBag.HHTEK)
             {
+                var cl = "";
+                var ht = DateTime.Now;
+                if (Item.IdKho == 1)
+                {
+                    cl = "";
+                }
+                else
+                {
+                    cl = "tomau";
+                }
                 <tr class="canhgiua" style="border-bottom: 2px solid black !important">
                     <td>@Item.GhiChu</td>
                     <td>
@@ -45,8 +60,8 @@
                             <span>SP</span>
                         }
                     </td>
-                    <td>
-                        <span>@Item.IdKho</span>
+                    <td class="@cl">
+                        <span>@Item.Kho.TenKho</span>
                     </td>
                     <td>@Item.SoLuong</td>
                     <td>@Html.FormatValue(Item.GiaNhap, "{0:#,###,###}")</td>

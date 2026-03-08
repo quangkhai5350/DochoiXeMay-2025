@@ -6,6 +6,8 @@
             <tr class="canhgiua" style="background-color: #00bcd4">
                 <th class="canhgiua">Id</th>
                 <th class="canhgiua">UserName</th>
+                <th class="canhgiua">Kho</th>
+                <th class="canhgiua">ChuyenKho</th>
                 <th class="canhgiua">Kỳ Xuất</th>
                 <th class="canhgiua">Chi Nhánh</th>
                 <th class="canhgiua">SoLuong</th>
@@ -21,6 +23,7 @@
             <tbody style="border: 2px solid black !important">
                 @foreach (DoChoiXeMay.Models.Ser_XuatSN_CN Item in ViewBag.GetListSNchinhanh)
                 {
+                    var kho = Item.KyXuatNhap.Kho.TenKho;
                     UserTek User = new UserTek();
                     if (Item.UserId != 0)
                     {
@@ -30,6 +33,8 @@
                     <tr class="canhgiua" style="border-bottom: 2px solid black !important">
                         <td>@Item.Id</td>
                         <td>@User.UserName</td>
+                        <td>@kho</td>
+                        <td>@Item.ChuyenKho</td>
                         <td>
                             @Item.KyXuatNhap.TenKy
                         </td>

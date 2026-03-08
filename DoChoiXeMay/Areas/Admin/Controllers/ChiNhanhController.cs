@@ -33,6 +33,9 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 model.NgayXuat = DateTime.Now;
                 model.IdKyxuat = 1;
                 model.IdChiNhanh = 1;
+                //mới 8thang3
+                model.ChuyenKho=false;
+                model.DenKhoId = 1;
                 model.Ghichu = "Mới tạo auto";
                 dbc.Ser_XuatSN_CN.Add(model);
                 dbc.SaveChanges();
@@ -88,6 +91,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             var model = dbc.Ser_XuatSN_CN.Find(Id);
             ViewBag.IdKyxuat = new SelectList(dbc.KyXuatNhaps.Where(kh => kh.AdminXNPUSH == true && kh.UPush==true && kh.KhachLe==false && kh.XuatNhap==true), "Id", "TenKy", model.IdKyxuat);
             ViewBag.IdChiNhanh = new SelectList(dbc.Ser_ChiNhanh.Where(kh => kh.Sudung == true), "Id", "DaiDien", model.IdChiNhanh);
+            ViewBag.DenKhoId = new SelectList(dbc.Khoes.Where(kh => kh.SuDung == true), "Id", "TenKho", model.DenKhoId);
             return View(model);
         }
         [HttpPost]
@@ -124,21 +128,30 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 string message = ex.Message;
                 ViewBag.IdKyxuat = new SelectList(dbc.KyXuatNhaps.Where(kh => kh.AdminXNPUSH == true && kh.UYeuCauThuHoi == false), "Id", "TenKy", model.IdKyxuat);
                 ViewBag.IdChiNhanh = new SelectList(dbc.Ser_ChiNhanh.Where(kh => kh.Sudung == true), "Id", "DaiDien", model.IdChiNhanh);
+                ViewBag.DenKhoId = new SelectList(dbc.Khoes.Where(kh => kh.SuDung == true), "Id", "TenKho", model.DenKhoId);
                 ModelState.AddModelError("", "Update Thất Bại !!!!" + message);
                 return View(model);
             }
         }
         public ActionResult AddSN_ChiNhanh(int Id)
         {
+            var modelSNCN = dbc.Ser_XuatSN_CN.Find(Id);
+            var khoden = dbc.Khoes.Find(modelSNCN.DenKhoId);
             var model = dbc.Ser_Chitiet_XuatSN_CN.Where(kh => kh.IdSN_CN == Id)
                                 .OrderBy(kh=>kh.NgayXuat)
                                 .ToList();
             ViewBag.GetListChitietSN_CN=model;
+            Session["ChuyenSNKHO"] = "";
             Session["TenChiNhanh"] = new Data.ChiNhanhData().GetChiNhanhByIdXuat(Id).TenChiNhanh;
             Session["KyXuatNhap"] = new Data.ChiNhanhData().GetKyByIdXuat(Id).TenKy;
             Session["IdSN_CN"] = Id;
             Session["DaAdd"] = model.Count();
             Session["SoLuong"] = dbc.Ser_XuatSN_CN.Find(Id).SoLuong;
+            if (modelSNCN.ChuyenKho == true)
+            {
+                Session["ChuyenSNKHO"] = "Chuyển Kho "+ modelSNCN.KyXuatNhap.Kho.TenKho + " đến kho " + khoden.TenKho;
+            }
+            
             for (int i = 0; i < model.Count(); i++)
             {
                 model[i].Ghichu = (i + 1).ToString();

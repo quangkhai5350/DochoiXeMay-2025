@@ -177,8 +177,9 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             }
 
             ViewBag.Tongsp = model.Sum(kh => kh.SoLuong);
-            var model1= model.OrderBy(h => h.IDKy)
-                                .OrderBy(h=>h.IDMF)
+            var model1= model.OrderBy(h => h.IdKho)
+                                .ThenBy(kh=>kh.IDKy)//SP or NVL
+                                .ThenByDescending(h=>h.IDMF)
                                 .ThenByDescending(h => h.SoLuong)
                                 .ThenByDescending(h=>h.NgayAuto)
                                 .ToList();
@@ -251,8 +252,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
 
                 string loi = ex.ToString();
                 ModelState.AddModelError("", "Update hình sp Thất Bại !!!!");
-                var model1 = dbc.ChiTietTCs.Find(model.Id);
-                return View(model1);
+                return View(model);
             }
             
         }
