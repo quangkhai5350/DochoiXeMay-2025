@@ -14,6 +14,7 @@ using System.Security.Cryptography;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
+using System.Windows;
 using System.Xml.Linq;
 using static QRCoder.PayloadGenerator;
 
@@ -81,7 +82,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             Session["requestUri"] = "/Admin/Serial/ListSerialDaIn";
             ViewBag.TotalSerialSPDaIn = dbc.Ser_sp.Where(kh => kh.DaIn == true && kh.Sudung==false).Count();
             ViewBag.TotalSerialBoXDaIn = dbc.Ser_box.Where(kh => kh.DaIn == true && kh.Sudung == false).Count();
-            
+            ViewBag.IdKho = new SelectList(dbc.Khoes.Where(kh=>kh.SuDung==true).ToList(), "Id", "TenKho");
             return View();
         }
         
@@ -535,12 +536,76 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             }
             return Json(count, JsonRequestBehavior.AllowGet);
         }
-        //public ActionResult GetListSer_BoxDaIn()
-        //{
-        //    ViewBag.SerBoxDaIn = dbc.Ser_box.Where(kh => kh.DaIn == true && kh.Sudung==false).OrderBy(kh => kh.NgayTao)
-        //        .ThenBy(kh=>kh.Sudung)
-        //        .ToList();
-        //    return PartialView();
-        //}
+        public ActionResult ChuyenKhoserialSP(string serialsp, int idkho)
+        {
+            try
+            {
+                var modelK = dbc.Khoes.Find(idkho);
+                if (serialsp.Length == 11)
+                {
+                    var sp = dbc.Ser_sp.FirstOrDefault(kh => kh.SerialSP == serialsp && kh.Sudung == false && kh.DaIn == true);
+                    if (sp == null)
+                    {
+                        Session["ThongBaoSerialSPDaIn"] = "Serial này không tồn tại, hoặc đã kích hoạt!!!";
+                        return RedirectToAction("ListSerialDaIn");
+                    }
+                    else
+                    {
+                        if (sp.IdKho == idkho)
+                        {
+                            Session["ThongBaoSerialSPDaIn"] = "Serial này đã ở kho "+modelK.TenKho+", Không thể chuyển!!!";
+                            return RedirectToAction("ListSerialDaIn");
+                        }
+                        else
+                        {
+                            var modelsp = dbc.Ser_sp.Find(sp.Id);
+                            modelsp.IdKho = idkho;
+                            modelsp.NgayUpdate = DateTime.Now;
+                            dbc.Entry(modelsp).State = EntityState.Modified;
+                            var kq = dbc.SaveChanges();
+                        }
+                    }
+                }
+                else if (serialsp.Length == 14)
+                {
+                    var modelsp = dbc.Ser_box.FirstOrDefault(kh => kh.Serial == serialsp);
+                    var box = dbc.Ser_sp.FirstOrDefault(kh => kh.IdSerBox == modelsp.Id && kh.Sudung == false && kh.DaIn == true);
+                    if (box == null)
+                    {
+                        Session["ThongBaoSerialBoxDaIn"] = "Serial này không tồn tại, hoặc đã kích hoạt!!!";
+                        return RedirectToAction("ListSerialDaIn");
+                    }
+                    else
+                    {
+                        if (box.IdKho == idkho)
+                        {
+                            Session["ThongBaoSerialSPDaIn"] = "Serial này đã ở kho " + modelK.TenKho + ", Không thể chuyển!!!";
+                            return RedirectToAction("ListSerialDaIn");
+                        }
+                        else
+                        {
+                            var modelbox = dbc.Ser_sp.Find(box.Id);
+                            modelbox.IdKho = idkho;
+                            modelbox.NgayUpdate = DateTime.Now;
+                            dbc.Entry(modelbox).State = EntityState.Modified;
+                            var kq = dbc.SaveChanges();
+                        }
+                    }
+
+                }
+                Session["ThongBaoSerialSPDaIn"] = "Chuyển thành công serial: " + serialsp + " đến kho: " + modelK.TenKho;
+                //SMS hệ thống
+                string sms = " đã Chuyển thành công serial: " + serialsp + " đến kho: " + modelK.TenKho;
+                new Data.UserData().SMSvaNhatKy(dbc, Session["UserId"].ToString(), Session["UserName"].ToString()
+                    , Session["quyen"].ToString(), sms);
+                return RedirectToAction("ListSerialDaIn");
+            }
+            catch (Exception ex)
+            {
+                string loi = ex.ToString();
+                Session["ThongBaoSerialSPDaIn"] = "Có Lỗi hệ thống khi Chuyển Kho S/N SP !!!";
+                return RedirectToAction("ListSerialDaIn");
+            }
+        }
     }
 }
