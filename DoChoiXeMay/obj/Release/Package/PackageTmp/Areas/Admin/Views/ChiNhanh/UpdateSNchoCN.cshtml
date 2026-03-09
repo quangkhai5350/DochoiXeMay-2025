@@ -46,30 +46,41 @@
                             @Html.TextBoxFor(m => m.Ghichu, new { @class = "form-control", style = "height: 40px;width: 75%", @required = true })
 
                         </div>
-                        <div class="row">
-                            <div class="form-group col-sm-12">
-                                <div class="text-center btn-crud">
-                                    <button id="btnLuu" class="btn btn-warning" data-action="UpdateSNchoCN"><span class="glyphicon glyphicon-refresh"></span>&nbsp;Update</button>
-                                    <a class="btn btn-primary" href="/Admin/ChiNhanh/Index" style="margin-left:10%"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;Quay Lại</a>
-                                </div>
-                                <script>
-                                    $(function () {
-                                        $("button[data-action]").click(function () {
-                                            if (!confirm("Bạn Có Chắc Chắn Hành Động Của Mình?")) {
-                                                return false;
-                                            } else {
-                                                var action = $(this).attr("data-action");
-                                                this.form.action = "/Admin/ChiNhanh/" + action;
-                                            }
-
-                                        });
-                                    });
-                                </script>
+                        <div class="row" style="width: 95%; padding-left: 15px; margin-bottom: 15px">
+                            <div class="col-md-6" style="text-align:center; border: 2px solid black !important">
+                                <p class="title-casekh" style="margin-left:-100px">Chuyển Kho </p>
+                                @Html.CheckBoxFor(kh => kh.ChuyenKho, new { @style = "height:37px" })
+                            </div>
+                            <div class="col-md-6" style="border: 2px solid black !important">
+                                <p>Đến Kho</p>
+                                <span class="icon-case"><i class="glyphicon glyphicon-arrow-right"></i></span>
+                                @Html.DropDownList("DenKhoId", null, new { @class = "form-control", style = "width: 75%; height: 40px" })
                             </div>
                         </div>
-                    </div>
+                            <div class="row">
+                                <div class="form-group col-sm-12">
+                                    <div class="text-center btn-crud">
+                                        <button id="btnLuu" class="btn btn-warning" data-action="UpdateSNchoCN"><span class="glyphicon glyphicon-refresh"></span>&nbsp;Update</button>
+                                        <a class="btn btn-primary" href="/Admin/ChiNhanh/Index" style="margin-left:10%"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;Quay Lại</a>
+                                    </div>
+                                    <script>
+                                        $(function () {
+                                            $("button[data-action]").click(function () {
+                                                if (!confirm("Bạn Có Chắc Chắn Hành Động Của Mình?")) {
+                                                    return false;
+                                                } else {
+                                                    var action = $(this).attr("data-action");
+                                                    this.form.action = "/Admin/ChiNhanh/" + action;
+                                                }
 
-                </div>
+                                            });
+                                        });
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
             </div>
         </fieldset>
     }

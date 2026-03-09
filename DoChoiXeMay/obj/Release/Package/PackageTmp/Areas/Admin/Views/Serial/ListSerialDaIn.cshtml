@@ -49,14 +49,19 @@
                 @if (Session["quyen"].ToString() == "1")
                 {
                     <div class="row">
-                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12 col-12">
-                            <input type="text" style="width:30%" placeholder="Chọn serial để xóa." name="serialsp" id="serialsp" />
+                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12 col-12">
+                            <input type="text" style="width: 30%; height: 30px" placeholder="Chọn serial để xóa." name="serialsp" id="serialsp" />
                             <button id="Xoasp" class="btn btn-danger" style="margin-left:10px" href="/Admin/Serial/DeleteSerialSP" onclick="XoaSNSP()">
                                 <i class="glyphicon glyphicon-remove"></i>&nbsp;&nbsp; Xóa Serial Number cụ thể
                             </button>
+                            
                         </div>
-
-
+                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12 col-12">
+                            @Html.DropDownList("IdKho", null, new { @class = "", style = "width: 40%; height: 30px" })
+                            <button id="ChuyenKhosp" class="btn btn-danger" style="margin-left:10px" href="/Admin/Serial/ChuyenKhoSerialSP" onclick="ChuyenKhoSNSP()">
+                                <i class="glyphicon glyphicon-remove"></i>Chuyển Kho SN cụ thể
+                            </button>
+                        </div>
                         <script>
                             function XoaSNSP() {
                                 var serialsp = $('#serialsp').val();
@@ -77,16 +82,36 @@
                                     alert("Bạn chưa chọn Serial để xóa.")
                                 }
                             };
+                            function ChuyenKhoSNSP() {
+                                var serialsp = $('#serialsp').val();
+                                var idkho = $('#IdKho').val();
+                                if (serialsp.length > 0) {
+                                    if (!confirm("Bạn muốn chuyển Kho serial: " + serialsp + "  ??")) {
+                                        return false;
+                                    } else {
+                                        $.ajax({
+                                            url: "/Admin/Serial/ChuyenKhoserialSP",
+                                            data: { serialsp: serialsp, idkho: idkho },
+                                            success: function (respone) {
+                                                location.reload();
+                                                //$('.TongSanPham').html(pagesp + '/' + TongSP + ' trang');
+                                            }
+                                        });
+                                    }
+                                } else {
+                                    alert("Bạn chưa chọn Serial để Chuyển.")
+                                }
+                            };
                         </script>
 
                         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 col-12" style="text-align:right">
                             <span class="TongChuaIn"></span> S/N
                         </div>
                     </div>
-                }
+                    }
 
             </div>
-        </div>
+            </div>
     </div>
 
 </div>
