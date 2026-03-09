@@ -61,7 +61,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             var model = dbc.Ser_XuatSN_CN.OrderByDescending(kh => kh.Id)
                 .ThenByDescending(kh => kh.IdChiNhanh)
                 .ThenByDescending(kh=>kh.SoLuong).ToList();
-            ViewBag.GetListSNchinhanh = model;
+            ViewBag.GetListSNchinhanh = model.Skip(0).Take(40).ToList();
             return PartialView(model);
         }
         public ActionResult DeleteSNChiNhanh( int Id) {
@@ -143,13 +143,21 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ViewBag.GetListChitietSN_CN=model;
             Session["ChuyenSNKHO"] = "";
             Session["TenChiNhanh"] = new Data.ChiNhanhData().GetChiNhanhByIdXuat(Id).TenChiNhanh;
+            if(modelSNCN.ChuyenKho == true && modelSNCN.IdChiNhanh == 1)
+            {
+                Session["TenChiNhanh"] = "Kho"; 
+            }
             Session["KyXuatNhap"] = new Data.ChiNhanhData().GetKyByIdXuat(Id).TenKy;
             Session["IdSN_CN"] = Id;
             Session["DaAdd"] = model.Count();
             Session["SoLuong"] = dbc.Ser_XuatSN_CN.Find(Id).SoLuong;
             if (modelSNCN.ChuyenKho == true)
             {
-                Session["ChuyenSNKHO"] = "Chuyển Kho "+ modelSNCN.KyXuatNhap.Kho.TenKho + " đến kho " + khoden.TenKho;
+                Session["ChuyenSNKHO"] = "Chuyển Kho: "+ modelSNCN.KyXuatNhap.Kho.TenKho + " ==> đến kho: " + khoden.TenKho;
+            }
+            else
+            {
+                Session["ChuyenSNKHO"] = "Kho: " + modelSNCN.KyXuatNhap.Kho.TenKho;
             }
             
             for (int i = 0; i < model.Count(); i++)
@@ -190,17 +198,18 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult AddSNCNtoChiTiet(string Serial)
         {
-            
             if (Session["IdSN_CN"] != null && Serial.Trim() !="")
             {
                 var Id = int.Parse(Session["IdSN_CN"].ToString());
+                var XuatSNCN = dbc.Ser_XuatSN_CN.Find(Id);
                 var modelctxuat = dbc.Ser_Chitiet_XuatSN_CN.Where(kh => kh.IdSN_CN == Id).ToList();
-                var soluong = dbc.Ser_XuatSN_CN.Find(Id).SoLuong;
+                var soluong = XuatSNCN.SoLuong;
                 var checkSNdain = dbc.Ser_box.FirstOrDefault(kh => kh.Serial == Serial);
                 try
                 {
-                    var modelct = dbc.Ser_Chitiet_XuatSN_CN.FirstOrDefault(kh => kh.Serial == Serial);
+                    var modelct = dbc.Ser_Chitiet_XuatSN_CN.FirstOrDefault(kh => kh.Serial == Serial && kh.Ser_XuatSN_CN.ChuyenKho == false);
                     var modelctxn = dbc.ChitietXuatNhaps.FirstOrDefault(kh => kh.SerialHop == Serial && kh.IdDoiTra < 4);
+                    var checkSN_SPdain = dbc.Ser_sp.FirstOrDefault(kh => kh.IdSerBox == checkSNdain.Id);
                     if (modelct != null && modelctxn == null)
                     {
                         Session["ThongBaotaolohang"] = "";
@@ -212,25 +221,29 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                         Session["ThongBaotaolohang"] = "";
                         Session["ThongBaoLoitaolohang"] = "Số serial: " + Serial + " đã xuất cho khách lẻ.!!!";
                     }
-                    else if (modelctxuat.Count()== soluong)
+                    else if (modelctxuat.Count() == soluong)
                     {
                         Session["ThongBaotaolohang"] = "";
                         Session["ThongBaoLoitaolohang"] = "Đã add đủ S/N cho lô hàng này, không thể add thêm !!!";
                     }
-                    else if (checkSNdain ==null)
+                    else if (checkSNdain == null)
                     {
                         Session["ThongBaotaolohang"] = "";
                         Session["ThongBaoLoitaolohang"] = "S/N Không tồn tại, không thể add !!!";
                     }
-                    else if (checkSNdain != null && checkSNdain.DaIn==false)
+                    else if (checkSNdain != null && checkSNdain.DaIn == false)
                     {
                         Session["ThongBaotaolohang"] = "";
                         Session["ThongBaoLoitaolohang"] = "S/N Chưa In, không thể add !!!";
                     }
-                    else if (checkSNdain != null && checkSNdain.DaIn == true && checkSNdain.Sudung==true)
+                    else if (checkSNdain != null && checkSNdain.DaIn == true && checkSNdain.Sudung == true)
                     {
                         Session["ThongBaotaolohang"] = "";
                         Session["ThongBaoLoitaolohang"] = "S/N đã Active, không thể add !!!";
+                    } else if(XuatSNCN.DenKhoId == checkSN_SPdain.IdKho && XuatSNCN.ChuyenKho == true)
+                    {
+                        Session["ThongBaotaolohang"] = "";
+                        Session["ThongBaoLoitaolohang"] = "Số serial: " + Serial + " đã ở trong kho Id=" + XuatSNCN.DenKhoId + ", không thể chuyển.!!!";
                     }
                     else
                     {
@@ -243,13 +256,28 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                         dbc.SaveChanges();
                         modelctxuat = dbc.Ser_Chitiet_XuatSN_CN.Where(kh => kh.IdSN_CN == Id).ToList();
                         Session["DaAdd"] = modelctxuat.Count();
-                        Session["ThongBaoLoitaolohang"] = "";
-                        Session["ThongBaotaolohang"] = "Thành công add S/N: " + Serial + " cho Chi nhánh";
                         //Update DaAdd cho Ser_XuatSN_CN
                         var modelXuat = dbc.Ser_XuatSN_CN.Find(int.Parse(Session["IdSN_CN"].ToString()));
                         modelXuat.DaAdd = modelctxuat.Count();
                         dbc.Entry(modelXuat).State = EntityState.Modified;
                         dbc.SaveChanges();
+                        if (XuatSNCN.ChuyenKho == false)
+                        {
+                            Session["ThongBaoLoitaolohang"] = "";
+                            Session["ThongBaotaolohang"] = "Thành công add S/N: " + Serial + " cho Chi nhánh";
+                        }
+                        else //ChuyenKho==true : Ser_sp ==> đổi idkho
+                        {
+                            var idbox = checkSN_SPdain.Id;
+                            var modelChuyen = dbc.Ser_sp.Find(idbox);
+                            modelChuyen.IdKho = XuatSNCN.DenKhoId;
+                            modelChuyen.NgayUpdate = DateTime.Now;
+                            dbc.Entry(modelChuyen).State = EntityState.Modified;
+                            dbc.SaveChanges();
+                            Session["ThongBaoLoitaolohang"] = "";
+                            Session["ThongBaotaolohang"] = "Thành công Chuyển Kho S/N: " + Serial + " đến kho Id= "+ XuatSNCN.DenKhoId;
+                        }
+
                     }
                 }
                 catch (Exception ex) {
