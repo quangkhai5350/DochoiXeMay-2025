@@ -15,7 +15,6 @@
                 @Html.HiddenFor(kh => kh.Id)
                 @Html.HiddenFor(kh=>kh.IdUser)
                 @Html.HiddenFor(kh=>kh.STTCNOFTinh)
-                @Html.HiddenFor(kh=>kh.TenChiNhanh)
                 <h1 class="info_header">
                     <span style="color:black">Update Chi Nhánh @Model.TenChiNhanh và User</span>
                     <span class="pull-right label label-warning" style="color:white;font-family:monospace">
@@ -48,7 +47,7 @@
                         <div class="row" style="width:95%;padding-left:15px">
                             <p>Tên Chi Nhánh (Tự phát sinh theo khu vực và level) </p>
                             <span class="icon-case"><i class="glyphicon glyphicon-user"></i></span>
-                            @Html.TextBoxFor(m => m.TenChiNhanh, new { @class = "form-control", style = "height: 40px;width: 100%", @disabled = true })
+                            @Html.TextBoxFor(m => m.TenChiNhanh, new { @class = "form-control", style = "height: 40px;width: 100%"})
 
                         </div>
                         <div class="row" style="width:95%;padding-left:15px">

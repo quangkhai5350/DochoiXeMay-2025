@@ -4,6 +4,9 @@
     .tomau {
         background-color: darkkhaki;
     }
+    .canhgiua {
+        text-align: center !important;
+    }
 </style>
 <div class="table-responsive">
     <table class="table table-hover table-striped" style="margin-bottom:0">
@@ -68,7 +71,7 @@
                             @Item.Ghichu
                         </td>
                         <td>
-                            @if ((Item.SoLuong > 0 && Item.IdKyxuat > 1 && Item.IdChiNhanh > 1 && Item.ChuyenKho==false)||
+                            @if ((Item.SoLuong > 0 && Item.IdKyxuat > 1 && Item.IdChiNhanh > 1 && Item.ChuyenKho == false) ||
                                 (Item.SoLuong > 0 && Item.IdKyxuat > 1 && Item.IdChiNhanh == 1 && Item.ChuyenKho == true && Item.KyXuatNhap.IdKho != Item.DenKhoId))
                             {
                                 <a style="cursor:pointer" href="/Admin/ChiNhanh/AddSN_ChiNhanh/@Item.Id">Xem và add S/N</a>
@@ -93,9 +96,19 @@
 
                 }
             </tbody>
-        }
+            <tfoot>
 
-
-    </table>
+                <tr class="canhgiua">
+                    <td colspan="3" style="color:chocolate">
+                    </td>
+                    <td colspan="6" style="color:chocolate">
+                        Tổng SoLuong: @ViewBag.TongSL
+                    </td>
+                    <td colspan="3" style="color:mediumblue">
+                    </td>
+                </tr>
+            </tfoot>
+                }
+        </table>
 
 </div>

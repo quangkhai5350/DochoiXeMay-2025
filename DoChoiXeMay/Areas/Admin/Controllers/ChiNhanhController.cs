@@ -18,6 +18,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         Model1 dbc = new Model1();
         public ActionResult Index()
         {
+            ViewBag.IdChiNhanh = new SelectList(dbc.Ser_ChiNhanh.Where(kh=>kh.Id>7).ToList(), "Id", "DaiDien");
             Session["requestUri"] = "/Admin/ChiNhanh/Index";
             return View();
         }
@@ -56,13 +57,43 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
         }
-        public ActionResult GetListSNchinhanh()
+        //20thang3
+        public ActionResult GetListSNchinhanh(int id=0,int idchinhanh=0)
         {
-            var model = dbc.Ser_XuatSN_CN.OrderByDescending(kh => kh.Id)
+            if (id == 0 && idchinhanh == 0)
+            {
+                var model = dbc.Ser_XuatSN_CN.OrderByDescending(kh => kh.Id)
                 .ThenByDescending(kh => kh.IdChiNhanh)
-                .ThenByDescending(kh=>kh.SoLuong).ToList();
-            ViewBag.GetListSNchinhanh = model.Skip(0).Take(40).ToList();
-            return PartialView(model);
+                .ThenByDescending(kh => kh.SoLuong).ToList();
+                ViewBag.TongSL = model.Sum(kh => kh.SoLuong);
+                ViewBag.GetListSNchinhanh = model.Skip(0).Take(40).ToList();
+                return PartialView(model);
+            }
+            else if (id > 0)
+            {
+                var model = dbc.Ser_XuatSN_CN.Where(kh => kh.Id == id).OrderByDescending(kh => kh.Id)
+                .ThenByDescending(kh => kh.IdChiNhanh)
+                .ThenByDescending(kh => kh.SoLuong).ToList();
+                ViewBag.TongSL = model.Sum(kh => kh.SoLuong);
+                ViewBag.GetListSNchinhanh = model.ToList();
+                return PartialView(model);
+            }
+            else if (idchinhanh > 0) {
+                var model = dbc.Ser_XuatSN_CN.Where(kh => kh.IdChiNhanh==idchinhanh).OrderByDescending(kh => kh.Id)
+                    .ThenByDescending(kh => kh.IdChiNhanh)
+                    .ThenByDescending(kh => kh.SoLuong).ToList();
+                ViewBag.TongSL = model.Sum(kh => kh.SoLuong);
+                ViewBag.GetListSNchinhanh = model.ToList();
+                return PartialView(model);
+            }
+            return null;
+        }
+        public ActionResult loadChiNhanh()
+        {
+            var IdChiNhanh = dbc.Ser_ChiNhanh.Where(kh => kh.Id > 7).
+                            Select(kh => new { id = kh.Id, ten = kh.DaiDien });
+
+            return Json(IdChiNhanh, JsonRequestBehavior.AllowGet);
         }
         public ActionResult DeleteSNChiNhanh( int Id) {
             var modelchitiet = dbc.Ser_Chitiet_XuatSN_CN.FirstOrDefault(kh => kh.IdSN_CN==Id);

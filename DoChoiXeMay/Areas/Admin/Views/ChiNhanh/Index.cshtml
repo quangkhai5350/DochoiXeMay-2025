@@ -44,8 +44,13 @@
                     </a>
                 </div>
                 <div class="col-md-8">
-                    <div class="col-md-4"></div>
-                    <div class="col-md-6 pull-right">
+                    <div class="col-md-4">
+                        @Html.DropDownList("IdChiNhanh", null, new { style = "width: 70%; height: 40px" })
+                    </div>
+                    <div class="col-md-3">
+                        <input type="number" value="0" class="form-control input-sm" style="font-size: medium; height: 40px; width: 90%" name="Keywordsid" id="Keywordsid" placeholder="Tìm theo Id." />
+                    </div>
+                    <div class="col-md-3 pull-right">
                         <input type="text" class="form-control input-sm" style="font-size: medium; height: 40px; width: 95%" name="KeywordsTT" id="KeywordsTT" placeholder="Tìm Số Serial box đang ở lô hàng nào ??." />
 
                     </div>
@@ -54,7 +59,7 @@
                     </div>
                 </div>
 
-            </div>
+                </div>
 
         </div>
         <div class="panel-body">
@@ -67,11 +72,14 @@
     </div>
 </div>
 <script>
+    LoadChiNhanh()
     LoadPage();
     function LoadPage() {
+        Keywordsid = $("#Keywordsid").val();
+        IdChiNhanh = $("#IdChiNhanh").val();
         $.ajax({
             url: "/Admin/ChiNhanh/GetListSNchinhanh",
-            data: {  },
+            data: { id: Keywordsid, idchinhanh: IdChiNhanh },
             success: function (respone) {
                 $(".listSNCN").html(respone);
             }
@@ -91,5 +99,37 @@
             alert("Bạn Chưa Điền Số S/N trên hộp để tìm !!!")
         }
     }
+    $("#Keywordsid").change(function () {
+        LoadPage();
+    });
+    $("#IdChiNhanh").change(function () {
+        LoadPage();
+    });
+    function LoadChiNhanh() {
+        $('#IdChiNhanh').empty();
+        $.ajax({
+            url: "/Admin/ChiNhanh/loadChiNhanh", // we are calling json method
+            data: {},
+            success: function (response) {
+                $("#IdChiNhanh").append(
+                    $('<option/>')
+                        .attr('value', 0)
+                        .text("Chọn Chi Nhánh")
+                );
+                $(response).each(function (i, e) {
+                    $("#IdChiNhanh").append(
+                        $('<option/>')
+                            .attr('value', e.id)
+                            .text(e.ten)
+                    );
+                    // here we are adding option for Hãng
+                });
+            },
+            error: function (ex) {
+                alert('Lỗi load ChiNhanh: ' + ex);
+            }
+        });
+
+    };
 </script>
 

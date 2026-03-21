@@ -387,6 +387,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         {
             Ser_Levelchinhanh model = new Ser_Levelchinhanh();
             model.Level_Name = "Auto Level";
+            model.Viettat = "Auto";
             model.ChietKhau_bandau = 0;
             model.chietkhau_khbh = 0;
             model.chietkhau_KPIQUI = 0;
