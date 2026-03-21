@@ -28,6 +28,12 @@
 
                         </div>
                         <div class="row" style="width:95%;padding-left:15px">
+                            <p>Tên viết tắt </p>
+                            <span class="icon-case"><i class="glyphicon glyphicon-user"></i></span>
+                            @Html.TextBoxFor(m => m.Viettat, new { @class = "form-control", style = "height: 40px;width: 50%", @required = true })
+
+                        </div>
+                        <div class="row" style="width:95%;padding-left:15px">
                             <p>Chiết khấu ban đầu </p>
                             <span class="icon-case"><i class="glyphicon glyphicon-expand"></i></span>
                             @Html.TextBoxFor(m => m.ChietKhau_bandau, new { @class = "form-control", @type = "number", style = "width: 50%; height: 40px", @required = true })
