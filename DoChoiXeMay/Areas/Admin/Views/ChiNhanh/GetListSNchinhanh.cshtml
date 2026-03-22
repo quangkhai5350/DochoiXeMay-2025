@@ -72,7 +72,7 @@
                         </td>
                         <td>
                             @if ((Item.SoLuong > 0 && Item.IdKyxuat > 1 && Item.IdChiNhanh > 1 && Item.ChuyenKho == false) ||
-                                (Item.SoLuong > 0 && Item.IdKyxuat > 1 && Item.IdChiNhanh == 1 && Item.ChuyenKho == true && Item.KyXuatNhap.IdKho != Item.DenKhoId))
+                                (Item.SoLuong > 0 && Item.IdKyxuat > 1 && Item.Ser_ChiNhanh.IdLevel == 10 && Item.ChuyenKho == true && Item.KyXuatNhap.IdKho != Item.DenKhoId))
                             {
                                 <a style="cursor:pointer" href="/Admin/ChiNhanh/AddSN_ChiNhanh/@Item.Id">Xem và add S/N</a>
                             }
