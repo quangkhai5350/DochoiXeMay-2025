@@ -59,7 +59,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             }
         }
         //20thang3
-        public ActionResult GetListSNchinhanh(int id=0,int idchinhanh=0,int chuyenkho=0)
+        public ActionResult GetListSNchinhanh(int id=0,int idchinhanh=0,int chuyenkho=0,int idkho=0)
         {
             var KhongChon = dbc.Ser_XuatSN_CN.OrderByDescending(kh => kh.Id)
                 .ThenByDescending(kh => kh.IdChiNhanh).ThenByDescending(kh => kh.SoLuong).ToList();
@@ -70,7 +70,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             var O4 = dbc.Ser_XuatSN_CN
                     .OrderByDescending(kh => kh.Id).ThenByDescending(kh => kh.IdChiNhanh)
                     .ThenByDescending(kh => kh.SoLuong).ToList();
-            if (id == 0 && idchinhanh == 0 && chuyenkho==0)
+            if (id == 0 && idchinhanh == 0 && chuyenkho==0 && idkho==0)
             {
                 var model = KhongChon;
                 ViewBag.TongSL = model.Sum(kh => kh.SoLuong);
@@ -84,26 +84,33 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 ViewBag.GetListSNchinhanh = model.ToList();
                 return PartialView(model);
             }
-            else if (id==0 && idchinhanh > 0 && chuyenkho==0) {
-                var model = ChonChiNhanh;
+            else if (id==0 && idchinhanh > 0) {
+                var model = ChonChiNhanh.ToList();
                 ViewBag.TongSL = model.Sum(kh => kh.SoLuong);
-                ViewBag.GetListSNchinhanh = model.ToList();
+                ViewBag.GetListSNchinhanh = model.Skip(0).Take(40).ToList();
                 return PartialView(model);
             }
-            else if (id == 0 && idchinhanh == 0 && chuyenkho > 0)
+            else if (id == 0 && idchinhanh == 0 && chuyenkho > 0 && idkho==0)
             {
                 var ck=chuyenkho==1?true:false;
                 var model = O4.Where(kh=>kh.ChuyenKho==ck);
                 ViewBag.TongSL = model.Sum(kh => kh.SoLuong);
-                ViewBag.GetListSNchinhanh = model.ToList();
+                ViewBag.GetListSNchinhanh = model.Skip(0).Take(40).ToList();
                 return PartialView(model);
             }
-            else if (id == 0 && idchinhanh > 0 && chuyenkho > 0)
+            else if (id == 0 && idchinhanh == 0 && chuyenkho == 0 && idkho >0)
+            {
+                var model = O4.Where(kh => kh.KyXuatNhap.IdKho == idkho);
+                ViewBag.TongSL = model.Sum(kh => kh.SoLuong);
+                ViewBag.GetListSNchinhanh = model.Skip(0).Take(40).ToList();
+                return PartialView(model);
+            }
+            else if (id == 0 && idchinhanh == 0 && chuyenkho > 0 && idkho > 0)
             {
                 var ck = chuyenkho == 1 ? true : false;
-                var model = O4.Where(kh => kh.ChuyenKho == ck && kh.IdChiNhanh == idchinhanh);
+                var model = O4.Where(kh => kh.ChuyenKho == ck && kh.KyXuatNhap.IdKho==idkho);
                 ViewBag.TongSL = model.Sum(kh => kh.SoLuong);
-                ViewBag.GetListSNchinhanh = model.ToList();
+                ViewBag.GetListSNchinhanh = model.Skip(0).Take(40).ToList();
                 return PartialView(model);
             }
 

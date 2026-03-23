@@ -44,14 +44,14 @@
                     </a>
                 </div>
                 <div class="col-md-9">
-                    <div class="col-md-4" style="">
+                    <div class="col-md-4" style="border: 2px solid #d7d5d2 !important">
                         
                             <div class="col-md-6">
                                 @Html.DropDownList("IdKho", null, new { style = "width: 90%; height: 40px" })
                             </div>
                             <div class="col-md-6">
                                 <select class="form-control" id="ChuyenKho" name="ChuyenKho" style="width: 90%; height: 40px; margin: 0 auto">
-                                    <option value="0">Chuyển/Không</option>
+                                    <option value="0">ChuyểnKho/Không</option>
                                     <option value="1">Chuyển Kho</option>
                                     <option value="2">Không Chuyển</option>
                                 </select>
@@ -93,9 +93,10 @@
         Keywordsid = $("#Keywordsid").val();
         IdChiNhanh = $("#IdChiNhanh").val();
         chuyenkho = $("#ChuyenKho").val();
+        idkho = $("#IdKho").val();
         $.ajax({
             url: "/Admin/ChiNhanh/GetListSNchinhanh",
-            data: { id: Keywordsid, idchinhanh: IdChiNhanh, chuyenkho: chuyenkho },
+            data: { id: Keywordsid, idchinhanh: IdChiNhanh, chuyenkho: chuyenkho, idkho: idkho },
             success: function (respone) {
                 $(".listSNCN").html(respone);
             }
@@ -116,12 +117,33 @@
         }
     }
     $("#Keywordsid").change(function () {
+        var Keywordsid = $("#Keywordsid").val();
+        if (parseInt(Keywordsid) > 0) {
+            $("#IdChiNhanh").prop("disabled", true);
+            $("#ChuyenKho").prop("disabled", true);
+            $("#IdKho").prop("disabled", true);
+        } else {
+            $('#IdChiNhanh').prop("disabled", false);
+            $('#ChuyenKho').prop("disabled", false);
+            $('#IdKho').prop("disabled", false);
+        }
         LoadPage();
     });
     $("#IdChiNhanh").change(function () {
+        IdChiNhanh = $("#IdChiNhanh").val();
+        if (parseInt(IdChiNhanh) > 0) {
+            $("#ChuyenKho").prop("disabled", true);
+            $("#IdKho").prop("disabled", true);
+        } else {
+            $('#ChuyenKho').prop("disabled", false);
+            $('#IdKho').prop("disabled", false);
+        }
         LoadPage();
     });
     $("#ChuyenKho").change(function () {
+        LoadPage();
+    });
+    $("#IdKho").change(function () {
         LoadPage();
     });
     function LoadChiNhanh() {
